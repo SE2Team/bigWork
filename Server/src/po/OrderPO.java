@@ -23,16 +23,19 @@ public class OrderPO implements Serializable {
     private double volume;
     private String goods_Name;
 
-    private deliveryType deliveryType;
+    private DeliveryType DeliveryType;
     private String wrapper;
     private double expenseOfTransport;
     private double expenseOfWrapper;
     private double expense;
 
+    private double date;
+    private long serialNumber;
+
     public OrderPO(String senderName, String senderAddress, String senderWorkplace, long senderTelephone,
                    long senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                    long receiverTelephone, long receiverPhone, int originalNum, double weight, double volume,
-                   String goods_Name, po.deliveryType deliveryType, String wrapper) {
+                   String goods_Name, DeliveryType DeliveryType, String wrapper) {
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;
@@ -47,7 +50,7 @@ public class OrderPO implements Serializable {
         this.weight = weight;
         this.volume = volume;
         this.goods_Name = goods_Name;
-        this.deliveryType = deliveryType;
+        this.DeliveryType = DeliveryType;
         this.wrapper = wrapper;
     }
 
@@ -164,12 +167,12 @@ public class OrderPO implements Serializable {
         this.goods_Name = goods_Name;
     }
 
-    public po.deliveryType getDeliveryType() {
-        return deliveryType;
+    public DeliveryType getDeliveryType() {
+        return DeliveryType;
     }
 
-    public void setDeliveryType(po.deliveryType deliveryType) {
-        this.deliveryType = deliveryType;
+    public void setDeliveryType(DeliveryType DeliveryType) {
+        this.DeliveryType = DeliveryType;
     }
 
     public String getWrapper() {
@@ -212,6 +215,5 @@ public class OrderPO implements Serializable {
         this.date = date;
     }
 
-    private double date;
-    private long serialNumber;
+
 }

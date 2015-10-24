@@ -9,30 +9,33 @@ public class OrderPO implements Serializable {
     private String senderName;
     private String senderAddress;
     private String senderWorkplace;
-    private long senderTelephone;
-    private long senderPhone;
+    private String senderTelephone;
+    private String senderPhone;
 
     private String receiverName;
     private String receiverAddress;
     private String receiverWorkplace;
-    private long receiverTelephone;
-    private long receiverPhone;
+    private String receiverTelephone;
+    private String receiverPhone;
 
     private int originalNum;
     private double weight;
     private double volume;
     private String goods_Name;
 
-    private deliveryType deliveryType;
+    private DeliveryType DeliveryType;
     private String wrapper;
     private double expenseOfTransport;
     private double expenseOfWrapper;
     private double expense;
 
-    public OrderPO(String senderName, String senderAddress, String senderWorkplace, long senderTelephone,
-                   long senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
-                   long receiverTelephone, long receiverPhone, int originalNum, double weight, double volume,
-                   String goods_Name, po.deliveryType deliveryType, String wrapper) {
+    private double date;
+    private long serialNumber;
+
+    public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
+                   String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
+                   String receiverTelephone, String receiverPhone, int originalNum, double weight, double volume,
+                   String goods_Name, DeliveryType DeliveryType, String wrapper) {
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;
@@ -47,7 +50,7 @@ public class OrderPO implements Serializable {
         this.weight = weight;
         this.volume = volume;
         this.goods_Name = goods_Name;
-        this.deliveryType = deliveryType;
+        this.DeliveryType = DeliveryType;
         this.wrapper = wrapper;
     }
 
@@ -76,19 +79,19 @@ public class OrderPO implements Serializable {
         this.senderWorkplace = senderWorkplace;
     }
 
-    public long getSenderTelephone() {
+    public String getSenderTelephone() {
         return senderTelephone;
     }
 
-    public void setSenderTelephone(long senderTelephone) {
+    public void setSenderTelephone(String senderTelephone) {
         this.senderTelephone = senderTelephone;
     }
 
-    public long getSenderPhone() {
+    public String getSenderPhone() {
         return senderPhone;
     }
 
-    public void setSenderPhone(long senderPhone) {
+    public void setSenderPhone(String senderPhone) {
         this.senderPhone = senderPhone;
     }
 
@@ -116,19 +119,19 @@ public class OrderPO implements Serializable {
         this.receiverWorkplace = receiverWorkplace;
     }
 
-    public long getReceiverTelephone() {
+    public String getReceiverTelephone() {
         return receiverTelephone;
     }
 
-    public void setReceiverTelephone(long receiverTelephone) {
+    public void setReceiverTelephone(String receiverTelephone) {
         this.receiverTelephone = receiverTelephone;
     }
 
-    public long getReceiverPhone() {
+    public String getReceiverPhone() {
         return receiverPhone;
     }
 
-    public void setReceiverPhone(long receiverPhone) {
+    public void setReceiverPhone(String receiverPhone) {
         this.receiverPhone = receiverPhone;
     }
 
@@ -164,12 +167,12 @@ public class OrderPO implements Serializable {
         this.goods_Name = goods_Name;
     }
 
-    public po.deliveryType getDeliveryType() {
-        return deliveryType;
+    public DeliveryType getDeliveryType() {
+        return DeliveryType;
     }
 
-    public void setDeliveryType(po.deliveryType deliveryType) {
-        this.deliveryType = deliveryType;
+    public void setDeliveryType(DeliveryType DeliveryType) {
+        this.DeliveryType = DeliveryType;
     }
 
     public String getWrapper() {
@@ -212,6 +215,5 @@ public class OrderPO implements Serializable {
         this.date = date;
     }
 
-    private double date;
-    private long serialNumber;
+
 }
