@@ -1,4 +1,4 @@
-package Client.src.dataservice.userdataservice;
+package dataservice.userdataservice;
 
 import po.UserPO;
 

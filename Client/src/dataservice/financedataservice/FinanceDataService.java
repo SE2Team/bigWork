@@ -8,7 +8,7 @@ public interface FinanceDataService {
 
     public String get(String startDate, String endDate);
 
-    public boolean addAccount(String name, int money);
+    public boolean addAccount(AccountPO accountPO);
 
     public AccountPO searchAccount();
 

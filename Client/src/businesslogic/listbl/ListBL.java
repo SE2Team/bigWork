@@ -64,9 +64,10 @@ public class ListBL implements ListblService{
     }
 
     @Override
-    public void receipt(String date, String orgnization, String name, double amount, String place) {
+    public void finance(String date, String orgnization, String name, double amount, String place) {
 
     }
+
 
     @Override
     public void payment(String date, int money, String name, String account, String entry, String comment) {

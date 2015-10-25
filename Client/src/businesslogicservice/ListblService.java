@@ -158,7 +158,7 @@ public interface ListblService {
      * @param place       the place
      */
 //财务人员建的收款单
-    public void receipt(String date, String orgnization, String name, double amount, String place);
+    public void finance(String date, String orgnization, String name, double amount, String place);
 
     /**
      * Payment.
