@@ -1,4 +1,4 @@
-package po;
+package enumClass;
 
 /**
  * Created by Administrator on 2015/10/24 0024.

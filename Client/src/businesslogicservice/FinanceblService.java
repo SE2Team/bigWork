@@ -91,6 +91,6 @@ public interface FinanceblService {
      * @param name the name
      * @return the boolean
      */
-    public boolean EditAccount(String name);
+    public boolean EditAccount(String originalName,String newName);
 
 }

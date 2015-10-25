@@ -1,11 +1,13 @@
 package po;
 
+import enumClass.DeliveryType;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2015/10/23 0023.
  */
-public class OrderPO implements Serializable {
+public class OrderPO extends ListPO implements Serializable  {
     private String senderName;
     private String senderAddress;
     private String senderWorkplace;
@@ -23,7 +25,7 @@ public class OrderPO implements Serializable {
     private double volume;
     private String goods_Name;
 
-    private DeliveryType DeliveryType;
+    private enumClass.DeliveryType DeliveryType;
     private String wrapper;
     private double expenseOfTransport;
     private double expenseOfWrapper;
@@ -31,7 +33,6 @@ public class OrderPO implements Serializable {
 
 
     private double date;
-    private long serialNumber;
 
     public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
                    String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
