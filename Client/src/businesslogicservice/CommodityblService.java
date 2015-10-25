@@ -6,7 +6,7 @@ import po.StockPO;
  * Created by Administrator on 2015/10/24 0024.
  */
 public interface CommodityblService {
-    //出库
+    //鍑哄簱
 
     /**
      *
@@ -36,7 +36,7 @@ public interface CommodityblService {
      * @return
      */
     boolean isFull(StockPO stockPO);
-    //日期的格式必须是：yyyy-mm-dd
+    //鏃ユ湡鐨勬牸寮忓繀椤绘槸锛歽yyy-mm-dd
     /**
      *
      * @param startDate
@@ -44,7 +44,7 @@ public interface CommodityblService {
      * @return
      */
     public boolean checkStock(String startDate,String endDate);
-    //日期的格式必须是：yyyy-mm-dd-hh
+    //鏃ユ湡鐨勬牸寮忓繀椤绘槸锛歽yyy-mm-dd-hh
     /**
      *
      * @param startDate
