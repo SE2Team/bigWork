@@ -29,6 +29,7 @@ public class OrderPO implements Serializable {
     private double expenseOfWrapper;
     private double expense;
 
+
     private double date;
     private long serialNumber;
 
@@ -54,11 +55,19 @@ public class OrderPO implements Serializable {
         this.wrapper = wrapper;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getSenderName() {
 
         return senderName;
     }
 
+    /**
+     *
+     * @param senderName
+     */
     public void setSenderName(String senderName) {
         this.senderName = senderName;
     }
