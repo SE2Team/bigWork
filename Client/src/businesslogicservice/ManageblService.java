@@ -11,10 +11,10 @@ import vo.VehicleVO;
  */
 public interface ManageblService {
 	public DriverVO addDriver(DriverVO driverVO);
-	public DriverVO delDriver(DriverPO driverPO);
+	public boolean delDriver(DriverVO drivervO);
 	public DriverVO checkDriver(String driveNumber);
 	public VehicleVO addVehicle(VehicleVO vehicleVO);
-	public VehicleVO delVehicle(VehiclePO vehiclePO);
+	public boolean delVehicle(VehicleVO vehiclevO);
 	public VehicleVO checkVehicle(String vehicleNumber);
 
 	public void updateSalary(String position,String Type);
