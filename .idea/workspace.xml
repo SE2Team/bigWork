@@ -2,31 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f1718fa-55f5-4d18-822e-048b8cd76f4b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/AccountVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/AddresseeInformationVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/ConstantVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/DistributeVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/GatheringVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/LoadingVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/PaymentVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/ReceiptVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/po/ReceivePO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/ReceiveVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/StockInVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/StockVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/TransferReceiveVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/vo/TransferVO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/CommodityblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/CommodityblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/FinanceblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/FinanceblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/InquiryblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/InquiryblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java" afterPath="$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/ListblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/ListblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/ManageblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/ManageblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/UserblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/UserblService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="G:\nju\学习\SE2\deliveryManagement\Client\src\po\FinancePO.java" afterPath="$PROJECT_DIR$/Client/src/po/GatheringPO.java" />
     </list>
     <ignored path="deliverManagement.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,10 +40,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StockInVO.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StockInVO.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/src/vo/StockInVO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16509435">
+            <state vertical-scroll-proportion="0.0">
               <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
               <folding />
             </state>
@@ -129,6 +106,26 @@
         <entry file="file://$PROJECT_DIR$/Client/src/businesslogicservice/UtilityblService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ListBL.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockOutVO.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Client/src/vo/StockOutVO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.23113208">
               <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
@@ -773,7 +770,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445791857415</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="bl中方法参数改为vo">
+      <created>1445825528208</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1445825528208</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -818,6 +821,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="重新初始化" />
     <MESSAGE value="支持eclipse" />
     <MESSAGE value="10-24myk剩余" />
@@ -1286,17 +1290,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.759434">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#292#293#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Client/src/businesslogicservice/UtilityblService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1305,18 +1298,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/vo/StockOutVO.java">
+    <entry file="file://$PROJECT_DIR$/Client/src/vo/StockInVO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16509435">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/vo/StockInVO.java">
+    <entry file="file://$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16509435">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/src/vo/StockOutVO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23113208">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
