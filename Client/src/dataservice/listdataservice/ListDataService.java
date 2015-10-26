@@ -1,10 +1,8 @@
 package dataservice.listdataservice;
 
-import enumClass.City;
-import enumClass.TransportType;
 import po.AddresseeInformationPO;
 import po.DistributePO;
-import po.FinancePO;
+import po.GatheringPO;
 import po.LoadingPO;
 import po.OrderPO;
 import po.PaymentPO;
@@ -29,5 +27,5 @@ public interface ListDataService {
     public boolean saveStockOut(StockOutPO stockOutPO);
     public boolean saveStockIn(StockInPO stockInPO);
     public boolean savePayment(PaymentPO paymentPO);
-    public boolean saveFinance(FinancePO financePO);
+    public boolean saveFinance(GatheringPO gatheringPO);
 }

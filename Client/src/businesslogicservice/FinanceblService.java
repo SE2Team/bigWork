@@ -1,96 +1,28 @@
 package businesslogicservice;
 
-/**
- * Created by Administrator on 2015/10/24 0024.
- */
+import vo.AccountVO;
+import vo.GatheringVO;
+import vo.PaymentVO;
+
 public interface FinanceblService {
-    /**
-     * Gathering boolean.
-     *
-     * @param date     the date
-     * @param payee    the payee
-     * @param name     the name
-     * @param money    the money
-     * @param location the location
-     * @return the boolean
-     */
-    public boolean gathering(String date,String payee,String name,int money,String location);
+    public boolean gathering(GatheringVO gatheringVO);
 
-    /**
-     * Payment boolean.
-     *
-     * @param date    the date
-     * @param money   the money
-     * @param name    the name
-     * @param account the account
-     * @param entry   the entry
-     * @param comment the comment
-     * @return the boolean
-     */
-    public boolean payment(String date,int money,String name,String account,String entry,String comment);
+    public boolean payment(PaymentVO paymentVO);
 
-    /**
-     * Generate form.
-     */
-//生成成本收益表
     public void generateForm();
 
-    /**
-     * Generate form.
-     *
-     * @param startDate the start date
-     * @param endDate   the end date
-     */
-//生成经营情况表
     public void generateForm(String startDate,String endDate);
 
-    /**
-     * Initial boolean.
-     *
-     * @param institution the institution
-     * @return the boolean
-     */
-//未完成
     public boolean initial(String institution);
 
-    /**
-     * Add account boolean.
-     *
-     * @param name  the name
-     * @param money the money
-     * @return the boolean
-     */
-    public boolean addAccount(String name,int money);
+    public boolean addAccount(AccountVO accountVO);
 
-    /**
-     * Search account boolean.
-     *
-     * @return the boolean
-     */
     public boolean searchAccount();
 
-    /**
-     * Search account boolean.
-     *
-     * @param name the name
-     * @return the boolean
-     */
     public boolean searchAccount(String name);
 
-    /**
-     * Del account boolean.
-     *
-     * @param name the name
-     * @return the boolean
-     */
-    public boolean DelAccount(String name);
+    public boolean DelAccount(AccountVO accountVO);
 
-    /**
-     * Edit account boolean.
-     *
-     * @param name the name
-     * @return the boolean
-     */
-    public boolean EditAccount(String originalName,String newName);
+    public boolean EditAccount(AccountVO accountVOOld,AccountVO accountVONew);
 
 }

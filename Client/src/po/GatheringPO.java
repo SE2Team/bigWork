@@ -3,15 +3,15 @@ package po;
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class FinancePO extends ListPO{
+public class GatheringPO extends ListPO{
     String date;
     String workplace;
     String man;
     double money;
     String place;
 
-    public FinancePO(String date, String workplace, String man,
-                     double money, String place) {
+    public GatheringPO(String date, String workplace, String man,
+                       double money, String place) {
         this.date = date;
         this.workplace = workplace;
         this.man = man;

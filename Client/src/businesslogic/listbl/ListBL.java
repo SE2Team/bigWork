@@ -1,12 +1,8 @@
 package businesslogic.listbl;
 
 import businesslogicservice.ListblService;
-import enumClass.City;
-import enumClass.DeliveryType;
-import enumClass.TransportType;
 import po.ListPO;
-import vo.ListVO;
-import vo.OrderVO;
+import vo.*;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
@@ -14,63 +10,62 @@ import vo.OrderVO;
 public class ListBL implements ListblService{
 
     @Override
-    public OrderVO order(String senderName, String senderAddress, String senderWorkplace, String senderTelephone, String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace, String receiverTelephone, String receiverPhone, int originalNum, double weight, double volume, String goods_Name, DeliveryType DeliveryType, String wrapper) {
+    public OrderVO order(OrderVO orderVO) {
         return null;
     }
 
     @Override
-    public void addresseeInfomation(String num, String name) {
+    public void ddresseeInfomation(AddresseeInformationVO addresseeInformationVO) {
 
     }
 
     @Override
-    public void loadingInfo(String date, String businessHallNum, String transferNum, String destination, String carNum, String name1, String name2, String orderNum) {
+    public void loadingInfo(LoadingVO loadingVO) {
 
     }
 
     @Override
-    public void receiveInfo(String date, String transferNum, String departPlace, String state) {
+    public void receiveInfo(ReceiveVO receiveVO) {
 
     }
 
     @Override
-    public void distributeInfo(String date, String orderNum, String name) {
+    public void distributeInfo(DistributeVO distributeVO) {
 
     }
 
     @Override
-    public void receipt(String date, String amount, String name, String orderNum) {
+    public void receipt(ReceiptVO receiptVO) {
 
     }
 
     @Override
-    public void transInfo(String way, String date, String Num, String transNum, String departPlace, String destination, String locNum, String name, String consignNum) {
+    public void transInfo(TransferVO transferVO) {
 
     }
 
     @Override
-    public void transArrive(String transCenterNum, String arriveDate, String transNum, String departPlace, String state) {
+    public void transArrive(TransferReceiveVO transferReceiveVO) {
 
     }
 
     @Override
-    public void stockOut(String deliveryNum, String outDate, City city, TransportType transportType, String transferNum) {
+    public void stockOut(StockOutVO stockOutVO) {
 
     }
 
     @Override
-    public void stockIn(String deliveryNum, String outDate, City city) {
+    public void stockIn(StockInVO stockInVO) {
 
     }
 
     @Override
-    public void finance(String date, String orgnization, String name, double amount, String place) {
+    public void gathering(GatheringVO gatheringVO) {
 
     }
 
-
     @Override
-    public void payment(String date, int money, String name, String account, String entry, String comment) {
+    public void payment(PaymentVO paymentVO) {
 
     }
 
