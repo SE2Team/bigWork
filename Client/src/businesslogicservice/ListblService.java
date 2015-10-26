@@ -5,7 +5,7 @@ import vo.*;
 
 public interface ListblService {
     //订单
-    public OrderVO order(OrderVO orderVO);
+    public boolean order(OrderVO orderVO);
 
     //收件单
     public void ddresseeInfomation(AddresseeInformationVO addresseeInformationVO);
@@ -35,7 +35,7 @@ public interface ListblService {
     public void stockIn(StockInVO stockInVO);
 
     //财务人员建的收款单
-    public void gathering(GatheringVO gatheringVO);
+    public boolean gathering(GatheringVO gatheringVO);
 
     //付款单
     public void payment(PaymentVO paymentVO);

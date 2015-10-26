@@ -10,8 +10,8 @@ import vo.*;
 public class ListBL implements ListblService{
 
     @Override
-    public OrderVO order(OrderVO orderVO) {
-        return null;
+    public boolean order(OrderVO orderVO) {
+        return true;
     }
 
     @Override
@@ -60,8 +60,9 @@ public class ListBL implements ListblService{
     }
 
     @Override
-    public void gathering(GatheringVO gatheringVO) {
-
+    public boolean gathering(GatheringVO gatheringVO) {
+        System.out.print("我被执行啦");
+        return true;
     }
 
     @Override

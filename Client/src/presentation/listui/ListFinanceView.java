@@ -1,6 +1,7 @@
 package presentation.listui;
 
 import businesslogicservice.ListblService;
+import vo.GatheringVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +14,7 @@ import java.awt.event.ActionListener;
  */
 public class ListFinanceView extends JPanel{
     private ListblService bl;
+    private GatheringVO gatheringVO;
 
     private DefaultTableModel financeTableModel;
     private JTable financeTable;
@@ -26,8 +28,7 @@ public class ListFinanceView extends JPanel{
 
     public ListFinanceView(ListblService bl) {
         this.bl=bl;
-//        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-
+//        this.setLayout(new FlowLayout());
         initItemField();
         initInfo();
         initSaveButton();
@@ -36,10 +37,12 @@ public class ListFinanceView extends JPanel{
 
     private void initSaveButton() {
         JButton saveButton = new JButton("提交收款单");
+
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                boolean result=bl.finance();
+                gatheringVO=new GatheringVO(date.getText(),workplace.getText(),man.getText(),Integer.parseInt(money.getText()),place.getText());
+                boolean result=bl.gathering(gatheringVO);
                 if(true){
                     JOptionPane.showMessageDialog(null,"保存成功","",JOptionPane.INFORMATION_MESSAGE);
                 }else{
@@ -62,9 +65,9 @@ public class ListFinanceView extends JPanel{
         place=new JTextField(10);
 
         JPanel inputPanel=new JPanel();
-        inputPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        inputPanel.add(dateLabel);
-        inputPanel.add(date);
+//        inputPanel.setLayout(new FlowLayout());
+        inputPanel.add(BorderLayout.WEST,dateLabel);
+        inputPanel.add(BorderLayout.WEST,date);
         inputPanel.add(workplaceLabel);
         inputPanel.add(workplace);
         inputPanel.add(manLabel);

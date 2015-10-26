@@ -2,6 +2,7 @@ package businesslogicservice;
 
 import po.StockPO;
 import vo.StockInVO;
+import vo.StockOutVO;
 
 public interface CommodityblService {
     //出库
