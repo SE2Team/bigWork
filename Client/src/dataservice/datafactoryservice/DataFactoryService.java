@@ -1,6 +1,6 @@
-package dataservice.datafactoryservice;
+package src.dataservice.datafactoryservice;
 
-import dataservice.listdataservice.ListDataService;
+import src.dataservice.listdataservice.ListDataService;
 
 public interface DataFactoryService {
     public ListDataService getListDataService();

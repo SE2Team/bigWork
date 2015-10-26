@@ -1,4 +1,4 @@
-package dataservice.commoditydataservice;
+package src.dataservice.commoditydataservice;
 
 /**
  * Created by Administrator on 2015/10/24 0024.

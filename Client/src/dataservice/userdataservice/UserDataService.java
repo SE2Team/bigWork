@@ -1,6 +1,6 @@
-package dataservice.userdataservice;
+package src.dataservice.userdataservice;
 
-import po.UserPO;
+import src.po.UserPO;
 
 public interface UserDataService {
 	public UserPO login (String loginInfo);

@@ -4,6 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Client"/>
 	<classpathentry kind="src" path="Server"/>
-	<classpathentry excluding="src/|Client/|Server/" kind="src" path=""/>
 	<classpathentry kind="output" path="out/production/deliveryManagement"/>
 </classpath>

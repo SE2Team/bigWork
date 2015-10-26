@@ -1,7 +1,6 @@
-package businesslogicservice;
+package src.businesslogicservice;
 
-import vo.LogisticsVO;
-import vo.OperationLogVO;
+import src.vo.*;
 
 public interface InquiryblService {
     //不用传参数

@@ -1,8 +1,6 @@
-package businesslogicservice;
+package src.businesslogicservice;
 
-import vo.AccountVO;
-import vo.GatheringVO;
-import vo.PaymentVO;
+import src.vo.*;
 
 public interface FinanceblService {
     public boolean gathering(GatheringVO gatheringVO);

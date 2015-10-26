@@ -1,6 +1,6 @@
-package businesslogicservice;
+package src.businesslogicservice;
 
-import vo.UserVO;
+import src.vo.UserVO;
 
 /**
  * Created by Administrator on 2015/10/24 0024.

@@ -1,8 +1,6 @@
-package dataservice.managedataservice;
+package src.dataservice.managedataservice;
 
-import po.ConstantPO;
-import po.DriverPO;
-import po.VehiclePO;
+import src.po.*;
 
 public interface ManageDataService {
 	public boolean addDriver(DriverPO driverPO);

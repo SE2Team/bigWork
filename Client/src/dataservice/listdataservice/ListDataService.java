@@ -1,16 +1,6 @@
-package dataservice.listdataservice;
+package src.dataservice.listdataservice;
 
-import po.AddresseeInformationPO;
-import po.DistributePO;
-import po.GatheringPO;
-import po.LoadingPO;
-import po.OrderPO;
-import po.PaymentPO;
-import po.ReceiptPO;
-import po.StockInPO;
-import po.StockOutPO;
-import po.TransferPO;
-import po.TransferReceivePO;
+import src.po.*;
 
 public interface ListDataService {
 	public 	boolean saveOrder(OrderPO orderPO);

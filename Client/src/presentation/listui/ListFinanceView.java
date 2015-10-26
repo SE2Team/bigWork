@@ -1,10 +1,13 @@
-package presentation.listui;
+package src.presentation.listui;
 
-import businesslogicservice.ListblService;
-import vo.GatheringVO;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import src.businesslogicservice.ListblService;
+import src.vo.GatheringVO;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +42,7 @@ public class ListFinanceView extends JPanel{
         JButton saveButton = new JButton("提交收款单");
 
         saveButton.addActionListener(new ActionListener() {
-            @Override
+            @SuppressWarnings("unused")
             public void actionPerformed(ActionEvent e) {
                 try {
                     gatheringVO = new GatheringVO(date.getText(), workplace.getText(), man.getText(), Integer.parseInt(money.getText()), place.getText());

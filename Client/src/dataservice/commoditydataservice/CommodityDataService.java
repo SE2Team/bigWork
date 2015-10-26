@@ -1,6 +1,6 @@
-package dataservice.commoditydataservice;
+package src.dataservice.commoditydataservice;
 
-import po.StockPO;
+import src.po.StockPO;
 
 public interface CommodityDataService {
 	public void update(StockPO PO);

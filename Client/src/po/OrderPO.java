@@ -1,6 +1,7 @@
-package po;
+package src.po;
 
-import enumClass.DeliveryType;
+
+import src.enumClass.DeliveryType;
 
 import java.io.Serializable;
 
@@ -25,7 +26,7 @@ public class OrderPO extends ListPO implements Serializable  {
     private double volume;
     private String goods_Name;
 
-    private enumClass.DeliveryType DeliveryType;
+    private DeliveryType DeliveryType;
     private String wrapper;
     private double expenseOfTransport;
     private double expenseOfWrapper;

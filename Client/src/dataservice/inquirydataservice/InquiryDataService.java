@@ -1,7 +1,7 @@
-package dataservice.inquirydataservice;
+package src.dataservice.inquirydataservice;
 
-import po.LogisticsPO;
-import po.OperationLogPO;
+import src.po.LogisticsPO;
+import src.po.OperationLogPO;
 
 public interface InquiryDataService {
 		public LogisticsPO checkLogistics(String num);

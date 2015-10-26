@@ -1,7 +1,6 @@
-package dataservice.financedataservice;
+package src.dataservice.financedataservice;
 
-
-import po.AccountPO;
+import src.po.AccountPO;
 
 public interface FinanceDataService {
     public String get();

@@ -1,4 +1,4 @@
-package vo;
+package src.vo;
 
 public class VehicleVO {
 
