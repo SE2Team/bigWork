@@ -10,10 +10,10 @@ import vo.VehicleVO;
  * Created by Administrator on 2015/10/24 0024.
  */
 public interface ManageblService {
-	public DriverVO addDriver(DriverVO driverVO);
+	public boolean addDriver(DriverVO driverVO);
 	public boolean delDriver(DriverVO drivervO);
 	public DriverVO checkDriver(String driveNumber);
-	public VehicleVO addVehicle(VehicleVO vehicleVO);
+	public boolean addVehicle(VehicleVO vehicleVO);
 	public boolean delVehicle(VehicleVO vehiclevO);
 	public VehicleVO checkVehicle(String vehicleNumber);
 
