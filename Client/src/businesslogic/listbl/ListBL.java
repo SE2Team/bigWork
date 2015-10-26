@@ -1,6 +1,10 @@
 package businesslogic.listbl;
 
 import businesslogicservice.ListblService;
+import data.DataFactory;
+import dataservice.datafactoryservice.DataFactoryService;
+import dataservice.listdataservice.ListDataService;
+import po.GatheringPO;
 import po.ListPO;
 import vo.*;
 
@@ -8,6 +12,7 @@ import vo.*;
  * Created by Administrator on 2015/10/25 0025.
  */
 public class ListBL implements ListblService{
+    DataFactoryService dataFactory;
 
     @Override
     public boolean order(OrderVO orderVO) {
@@ -61,7 +66,11 @@ public class ListBL implements ListblService{
 
     @Override
     public boolean gathering(GatheringVO gatheringVO) {
-        System.out.print("我被执行啦");
+//        System.out.print("我被执行啦");
+        dataFactory=new DataFactory();
+        ListDataService dataService=dataFactory.getListDataService();
+        GatheringPO po=new GatheringPO(gatheringVO.getDate(),gatheringVO.getWorkplace(),gatheringVO.getMan(),gatheringVO.getMoney(),gatheringVO.getPlace());
+        dataService.saveGathering(po);
         return true;
     }
 

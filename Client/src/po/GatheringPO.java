@@ -59,5 +59,14 @@ public class GatheringPO extends ListPO{
         this.place = place;
     }
 
-
+    @Override
+    public String toString() {
+        return "GatheringPO{" +
+                "date='" + date + '\'' +
+                ", workplace='" + workplace + '\'' +
+                ", man='" + man + '\'' +
+                ", money=" + money +
+                ", place='" + place + '\'' +
+                '}';
+    }
 }

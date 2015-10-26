@@ -58,4 +58,15 @@ public class GatheringVO {
     public void setPlace(String place) {
         this.place = place;
     }
+
+    @Override
+    public String toString() {
+        return "收款单{" +
+                "日期：'" + date + '\'' +
+                ", 收款地点：'" + workplace + '\'' +
+                ", 收款人：'" + man + '\'' +
+                ", 金额：" + money +
+                ", 收款地点：'" + place + '\'' +
+                '}';
+    }
 }

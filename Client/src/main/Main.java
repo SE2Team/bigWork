@@ -12,7 +12,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args){
         JFrame mFrame = new JFrame();
-        mFrame.setSize(800, 600);
+        mFrame.setSize(900, 600);
         mFrame.setLocation(300, 300);
         ListblService bl=new ListBL();
         JPanel panel=new ListFinanceView(bl);

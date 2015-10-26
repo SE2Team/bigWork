@@ -27,5 +27,5 @@ public interface ListDataService {
     public boolean saveStockOut(StockOutPO stockOutPO);
     public boolean saveStockIn(StockInPO stockInPO);
     public boolean savePayment(PaymentPO paymentPO);
-    public boolean saveFinance(GatheringPO gatheringPO);
+    public boolean saveGathering(GatheringPO gatheringPO);
 }

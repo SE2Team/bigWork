@@ -30,7 +30,7 @@ public class ListFinanceView extends JPanel{
         this.bl=bl;
 //        this.setLayout(new FlowLayout());
         initItemField();
-        initInfo();
+//        initInfo();
         initSaveButton();
         this.validate();
     }
@@ -41,10 +41,17 @@ public class ListFinanceView extends JPanel{
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gatheringVO=new GatheringVO(date.getText(),workplace.getText(),man.getText(),Integer.parseInt(money.getText()),place.getText());
+                try {
+                    gatheringVO = new GatheringVO(date.getText(), workplace.getText(), man.getText(), Integer.parseInt(money.getText()), place.getText());
+                }catch(NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null,"金额数据输入错误","",JOptionPane.ERROR_MESSAGE);
+                }catch (NullPointerException ex2){
+
+                }
                 boolean result=bl.gathering(gatheringVO);
                 if(true){
-                    JOptionPane.showMessageDialog(null,"保存成功","",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"保存成功\n"+gatheringVO.toString(),"",JOptionPane.INFORMATION_MESSAGE);
+//                    updateInfo(gatheringVO.toString());
                 }else{
                     JOptionPane.showMessageDialog(null,"保存失败","",JOptionPane.ERROR_MESSAGE);
                 }
@@ -81,5 +88,10 @@ public class ListFinanceView extends JPanel{
     private void initInfo(){
         info=new JLabel("无收款信息");
         this.add(BorderLayout.CENTER,info);
+    }
+    private void updateInfo(String info){
+        this.info=new JLabel(info);
+        this.add(BorderLayout.CENTER,this.info);
+
     }
 }
