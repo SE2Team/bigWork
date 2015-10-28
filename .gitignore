@@ -1,8 +1,9 @@
-.idea/
+/.idea/
 *.iml
 *.class
-target/
+/target/
 .settings/
 .metadata/
 *.ipr
 *.iws
+/bin/
