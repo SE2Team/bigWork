@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Administrator on 2015/10/25 0025.
+ * Created by Administrator on 2015/10/28 0025.
  */
 public class ListFinanceView extends JPanel{
     private ListblService bl;
