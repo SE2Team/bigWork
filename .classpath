@@ -4,5 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Client"/>
 	<classpathentry kind="src" path="Server"/>
-	<classpathentry kind="output" path="out/production/deliveryManagement"/>
+	<classpathentry kind="output" path="bin/production/deliveryManagement"/>
 </classpath>
