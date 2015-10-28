@@ -2,169 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f1718fa-55f5-4d18-822e-048b8cd76f4b" name="Default" comment="组长调试完美功能实现与桩整合">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/stubs/data/CommodityDataService_Stub.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/stubs/data/FinanceDataService_Stub.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/stubs/data/InquiryDataService_Stub.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/stubs/data/ListDataService_Stub.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/stubs/data/ManageDataService_Stub.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Client/src/stubs/data/UserDataService_Stub.java" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\commoditybl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\financebl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\financebl\FinanceBL.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\inquirybl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\listbl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\listbl\ListBL.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\managebl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\userbl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogic\utilitybl\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\CommodityblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\FinanceblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\InquiryblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\ListblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\ManageblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\UserblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\businesslogicservice\UtilityblService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\commoditydataservice\CommodityDataService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\datafactoryservice\DataFactoryService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\financedataservice\FinanceDataService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\inquirydataservice\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\inquirydataservice\InquiryDataService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\listdataservice\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\listdataservice\ListDataService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\managedataservice\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\managedataservice\ManageDataService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\userdataservice\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\dataservice\userdataservice\UserDataService.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\enumClass\City.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\enumClass\DeliveryType.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\enumClass\PositionType.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\enumClass\TransportType.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\main\Main.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\AccountPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\AddresseeInformationPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\ConstantPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\DistributePO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\DriverPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\GatheringPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\ListPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\LoadingPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\LogisticsPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\OperationLogPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\OrderPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\PaymentPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\ReceiptPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\StockInPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\StockOutPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\StockPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\TransferPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\TransferReceivePO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\UserPO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\po\VehiclePO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\commodityui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\financeui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\inquiryui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\listui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\listui\ListFinanceView$1.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\listui\ListFinanceView.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\mainui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\manageui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\presentation\userui\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\AccountVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\AddresseeInformationVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\ConstantVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\DistributeVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\DriverVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\GatheringVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\ListVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\LoadingVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\LogisticsVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\OperationLogVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\OrderVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\PaymentVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\ReceiptVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\StockInVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\StockOutVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\StockVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\TransferReceiveVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\UserVO.class" afterPath="" />
-      <change type="DELETED" beforePath="G:\nju\学习\SE2\SE2TEAM_doc\Submitted_Homework\作业151026\代码\deliveryManagement\out\production\Client\vo\VehicleVO.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/.classpath" afterPath="$PROJECT_DIR$/Client/.classpath" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/AccountPO.java" afterPath="$PROJECT_DIR$/Client/src/po/AccountPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/AccountVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/AccountVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/AddresseeInformationPO.java" afterPath="$PROJECT_DIR$/Client/src/po/AddresseeInformationPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/AddresseeInformationVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/AddresseeInformationVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/enumClass/City.java" afterPath="$PROJECT_DIR$/Client/src/enumClass/City.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/Client.eml" afterPath="$PROJECT_DIR$/Client/Client.eml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/commoditydataservice/CommodityDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/commoditydataservice/CommodityDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/CommodityblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/CommodityblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/dataservice/commoditydataservice/CommoditydataService.java" afterPath="$PROJECT_DIR$/Server/src/dataservice/commoditydataservice/CommoditydataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/ConstantPO.java" afterPath="$PROJECT_DIR$/Client/src/po/ConstantPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/ConstantVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/ConstantVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/data/DataFactory.java" afterPath="$PROJECT_DIR$/Client/src/data/DataFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/data/datafactory/DataFactory.java" afterPath="$PROJECT_DIR$/Server/src/data/datafactory/DataFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/datafactoryservice/DataFactoryService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/datafactoryservice/DataFactoryService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/enumClass/DeliveryType.java" afterPath="$PROJECT_DIR$/Client/src/enumClass/DeliveryType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/DistributePO.java" afterPath="$PROJECT_DIR$/Client/src/po/DistributePO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/DistributeVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/DistributeVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/DriverPO.java" afterPath="$PROJECT_DIR$/Client/src/po/DriverPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/DriverVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/DriverVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogic/financebl/FinanceBL.java" afterPath="$PROJECT_DIR$/Client/src/businesslogic/financebl/FinanceBL.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/financedataservice/FinanceDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/financedataservice/FinanceDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/FinanceblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/FinanceblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/GatheringPO.java" afterPath="$PROJECT_DIR$/Client/src/po/GatheringPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/GatheringVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/GatheringVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/inquirydataservice/InquiryDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/inquirydataservice/InquiryDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/InquiryblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/InquiryblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java" afterPath="$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/impl/ListDataServiceSerializableFileImpl.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/impl/ListDataServiceSerializableFileImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/presentation/listui/ListFinanceView.java" afterPath="$PROJECT_DIR$/Client/src/presentation/listui/ListFinanceView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/ListPO.java" afterPath="$PROJECT_DIR$/Client/src/po/ListPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/ListVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/ListVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/ListblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/ListblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/LoadingPO.java" afterPath="$PROJECT_DIR$/Client/src/po/LoadingPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/LoadingVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/LoadingVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/LogisticsPO.java" afterPath="$PROJECT_DIR$/Client/src/po/LogisticsPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/LogisticsVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/LogisticsVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/main/Main.java" afterPath="$PROJECT_DIR$/Client/src/main/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/managedataservice/ManageDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/managedataservice/ManageDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/ManageblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/ManageblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/OperationLogPO.java" afterPath="$PROJECT_DIR$/Client/src/po/OperationLogPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/OperationLogVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/OperationLogVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/OrderPO.java" afterPath="$PROJECT_DIR$/Client/src/po/OrderPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/po/OrderPO.java" afterPath="$PROJECT_DIR$/Server/src/po/OrderPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/OrderVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/OrderVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/PaymentPO.java" afterPath="$PROJECT_DIR$/Client/src/po/PaymentPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/PaymentVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/PaymentVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/enumClass/PositionType.java" afterPath="$PROJECT_DIR$/Client/src/enumClass/PositionType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/ReceiptPO.java" afterPath="$PROJECT_DIR$/Client/src/po/ReceiptPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/ReceiptVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/ReceiptVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/ReceivePO.java" afterPath="$PROJECT_DIR$/Client/src/po/ReceivePO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/ReceiveVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/ReceiveVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/Server.eml" afterPath="$PROJECT_DIR$/Server/Server.eml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/StockInPO.java" afterPath="$PROJECT_DIR$/Client/src/po/StockInPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/StockInVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/StockInVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/StockOutPO.java" afterPath="$PROJECT_DIR$/Client/src/po/StockOutPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/StockOutVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/StockOutVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/StockPO.java" afterPath="$PROJECT_DIR$/Client/src/po/StockPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/StockVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/StockVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/TransferPO.java" afterPath="$PROJECT_DIR$/Client/src/po/TransferPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/TransferReceivePO.java" afterPath="$PROJECT_DIR$/Client/src/po/TransferReceivePO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/TransferReceiveVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/TransferReceiveVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/TransferVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/TransferVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/enumClass/TransportType.java" afterPath="$PROJECT_DIR$/Client/src/enumClass/TransportType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/dataservice/userdataservice/UserDataService.java" afterPath="$PROJECT_DIR$/Client/src/dataservice/userdataservice/UserDataService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/UserPO.java" afterPath="$PROJECT_DIR$/Client/src/po/UserPO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/UserVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/UserVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/UserblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/UserblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/businesslogicservice/UtilityblService.java" afterPath="$PROJECT_DIR$/Client/src/businesslogicservice/UtilityblService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/po/VehiclePO.java" afterPath="$PROJECT_DIR$/Client/src/po/VehiclePO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/src/vo/VehicleVO.java" afterPath="$PROJECT_DIR$/Client/src/vo/VehicleVO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/deliveryManagement.eml" afterPath="$PROJECT_DIR$/deliveryManagement.eml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/src/po/deliveryType.java" afterPath="$PROJECT_DIR$/Server/src/po/deliveryType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="5363dd83-0c1d-4d2d-8f23-1fff167ce1c3" name="Failed commit: Default" comment="bl中方法参数改为vo" />
@@ -197,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -207,32 +45,8 @@
         <entry file="file://$PROJECT_DIR$/Client/src/main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommodityDataService_Stub.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/src/stubs/data/CommodityDataService_Stub.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ListDataService_Stub.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/src/stubs/data/ListDataService_Stub.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -271,7 +85,7 @@
         <entry file="file://$PROJECT_DIR$/Client/src/enumClass/PositionType.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -287,14 +101,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FinanceDataService_Stub.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Client/src/stubs/data/FinanceDataService_Stub.java">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.66824645">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-              <folding>
-                <element signature="e#1139#1140#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.09261301">
+              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -321,7 +133,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Client/src/City.java" />
         <option value="$PROJECT_DIR$/Client/src/enumClass/TransportType.java" />
         <option value="$PROJECT_DIR$/Client/src/vo/OperationLogVO.java" />
         <option value="$PROJECT_DIR$/Client/src/po/DeliveryType.java" />
@@ -357,7 +168,6 @@
         <option value="$PROJECT_DIR$/Server/src/data/datafactory/DataFactory.java" />
         <option value="$PROJECT_DIR$/Client/src/dataservice/datafactoryservice/DataFactoryService.java" />
         <option value="$PROJECT_DIR$/Client/src/data/DataFactory.java" />
-        <option value="$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java" />
         <option value="$PROJECT_DIR$/Client/src/businesslogic/listbl/ListBL.java" />
         <option value="$PROJECT_DIR$/Client/src/po/ListPO.java" />
         <option value="$PROJECT_DIR$/Client/src/dataservice/impl/ListDataServiceSerializableFileImpl.java" />
@@ -372,6 +182,8 @@
         <option value="$PROJECT_DIR$/Client/.classpath" />
         <option value="$PROJECT_DIR$/Client/src/enumClass/PositionType.java" />
         <option value="$PROJECT_DIR$/Client/src/stubs/data/FinanceDataService_Stub.java" />
+        <option value="$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -415,7 +227,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -434,234 +245,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datafactory" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stubs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enumClass" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dataservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliverManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="deliveryManagement" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dataservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="listdataservice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -985,7 +571,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445849527059</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="组长调试完美功能实现与桩整合">
+      <created>1445871336147</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1445871336147</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1002,29 +594,29 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32928064" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32624114" sideWeight="0.49583334" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928064" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892057" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32826748" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32522798" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15052083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928064" sideWeight="0.49791667" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15048026" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3596758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32624114" sideWeight="0.49583334" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32522798" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985386" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928064" sideWeight="0.49791667" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3596758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1065,6 +657,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Client/src/enumClass/TransportType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Client/src/dataservice/userdataservice/UserDataService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24239245">
@@ -1307,7 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1315,9 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="17" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1325,7 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1333,16 +928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7924528">
           <caret line="26" column="30" selection-start-line="26" selection-start-column="30" selection-end-line="26" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="docComment;class#OrderPO#0" expanded="false" />
-            <element signature="method#OrderPO#0;class#OrderPO#0" expanded="false" />
-            <element signature="docComment;method#getSenderName#0;class#OrderPO#0" expanded="false" />
-            <element signature="method#getSenderName#0;class#OrderPO#0" expanded="false" />
-            <element signature="docComment;method#setSenderName#0;class#OrderPO#0" expanded="false" />
-            <element signature="e#2163#2164#0" expanded="true" />
-            <element signature="e#2207#2208#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1357,22 +942,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/src/dataservice/listdataservice/ListDataService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/stubs/data/CommodityDataService_Stub.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1380,10 +956,8 @@
     <entry file="file://$PROJECT_DIR$/Client/src/main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1391,16 +965,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="263" column="0" selection-start-line="263" selection-start-column="0" selection-end-line="263" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/stubs/data/ListDataService_Stub.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1439,18 +1003,24 @@
     <entry file="file://$PROJECT_DIR$/Client/src/enumClass/PositionType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/stubs/data/FinanceDataService_Stub.java">
+    <entry file="file://$PROJECT_DIR$/Server/.project">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.66824645">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding>
-            <element signature="e#1139#1140#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09261301">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
