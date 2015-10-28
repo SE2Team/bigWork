@@ -2,18 +2,17 @@ package src.presentation.listui;
 
 
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
 import src.businesslogicservice.ListblService;
 import src.vo.GatheringVO;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Administrator on 2015/10/25 0025.
+ * Created by Administrator on 2015/10/28 0025.
  */
 public class ListFinanceView extends JPanel{
     private ListblService bl;
@@ -43,6 +42,7 @@ public class ListFinanceView extends JPanel{
 
         saveButton.addActionListener(new ActionListener() {
             @SuppressWarnings("unused")
+
             public void actionPerformed(ActionEvent e) {
                 try {
                     gatheringVO = new GatheringVO(date.getText(), workplace.getText(), man.getText(), Integer.parseInt(money.getText()), place.getText());
