@@ -1,10 +1,11 @@
 package src.dataservice.impl;
 
-import java.io.*;
-
 import src.dataservice.listdataservice.ListDataService;
-import src.po.AddresseeInformationPO;
 import src.po.*;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  * Created by Administrator on 2015/10/26 0026.
@@ -26,7 +27,7 @@ public class ListDataServiceSerializableFileImpl implements ListDataService {
     }
 
     
-    public boolean saveReceiveInfo(ReceiptPO receiptPO) {
+    public boolean saveReceiveInfo(ReceivePO receivePO) {
         return false;
     }
 

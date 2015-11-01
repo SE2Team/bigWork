@@ -7,11 +7,11 @@ public class GatheringVO {
     String date;
     String workplace;
     String man;
-    double money;
+    String money;
     String place;
 
     public GatheringVO(String date, String workplace, String man,
-                       double money, String place) {
+                       String money, String place) {
         this.date = date;
         this.workplace = workplace;
         this.man = man;
@@ -43,11 +43,11 @@ public class GatheringVO {
         this.man = man;
     }
 
-    public double getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 

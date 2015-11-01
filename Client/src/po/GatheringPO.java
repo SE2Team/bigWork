@@ -11,7 +11,7 @@ public class GatheringPO extends ListPO{
     String place;
 
     public GatheringPO(String date, String workplace, String man,
-                       double money, String place) {
+                       String money, String place) {
         this.date = date;
         this.workplace = workplace;
         this.man = man;
