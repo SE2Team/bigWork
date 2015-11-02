@@ -1,7 +1,6 @@
 package src.po;
 
 
-import src.enumClass.DeliveryType;
 
 import java.io.Serializable;
 
@@ -26,7 +25,7 @@ public class OrderPO extends ListPO implements Serializable  {
     private double volume;
     private String goods_Name;
 
-    private DeliveryType DeliveryType;
+    private util.DeliveryType DeliveryType;
     private String wrapper;
     private double expenseOfTransport;
     private double expenseOfWrapper;
@@ -38,7 +37,7 @@ public class OrderPO extends ListPO implements Serializable  {
     public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
                    String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                    String receiverTelephone, String receiverPhone, int originalNum, double weight, double volume,
-                   String goods_Name, DeliveryType DeliveryType, String wrapper) {
+                   String goods_Name, util.DeliveryType DeliveryType, String wrapper) {
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;
@@ -178,11 +177,11 @@ public class OrderPO extends ListPO implements Serializable  {
         this.goods_Name = goods_Name;
     }
 
-    public DeliveryType getDeliveryType() {
+    public util.DeliveryType getDeliveryType() {
         return DeliveryType;
     }
 
-    public void setDeliveryType(DeliveryType DeliveryType) {
+    public void setDeliveryType(util.DeliveryType DeliveryType) {
         this.DeliveryType = DeliveryType;
     }
 

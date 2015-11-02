@@ -19,7 +19,7 @@ public class Commodity {
         return null;
     }
 
-    public ResultMessage StockSum(String startDate, String endDate) {
+    public ResultMessage StockSum() {
         return null;
     }
 

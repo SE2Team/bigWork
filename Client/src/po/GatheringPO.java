@@ -7,7 +7,7 @@ public class GatheringPO extends ListPO{
     String date;
     String workplace;
     String man;
-    double money;
+    String money;
     String place;
 
     public GatheringPO(String date, String workplace, String man,
@@ -43,11 +43,11 @@ public class GatheringPO extends ListPO{
         this.man = man;
     }
 
-    public double getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 

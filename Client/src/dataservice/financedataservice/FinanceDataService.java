@@ -1,13 +1,15 @@
 package src.dataservice.financedataservice;
 
 import src.po.AccountPO;
+import src.po.InstitutionPO;
+import util.ResultMessage;
 
 public interface FinanceDataService {
     public String get();
 
     public String get(String startDate, String endDate);
 
-    public boolean addAccount(AccountPO accountPO);
+    public ResultMessage addAccount(AccountPO accountPO);
 
     public AccountPO searchAccount();
 
@@ -19,14 +21,15 @@ public interface FinanceDataService {
      * @param accountPO
      * @return
      */
-    public boolean DelAccount(AccountPO accountPO);
+    public ResultMessage delAccount(AccountPO accountPO);
 
     /**
      * @param name
      * @param newAccountPO 新的账户信息
      * @return
      */
-    public boolean EditAccount(String name, AccountPO newAccountPO);
+    public ResultMessage editAccount(String name, AccountPO newAccountPO);
 
+    public ResultMessage initial(InstitutionPO institutionPO);
 
 }

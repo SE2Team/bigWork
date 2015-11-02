@@ -2,6 +2,7 @@ package src.businesslogicservice;
 
 import src.vo.StockInVO;
 import src.vo.StockOutVO;
+import src.vo.StockVO;
 import util.ResultMessage;
 
 public interface CommodityblService {
@@ -14,5 +15,5 @@ public interface CommodityblService {
     //日期的格式必须是：yyyy-mm-dd
     public ResultMessage checkStock(String startDate,String endDate);
     //日期的格式必须是：yyyy-mm-dd-hh
-    public ResultMessage StockSum(String startDate,String endDate);
+    public StockVO StockSum();
 }
