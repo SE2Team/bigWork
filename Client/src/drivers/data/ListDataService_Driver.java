@@ -10,7 +10,6 @@ public class ListDataService_Driver {
 	AddresseeInformationPO addresseeInformationPO;
 	LoadingPO loadingPO;
 	ReceiptPO receiptPO;
-	ReceivePO receievPO;
 	DistributePO distributePO;
 	TransferPO transferPO;
 	StockOutPO stockOutPO;
@@ -35,7 +34,7 @@ public class ListDataService_Driver {
 				System.out.println("Success!");
 			}
 			
-			boolean isSaveReceiveInfo=listDataService.saveReceiveInfo(receievPO);
+			boolean isSaveReceiveInfo=listDataService.saveReceiveInfo(receiptPO);
 			if(isSaveReceiveInfo==true){
 				System.out.println("Success!");
 			}

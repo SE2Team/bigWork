@@ -1,29 +1,26 @@
 package src.businesslogicservice;
 
 import src.vo.*;
-import util.ResultMessage;
-
-import java.util.ArrayList;
 
 public interface FinanceblService {
-    public ResultMessage gathering(GatheringVO gatheringVO);
+    public boolean gathering(GatheringVO gatheringVO);
 
-    public ResultMessage payment(PaymentVO paymentVO);
+    public boolean payment(PaymentVO paymentVO);
 
-    public ResultMessage generateForm();
+    public void generateForm();
 
-    public ResultMessage generateForm(String startDate,String endDate);
+    public void generateForm(String startDate,String endDate);
 
-    public ResultMessage initial(src.vo.InstitutionVO institutionVO);
+    public boolean initial(String institution);
 
-    public ResultMessage addAccount(AccountVO accountVO);
+    public boolean addAccount(AccountVO accountVO);
 
-    public ArrayList<AccountVO> searchAccount();
+    public boolean searchAccount();
 
-    public AccountVO searchAccount(String name);
+    public boolean searchAccount(String name);
 
-    public ResultMessage delAccount(AccountVO accountVO);
+    public boolean DelAccount(AccountVO accountVO);
 
-    public ResultMessage editAccount(AccountVO accountVOOld,AccountVO accountVONew);
+    public boolean EditAccount(AccountVO accountVOOld,AccountVO accountVONew);
 
 }
