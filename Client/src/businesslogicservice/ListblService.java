@@ -2,45 +2,46 @@ package src.businesslogicservice;
 
 import src.po.ListPO;
 import src.vo.*;
+import util.ResultMessage;
 
 public interface ListblService {
     //订单
-    public boolean order(OrderVO orderVO);
+    public ResultMessage order(OrderVO orderVO);
 
     //收件单
-    public void ddresseeInfomation(AddresseeInformationVO addresseeInformationVO);
+    public ResultMessage AddresseeInfomation(AddresseeInformationVO addresseeInformationVO);
 
     //装车单
-    public void loadingInfo(LoadingVO loadingVO);
+    public ResultMessage loadingInfo(LoadingVO loadingVO);
 
     //接收单
-    public void receiveInfo(ReceiveVO receiveVO);
+    public ResultMessage receiveInfo(ReceiveVO receiveVO);
 
     //派件单
-    public void distributeInfo(DistributeVO distributeVO);
+    public ResultMessage distributeInfo(DistributeVO distributeVO);
 
     //营业厅业务员建的收款单
-    public void receipt(ReceiptVO receiptVO);
+    public ResultMessage receipt(ReceiptVO receiptVO);
 
     //中转单
-    public void transInfo(TransferVO transferVO);
+    public ResultMessage transInfo(TransferVO transferVO);
 
     //中转中心到达单
-    public void transArrive(TransferReceiveVO transferReceiveVO);
+    public ResultMessage transArrive(TransferReceiveVO transferReceiveVO);
 
     //入库单
-    public void stockOut(StockOutVO stockOutVO);
+    public ResultMessage stockOut(StockOutVO stockOutVO);
 
     //出库单
-    public void stockIn(StockInVO stockInVO);
+    public ResultMessage stockIn(StockInVO stockInVO);
 
     //财务人员建的收款单
-    public boolean gathering(GatheringVO gatheringVO);
+    public ResultMessage gathering(GatheringVO gatheringVO);
 
     //付款单
-    public void payment(PaymentVO paymentVO);
+    public ResultMessage payment(PaymentVO paymentVO);
 
-    public void saveList(ListPO list);
+    public ResultMessage saveList(ListPO list);
 
     public ListVO push();
 }

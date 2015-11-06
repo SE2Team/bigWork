@@ -6,7 +6,7 @@ public interface ListDataService {
 	public 	boolean saveOrder(OrderPO orderPO);
 	public boolean saveAddresseeInfo(AddresseeInformationPO addresseeInformationPO);
     public boolean saveLoadingInfo(LoadingPO loadingPO);
-    public boolean saveReceiveInfo(ReceiptPO receiptPO);
+    public boolean saveReceiveInfo(ReceivePO receivePO);
     public boolean saveDistributeInfo(DistributePO distributePO);
 
     public boolean saveReceipt(ReceiptPO receiptPO);

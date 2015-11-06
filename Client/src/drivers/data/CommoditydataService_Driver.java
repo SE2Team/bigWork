@@ -10,10 +10,10 @@ public class CommoditydataService_Driver {
 		if(isCheck==po){
 			System.out.println("Success!");
 		}
-		
-		StockPO isInitial=commodityDataService.initial();
-		if(isInitial==po){
-			System.out.println("Success!");
-		}
+//		
+//		StockPO isInitial=commodityDataService.initial();
+//		if(isInitial==po){
+//			System.out.println("Success!");
+//		}
 	}
 }

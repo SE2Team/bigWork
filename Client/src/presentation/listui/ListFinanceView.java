@@ -45,19 +45,19 @@ public class ListFinanceView extends JPanel{
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    gatheringVO = new GatheringVO(date.getText(), workplace.getText(), man.getText(), Integer.parseInt(money.getText()), place.getText());
+                    gatheringVO = new GatheringVO(date.getText(), workplace.getText(), man.getText(), money.getText(), place.getText());
                 }catch(NumberFormatException ex){
                     JOptionPane.showMessageDialog(null,"金额数据输入错误","",JOptionPane.ERROR_MESSAGE);
                 }catch (NullPointerException ex2){
 
                 }
-                boolean result=bl.gathering(gatheringVO);
-                if(true){
-                    JOptionPane.showMessageDialog(null,"保存成功\n"+gatheringVO.toString(),"",JOptionPane.INFORMATION_MESSAGE);
-//                    updateInfo(gatheringVO.toString());
-                }else{
-                    JOptionPane.showMessageDialog(null,"保存失败","",JOptionPane.ERROR_MESSAGE);
-                }
+//                boolean result=bl.gathering(gatheringVO);
+//                if(true){
+//                    JOptionPane.showMessageDialog(null,"保存成功\n"+gatheringVO.toString(),"",JOptionPane.INFORMATION_MESSAGE);
+////                    updateInfo(gatheringVO.toString());
+//                }else{
+//                    JOptionPane.showMessageDialog(null,"保存失败","",JOptionPane.ERROR_MESSAGE);
+//                }
             }
         });
         this.add(BorderLayout.SOUTH,saveButton);

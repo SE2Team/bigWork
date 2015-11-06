@@ -1,19 +1,19 @@
 package src.businesslogicservice;
 
-import src.po.StockPO;
 import src.vo.StockInVO;
 import src.vo.StockOutVO;
+import src.vo.StockVO;
+import util.ResultMessage;
 
 public interface CommodityblService {
     //出库
 
-    public boolean stockOut(StockOutVO stockOutVO);
+    public ResultMessage stockOut(StockOutVO stockOutVO);
 
-    public boolean stockIn(StockInVO stockInVO);
+    public ResultMessage stockIn(StockInVO stockInVO);
 
-    boolean isFull(StockPO stockPO);
     //日期的格式必须是：yyyy-mm-dd
-    public boolean checkStock(String startDate,String endDate);
+    public ResultMessage checkStock(String startDate,String endDate);
     //日期的格式必须是：yyyy-mm-dd-hh
-    public boolean StockSum(String startDate,String endDate);
+    public StockVO StockSum();
 }

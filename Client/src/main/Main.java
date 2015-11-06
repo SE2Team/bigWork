@@ -1,7 +1,6 @@
 package src.main;
 
 
-import src.businesslogic.listbl.ListBL;
 import src.businesslogicservice.ListblService;
 import src.presentation.listui.ListFinanceView;
 
@@ -15,7 +14,7 @@ public class Main {
     	JFrame mFrame = new JFrame();
         mFrame.setSize(900, 600);
         mFrame.setLocation(300, 300);
-        ListblService bl=new ListBL();
+        ListblService bl=new src.businesslogic.listbl.List();
         JPanel panel=new ListFinanceView(bl);
         mFrame.getContentPane().add(panel);
         mFrame.setTitle("输入收款单信息");

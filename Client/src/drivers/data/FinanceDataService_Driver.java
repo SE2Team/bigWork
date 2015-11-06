@@ -3,6 +3,7 @@ package src.drivers.data;
 
 import src.dataservice.financedataservice.FinanceDataService;
 import src.po.AccountPO;
+import util.ResultMessage;
 
 public class FinanceDataService_Driver {
 	String date;
@@ -19,10 +20,10 @@ public class FinanceDataService_Driver {
 			System.out.println("Success");
 		}
 		
-		boolean isAddAccount=financeDataService.addAccount(accountPO);
-		if(isAddAccount==true){
-			System.out.println("Success");
-		}
+//		boolean isAddAccount=financeDataService.addAccount(accountPO);
+//		if(isAddAccount==true){
+//			System.out.println("Success");
+//		}
 		
 		AccountPO isSearchAccount1=financeDataService.searchAccount();
 		if(isSearchAccount1==accountPO){
@@ -34,15 +35,15 @@ public class FinanceDataService_Driver {
 			System.out.println("Success");
 		}
 		
-		boolean isDelAccount=financeDataService.DelAccount(accountPO);
-		if(isDelAccount==true){
-			System.out.println("Success");
-		}
-		
-		boolean isEditAccount=financeDataService.EditAccount(name, accountPO);
-		if(isEditAccount==true){
-			System.out.println("Success");
-		}
+//		boolean isDelAccount=financeDataService.DelAccount(accountPO);
+//		if(isDelAccount==true){
+//			System.out.println("Success");
+//		}
+//		
+//		boolean isEditAccount=financeDataService.EditAccount(name, accountPO);
+//		if(isEditAccount==true){
+//			System.out.println("Success");
+//		}
 		
 	}
 }
