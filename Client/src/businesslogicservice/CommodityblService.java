@@ -13,8 +13,7 @@ public interface CommodityblService {
     public ResultMessage stockIn(StockInVO stockInVO);
 
     //日期的格式必须是：yyyy-mm-dd
-    public ResultMessage checkStock(String startDate, String endDate);
-
+    public ResultMessage checkStock(String startDate,String endDate);
     //日期的格式必须是：yyyy-mm-dd-hh
     public StockVO StockSum();
 }

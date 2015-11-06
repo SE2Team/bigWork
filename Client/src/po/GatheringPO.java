@@ -3,7 +3,7 @@ package src.po;
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class GatheringPO extends ListPO {
+public class GatheringPO extends ListPO{
     String date;
     String workplace;
     String man;

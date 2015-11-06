@@ -1,7 +1,6 @@
 package src.businesslogic.listbl;
 
-
-import src.data.datafactory.DataFactory;
+import src.data.DataFactory;
 import src.dataservice.datafactoryservice.DataFactoryService;
 import src.dataservice.listdataservice.ListDataService;
 import src.po.GatheringPO;

@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class ListPO implements Serializable {
+public class ListPO implements Serializable{
 
     protected String id;
     protected String content;
@@ -33,7 +33,7 @@ public class ListPO implements Serializable {
         this.content = content;
     }
 
-    protected void save(ListPO list) {
+    protected void save(ListPO list){
 
     }
 }

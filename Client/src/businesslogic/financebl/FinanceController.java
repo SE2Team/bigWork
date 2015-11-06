@@ -13,16 +13,14 @@ import java.util.ArrayList;
  * Created by Administrator on 2015/11/1 0001.
  */
 public class FinanceController implements FinanceblService {
-    Finance finance = new Finance();
 
     @Override
     public ResultMessage gathering(GatheringVO gatheringVO) {
-        return finance.gathering(gatheringVO);
+        return null;
     }
 
     @Override
     public ResultMessage payment(PaymentVO paymentVO) {
-
         return null;
     }
 
@@ -61,11 +59,6 @@ public class FinanceController implements FinanceblService {
         return null;
     }
 
-    /**
-     * @param accountVOOld
-     * @param accountVONew
-     * @return
-     */
     @Override
     public ResultMessage editAccount(AccountVO accountVOOld, AccountVO accountVONew) {
         return null;

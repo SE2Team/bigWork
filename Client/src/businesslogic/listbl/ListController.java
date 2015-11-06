@@ -10,7 +10,7 @@ import util.ResultMessage;
  */
 public class ListController implements ListblService {
 
-    List list = new List();
+    List list=new List();
 
 
     @Override

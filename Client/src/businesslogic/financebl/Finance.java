@@ -20,7 +20,6 @@ public class Finance {
 
     /**
      * 成本收益表
-     *
      * @return
      */
     public ResultMessage generateForm() {
@@ -29,7 +28,6 @@ public class Finance {
 
     /**
      * 经营情况表
-     *
      * @param startDate
      * @param endDate
      * @return

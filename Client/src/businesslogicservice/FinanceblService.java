@@ -1,8 +1,6 @@
 package src.businesslogicservice;
 
-import src.vo.AccountVO;
-import src.vo.GatheringVO;
-import src.vo.PaymentVO;
+import src.vo.*;
 import util.ResultMessage;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ public interface FinanceblService {
 
     public ResultMessage generateForm();
 
-    public ResultMessage generateForm(String startDate, String endDate);
+    public ResultMessage generateForm(String startDate,String endDate);
 
     public ResultMessage initial(src.vo.InstitutionVO institutionVO);
 
@@ -26,6 +24,6 @@ public interface FinanceblService {
 
     public ResultMessage delAccount(AccountVO accountVO);
 
-    public ResultMessage editAccount(AccountVO accountVOOld, AccountVO accountVONew);
+    public ResultMessage editAccount(AccountVO accountVOOld,AccountVO accountVONew);
 
 }

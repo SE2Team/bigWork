@@ -1,6 +1,7 @@
 package src.presentation.listui;
 
 
+
 import src.businesslogicservice.ListblService;
 import src.vo.GatheringVO;
 
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by Administrator on 2015/10/28 0025.
  */
-public class ListFinanceView extends JPanel {
+public class ListFinanceView extends JPanel{
     private ListblService bl;
     private GatheringVO gatheringVO;
 
@@ -28,7 +29,7 @@ public class ListFinanceView extends JPanel {
     private JLabel info;
 
     public ListFinanceView(ListblService bl) {
-        this.bl = bl;
+        this.bl=bl;
 //        this.setLayout(new FlowLayout());
         initItemField();
 //        initInfo();
@@ -45,9 +46,9 @@ public class ListFinanceView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     gatheringVO = new GatheringVO(date.getText(), workplace.getText(), man.getText(), money.getText(), place.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "金额数据输入错误", "", JOptionPane.ERROR_MESSAGE);
-                } catch (NullPointerException ex2) {
+                }catch(NumberFormatException ex){
+                    JOptionPane.showMessageDialog(null,"金额数据输入错误","",JOptionPane.ERROR_MESSAGE);
+                }catch (NullPointerException ex2){
 
                 }
 //                boolean result=bl.gathering(gatheringVO);
@@ -59,25 +60,24 @@ public class ListFinanceView extends JPanel {
 //                }
             }
         });
-        this.add(BorderLayout.SOUTH, saveButton);
+        this.add(BorderLayout.SOUTH,saveButton);
     }
+    private void initItemField(){
+        JLabel dateLabel=new JLabel("收款日期：");
+        date=new JTextField(10);
+        JLabel workplaceLabel=new JLabel("收款单位：");
+        workplace=new JTextField(15);
+        JLabel manLabel=new JLabel("收款人：");
+        man=new JTextField(5);
+        JLabel moneyLabel=new JLabel("收款金额：");
+        money=new JTextField(5);
+        JLabel placeLabel=new JLabel("收款地点：");
+        place=new JTextField(10);
 
-    private void initItemField() {
-        JLabel dateLabel = new JLabel("收款日期：");
-        date = new JTextField(10);
-        JLabel workplaceLabel = new JLabel("收款单位：");
-        workplace = new JTextField(15);
-        JLabel manLabel = new JLabel("收款人：");
-        man = new JTextField(5);
-        JLabel moneyLabel = new JLabel("收款金额：");
-        money = new JTextField(5);
-        JLabel placeLabel = new JLabel("收款地点：");
-        place = new JTextField(10);
-
-        JPanel inputPanel = new JPanel();
+        JPanel inputPanel=new JPanel();
 //        inputPanel.setLayout(new FlowLayout());
-        inputPanel.add(BorderLayout.WEST, dateLabel);
-        inputPanel.add(BorderLayout.WEST, date);
+        inputPanel.add(BorderLayout.WEST,dateLabel);
+        inputPanel.add(BorderLayout.WEST,date);
         inputPanel.add(workplaceLabel);
         inputPanel.add(workplace);
         inputPanel.add(manLabel);
@@ -86,17 +86,15 @@ public class ListFinanceView extends JPanel {
         inputPanel.add(money);
         inputPanel.add(placeLabel);
         inputPanel.add(place);
-        this.add(BorderLayout.NORTH, inputPanel);
+        this.add(BorderLayout.NORTH,inputPanel);
     }
-
-    private void initInfo() {
-        info = new JLabel("无收款信息");
-        this.add(BorderLayout.CENTER, info);
+    private void initInfo(){
+        info=new JLabel("无收款信息");
+        this.add(BorderLayout.CENTER,info);
     }
-
-    private void updateInfo(String info) {
-        this.info = new JLabel(info);
-        this.add(BorderLayout.CENTER, this.info);
+    private void updateInfo(String info){
+        this.info=new JLabel(info);
+        this.add(BorderLayout.CENTER,this.info);
 
     }
 }
