@@ -1,6 +1,7 @@
 package src.businesslogicservice;
 
-import src.vo.*;
+import src.vo.LogisticsVO;
+import src.vo.OperationLogVO;
 import util.FormType;
 
 public interface InquiryblService {

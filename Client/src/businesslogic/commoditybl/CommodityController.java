@@ -10,7 +10,8 @@ import util.ResultMessage;
  * Created by Administrator on 2015/11/1 0001.
  */
 public class CommodityController implements CommodityblService {
-    Commodity commodity=new Commodity();
+    Commodity commodity = new Commodity();
+
     @Override
     public ResultMessage stockOut(StockOutVO stockOutVO) {
         return null;

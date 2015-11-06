@@ -1,13 +1,12 @@
 package src.po;
 
 
-
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2015/10/23 0023.
  */
-public class OrderPO extends ListPO implements Serializable  {
+public class OrderPO extends ListPO implements Serializable {
     private String senderName;
     private String senderAddress;
     private String senderWorkplace;
@@ -57,7 +56,6 @@ public class OrderPO extends ListPO implements Serializable  {
     }
 
     /**
-     *
      * @return
      */
     public String getSenderName() {
@@ -66,7 +64,6 @@ public class OrderPO extends ListPO implements Serializable  {
     }
 
     /**
-     *
      * @param senderName
      */
     public void setSenderName(String senderName) {

@@ -25,9 +25,10 @@ public class Commodity {
 
     /**
      * 待完善的内部判断代码
+     *
      * @return
      */
-    private boolean isFull(){
+    private boolean isFull() {
         return false;
     }
 }

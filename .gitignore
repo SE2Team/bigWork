@@ -8,3 +8,7 @@
 *.iws
 /bin/
 /*/bin/
+.idea/*
+.idea/codeStyleSettings.xml
+.idea/codeStyleSettings.xml
+*.xml

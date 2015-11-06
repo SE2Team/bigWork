@@ -9,7 +9,8 @@ import util.FormType;
  * Created by Administrator on 2015/11/1 0001.
  */
 public class InquiryController implements InquiryblService {
-    Inquiry inquiry=new Inquiry();
+    Inquiry inquiry = new Inquiry();
+
     @Override
     public OperationLogVO checkOperationLog() {
         return null;

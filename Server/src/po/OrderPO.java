@@ -1,218 +1,226 @@
 package src.po;
 
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2015/10/23 0023.
  */
-public class OrderPO implements Serializable {
-	private String senderName;
-	private String senderAddress;
-	private String senderWorkplace;
-	private long senderTelephone;
-	private long senderPhone;
+public class OrderPO extends ListPO implements Serializable {
+    private String senderName;
+    private String senderAddress;
+    private String senderWorkplace;
+    private String senderTelephone;
+    private String senderPhone;
 
-	private String receiverName;
-	private String receiverAddress;
-	private String receiverWorkplace;
-	private long receiverTelephone;
-	private long receiverPhone;
+    private String receiverName;
+    private String receiverAddress;
+    private String receiverWorkplace;
+    private String receiverTelephone;
+    private String receiverPhone;
 
-	private int originalNum;
-	private double weight;
-	private double volume;
-	private String goods_Name;
+    private int originalNum;
+    private double weight;
+    private double volume;
+    private String goods_Name;
 
-	private DeliveryType DeliveryType;
-	private String wrapper;
-	private double expenseOfTransport;
-	private double expenseOfWrapper;
-	private double expense;
+    private util.DeliveryType DeliveryType;
+    private String wrapper;
+    private double expenseOfTransport;
+    private double expenseOfWrapper;
+    private double expense;
 
-	private double date;
-	private long serialNumber;
 
-	public OrderPO(String senderName, String senderAddress, String senderWorkplace, long senderTelephone,
-			long senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
-			long receiverTelephone, long receiverPhone, int originalNum, double weight, double volume,
-			String goods_Name, DeliveryType DeliveryType, String wrapper) {
-		this.senderName = senderName;
-		this.senderAddress = senderAddress;
-		this.senderWorkplace = senderWorkplace;
-		this.senderTelephone = senderTelephone;
-		this.senderPhone = senderPhone;
-		this.receiverName = receiverName;
-		this.receiverAddress = receiverAddress;
-		this.receiverWorkplace = receiverWorkplace;
-		this.receiverTelephone = receiverTelephone;
-		this.receiverPhone = receiverPhone;
-		this.originalNum = originalNum;
-		this.weight = weight;
-		this.volume = volume;
-		this.goods_Name = goods_Name;
-		this.DeliveryType = DeliveryType;
-		this.wrapper = wrapper;
-	}
+    private double date;
 
-	public String getSenderName() {
+    public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
+                   String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
+                   String receiverTelephone, String receiverPhone, int originalNum, double weight, double volume,
+                   String goods_Name, util.DeliveryType DeliveryType, String wrapper) {
+        this.senderName = senderName;
+        this.senderAddress = senderAddress;
+        this.senderWorkplace = senderWorkplace;
+        this.senderTelephone = senderTelephone;
+        this.senderPhone = senderPhone;
+        this.receiverName = receiverName;
+        this.receiverAddress = receiverAddress;
+        this.receiverWorkplace = receiverWorkplace;
+        this.receiverTelephone = receiverTelephone;
+        this.receiverPhone = receiverPhone;
+        this.originalNum = originalNum;
+        this.weight = weight;
+        this.volume = volume;
+        this.goods_Name = goods_Name;
+        this.DeliveryType = DeliveryType;
+        this.wrapper = wrapper;
+    }
 
-		return senderName;
-	}
+    /**
+     * @return
+     */
+    public String getSenderName() {
 
-	public void setSenderName(String senderName) {
-		this.senderName = senderName;
-	}
+        return senderName;
+    }
 
-	public String getSenderAddress() {
-		return senderAddress;
-	}
+    /**
+     * @param senderName
+     */
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
 
-	public void setSenderAddress(String senderAddress) {
-		this.senderAddress = senderAddress;
-	}
+    public String getSenderAddress() {
+        return senderAddress;
+    }
 
-	public String getSenderWorkplace() {
-		return senderWorkplace;
-	}
+    public void setSenderAddress(String senderAddress) {
+        this.senderAddress = senderAddress;
+    }
 
-	public void setSenderWorkplace(String senderWorkplace) {
-		this.senderWorkplace = senderWorkplace;
-	}
+    public String getSenderWorkplace() {
+        return senderWorkplace;
+    }
 
-	public long getSenderTelephone() {
-		return senderTelephone;
-	}
+    public void setSenderWorkplace(String senderWorkplace) {
+        this.senderWorkplace = senderWorkplace;
+    }
 
-	public void setSenderTelephone(long senderTelephone) {
-		this.senderTelephone = senderTelephone;
-	}
+    public String getSenderTelephone() {
+        return senderTelephone;
+    }
 
-	public long getSenderPhone() {
-		return senderPhone;
-	}
+    public void setSenderTelephone(String senderTelephone) {
+        this.senderTelephone = senderTelephone;
+    }
 
-	public void setSenderPhone(long senderPhone) {
-		this.senderPhone = senderPhone;
-	}
+    public String getSenderPhone() {
+        return senderPhone;
+    }
 
-	public String getReceiverName() {
-		return receiverName;
-	}
+    public void setSenderPhone(String senderPhone) {
+        this.senderPhone = senderPhone;
+    }
 
-	public void setReceiverName(String receiverName) {
-		this.receiverName = receiverName;
-	}
+    public String getReceiverName() {
+        return receiverName;
+    }
 
-	public String getReceiverAddress() {
-		return receiverAddress;
-	}
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
-	public void setReceiverAddress(String receiverAddress) {
-		this.receiverAddress = receiverAddress;
-	}
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
 
-	public String getReceiverWorkplace() {
-		return receiverWorkplace;
-	}
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
 
-	public void setReceiverWorkplace(String receiverWorkplace) {
-		this.receiverWorkplace = receiverWorkplace;
-	}
+    public String getReceiverWorkplace() {
+        return receiverWorkplace;
+    }
 
-	public long getReceiverTelephone() {
-		return receiverTelephone;
-	}
+    public void setReceiverWorkplace(String receiverWorkplace) {
+        this.receiverWorkplace = receiverWorkplace;
+    }
 
-	public void setReceiverTelephone(long receiverTelephone) {
-		this.receiverTelephone = receiverTelephone;
-	}
+    public String getReceiverTelephone() {
+        return receiverTelephone;
+    }
 
-	public long getReceiverPhone() {
-		return receiverPhone;
-	}
+    public void setReceiverTelephone(String receiverTelephone) {
+        this.receiverTelephone = receiverTelephone;
+    }
 
-	public void setReceiverPhone(long receiverPhone) {
-		this.receiverPhone = receiverPhone;
-	}
+    public String getReceiverPhone() {
+        return receiverPhone;
+    }
 
-	public int getOriginalNum() {
-		return originalNum;
-	}
+    public void setReceiverPhone(String receiverPhone) {
+        this.receiverPhone = receiverPhone;
+    }
 
-	public void setOriginalNum(int originalNum) {
-		this.originalNum = originalNum;
-	}
+    public int getOriginalNum() {
+        return originalNum;
+    }
 
-	public double getWeight() {
-		return weight;
-	}
+    public void setOriginalNum(int originalNum) {
+        this.originalNum = originalNum;
+    }
 
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
+    public double getWeight() {
+        return weight;
+    }
 
-	public double getVolume() {
-		return volume;
-	}
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 
-	public void setVolume(double volume) {
-		this.volume = volume;
-	}
+    public double getVolume() {
+        return volume;
+    }
 
-	public String getGoods_Name() {
-		return goods_Name;
-	}
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
 
-	public void setGoods_Name(String goods_Name) {
-		this.goods_Name = goods_Name;
-	}
+    public String getGoods_Name() {
+        return goods_Name;
+    }
 
-	public DeliveryType getDeliveryType() {
-		return DeliveryType;
-	}
+    public void setGoods_Name(String goods_Name) {
+        this.goods_Name = goods_Name;
+    }
 
-	public void setDeliveryType(DeliveryType DeliveryType) {
-		this.DeliveryType = DeliveryType;
-	}
+    public util.DeliveryType getDeliveryType() {
+        return DeliveryType;
+    }
 
-	public String getWrapper() {
-		return wrapper;
-	}
+    public void setDeliveryType(util.DeliveryType DeliveryType) {
+        this.DeliveryType = DeliveryType;
+    }
 
-	public void setWrapper(String wrapper) {
-		this.wrapper = wrapper;
-	}
+    public String getWrapper() {
+        return wrapper;
+    }
 
-	public double getExpenseOfTransport() {
-		return expenseOfTransport;
-	}
+    public void setWrapper(String wrapper) {
+        this.wrapper = wrapper;
+    }
 
-	public void setExpenseOfTransport(double expenseOfTransport) {
-		this.expenseOfTransport = expenseOfTransport;
-	}
+    public double getExpenseOfTransport() {
+        return expenseOfTransport;
+    }
 
-	public double getExpenseOfWrapper() {
-		return expenseOfWrapper;
-	}
+    public void setExpenseOfTransport(double expenseOfTransport) {
+        this.expenseOfTransport = expenseOfTransport;
+    }
 
-	public void setExpenseOfWrapper(double expenseOfWrapper) {
-		this.expenseOfWrapper = expenseOfWrapper;
-	}
+    public double getExpenseOfWrapper() {
+        return expenseOfWrapper;
+    }
 
-	public double getExpense() {
-		return expense;
-	}
+    public void setExpenseOfWrapper(double expenseOfWrapper) {
+        this.expenseOfWrapper = expenseOfWrapper;
+    }
 
-	public void setExpense(double expense) {
-		this.expense = expense;
-	}
+    public double getExpense() {
+        return expense;
+    }
 
-	public double getDate() {
-		return date;
-	}
+    public void setExpense(double expense) {
+        this.expense = expense;
+    }
 
-	public void setDate(double date) {
-		this.date = date;
-	}
+    public double getDate() {
+        return date;
+    }
+
+    public void setDate(double date) {
+        this.date = date;
+    }
+
 
 }

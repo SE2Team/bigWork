@@ -2,5 +2,8 @@
 <component inheritJdk="true">
 	<output-test url="file://$MODULE_DIR$/bin/test"/>
 	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/src/drivers"/>
+		<excludeFolder url="file://$MODULE_DIR$/src/stubs"/>
+	</contentEntry>
 </component>
