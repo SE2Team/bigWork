@@ -1,4 +1,4 @@
-package util;
+package src.util;
 
 public enum PositionType {
 		COURIER,MANAGER,FINANCIAL,STOCKMANAGER,SALESMAN,TRANSFERMAN;

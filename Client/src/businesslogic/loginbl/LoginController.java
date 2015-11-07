@@ -1,8 +1,8 @@
 package src.businesslogic.loginbl;
 
 import src.businesslogicservice.LoginblService;
+import src.util.ResultMessage;
 import src.vo.UserVO;
-import util.ResultMessage;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
@@ -27,7 +27,7 @@ public class LoginController implements LoginblService {
     }
 
     @Override
-    public util.UserType getUserType() {
+    public src.util.UserType getUserType() {
         return null;
     }
 }

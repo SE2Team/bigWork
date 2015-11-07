@@ -1,7 +1,7 @@
 package src.businesslogicservice;
 
+import src.util.ResultMessage;
 import src.vo.*;
-import util.ResultMessage;
 
 public interface FinanceblService {
     public ResultMessage gathering(GatheringVO gatheringVO);

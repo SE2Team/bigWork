@@ -1,7 +1,7 @@
 package src.businesslogic.loginbl;
 
-import util.ResultMessage;
-import util.UserType;
+import src.util.ResultMessage;
+import src.util.UserType;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
@@ -28,7 +28,7 @@ public class Login {
      */
     public ResultMessage login(String password) {
 
-        return util.ResultMessage.FAILED;
+        return ResultMessage.FAILED;
     }
 
     public String getCurrentUserName() {

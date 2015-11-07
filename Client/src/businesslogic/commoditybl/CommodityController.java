@@ -1,9 +1,9 @@
 package src.businesslogic.commoditybl;
 
+import src.util.ResultMessage;
 import src.businesslogicservice.CommodityblService;
 import src.vo.StockInVO;
 import src.vo.StockOutVO;
-import util.ResultMessage;
 
 /**
  * Created by Administrator on 2015/11/1 0001.

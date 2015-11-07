@@ -1,13 +1,14 @@
 package src.po;
 
-import src.util.DeliveryType;
+
+import src.util.*;
 
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2015/10/23 0023.
  */
-public class OrderPO extends ListPO implements Serializable  {
+public class OrderPO extends ListPO implements Serializable {
     private String senderName;
     private String senderAddress;
     private String senderWorkplace;
@@ -34,10 +35,10 @@ public class OrderPO extends ListPO implements Serializable  {
 
     private double date;
 
-    OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
-            String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
-            String receiverTelephone, String receiverPhone, int originalNum, double weight, double volume,
-            String goods_Name, DeliveryType DeliveryType, String wrapper) {
+    public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
+                   String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
+                   String receiverTelephone, String receiverPhone, int originalNum, double weight, double volume,
+                   String goods_Name, DeliveryType DeliveryType, String wrapper) {
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;
@@ -57,7 +58,6 @@ public class OrderPO extends ListPO implements Serializable  {
     }
 
     /**
-     *
      * @return
      */
     public String getSenderName() {
@@ -66,7 +66,6 @@ public class OrderPO extends ListPO implements Serializable  {
     }
 
     /**
-     *
      * @param senderName
      */
     public void setSenderName(String senderName) {

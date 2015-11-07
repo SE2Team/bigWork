@@ -5,8 +5,8 @@ import src.dataservice.datafactoryservice.DataFactoryService;
 import src.dataservice.listdataservice.ListDataService;
 import src.po.GatheringPO;
 import src.po.ListPO;
+import src.util.ResultMessage;
 import src.vo.*;
-import util.ResultMessage;
 
 /**
  * Created by Administrator on 2015/10/25 0025.

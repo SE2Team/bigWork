@@ -1,8 +1,8 @@
 package src.businesslogicservice;
 
+import src.util.ResultMessage;
 import src.vo.StockInVO;
 import src.vo.StockOutVO;
-import util.ResultMessage;
 
 public interface CommodityblService {
     //出库

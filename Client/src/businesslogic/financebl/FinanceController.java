@@ -1,10 +1,10 @@
 package src.businesslogic.financebl;
 
 import src.businesslogicservice.FinanceblService;
+import src.util.ResultMessage;
 import src.vo.AccountVO;
 import src.vo.GatheringVO;
 import src.vo.PaymentVO;
-import util.ResultMessage;
 
 /**
  * Created by Administrator on 2015/11/7 0007.

@@ -2,8 +2,8 @@ package src.businesslogic.listbl;
 
 import src.businesslogicservice.ListblService;
 import src.po.ListPO;
+import src.util.ResultMessage;
 import src.vo.*;
-import util.ResultMessage;
 
 /**
  * Created by Administrator on 2015/10/30 0030.

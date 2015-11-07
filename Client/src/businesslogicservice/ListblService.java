@@ -1,8 +1,8 @@
 package src.businesslogicservice;
 
 import src.po.ListPO;
+import src.util.ResultMessage;
 import src.vo.*;
-import util.ResultMessage;
 
 public interface ListblService {
     //订单
