@@ -1,7 +1,9 @@
 package src.dataservice.commoditydataservice;
 
-/**
- * Created by Administrator on 2015/10/24 0024.
- */
-public class CommoditydataService {
+import src.po.StockPO;
+
+public interface CommodityDataService {
+	public void update(StockPO PO);
+	public StockPO check();
+	public StockPO initial();
 }

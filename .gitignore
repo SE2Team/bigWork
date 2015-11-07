@@ -8,3 +8,5 @@
 *.iws
 /bin/
 /*/bin/
+*.xml
+.idea/workspace.xml

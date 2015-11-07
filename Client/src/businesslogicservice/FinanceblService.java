@@ -1,26 +1,27 @@
 package src.businesslogicservice;
 
 import src.vo.*;
+import util.ResultMessage;
 
 public interface FinanceblService {
-    public boolean gathering(GatheringVO gatheringVO);
+    public ResultMessage gathering(GatheringVO gatheringVO);
 
-    public boolean payment(PaymentVO paymentVO);
+    public ResultMessage payment(PaymentVO paymentVO);
 
-    public void generateForm();
+    public ResultMessage generateForm();
 
-    public void generateForm(String startDate,String endDate);
+    public ResultMessage generateForm(String startDate,String endDate);
 
-    public boolean initial(String institution);
+    public ResultMessage initial(String institution);
 
-    public boolean addAccount(AccountVO accountVO);
+    public ResultMessage addAccount(AccountVO accountVO);
 
-    public boolean searchAccount();
+    public ResultMessage searchAccount();
 
-    public boolean searchAccount(String name);
+    public ResultMessage searchAccount(String name);
 
-    public boolean DelAccount(AccountVO accountVO);
+    public ResultMessage DelAccount(AccountVO accountVO);
 
-    public boolean EditAccount(AccountVO accountVOOld,AccountVO accountVONew);
+    public ResultMessage EditAccount(AccountVO accountVOOld,AccountVO accountVONew);
 
 }
