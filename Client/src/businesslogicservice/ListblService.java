@@ -9,7 +9,7 @@ public interface ListblService {
     public ResultMessage order(OrderVO orderVO);
 
     //收件单
-    public ResultMessage AddresseeInfomation(AddresseeInformationVO addresseeInformationVO);
+    public ResultMessage addresseeInfomation(AddresseeInformationVO addresseeInformationVO);
 
     //装车单
     public ResultMessage loadingInfo(LoadingVO loadingVO);

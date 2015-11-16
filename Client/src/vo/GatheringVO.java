@@ -3,7 +3,7 @@ package src.vo;
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
-public class GatheringVO {
+public class GatheringVO extends ListVO {
     String date;
     String workplace;
     String man;

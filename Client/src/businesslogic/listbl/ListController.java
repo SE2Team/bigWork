@@ -10,17 +10,17 @@ import src.vo.*;
  */
 public class ListController implements ListblService {
 
-    List list=new List();
+    List list;
 
 
     @Override
     public ResultMessage order(OrderVO orderVO) {
-        return list.order(orderVO);
+        return new Order().save();
     }
 
     @Override
-    public ResultMessage AddresseeInfomation(AddresseeInformationVO addresseeInformationVO) {
-        return list.AddresseeInfomation(addresseeInformationVO);
+    public ResultMessage addresseeInfomation(AddresseeInformationVO addresseeInformationVO) {
+        return new AddresseeInfomation().save();
     }
 
     @Override

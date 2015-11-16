@@ -21,9 +21,6 @@ public class ListPO implements Serializable{
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getContent() {
         return content;
