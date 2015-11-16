@@ -1,4 +1,4 @@
-package src.drivers.bl;
+package src.drivers.bl1;
 
 
 import src.businesslogicservice.InquiryblService;
@@ -11,7 +11,7 @@ public class InquiryblService_Drivers {
 	private LogisticsVO logisticsVO;
 	private String type;
 	private String num;
-		public void driver(InquiryblService inquiryblService) {
+		public void drive(InquiryblService inquiryblService) {
 			OperationLogVO isCheckLog=inquiryblService.checkOperationLog();
 			if(isCheckLog==operationLogVO){
 				System.out.println("Success!");

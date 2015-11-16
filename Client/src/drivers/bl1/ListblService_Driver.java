@@ -1,11 +1,12 @@
-package src.drivers.bl;
+package src.drivers.bl1;
 
 import src.businesslogicservice.ListblService;
+import src.util.ResultMessage;
 import src.vo.GatheringVO;
 import src.vo.ListVO;
 import src.vo.OrderVO;
 
-public class ListblService_Drivers {
+public class ListblService_Driver {
 		ListVO listVO;
 		OrderVO orderVO;
 		GatheringVO gatheringVO;
@@ -17,13 +18,13 @@ public class ListblService_Drivers {
 				System.out.println("Success!");
 			}
 			
-			boolean isOrder=listblService.order(orderVO);
-			if(isOrder==true){
+			ResultMessage isOrder=listblService.order(orderVO);
+			if(isOrder==ResultMessage.SUCCESS){
 				System.out.println("success!");
 			}
 			
-			boolean isGathering=listblService.gathering(gatheringVO); 
-			if(isGathering==true){
+			ResultMessage isGathering=listblService.gathering(gatheringVO); 
+			if(isGathering==ResultMessage.SUCCESS){
 				System.out.println("success!");
 			}
 		}

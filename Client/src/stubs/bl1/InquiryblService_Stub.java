@@ -1,4 +1,4 @@
-package src.stubs.bl;
+package src.stubs.bl1;
 
 import src.businesslogicservice.InquiryblService;
 import src.vo.LogisticsVO;
@@ -12,7 +12,11 @@ public class InquiryblService_Stub implements InquiryblService{
 		checkForm=cn;
 	}
 
-    public OperationLogVO checkOperationLog(){
+    public InquiryblService_Stub() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public OperationLogVO checkOperationLog(){
     	// TODO Auto-generated method stub
     	return null;
     }

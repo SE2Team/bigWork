@@ -1,8 +1,9 @@
-package src.stubs.bl;
+package src.stubs.bl1;
 
 import src.vo.StockInVO;
 import src.vo.StockOutVO;
 import src.po.StockPO;
+import src.util.ResultMessage;
 import src.businesslogicservice.CommodityblService;
 
 public class CommodityblService_Stub implements CommodityblService{
@@ -11,14 +12,14 @@ public class CommodityblService_Stub implements CommodityblService{
 		
 	}
 
-    public boolean stockOut(StockOutVO stockOutVO){
+    public ResultMessage stockOut(StockOutVO stockOutVO){
     	// TODO Auto-generated method stub
-    	return true;
+    	return ResultMessage.SUCCESS;
     }
 
-    public boolean stockIn(StockInVO stockInVO){
+    public ResultMessage stockIn(StockInVO stockInVO){
     	// TODO Auto-generated method stub
-    	return true;
+    	return ResultMessage.SUCCESS;
     }
     
    public boolean isFull(StockPO stockPO){
@@ -26,14 +27,14 @@ public class CommodityblService_Stub implements CommodityblService{
    	return true;
    }
    
-    public boolean checkStock(String startDate,String endDate){
+    public ResultMessage checkStock(String startDate,String endDate){
     	// TODO Auto-generated method stub
-    	return true;
+    	return ResultMessage.SUCCESS;
     }
    
-    public boolean StockSum(String startDate,String endDate){
+    public ResultMessage StockSum(String startDate,String endDate){
     	// TODO Auto-generated method stub
-    	return true;
+    	return ResultMessage.SUCCESS;
     }
 
 

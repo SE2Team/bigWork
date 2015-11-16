@@ -1,4 +1,4 @@
-package src.stubs.data;
+package src.stubs.data1;
 
 import src.dataservice.commoditydataservice.CommodityDataService;
 import src.po.StockPO;

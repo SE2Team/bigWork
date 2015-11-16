@@ -1,6 +1,7 @@
-package src.drivers.bl;
+package src.drivers.bl1;
 
 import src.businesslogicservice.CommodityblService;
+import src.util.ResultMessage;
 import src.vo.StockInVO;
 import src.vo.StockOutVO;
 
@@ -10,23 +11,23 @@ public class CommodityblService_Driver {
     private String startDate;
     private String endDate;
     public void driver(CommodityblService commodityblService){
-    	boolean isOut=commodityblService.stockOut(stockOutVO);
-    	if(isOut==true){
+    	ResultMessage isOut=commodityblService.stockOut(stockOutVO);
+    	if(isOut==ResultMessage.SUCCESS){
     		System.out.println("Success!");
     	}
     	
-    	boolean isIn=commodityblService.stockIn(stockInVO);
-    	if(isIn==true){
+    	ResultMessage isIn=commodityblService.stockIn(stockInVO);
+    	if(isIn==ResultMessage.SUCCESS){
     		System.out.println("Success!");
     	}
 
-    	boolean isCheck=commodityblService.checkStock(startDate,endDate);
-    	if(isCheck==true){
+    	ResultMessage isCheck=commodityblService.checkStock(startDate,endDate);
+    	if(isCheck==ResultMessage.SUCCESS){
     		System.out.println("Success!");
     	}
     	
-    	boolean isSum=commodityblService. StockSum(startDate,endDate);
-    	if(isSum==true){
+    	ResultMessage isSum=commodityblService. StockSum(startDate,endDate);
+    	if(isSum==ResultMessage.SUCCESS){
     		System.out.println("Success!");
     	}
     }

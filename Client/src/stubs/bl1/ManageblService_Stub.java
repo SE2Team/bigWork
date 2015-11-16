@@ -1,4 +1,4 @@
-package src.stubs.bl;
+package src.stubs.bl1;
 
 import src.vo.ConstantVO;
 import src.po.DriverPO;

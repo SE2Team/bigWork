@@ -1,11 +1,11 @@
-package src.drivers.data;
+package src.drivers.data1;
 
 
 import src.dataservice.managedataservice.ManageDataService;
 import src.po.*;
 
 
-public class ManageDataService_Service {
+public class ManageDataService_Driver {
 	DriverPO driverPO;
 	String driveNumber;
 	VehiclePO vehiclePO;

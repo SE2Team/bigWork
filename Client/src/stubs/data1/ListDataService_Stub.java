@@ -1,4 +1,4 @@
-package src.stubs.data;
+package src.stubs.data1;
 
 import src.po.AddresseeInformationPO;
 import src.po.DistributePO;
@@ -7,6 +7,7 @@ import src.po.LoadingPO;
 import src.po.OrderPO;
 import src.po.PaymentPO;
 import src.po.ReceiptPO;
+import src.po.ReceivePO;
 import src.po.StockInPO;
 import src.po.StockOutPO;
 import src.po.TransferPO;
@@ -78,5 +79,11 @@ public class ListDataService_Stub implements ListDataService{
 	public boolean saveFinance(GatheringPO gatheringPO){
 		System.out.println("Success");
 		return true;
+	}
+
+	@Override
+	public boolean saveReceiveInfo(ReceivePO receivePO) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
