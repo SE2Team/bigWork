@@ -9,4 +9,9 @@
 /bin/
 /*/bin/
 *.xml
-.idea/workspace.xml
+.idea/*
+*.classpath
+Client/.classpath
+*.iml
+.idea/encodings.xml
+.idea/encodings.xml
