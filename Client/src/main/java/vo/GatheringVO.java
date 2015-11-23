@@ -4,11 +4,13 @@ package vo;
  * Created by Administrator on 2015/10/26 0026.
  */
 public class GatheringVO extends ListVO {
-    String date;
-    String workplace;
-    String man;
-    String money;
-    String place;
+	
+	
+	private String date;
+    private String workplace;
+    private String man;
+    private String money;
+    private String place;
 
     public GatheringVO(String date, String workplace, String man,
                        String money, String place) {
@@ -18,6 +20,8 @@ public class GatheringVO extends ListVO {
         this.money = money;
         this.place = place;
     }
+    
+    public GatheringVO(){}
 
     public String getDate() {
         return date;

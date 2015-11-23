@@ -21,7 +21,7 @@ public class LogisticsPO extends ListPO implements Serializable{
 		this.transportState=transportState;
 	}
 	
-	public void setDeliveryNum(){
+	public void setDeliveryNum(String deliveryNum){
 		this.deliveryNum=deliveryNum;
 	}
 	

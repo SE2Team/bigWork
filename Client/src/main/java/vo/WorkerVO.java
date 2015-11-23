@@ -1,9 +1,6 @@
-package po;
+package vo;
 
-import java.io.Serializable;
-
-public class WorkerPO implements Serializable{
-	private static final long serialVersionUID = 1L;//序列化编号
+public class WorkerVO {
 	/**
 	 * 
 	 * 姓名，身份证号、职位、所属机构，系统用户名
@@ -14,7 +11,7 @@ public class WorkerPO implements Serializable{
 	private String organization;
 	private String userId;
 	
-	public WorkerPO(String name, String idNum, String position,
+	public WorkerVO(String name, String idNum, String position,
 			String organization, String userId){
 		this.name=name;
 		this.idNum=idNum;
@@ -23,6 +20,7 @@ public class WorkerPO implements Serializable{
 		this.userId=userId;
 	}
 	
+	public WorkerVO(){}
 	public void setName(String name){
 		this.name=name;
 	}
@@ -62,5 +60,4 @@ public class WorkerPO implements Serializable{
 	public String getUserId(){
 		return userId;
 	}
-	
 }

@@ -1,22 +1,60 @@
 package vo;
 
 public class UserVO {
-    String id;
-    String password;
+	/**
+	 * 
+	 * 用户名和密码，姓名，权限
+	 */
+	
+	private String id;
+	private String password;
+	private String name;
+	private String permission;
+	
+	
+	/**
+	 * 
+	 * @param id
+	 * @param password
+	 * @param name
+	 * @param permission
+	 */
+	public UserVO(String id,String password, String 
+			name,String permission){
+		this.id=id;
+		this.password=password;
+		this.name=name;
+		this.permission=permission;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
+	public String getPermission() {
+		return permission;
+	}
+
+	public void setPermission(String permission) {
+		this.permission = permission;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+	
 }
