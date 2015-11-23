@@ -20,16 +20,16 @@ public class CommodityController implements CommodityblService {
 
 
     public ResultMessage stockIn(StockInVO stockInVO) {
-        return null;
+        return commodity.stockIn(stockInVO);
     }
 
 
     public ResultMessage checkStock(String startDate, String endDate) {
-        return null;
+        return commodity.checkStock(startDate, endDate);
     }
 
 
-    public ResultMessage StockSum(String startDate, String endDate) {
-        return null;
+    public ResultMessage stockSum(String startDate, String endDate) {
+        return commodity.stockSum(startDate, endDate);
     }
 }

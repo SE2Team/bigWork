@@ -12,6 +12,7 @@ class Main {
 //        mFrame.getContentPane().add(panel);
 //        mFrame.setTitle("ss�");
 //        mFrame.setVisible(true);
-        System.out.println("jsidfh");
+        String s=null;
+        System.out.println(s=="");
     }
 }
