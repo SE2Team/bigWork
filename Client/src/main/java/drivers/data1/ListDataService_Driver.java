@@ -33,7 +33,7 @@ public class ListDataService_Driver {
             System.out.println("Success!");
         }
 
-        boolean isSaveReceiveInfo = listDataService.saveReceiveInfo(receiptPO);
+        boolean isSaveReceiveInfo = listDataService.saveReceipt(receiptPO);
         if (isSaveReceiveInfo == true) {
             System.out.println("Success!");
         }

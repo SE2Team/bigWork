@@ -11,7 +11,8 @@ import vo.ListVO;
  * Created by Administrator on 2015/11/16 0016.
  */
 public class Gathering extends List {
-    String date;
+	
+	String date;
     String workplace;
     String man;
     String money;
