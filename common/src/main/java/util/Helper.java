@@ -16,9 +16,31 @@ public class Helper {
     /**
      * 比较任意日期数据和现在时间的先后
      * @param date
-     * @return data-now (>,<,= 0)
+     * @return date-now (>,<,= 0)
      */
-    public static int compareToNow(String date){
+    public static int compareTo(String date){
         return 0;
+    }
+
+    /**
+     * 比较两个日期先后
+     * @param date1
+     * @param date2
+     * @return date1-date2
+     */
+    public static int compareTo(String date1,String date2){
+        return 0;
+    }
+    /**
+     * 判断一个日期串是否合法
+     * @param date
+     * @return
+     */
+    public static boolean dateIsValid(String date){
+        return false;
+    }
+
+    public static boolean isBetween(String date){
+        return false;
     }
 }

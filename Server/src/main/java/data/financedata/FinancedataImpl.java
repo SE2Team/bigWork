@@ -2,6 +2,9 @@ package data.financedata;
 
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountPO;
+import util.ResultMessage;
+
+import java.util.ArrayList;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -19,7 +22,7 @@ public class FinancedataImpl implements FinanceDataService{
         return false;
     }
 
-    public AccountPO searchAccount() {
+    public ArrayList<AccountPO> searchAccount() {
         return null;
     }
 
@@ -27,11 +30,11 @@ public class FinancedataImpl implements FinanceDataService{
         return null;
     }
 
-    public boolean DelAccount(AccountPO accountPO) {
-        return false;
+    public ResultMessage DelAccount(AccountPO accountPO) {
+        return ResultMessage.SUCCESS;
     }
 
-    public boolean EditAccount(String name, AccountPO newAccountPO) {
-        return false;
+    public ResultMessage EditAccount(String name, AccountPO newAccountPO) {
+        return ResultMessage.SUCCESS;
     }
 }

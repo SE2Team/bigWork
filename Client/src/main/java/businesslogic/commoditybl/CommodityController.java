@@ -4,7 +4,9 @@ import businesslogicservice.CommodityblService;
 import util.ResultMessage;
 import vo.StockInVO;
 import vo.StockOutVO;
+import vo.StockVO;
 
+import java.util.ArrayList;
 
 
 /**
@@ -24,12 +26,12 @@ public class CommodityController implements CommodityblService {
     }
 
 
-    public ResultMessage checkStock(String startDate, String endDate) {
+    public StockVO checkStock(String startDate, String endDate) {
         return commodity.checkStock(startDate, endDate);
     }
 
 
-    public ResultMessage stockSum(String startDate, String endDate) {
-        return commodity.stockSum(startDate, endDate);
+    public ArrayList<StockInVO> stockSum() {
+        return commodity.stockSum();
     }
 }

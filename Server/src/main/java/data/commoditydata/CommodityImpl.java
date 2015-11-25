@@ -18,4 +18,8 @@ public class CommodityImpl implements CommodityDataService{
     public StockPO initial() {
         return null;
     }
+
+
+
+
 }

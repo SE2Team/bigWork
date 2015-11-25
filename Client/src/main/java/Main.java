@@ -1,3 +1,4 @@
+import util.IsValid;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
@@ -12,7 +13,9 @@ class Main {
 //        mFrame.getContentPane().add(panel);
 //        mFrame.setTitle("ss�");
 //        mFrame.setVisible(true);
-        String s=null;
-        System.out.println(s=="");
+        String s="";
+        int sv = 0;
+
+        System.out.println(IsValid.isDouble(s));
     }
 }

@@ -1,10 +1,14 @@
 package po;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class GatheringPO extends ListPO {
-    String date;
+public class GatheringPO extends ListPO implements Serializable{
+	private static final long serialVersionUID = 1L;//序列化编号
+	
+	String date;
     String workplace;
     String man;
     String money;

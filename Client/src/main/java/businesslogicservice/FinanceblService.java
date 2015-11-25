@@ -3,6 +3,8 @@ package businesslogicservice;
 import util.ResultMessage;
 import vo.*;
 
+import java.util.ArrayList;
+
 public interface FinanceblService {
     ResultMessage gathering(GatheringVO gatheringVO);
 
@@ -16,9 +18,9 @@ public interface FinanceblService {
 
     ResultMessage addAccount(AccountVO accountVO);
 
-    ResultMessage searchAccount();
+    ArrayList<AccountVO> searchAccount();
 
-    ResultMessage searchAccount(String name);
+    AccountVO searchAccount(String name);
 
     ResultMessage DelAccount(AccountVO accountVO);
 

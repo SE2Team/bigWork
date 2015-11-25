@@ -30,7 +30,6 @@ public class StockInPO extends ListPO implements Serializable {
 	 * @param rowNum
 	 * @param shelfNum
 	 * @param positionNum
-	 * @param stockState
 	 */
 	public StockInPO(String deliveryNum, String inDate, String end, String zoneNum, String rowNum, String shelfNum,
 			String positionNum) {

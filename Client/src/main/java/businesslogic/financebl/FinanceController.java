@@ -6,48 +6,51 @@ import vo.AccountVO;
 import vo.GatheringVO;
 import vo.PaymentVO;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 2015/11/7 0007.
  */
 public class FinanceController implements FinanceblService {
+    Finance finance=new Finance();
 
     public ResultMessage gathering(GatheringVO gatheringVO) {
-        return null;
+        return finance.gathering(gatheringVO);
     }
 
     public ResultMessage payment(PaymentVO paymentVO) {
-        return null;
+        return finance.payment(paymentVO);
     }
 
     public ResultMessage generateForm() {
-        return null;
+        return finance.generateForm();
     }
 
     public ResultMessage generateForm(String startDate, String endDate) {
-        return null;
+        return finance.generateForm(startDate,endDate);
     }
 
     public ResultMessage initial(String institution) {
-        return null;
+        return finance.initial(institution);
     }
 
     public ResultMessage addAccount(AccountVO accountVO) {
-        return null;
+        return finance.addAccount(accountVO);
     }
 
-    public ResultMessage searchAccount() {
-        return null;
+    public ArrayList<AccountVO> searchAccount() {
+        return finance.searchAccount();
     }
 
-    public ResultMessage searchAccount(String name) {
-        return null;
+    public AccountVO searchAccount(String name) {
+        return finance.searchAccount(name);
     }
 
     public ResultMessage DelAccount(AccountVO accountVO) {
-        return null;
+        return finance.DelAccount(accountVO);
     }
 
     public ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) {
-        return null;
+        return finance.EditAccount(accountVOOld,accountVONew);
     }
 }
