@@ -3,7 +3,7 @@ package vo;
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
-public class DistributeVO {
+public class DistributeVO extends ListVO{
 	//到达日期、托运订单条形码号、派送员
 		private String arriveDate;
 		private String orderNum;

@@ -1,5 +1,6 @@
 package businesslogicservice;
 
+import businesslogic.Exception.InvalidDoubleException;
 import util.ResultMessage;
 import vo.*;
 
@@ -16,7 +17,7 @@ public interface FinanceblService {
 
     ResultMessage initial(String institution);
 
-    ResultMessage addAccount(AccountVO accountVO);
+    ResultMessage addAccount(AccountVO accountVO) throws InvalidDoubleException;
 
     ArrayList<AccountVO> searchAccount();
 

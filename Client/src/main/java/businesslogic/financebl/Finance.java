@@ -1,5 +1,6 @@
 package businesslogic.financebl;
 
+import businesslogic.Exception.InvalidDoubleException;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import data.DataFactory;
@@ -74,9 +75,10 @@ public class Finance {
         return null;
     }
 
-    public ResultMessage addAccount(AccountVO accountVO) {
+    public ResultMessage addAccount(AccountVO accountVO) throws InvalidDoubleException {
         if(!IsValid.isDouble(accountVO.getAccountBalance())){
             //金额数据异常
+            throw new InvalidDoubleException("账户余额数据错误!");
         }
         if(accountVO.getAccountName().length()==0){
             //缺少账户名

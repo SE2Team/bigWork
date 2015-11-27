@@ -77,4 +77,10 @@ public class TransferReceivePO extends ListPO implements Serializable{
 	public String getTransferNum(){
 		return transferNum;
 	}
+
+	@Override
+	public String getClassName() {
+		return "TransferReceive";
+	}
+
 }	

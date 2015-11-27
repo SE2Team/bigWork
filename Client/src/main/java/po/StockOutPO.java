@@ -74,5 +74,10 @@ public class StockOutPO extends ListPO implements Serializable{
 	public String getTransferNum(){
 		return transferNum;
 	}
-	
+
+	@Override
+	public String getClassName() {
+		return "StockOut";
+	}
+
 }

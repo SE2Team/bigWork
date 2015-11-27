@@ -209,5 +209,9 @@ public class LoadingPO extends ListPO implements Serializable{
 	public void setEnd(String end){
 		this.end=end;
 	}
-	
+
+	@Override
+	public String getClassName() {
+		return "Loading";
+	}
 }

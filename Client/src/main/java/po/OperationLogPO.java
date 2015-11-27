@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2015/10/24 0024.
  */
-public class OperationLogPO extends ListPO implements Serializable {
+public class OperationLogPO implements Serializable {
 	private static final long serialVersionUID = 1L;// 序列化ID
 
 	private String time;// 操作时间

@@ -1,8 +1,9 @@
 package businesslogicservice;
 
-import po.ListPO;
 import util.ResultMessage;
 import vo.*;
+
+import java.util.ArrayList;
 
 public interface ListblService {
     //订单
@@ -41,7 +42,7 @@ public interface ListblService {
     //付款单
     ResultMessage payment(PaymentVO paymentVO);
 
-    ResultMessage saveList(ListPO list);
 
-    ListVO push();
+
+    ArrayList<ListVO> push();
 }

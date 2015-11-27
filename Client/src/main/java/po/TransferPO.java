@@ -2,8 +2,6 @@ package po;
 
 import java.io.Serializable;
 
-import javax.print.attribute.standard.RequestingUserName;
-
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
@@ -147,7 +145,11 @@ public class TransferPO extends ListPO implements Serializable{
 	public String getMoney(){
 		return money;
 	}
-	
-	
-	
+
+	@Override
+	public String getClassName() {
+		return "Transfer";
+	}
+
+
 }

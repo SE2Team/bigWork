@@ -1,29 +1,36 @@
 package dataservice.listdataservice;
 
 import po.*;
+import util.ResultMessage;
+
+import java.util.ArrayList;
 
 public interface ListDataService {
-    public boolean saveOrder(OrderPO orderPO);
+    public ResultMessage save(OrderPO orderPO);
 
-    public boolean saveAddresseeInfo(AddresseeInformationPO addresseeInformationPO);
+    public ResultMessage save(AddresseeInformationPO addresseeInformationPO);
 
-    public boolean saveLoadingInfo(LoadingPO loadingPO);
+    public ResultMessage save(LoadingPO loadingPO);
 
-    public boolean saveReceiveInfo(ReceivePO receivePO);
+    public ResultMessage save(ReceivePO receivePO);
 
-    public boolean saveDistributeInfo(DistributePO distributePO);
+    public ResultMessage save(DistributePO distributePO);
 
-    public boolean saveReceipt(ReceiptPO receiptPO);
+    public ResultMessage save(ReceiptPO receiptPO);
 
-    public boolean saveTransInfo(TransferPO transferPO);
+    public ResultMessage save(TransferPO transferPO);
 
-    public boolean saveTransArrive(TransferReceivePO transferReceivePO);
+    public ResultMessage save(TransferReceivePO transferReceivePO);
 
-    public boolean saveStockOut(StockOutPO stockOutPO);
+    public ResultMessage save(StockOutPO stockOutPO);
 
-    public boolean saveStockIn(StockInPO stockInPO);
+    public ResultMessage save(StockInPO stockInPO);
 
-    public boolean savePayment(PaymentPO paymentPO);
+    public ResultMessage save(PaymentPO paymentPO);
 
-    public boolean saveGathering(GatheringPO gatheringPO);
+    public ResultMessage save(GatheringPO gatheringPO);
+
+    public ResultMessage saveAsList(ListPO listPO);
+
+    public ArrayList<ListPO> checkList();
 }

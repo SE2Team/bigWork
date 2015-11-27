@@ -98,4 +98,9 @@ public class StockInPO extends ListPO implements Serializable {
 		return positionNum;
 	}
 
+	@Override
+	public String getClassName() {
+		return "StockIn";
+	}
+
 }

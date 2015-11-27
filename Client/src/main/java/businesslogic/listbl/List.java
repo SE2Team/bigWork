@@ -1,14 +1,20 @@
 package businesslogic.listbl;
 
+import data.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
+import dataservice.listdataservice.ListDataService;
+import po.ListPO;
 import util.ResultMessage;
 import vo.ListVO;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
 public class List {
-    DataFactoryService dataFactory;
+    DataFactoryService dataFactory=new DataFactory();
+    ListDataService listDataService=dataFactory.getListData();
 
     /**
      * 以对应类型序列化或者txt
@@ -25,22 +31,15 @@ public class List {
     }
 
     /**
-     * 作为待审核单据保存
-     * 每个子类实现
-     *
+     * 返回一个待审批单据列表
      * @return
      */
-    public ResultMessage saveAsList() {
-        return ResultMessage.FAILED;
-    }
-
-
-    /**
-     * 将单据推送，不允许继承
-     *
-     * @return
-     */
-    public final ListVO push() {
-        return null;
+    public final ArrayList<ListVO> push(){
+        ArrayList<ListPO> pos=listDataService.checkList();
+        ArrayList<ListVO> vos=new ArrayList<ListVO>();
+        for (ListPO temp:pos){
+            vos.add(new ListVO(temp.getId(),temp.getContent()));
+        }
+        return vos;
     }
 }

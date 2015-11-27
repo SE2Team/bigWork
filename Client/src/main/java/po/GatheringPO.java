@@ -21,6 +21,7 @@ public class GatheringPO extends ListPO implements Serializable{
         this.man = man;
         this.money = money;
         this.place = place;
+        content=this.toString();
     }
 
     public String getDate() {
@@ -65,12 +66,17 @@ public class GatheringPO extends ListPO implements Serializable{
 
     @Override
     public String toString() {
-        return "GatheringPO{" +
-                "date='" + date + '\'' +
-                ", workplace='" + workplace + '\'' +
-                ", man='" + man + '\'' +
-                ", money=" + money +
-                ", place='" + place + '\'' +
-                '}';
+        return "收款单  " +
+                "时间：" + date +
+                "  收款单位：" + workplace +
+                "  收款人：" + man +
+                "  金额：" + money +
+                "  地点：" + place;
+    }
+
+
+    @Override
+    public String getClassName() {
+        return "Gathering";
     }
 }

@@ -9,15 +9,16 @@ import vo.OperationLogVO;
  * Created by Administrator on 2015/11/7 0007.
  */
 public class InquiryController implements InquiryblService {
+    Inquiry inquiry=new Inquiry();
     public OperationLogVO checkOperationLog() {
-        return null;
+        return inquiry.checkOperationLog();
     }
 
     public String checkForm(String type) {
-        return null;
+        return inquiry.checkForm(type);
     }
 
     public LogisticsVO checkLogistics(String num) {
-        return null;
+        return inquiry.checkLogistics(num);
     }
 }

@@ -1,9 +1,10 @@
 package businesslogic.listbl;
 
 import businesslogicservice.ListblService;
-import po.ListPO;
 import util.ResultMessage;
 import vo.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/10/30 0030.
@@ -18,54 +19,52 @@ public class ListController implements ListblService {
     }
 
     public ResultMessage addresseeInfomation(AddresseeInformationVO addresseeInformationVO) {
-        return new AddresseeInfomation().save();
+        return new AddresseeInfomation().save(addresseeInformationVO);
     }
 
     public ResultMessage loadingInfo(LoadingVO loadingVO) {
-        return list.loadingInfo(loadingVO);
+        return new LoadingInfo().save(loadingVO);
     }
 
     public ResultMessage receiveInfo(ReceiveVO receiveVO) {
-        return list.receiveInfo(receiveVO);
+        return new ReceiveInfo().save(receiveVO);
     }
 
     public ResultMessage distributeInfo(DistributeVO distributeVO) {
-        return list.distributeInfo(distributeVO);
+        return new DistributeInfo().save(distributeVO);
     }
 
     public ResultMessage receipt(ReceiptVO receiptVO) {
-        return list.receipt(receiptVO);
+        return new Receipt().save(receiptVO);
     }
 
     public ResultMessage transInfo(TransferVO transferVO) {
-        return list.transInfo(transferVO);
+        return new TransInfo().save(transferVO);
     }
 
     public ResultMessage transArrive(TransferReceiveVO transferReceiveVO) {
-        return list.transArrive(transferReceiveVO);
+        return new TransArrive().save(transferReceiveVO);
     }
 
     public ResultMessage stockOut(StockOutVO stockOutVO) {
-        return list.stockOut(stockOutVO);
+        return new StockOut().save(stockOutVO);
     }
 
     public ResultMessage stockIn(StockInVO stockInVO) {
-        return list.stockIn(stockInVO);
+        return new StockIn().save(stockInVO);
     }
 
     public ResultMessage gathering(GatheringVO gatheringVO) {
-        return list.gathering(gatheringVO);
+        return new Gathering().save(gatheringVO);
     }
 
     public ResultMessage payment(PaymentVO paymentVO) {
-        return list.payment(paymentVO);
+        return new Payment().save(paymentVO);
     }
 
-    public ResultMessage saveList(ListPO list) {
-        return ResultMessage.FAILED;
-    }
 
-    public ListVO push() {
-        return null;
+
+    public ArrayList<ListVO> push() {
+        return new List().push();
     }
 }

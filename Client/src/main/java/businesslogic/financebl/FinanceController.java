@@ -1,5 +1,6 @@
 package businesslogic.financebl;
 
+import businesslogic.Exception.InvalidDoubleException;
 import businesslogicservice.FinanceblService;
 import util.ResultMessage;
 import vo.AccountVO;
@@ -34,7 +35,7 @@ public class FinanceController implements FinanceblService {
         return finance.initial(institution);
     }
 
-    public ResultMessage addAccount(AccountVO accountVO) {
+    public ResultMessage addAccount(AccountVO accountVO) throws InvalidDoubleException {
         return finance.addAccount(accountVO);
     }
 

@@ -5,6 +5,8 @@ import po.ListPO;
 import util.ResultMessage;
 import vo.*;
 
+import java.util.ArrayList;
+
 public class ListblService_Stub implements ListblService {
 
     public ListblService_Stub() {
@@ -80,7 +82,7 @@ public class ListblService_Stub implements ListblService {
         return ResultMessage.SUCCESS;
     }
 
-    public ListVO push() {
+    public ArrayList<ListVO> push() {
         // TODO Auto-generated method stub
         return null;
     }

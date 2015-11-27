@@ -9,35 +9,36 @@ import vo.VehicleVO;
  * Created by Administrator on 2015/11/7 0007.
  */
 public class ManageController implements ManageblService {
+    Manage manage=new Manage();
     public boolean addDriver(DriverVO driverVO) {
-        return false;
+        return manage.addDriver(driverVO);
     }
 
     public boolean delDriver(DriverVO drivervO) {
-        return false;
+        return manage.delDriver(drivervO);
     }
 
     public DriverVO checkDriver(String driveNumber) {
-        return null;
+        return manage.checkDriver(driveNumber);
     }
 
     public boolean addVehicle(VehicleVO vehicleVO) {
-        return false;
+        return manage.addVehicle(vehicleVO);
     }
 
     public boolean delVehicle(VehicleVO vehiclevO) {
-        return false;
+        return manage.delVehicle(vehiclevO);
     }
 
     public VehicleVO checkVehicle(String vehicleNumber) {
-        return null;
+        return manage.checkVehicle(vehicleNumber);
     }
 
     public void updateSalary(String position, String Type) {
-
+        manage.updateSalary(position,Type);
     }
 
     public void updateConstant(ConstantVO constantVO) {
-
+        manage.updateConstant(constantVO);
     }
 }

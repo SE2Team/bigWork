@@ -1,6 +1,8 @@
 package businesslogic.listbl;
 
+import po.AddresseeInformationPO;
 import util.ResultMessage;
+import vo.AddresseeInformationVO;
 import vo.ListVO;
 
 /**
@@ -10,7 +12,17 @@ import vo.ListVO;
 public class AddresseeInfomation extends List {
 
     public ResultMessage save(ListVO listvo) {
-        return super.save();
+
+        AddresseeInformationVO vo= null;
+        try {
+            vo = (AddresseeInformationVO) listvo;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("强制类型转换失败！");
+        }
+        AddresseeInformationPO po=new AddresseeInformationPO(vo.getAddresseeNum(),vo.getAddresseeName(),vo.getAddresseeDate());
+        listDataService.saveAsList(po);
+        return listDataService.save(po);
     }
 
     @Override
@@ -18,8 +30,7 @@ public class AddresseeInfomation extends List {
         return super.get();
     }
 
-    @Override
-    public ResultMessage saveAsList() {
-        return super.saveAsList();
-    }
+
+
+
 }
