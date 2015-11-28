@@ -1,5 +1,6 @@
 package businesslogic.commoditybl;
 
+import businesslogic.Exception.*;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import data.DataFactory;
@@ -8,7 +9,7 @@ import dataservice.datafactoryservice.DataFactoryService;
 import po.StockInPO;
 import po.StockOutPO;
 import po.StockPO;
-import util.Helper;
+import businesslogic.utilitybl.Helper;
 import util.ResultMessage;
 import vo.StockInVO;
 import vo.StockOutVO;
@@ -25,20 +26,26 @@ public class Commodity {
     StockPO stockPO;
 
     public Commodity() {
-        stockPO=commodity.check();
+//        stockPO=commodity.check();
     }
 
     //TODO 所有输入是否为空的判断
-    public ResultMessage stockOut(StockOutVO stockOutVO) {
+    public ResultMessage stockOut(StockOutVO stockOutVO) throws InvalidInput, TransferException, DateException {
         ListblService list=new ListController();
         /**
          * 判断输入是否合法
          */
         if(stockOutVO.getDeliveryNum().length()!=10)//TODO 快递编号长度
-            return ResultMessage.FAILED;
+            throw new InvalidInput("快递编号错误！");
+        if(!DateException.IsValid(stockOutVO.getOutDate()))
+            throw new DateException("出库日期格式错误！");
+        else if(Helper.compareTo(stockOutVO.getOutDate())>0)
+            throw  new InvalidInput("出库日期晚于当前时间！");
+        if(!TransferException.isValid(stockOutVO.getTransferNum()))
+            throw new TransferException("中转单号错误");
         //……
         StockOutPO stockOutPO=new StockOutPO(stockOutVO.getDeliveryNum(),stockOutVO.getOutDate(),stockOutVO.getEnd(),
-                stockOutVO.getLoadingWay(),stockOutVO.getTransferNum());
+                stockOutVO.getTransportType(),stockOutVO.getTransferNum());
 
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
         //……
@@ -49,18 +56,27 @@ public class Commodity {
         return ResultMessage.SUCCESS;
     }
 
-    public ResultMessage stockIn(StockInVO stockInVO) {
+    public ResultMessage stockIn(StockInVO stockInVO) throws InvalidInput, DateException {
         ListblService list=new ListController();
         /**
          *判断输入是否合法
          */
-        if(stockInVO.getDeliveryNum().length()!=8)//TODO 快递编号长度
-            return ResultMessage.FAILED;
-
+        if(stockInVO.getDeliveryNum().length()!=10)//TODO 快递编号长度
+            throw new InvalidInput("快递编号错误！");
+        if(!DateException.IsValid(stockInVO.getInDate()))
+            throw new DateException("入库日期格式错误！");
         if(Helper.compareTo(stockInVO.getInDate())>0){
-            return ResultMessage.FAILED;
+            throw new InvalidInput("出库日期晚于当前时间！");
         }
-        //……
+        if(!InvalidIntegerException.isValid(stockInVO.getPositionNum()))
+            throw new InvalidInput("位号错误！");
+        if(!InvalidIntegerException.isValid(stockInVO.getRowNum()))
+            throw new InvalidInput("排号错误！");
+        if(!InvalidIntegerException.isValid(stockInVO.getShelfNum()))
+            throw new InvalidInput("架号错误！");
+        if(!InvalidIntegerException.isValid(stockInVO.getZoneNum()))
+            throw new InvalidInput("区号错误！");
+            //……
 
         StockInPO stockInPO=new StockInPO(stockInVO.getDeliveryNum(),stockInVO.getInDate(),stockInVO.getEnd(),stockInVO.getZoneNum(),
                 stockInVO.getRowNum(),stockInVO.getShelfNum(),stockInVO.getPositionNum());
@@ -104,14 +120,5 @@ public class Commodity {
                         temp.getZoneNum(),temp.getRowNum(),temp.getShelfNum(),temp.getPositionNum()));
         }
         return arrayList;
-    }
-
-    /**
-     * 待完善的内部判断代码
-     *
-     * @return
-     */
-    private boolean isFull() {
-        return false;
     }
 }

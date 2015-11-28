@@ -1,4 +1,4 @@
-import util.IsValid;
+import businesslogic.utilitybl.IsValid;
 
 /**
  * Created by Administrator on 2015/10/25 0025.

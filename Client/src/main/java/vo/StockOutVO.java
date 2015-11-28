@@ -1,5 +1,7 @@
 package vo;
 
+import util.TransportType;
+
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
@@ -12,7 +14,7 @@ public class StockOutVO extends ListVO {
 	private String deliveryNum;
 	private String outDate;
 	private String end;
-	private String loadingWay;
+	private TransportType transportType;
 	private String transferNum;
 	
 	
@@ -21,15 +23,15 @@ public class StockOutVO extends ListVO {
 	 * @param deliveryNum
 	 * @param outDate
 	 * @param end
-	 * @param loadingWay
+	 * @param transportType
 	 * @param transferNum
 	 */
 	public StockOutVO(String deliveryNum, String outDate,
-			String end,String loadingWay,String transferNum){
+			String end,TransportType transportType,String transferNum){
 		this.deliveryNum=deliveryNum;
 		this.outDate=outDate;
 		this.end=end;
-		this.loadingWay=loadingWay;
+		this.transportType=transportType;
 		this.transferNum=transferNum;
 	}
 	
@@ -58,15 +60,15 @@ public class StockOutVO extends ListVO {
 	public String getEnd(){
 		return end;
 	}
-	
-	public void setLoadingWay(String loadingWay){
-		this.loadingWay=loadingWay;
+
+	public TransportType getTransportType() {
+		return transportType;
 	}
-	
-	public String getLoadingWay(){
-		return loadingWay;
+
+	public void setTransportType(TransportType transportType) {
+		this.transportType = transportType;
 	}
-	
+
 	public void setTransferNum(String transferNum){
 		this.transferNum=transferNum;
 	}

@@ -1,4 +1,4 @@
-package util;
+package businesslogic.utilitybl;
 
 /**
  * 一个帮助计算一些数据的静态类
@@ -36,9 +36,7 @@ public class Helper {
      * @param date
      * @return
      */
-    public static boolean dateIsValid(String date){
-        return false;
-    }
+
 
     public static boolean isBetween(String date){
         return false;

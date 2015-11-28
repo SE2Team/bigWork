@@ -24,4 +24,7 @@ public class ListVO {
         this.id = id;
         this.content = content;
     }
+
+    public ListVO() {
+    }
 }

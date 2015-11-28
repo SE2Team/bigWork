@@ -1,7 +1,10 @@
 package businesslogic.commoditybl;
 
+import businesslogic.Exception.DateException;
+import businesslogic.Exception.InvalidInput;
 import businesslogic.listbl.List;
-import po.ListPO;
+import businesslogicservice.CommodityblService;
+import vo.StockInVO;
 
 /**
  * tester生成一个PO过来，主要测试content内容是否符合
@@ -11,13 +14,18 @@ import po.ListPO;
 public class MockList extends List {
 
 
-    ListPO po;
+    public static void main(String[] args) {
+        CommodityblService commodity=new CommodityController();
+        StockInVO vo=new StockInVO("121","121","121","121","121","121","121");
+        try {
+            commodity.stockIn(vo);
+        } catch (DateException e) {
+            System.out.print(e.getMessage());
+        } catch (InvalidInput invalidInput) {
+            System.out.print(invalidInput.getMessage());
 
-    public void addList(ListPO po) {
-        this.po = po;
+        }
     }
 
-    public ListPO getList() {
-        return this.po;
-    }
+    
 }

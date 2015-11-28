@@ -31,6 +31,8 @@ public interface ListDataService {
     public ResultMessage save(GatheringPO gatheringPO);
 
     public ResultMessage saveAsList(ListPO listPO);
+    //Orderpo
+    //ListPO listpo=orderpo;
 
     public ArrayList<ListPO> checkList();
 }

@@ -18,7 +18,7 @@ public class LogisticsVO extends ListVO{
 		this.transportState=transportState;
 	}
 	
-	public LogisticsVO(){};
+
 	
 	public void setDeliveryNum(String deliveryNum){
 		this.deliveryNum=deliveryNum;

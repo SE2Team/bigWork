@@ -1,5 +1,7 @@
 package po;
 
+import util.TransportType;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +16,7 @@ public class StockOutPO extends ListPO implements Serializable{
 	private String deliveryNum;
 	private String outDate;
 	private String end;
-	private String loadingWay;
+	private TransportType transportType;
 	private String transferNum;
 	
 	
@@ -23,15 +25,15 @@ public class StockOutPO extends ListPO implements Serializable{
 	 * @param deliveryNum
 	 * @param outDate
 	 * @param end
-	 * @param loadingWay
+	 * @param transportType
 	 * @param transferNum
 	 */
 	public StockOutPO(String deliveryNum, String outDate,
-			String end,String loadingWay,String transferNum){
+			String end,TransportType transportType,String transferNum){
 		this.deliveryNum=deliveryNum;
 		this.outDate=outDate;
 		this.end=end;
-		this.loadingWay=loadingWay;
+		this.transportType=transportType;
 		this.transferNum=transferNum;
 	}
 	
@@ -59,12 +61,12 @@ public class StockOutPO extends ListPO implements Serializable{
 		return end;
 	}
 	
-	public void setLoadingWay(String loadingWay){
-		this.loadingWay=loadingWay;
+	public void setLoadingWay(TransportType transportType){
+		this.transportType=transportType;
 	}
 	
-	public String getLoadingWay(){
-		return loadingWay;
+	public TransportType getLoadingWay(){
+		return transportType;
 	}
 	
 	public void setTransferNum(String transferNum){

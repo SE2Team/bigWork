@@ -11,12 +11,12 @@ public class ListPO implements Serializable {
 
     protected String id;
     protected String content;
+    protected boolean isCheck=false;
 
     public boolean isCheck() {
         return isCheck;
     }
 
-    protected boolean isCheck=false;
 
     /**
      * id是自动根据日期生成的

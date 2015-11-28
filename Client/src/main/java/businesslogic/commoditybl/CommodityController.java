@@ -1,5 +1,8 @@
 package businesslogic.commoditybl;
 
+import businesslogic.Exception.DateException;
+import businesslogic.Exception.InvalidInput;
+import businesslogic.Exception.TransferException;
 import businesslogicservice.CommodityblService;
 import util.ResultMessage;
 import vo.StockInVO;
@@ -15,13 +18,13 @@ import java.util.ArrayList;
 public class CommodityController implements CommodityblService {
     Commodity commodity = new Commodity();
 
-    public ResultMessage stockOut(StockOutVO stockOutVO) {
+    public ResultMessage stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException {
 
         return commodity.stockOut(stockOutVO);
     }
 
 
-    public ResultMessage stockIn(StockInVO stockInVO) {
+    public ResultMessage stockIn(StockInVO stockInVO) throws DateException, InvalidInput {
         return commodity.stockIn(stockInVO);
     }
 

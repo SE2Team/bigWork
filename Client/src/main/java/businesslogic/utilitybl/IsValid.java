@@ -1,10 +1,14 @@
-package util;
+package businesslogic.utilitybl;
 
 /**
  * Created by MYK on 2015/11/25 0025.
  */
 public class IsValid {
-
+    /**
+     * 判断输入的字符串是否合法
+     * @param str
+     * @return
+     */
 
     public static boolean isDouble(String str){
         double temp=0;

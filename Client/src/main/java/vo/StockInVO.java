@@ -27,7 +27,6 @@ public class StockInVO extends ListVO{
 	 * @param rowNum
 	 * @param shelfNum
 	 * @param positionNum
-	 * @param stockState
 	 */
 	public StockInVO(String deliveryNum, String inDate, String end, String zoneNum, String rowNum, String shelfNum,
 			String positionNum) {
