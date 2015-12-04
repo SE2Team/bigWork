@@ -11,6 +11,7 @@ public class ListPO implements Serializable {
 
     protected String id;
     protected String content;
+    public boolean isCheck=false;
 
     /**
      * id是自动根据日期生成的
@@ -20,6 +21,11 @@ public class ListPO implements Serializable {
         this.id = df.format(new Date());
     }
 
+    public ListPO(String id,String content,boolean isCheck ){
+        this.id=id;
+        this.content=content;
+        this.isCheck=isCheck;
+    }
 
     public String getId() {
         return id;
@@ -34,7 +40,11 @@ public class ListPO implements Serializable {
         this.content = content;
     }
 
-    protected void save(ListPO list) {
+    public void setIsCheck(boolean isCheck){
+        this.isCheck=isCheck;
+    }
 
+    public boolean getIsCheck(){
+        return isCheck;
     }
 }

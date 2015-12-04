@@ -96,9 +96,6 @@ public class ReceivePO extends ListPO implements Serializable{
 		return arriveState;
 	}
 
-	@Override
-	public String getClassName() {
-		return "Receipt";
-	}
+
 
 }

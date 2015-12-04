@@ -6,54 +6,63 @@ import dataservice.managedataservice.ManageDataService;
 import po.ConstantPO;
 import po.DriverPO;
 import po.VehiclePO;
+import util.ResultMessage;
 import vo.ConstantVO;
 import vo.DriverVO;
 import vo.VehicleVO;
+
+import java.rmi.RemoteException;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
  */
 public class Manage {
-    DataFactoryService dataFactory=new DataFactory();
-    ManageDataService manage=dataFactory.getManageData();
-    public boolean addDriver(DriverVO driverVO) {
+    DataFactoryService dataFactory;
+    ManageDataService manage;
+
+    public Manage() throws RemoteException {
+        dataFactory = DataFactory.getInstance();
+        manage = dataFactory.getManageData();
+    }
+
+    public boolean addDriver(DriverVO driverVO) throws RemoteException {
         DriverPO po=new DriverPO(driverVO.getDriverNum(),driverVO.getDriverName(),driverVO.getBirthDate(),driverVO.getIdNum(),
                 driverVO.getPhone(),driverVO.getVehicleInstitution(),driverVO.getSex(),driverVO.getLicenseTime());
         manage.addDriver(po);
         return true;
     }
 
-    public boolean delDriver(DriverVO driverVO) {
+    public ResultMessage delDriver(DriverVO driverVO) throws RemoteException {
         //判断
         //……
         
         return manage.deleteDriver(convert(driverVO));
     }
 
-    public DriverVO checkDriver(String driveNumber) {
+    public DriverVO checkDriver(String driveNumber) throws RemoteException {
         //判断
         //……
         
         return convert(manage.checkDriver(driveNumber));
     }
 
-    public boolean addVehicle(VehicleVO vehicleVO) {
+    public ResultMessage addVehicle(VehicleVO vehicleVO) throws RemoteException {
         return manage.addVehicle(convert(vehicleVO));
     }
 
-    public boolean delVehicle(VehicleVO vehiclevO) {
+    public ResultMessage delVehicle(VehicleVO vehiclevO) throws RemoteException {
         return manage.deleteVehicle(convert(vehiclevO));
     }
 
-    public VehicleVO checkVehicle(String vehicleNumber) {
+    public VehicleVO checkVehicle(String vehicleNumber) throws RemoteException {
         return convert(manage.checkVehicle(vehicleNumber));
     }
 
-    public void updateSalary(String position, String Type) {
+    public void updateSalary(String position, String Type) throws RemoteException {
         manage.updateSalary(position,Type);
     }
 
-    public void updateConstant(ConstantVO constantVO) {
+    public void updateConstant(ConstantVO constantVO) throws RemoteException {
 
         ConstantPO po=new ConstantPO(constantVO.getCity1(),constantVO.getCity2(),constantVO.getPrice(),constantVO.getDistance());
 

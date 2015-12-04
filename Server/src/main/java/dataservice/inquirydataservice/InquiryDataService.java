@@ -2,11 +2,18 @@ package dataservice.inquirydataservice;
 
 import po.LogisticsPO;
 import po.OperationLogPO;
+import util.ResultMessage;
 
-public interface InquiryDataService {
-    public LogisticsPO checkLogistics(String num);
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
-    public OperationLogPO checkOperationLog();
+public interface InquiryDataService extends Remote{
+    public LogisticsPO checkLogistics(String num) throws RemoteException;
 
-    public String checkForm(String type);
+    public ArrayList<OperationLogPO> checkOperationLog() throws RemoteException;
+
+    public String checkForm(String type) throws RemoteException;
+    
+    public ResultMessage updateLogistics(LogisticsPO po) throws RemoteException;
 }

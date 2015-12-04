@@ -4,6 +4,8 @@ import businesslogicservice.InquiryblService;
 import vo.LogisticsVO;
 import vo.OperationLogVO;
 
+import java.util.ArrayList;
+
 public class InquiryblService_Stub implements InquiryblService {
 
     String checkForm;
@@ -16,7 +18,7 @@ public class InquiryblService_Stub implements InquiryblService {
         // TODO Auto-generated constructor stub
     }
 
-    public OperationLogVO checkOperationLog() {
+    public ArrayList<OperationLogVO> checkOperationLog() {
         // TODO Auto-generated method stub
         return null;
     }

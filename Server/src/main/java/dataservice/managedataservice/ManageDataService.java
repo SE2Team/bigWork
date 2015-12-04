@@ -1,21 +1,29 @@
 package dataservice.managedataservice;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 import po.*;
+import util.ResultMessage;
 
-public interface ManageDataService {
-    public boolean addDriver(DriverPO driverPO);
+public interface ManageDataService extends Remote{
+    public ResultMessage addDriver(DriverPO driverPO) throws RemoteException;
 
-    public boolean deleteDriver(DriverPO po);
+    public ResultMessage  deleteDriver(DriverPO po) throws RemoteException;
 
-    public DriverPO checkDriver(String driveNumber);
+    public DriverPO checkDriver(String driveNumber) throws RemoteException;
 
-    public boolean addVehicle(VehiclePO vehiclePO);
+    public ResultMessage  addVehicle(VehiclePO vehiclePO) throws RemoteException;
 
-    public boolean deleteVehicle(VehiclePO po);
+    public ResultMessage  deleteVehicle(VehiclePO po) throws RemoteException;
 
-    public VehiclePO checkVehicle(String vehicleNumber);
+    public VehiclePO checkVehicle(String vehicleNumber) throws RemoteException;
 
-    public void updateSalary(String position, String Type);
+    public ResultMessage updateSalary(String position, String Type) throws RemoteException;
 
-    public void updateConstant(ConstantPO constantPO);
+    public ResultMessage updateConstant(ConstantPO constantPO) throws RemoteException;
+    
+    public String[] getSalary() throws RemoteException;
+    
+    public ConstantPO getConstant() throws RemoteException;
 }

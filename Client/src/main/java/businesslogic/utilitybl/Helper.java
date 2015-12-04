@@ -1,5 +1,7 @@
 package businesslogic.utilitybl;
 
+import businesslogic.Exception.DateException;
+
 /**
  * 一个帮助计算一些数据的静态类
  * Created by MYK on 2015/11/23 0023.
@@ -16,10 +18,12 @@ public class Helper {
     /**
      * 比较任意日期数据和现在时间的先后
      * @param date
-     * @return date-now (>,<,= 0)
+     * @return date-now 晚于当前时间时，返回true（非法时间）
      */
-    public static int compareTo(String date){
-        return 0;
+    public static boolean compareTo(String date)  {
+        if(!DateException.isValid(date))
+            return true;
+        return true;
     }
 
     /**
@@ -28,8 +32,10 @@ public class Helper {
      * @param date2
      * @return date1-date2
      */
-    public static int compareTo(String date1,String date2){
-        return 0;
+    public static boolean compareTo(String date1,String date2)  {
+        if(!DateException.isValid(date1)||!DateException.isValid(date2))
+            return false;
+        return false;
     }
     /**
      * 判断一个日期串是否合法

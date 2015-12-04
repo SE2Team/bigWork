@@ -73,10 +73,8 @@ public class AddresseeInformationPO extends ListPO implements Serializable {
 		this.addresseeDate=addresseeDate;
 	}
 
-	@Override
-	public String getClassName() {
-		return "Addressee";
-	}
+
+
 
 
 }

@@ -13,7 +13,7 @@ public class StockOut extends List{
     public ResultMessage save(ListVO listVO) {
         StockOutVO vo=null;
         vo= (StockOutVO) listVO;
-        StockOutPO po=new StockOutPO(vo.getDeliveryNum(),vo.getOutDate(),vo.getEnd(),vo.getLoadingWay(),vo.getTransferNum());
+        StockOutPO po=new StockOutPO(vo.getDeliveryNum(),vo.getOutDate(),vo.getEnd(),vo.getTransportType(),vo.getTransferNum());
         listDataService.saveAsList(po);
         return listDataService.save(po);
     }

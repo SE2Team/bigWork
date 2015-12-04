@@ -15,31 +15,34 @@ import vo.StockInVO;
 import vo.StockOutVO;
 import vo.StockVO;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
  */
 public class Commodity {
-    DataFactoryService dataFactory=new DataFactory();
-    CommodityDataService commodity=dataFactory.getCommodityData();
+    DataFactoryService dataFactory;
+    CommodityDataService commodity;
     StockPO stockPO;
 
-    public Commodity() {
-//        stockPO=commodity.check();
+    public Commodity() throws RemoteException {
+        stockPO=commodity.check();
+        dataFactory = DataFactory.getInstance();
+        commodity = dataFactory.getCommodityData();
     }
 
     //TODO 所有输入是否为空的判断
-    public ResultMessage stockOut(StockOutVO stockOutVO) throws InvalidInput, TransferException, DateException {
+    public ResultMessage stockOut(StockOutVO stockOutVO) throws InvalidInput, TransferException, DateException, RemoteException {
         ListblService list=new ListController();
         /**
          * 判断输入是否合法
          */
         if(stockOutVO.getDeliveryNum().length()!=10)//TODO 快递编号长度
             throw new InvalidInput("快递编号错误！");
-        if(!DateException.IsValid(stockOutVO.getOutDate()))
+        if(!DateException.isValid(stockOutVO.getOutDate()))
             throw new DateException("出库日期格式错误！");
-        else if(Helper.compareTo(stockOutVO.getOutDate())>0)
+        else if(Helper.compareTo(stockOutVO.getOutDate()))
             throw  new InvalidInput("出库日期晚于当前时间！");
         if(!TransferException.isValid(stockOutVO.getTransferNum()))
             throw new TransferException("中转单号错误");
@@ -53,19 +56,21 @@ public class Commodity {
         //从库存中删去
         stockPO.remove(stockOutVO.getDeliveryNum());
 
+        commodity.update(stockPO);
+
         return ResultMessage.SUCCESS;
     }
 
-    public ResultMessage stockIn(StockInVO stockInVO) throws InvalidInput, DateException {
+    public ResultMessage stockIn(StockInVO stockInVO) throws InvalidInput, DateException, RemoteException {
         ListblService list=new ListController();
         /**
          *判断输入是否合法
          */
         if(stockInVO.getDeliveryNum().length()!=10)//TODO 快递编号长度
             throw new InvalidInput("快递编号错误！");
-        if(!DateException.IsValid(stockInVO.getInDate()))
+        if(!DateException.isValid(stockInVO.getInDate()))
             throw new DateException("入库日期格式错误！");
-        if(Helper.compareTo(stockInVO.getInDate())>0){
+        if(Helper.compareTo(stockInVO.getInDate())){
             throw new InvalidInput("出库日期晚于当前时间！");
         }
         if(!InvalidIntegerException.isValid(stockInVO.getPositionNum()))
@@ -87,6 +92,8 @@ public class Commodity {
 
         //添加到库存
         stockPO.add(stockInPO);
+
+        commodity.update(stockPO);
         return ResultMessage.SUCCESS;
     }
 

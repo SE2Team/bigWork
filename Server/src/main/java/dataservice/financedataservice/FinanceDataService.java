@@ -3,9 +3,11 @@ package dataservice.financedataservice;
 import po.AccountPO;
 import util.ResultMessage;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface FinanceDataService {
+public interface FinanceDataService extends Remote{
     /**
      * TODO 只生成不返回？
      * @return
@@ -18,11 +20,11 @@ public interface FinanceDataService {
      * @param endDate
      * @return
      */
-    public String get(String startDate, String endDate);
+    public String get(String startDate, String endDate) throws RemoteException;
 
-    public boolean addAccount(AccountPO accountPO);
+    public ResultMessage addAccount(AccountPO accountPO);
 
-    public ArrayList<AccountPO> searchAccount();
+    public ArrayList<AccountPO> searchAccount()throws RemoteException;
 
     public AccountPO searchAccount(String name);
 

@@ -9,6 +9,7 @@ import vo.StockInVO;
 import vo.StockOutVO;
 import vo.StockVO;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
@@ -16,15 +17,19 @@ import java.util.ArrayList;
  * Created by Administrator on 2015/11/1 0001.
  */
 public class CommodityController implements CommodityblService {
-    Commodity commodity = new Commodity();
+    Commodity commodity;
 
-    public ResultMessage stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException {
+    public CommodityController() throws RemoteException {
+        commodity = new Commodity();
+    }
+
+    public ResultMessage stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException {
 
         return commodity.stockOut(stockOutVO);
     }
 
 
-    public ResultMessage stockIn(StockInVO stockInVO) throws DateException, InvalidInput {
+    public ResultMessage stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException {
         return commodity.stockIn(stockInVO);
     }
 

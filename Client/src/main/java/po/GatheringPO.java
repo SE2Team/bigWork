@@ -74,9 +74,4 @@ public class GatheringPO extends ListPO implements Serializable{
                 "  地点：" + place;
     }
 
-
-    @Override
-    public String getClassName() {
-        return "Gathering";
-    }
 }

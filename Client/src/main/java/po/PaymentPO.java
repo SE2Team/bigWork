@@ -88,9 +88,6 @@ public class PaymentPO extends ListPO implements Serializable{
 		return payComment;
 	}
 
-	@Override
-	public String getClassName() {
-		return "Payment";
-	}
+
 	
 }

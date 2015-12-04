@@ -17,7 +17,7 @@ public class TransferException extends Exception{
         //025(城市编号)+0（中转中心）+日期（8位）+7位数
         if(num.length()!=19)
             return false;
-        if(!DateException.IsValid(num.substring(5,13)))
+        if(!DateException.isValid(num.substring(5,13)))
             return false;
         return true;
     }

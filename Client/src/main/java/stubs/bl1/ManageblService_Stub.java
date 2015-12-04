@@ -1,6 +1,7 @@
 package stubs.bl1;
 
 import businesslogicservice.ManageblService;
+import util.ResultMessage;
 import vo.ConstantVO;
 import vo.DriverVO;
 import vo.VehicleVO;
@@ -23,7 +24,7 @@ public class ManageblService_Stub implements ManageblService {
         return null;
     }
 
-    public boolean addVehicle(VehicleVO vehicleVO) {
+    public ResultMessage addVehicle(VehicleVO vehicleVO) {
         // TODO Auto-generated method stub
         return true;
     }
@@ -42,12 +43,12 @@ public class ManageblService_Stub implements ManageblService {
         // TODO Auto-generated method stub
     }
 
-    public boolean delDriver(DriverVO drivervO) {
+    public ResultMessage delDriver(DriverVO drivervO) {
         // TODO Auto-generated method stub
         return false;
     }
 
-    public boolean delVehicle(VehicleVO vehiclevO) {
+    public ResultMessage delVehicle(VehicleVO vehiclevO) {
         // TODO Auto-generated method stub
         return false;
     }

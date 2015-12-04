@@ -1,5 +1,7 @@
 package businesslogic.financebl;
 
+import businesslogic.Exception.DateException;
+import businesslogic.Exception.InputNullException;
 import businesslogic.Exception.InvalidDoubleException;
 import businesslogicservice.FinanceblService;
 import util.ResultMessage;
@@ -7,19 +9,25 @@ import vo.AccountVO;
 import vo.GatheringVO;
 import vo.PaymentVO;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
  */
 public class FinanceController implements FinanceblService {
-    Finance finance=new Finance();
+    Finance finance;
 
-    public ResultMessage gathering(GatheringVO gatheringVO) {
+    public FinanceController() throws RemoteException {
+        finance = new Finance();
+    }
+
+
+    public ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException {
         return finance.gathering(gatheringVO);
     }
 
-    public ResultMessage payment(PaymentVO paymentVO) {
+    public ResultMessage payment(PaymentVO paymentVO) throws InvalidDoubleException, DateException {
         return finance.payment(paymentVO);
     }
 
@@ -27,19 +35,19 @@ public class FinanceController implements FinanceblService {
         return finance.generateForm();
     }
 
-    public ResultMessage generateForm(String startDate, String endDate) {
+    public ResultMessage generateForm(String startDate, String endDate) throws DateException, RemoteException {
         return finance.generateForm(startDate,endDate);
     }
 
-    public ResultMessage initial(String institution) {
+    public ResultMessage initial(String institution){
         return finance.initial(institution);
     }
 
-    public ResultMessage addAccount(AccountVO accountVO) throws InvalidDoubleException {
+    public ResultMessage addAccount(AccountVO accountVO) throws InvalidDoubleException, InputNullException {
         return finance.addAccount(accountVO);
     }
 
-    public ArrayList<AccountVO> searchAccount() {
+    public ArrayList<AccountVO> searchAccount() throws RemoteException {
         return finance.searchAccount();
     }
 
@@ -51,7 +59,7 @@ public class FinanceController implements FinanceblService {
         return finance.DelAccount(accountVO);
     }
 
-    public ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) {
+    public ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws InvalidDoubleException {
         return finance.EditAccount(accountVOOld,accountVONew);
     }
 }

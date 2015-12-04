@@ -74,8 +74,5 @@ public class DistributePO extends ListPO implements Serializable {
 		return distributeHuman;
 	}
 
-	@Override
-	public String getClassName() {
-		return "Distribute";
-	}
+
 }

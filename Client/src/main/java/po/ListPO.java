@@ -11,24 +11,22 @@ public class ListPO implements Serializable {
 
     protected String id;
     protected String content;
-    protected boolean isCheck=false;
-
-    public boolean isCheck() {
-        return isCheck;
-    }
-
+    public boolean isCheck=false;
 
     /**
      * id是自动根据日期生成的
      */
     public ListPO() {
         SimpleDateFormat df = new SimpleDateFormat("MMddHHmmss");//设置日期格式
-        this.id = getClassName()+df.format(new Date());
+        this.id = df.format(new Date());
     }
 
-    public  String getClassName(){
-        return "List";
+    public ListPO(String id,String content,boolean isCheck ){
+        this.id=id;
+        this.content=content;
+        this.isCheck=isCheck;
     }
+
     public String getId() {
         return id;
     }
@@ -42,5 +40,11 @@ public class ListPO implements Serializable {
         this.content = content;
     }
 
+    public void setIsCheck(boolean isCheck){
+        this.isCheck=isCheck;
+    }
 
+    public boolean getIsCheck(){
+        return isCheck;
+    }
 }

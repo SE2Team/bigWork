@@ -1,47 +1,39 @@
 package businesslogic.loginbl;
 
-import util.ResultMessage;
-import util.UserType;
+import data.DataFactory;
+import dataservice.datafactoryservice.DataFactoryService;
+import dataservice.userdataservice.UserDataService;
+import po.UserPO;
+import vo.UserVO;
+
+import java.rmi.RemoteException;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
  */
 public class Login {
 
-    public static String currentUserName;
+    private UserDataService data;
+    private DataFactoryService dataFactory;
 
-    public static String currentUserId;
-
-    public static UserType currentUserType;
-
-    private int type;
-
-    public Login(String id) {
-        Login.currentUserId = id;
+    public Login() throws RemoteException {
+        dataFactory=DataFactory.getInstance();
+        data=dataFactory.getUserData();
     }
 
     /**
      * 用户登录验证
      *
-     * @param password
+     * @param
      * @return
      * @throws
      */
-    public ResultMessage login(String password) {
+    public UserPO login(UserVO vo) throws RemoteException {
 
-        return ResultMessage.FAILED;
+
+        return data.login(vo.getId(),vo.getPassword());
     }
 
-    public String getCurrentUserName() {
-        return currentUserName;
-    }
 
-    public String getCurrentUserId() {
-        return currentUserId;
-    }
-
-    public UserType getCurrentUserType() {
-        return currentUserType;
-    }
 
 }

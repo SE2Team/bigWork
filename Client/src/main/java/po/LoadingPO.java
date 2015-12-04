@@ -210,8 +210,5 @@ public class LoadingPO extends ListPO implements Serializable{
 		this.end=end;
 	}
 
-	@Override
-	public String getClassName() {
-		return "Loading";
-	}
+
 }

@@ -1,5 +1,3 @@
-import businesslogic.utilitybl.IsValid;
-
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
@@ -16,6 +14,6 @@ class Main {
         String s="";
         int sv = 0;
 
-        System.out.println(IsValid.isDouble(s));
+        System.out.println(s==null);
     }
 }

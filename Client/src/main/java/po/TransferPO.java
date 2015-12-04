@@ -146,10 +146,7 @@ public class TransferPO extends ListPO implements Serializable{
 		return money;
 	}
 
-	@Override
-	public String getClassName() {
-		return "Transfer";
-	}
+
 
 
 }
