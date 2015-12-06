@@ -6,6 +6,8 @@ import businesslogic.listbl.List;
 import businesslogicservice.CommodityblService;
 import vo.StockInVO;
 
+import java.rmi.RemoteException;
+
 /**
  * tester生成一个PO过来，主要测试content内容是否符合
  *
@@ -14,9 +16,23 @@ import vo.StockInVO;
 public class MockList extends List {
 
 
-    public static void main(String[] args) {
-        CommodityblService commodity=new CommodityController();
-        StockInVO vo=new StockInVO("121","121","121","121","121","121","121");
+    /**
+     * Instantiates a new Mock list.
+     *
+     * @throws RemoteException the remote exception
+     */
+    public MockList() throws RemoteException {
+    }
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws RemoteException the remote exception
+     */
+    public static void main(String[] args) throws RemoteException {
+        CommodityblService commodity = new CommodityController();
+        StockInVO vo = new StockInVO("121", "121", "121", "121", "121", "121", "121");
         try {
             commodity.stockIn(vo);
         } catch (DateException e) {

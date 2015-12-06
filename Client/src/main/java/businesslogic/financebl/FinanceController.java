@@ -3,6 +3,7 @@ package businesslogic.financebl;
 import businesslogic.Exception.DateException;
 import businesslogic.Exception.InputNullException;
 import businesslogic.Exception.InvalidDoubleException;
+import businesslogic.Exception.MoneyException;
 import businesslogicservice.FinanceblService;
 import util.ResultMessage;
 import vo.AccountVO;
@@ -14,20 +15,30 @@ import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
+ *
+ * @author myk
  */
 public class FinanceController implements FinanceblService {
+    /**
+     * The Finance.
+     */
     Finance finance;
 
+    /**
+     * Instantiates a new Finance controller.
+     *
+     * @throws RemoteException the remote exception
+     */
     public FinanceController() throws RemoteException {
         finance = new Finance();
     }
 
 
-    public ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException {
+    public ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException, RemoteException {
         return finance.gathering(gatheringVO);
     }
 
-    public ResultMessage payment(PaymentVO paymentVO) throws InvalidDoubleException, DateException {
+    public ResultMessage payment(PaymentVO paymentVO) throws InvalidDoubleException, DateException, RemoteException, MoneyException {
         return finance.payment(paymentVO);
     }
 
@@ -36,10 +47,10 @@ public class FinanceController implements FinanceblService {
     }
 
     public ResultMessage generateForm(String startDate, String endDate) throws DateException, RemoteException {
-        return finance.generateForm(startDate,endDate);
+        return finance.generateForm(startDate, endDate);
     }
 
-    public ResultMessage initial(String institution){
+    public ResultMessage initial(String institution) {
         return finance.initial(institution);
     }
 
@@ -60,6 +71,6 @@ public class FinanceController implements FinanceblService {
     }
 
     public ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws InvalidDoubleException {
-        return finance.EditAccount(accountVOOld,accountVONew);
+        return finance.EditAccount(accountVOOld, accountVONew);
     }
 }

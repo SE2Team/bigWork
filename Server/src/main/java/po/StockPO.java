@@ -20,7 +20,7 @@ public class StockPO implements Serializable {
 	private String rowNum;
 	private String shelfNum;
 	private String positionNum;
-	private String stockState;
+	private Boolean stockState;
 	
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class StockPO implements Serializable {
 	 */
 	public StockPO(String deliveryNum, String inDate, 
 			String end, String zoneNum, String rowNum,
-			String shelfNum,String positionNum,String stockState){
+			String shelfNum,String positionNum,Boolean stockState){
 		this.deliveryNum=deliveryNum;
 		this.inDate=inDate;
 		this.end=end;
@@ -102,11 +102,11 @@ public class StockPO implements Serializable {
 		return positionNum;
 	}
 	
-	public void setStockState(String stockState){
+	public void setStockState(Boolean stockState){
 		this.stockState=stockState;
 	}
 	
-	public String getStockState(){
+	public Boolean getStockState(){
 		return stockState;
 	}
 	

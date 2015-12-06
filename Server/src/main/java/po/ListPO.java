@@ -22,11 +22,11 @@ public class ListPO implements Serializable {
     }
 
     public ListPO(String id,String content,boolean isCheck ){
-        this.id=id;
-        this.content=content;
-        this.isCheck=isCheck;
+    	this.id=id;
+    	this.content=content;
+    	this.isCheck=isCheck;
     }
-
+    
     public String getId() {
         return id;
     }
@@ -41,10 +41,10 @@ public class ListPO implements Serializable {
     }
 
     public void setIsCheck(boolean isCheck){
-        this.isCheck=isCheck;
+    	this.isCheck=isCheck;
     }
-
+    
     public boolean getIsCheck(){
-        return isCheck;
+    	return isCheck;
     }
 }

@@ -1,11 +1,5 @@
-package data;
+package dataservice;
 
-import data.commoditydata.CommoditydataImpl;
-import data.financedata.FinancedataImpl;
-import data.inquirydata.InquirydataImpl;
-import data.listdata.ListdataImpl;
-import data.managedata.ManagedataImpl;
-import data.userdata.UserdataImpl;
 import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
@@ -14,6 +8,9 @@ import dataservice.listdataservice.ListDataService;
 import dataservice.managedataservice.ManageDataService;
 import dataservice.userdataservice.UserDataService;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -21,50 +18,59 @@ import java.rmi.server.UnicastRemoteObject;
  * Created by Administrator on 2015/10/26 0026.
  */
 public class DataFactory extends UnicastRemoteObject implements DataFactoryService {
+    private static DataFactoryService FACTORY = null;
 
+    public static String address = "127.0.0.1";
 
-    private static DataFactory FACTORY = null;
+    public static String port = "8888";
 
     protected DataFactory() throws RemoteException {
         super();
     }
 
-    public static DataFactory getInstance() throws RemoteException {
-        if (DataFactory.FACTORY == null) {
-            FACTORY = new DataFactory();
+    public static DataFactoryService getInstance() throws RemoteException {
+
+        if (FACTORY != null)
+            return FACTORY;
+
+        try {
+            FACTORY = (DataFactoryService) Naming.lookup("rmi://" + address + ":" + port + "/DataFactory");
+            System.out.println("连接成功！");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+
         }
         return FACTORY;
     }
 
+
     public CommodityDataService getCommodityData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new CommoditydataImpl();
+        return null;
     }
 
     public FinanceDataService getFinanceData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new FinancedataImpl();
+        return null;
     }
 
     public InquiryDataService getInquiryData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new InquirydataImpl();
+        return null;
     }
 
     public ListDataService getListData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new ListdataImpl();
+        return null;
     }
 
     public ManageDataService getManageData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new ManagedataImpl();
+        return null;
     }
 
     public UserDataService getUserData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new UserdataImpl();
+        return null;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package businesslogic.managebl;
 
 import businesslogicservice.ManageblService;
+import util.ExistException;
 import util.ResultMessage;
 import vo.ConstantVO;
 import vo.DriverVO;
@@ -10,15 +11,25 @@ import java.rmi.RemoteException;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
+ *
+ * @author myk
  */
 public class ManageController implements ManageblService {
+    /**
+     * The Manage.
+     */
     Manage manage;
 
+    /**
+     * Instantiates a new Manage controller.
+     *
+     * @throws RemoteException the remote exception
+     */
     public ManageController() throws RemoteException {
         manage = new Manage();
     }
 
-    public boolean addDriver(DriverVO driverVO) throws RemoteException {
+    public boolean addDriver(DriverVO driverVO) throws RemoteException, ExistException {
         return manage.addDriver(driverVO);
     }
 
@@ -30,7 +41,7 @@ public class ManageController implements ManageblService {
         return manage.checkDriver(driveNumber);
     }
 
-    public ResultMessage addVehicle(VehicleVO vehicleVO) throws RemoteException {
+    public ResultMessage addVehicle(VehicleVO vehicleVO) throws RemoteException, ExistException {
         return manage.addVehicle(vehicleVO);
     }
 
@@ -43,7 +54,7 @@ public class ManageController implements ManageblService {
     }
 
     public void updateSalary(String position, String Type) throws RemoteException {
-        manage.updateSalary(position,Type);
+        manage.updateSalary(position, Type);
     }
 
     public void updateConstant(ConstantVO constantVO) throws RemoteException {

@@ -15,10 +15,20 @@ import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
+ *
+ * @author myk
  */
 public class CommodityController implements CommodityblService {
+    /**
+     * The Commodity.
+     */
     Commodity commodity;
 
+    /**
+     * Instantiates a new Commodity controller.
+     *
+     * @throws RemoteException the remote exception
+     */
     public CommodityController() throws RemoteException {
         commodity = new Commodity();
     }

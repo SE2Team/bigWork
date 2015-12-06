@@ -11,9 +11,8 @@ class Main {
 //        mFrame.getContentPane().add(panel);
 //        mFrame.setTitle("ss�");
 //        mFrame.setVisible(true);
-        String s="";
-        int sv = 0;
 
-        System.out.println(s==null);
+
+
     }
 }

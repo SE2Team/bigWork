@@ -6,15 +6,31 @@ import java.util.Date;
 
 /**
  * Created by MYK on 2015/11/28 0028.
+ *
+ * @author myk
  */
 public class DateException extends Exception {
+    /**
+     * Instantiates a new Date exception.
+     */
     public DateException() {
     }
 
+    /**
+     * Instantiates a new Date exception.
+     *
+     * @param message the message
+     */
     public DateException(String message) {
         super(message);
     }
 
+    /**
+     * Is valid boolean.
+     *
+     * @param date the date
+     * @return the boolean
+     */
     public static boolean isValid(String date) {
         if (date.contains("-")) {
             if (date.length() != (8 + 2)) {//2015-10-10
@@ -63,6 +79,11 @@ public class DateException extends Exception {
         return false;
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         System.out.println(DateException.isValid("2015-11-20"));
     }

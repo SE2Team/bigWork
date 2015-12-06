@@ -18,7 +18,7 @@ public interface ListblService {
     ResultMessage loadingInfo(LoadingVO loadingVO) throws MoneyException, OtherException, DateException, InvalidIntegerException, RemoteException;
 
     //接收单
-    ResultMessage receiveInfo(ReceiveVO receiveVO);
+    ResultMessage receiveInfo(ReceiveVO receiveVO) throws RemoteException;
 
     //派件单
     ResultMessage distributeInfo(DistributeVO distributeVO) throws DateException, RemoteException;
@@ -27,23 +27,22 @@ public interface ListblService {
     ResultMessage receipt(ReceiptVO receiptVO) throws RemoteException, MoneyException, DateException, DeliverNumException;
 
     //中转单
-    ResultMessage transInfo(TransferVO transferVO);
+    ResultMessage transInfo(TransferVO transferVO) throws RemoteException;
 
     //中转中心到达单
-    ResultMessage transArrive(TransferReceiveVO transferReceiveVO);
+    ResultMessage transArrive(TransferReceiveVO transferReceiveVO) throws RemoteException;
 
     //入库单
-    ResultMessage stockOut(StockOutVO stockOutVO);
+    ResultMessage stockOut(StockOutVO stockOutVO) throws RemoteException;
 
     //出库单
-    ResultMessage stockIn(StockInVO stockInVO);
+    ResultMessage stockIn(StockInVO stockInVO) throws RemoteException;
 
     //财务人员建的收款单
     ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException, RemoteException;
 
     //付款单
     ResultMessage payment(PaymentVO paymentVO) throws RemoteException, MoneyException, DateException;
-
 
 
     ArrayList<ListVO> push() throws RemoteException;

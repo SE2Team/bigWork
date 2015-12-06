@@ -11,8 +11,8 @@ public class StockPO implements Serializable {
 
 	private String stockState;//库存状态
 
-	private ArrayList<StockInPO> stockList;//TODO 后期加入排序处理
-
+	private ArrayList<StockInPO> stockList;
+//TODO 库存最大容量和报警容量
 	
 	public String getStockState(){
 		return stockState;

@@ -1,9 +1,9 @@
 package dataservice.commoditydataservice;
 
-import po.StockPO;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
+import po.StockPO;
 
 public interface CommodityDataService extends Remote{
 	public void update(StockPO PO) throws RemoteException;

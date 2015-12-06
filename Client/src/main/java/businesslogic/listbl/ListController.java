@@ -10,17 +10,22 @@ import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/10/30 0030.
+ *
+ * @author myk
  */
 public class ListController implements ListblService {
 
+    /**
+     * The List.
+     */
     List list;
 
 
-    public ResultMessage order(OrderVO orderVO) throws OtherException, RemoteException {
+    public ResultMessage order(OrderVO orderVO) throws RemoteException {
         return new Order().save(orderVO);
     }
 
-    public ResultMessage addresseeInfomation(AddresseeInformationVO addresseeInformationVO) throws DateException, RemoteException {
+    public ResultMessage addresseeInfomation(AddresseeInformationVO addresseeInformationVO) throws RemoteException {
         return new AddresseeInfomation().save(addresseeInformationVO);
     }
 
@@ -28,7 +33,7 @@ public class ListController implements ListblService {
         return new LoadingInfo().save(loadingVO);
     }
 
-    public ResultMessage receiveInfo(ReceiveVO receiveVO) {
+    public ResultMessage receiveInfo(ReceiveVO receiveVO) throws RemoteException {
         return new ReceiveInfo().save(receiveVO);
     }
 
@@ -40,19 +45,19 @@ public class ListController implements ListblService {
         return new Receipt().save(receiptVO);
     }
 
-    public ResultMessage transInfo(TransferVO transferVO) {
+    public ResultMessage transInfo(TransferVO transferVO) throws RemoteException {
         return new TransInfo().save(transferVO);
     }
 
-    public ResultMessage transArrive(TransferReceiveVO transferReceiveVO) {
+    public ResultMessage transArrive(TransferReceiveVO transferReceiveVO) throws RemoteException {
         return new TransArrive().save(transferReceiveVO);
     }
 
-    public ResultMessage stockOut(StockOutVO stockOutVO) {
+    public ResultMessage stockOut(StockOutVO stockOutVO) throws RemoteException {
         return new StockOut().save(stockOutVO);
     }
 
-    public ResultMessage stockIn(StockInVO stockInVO) {
+    public ResultMessage stockIn(StockInVO stockInVO) throws RemoteException {
         return new StockIn().save(stockInVO);
     }
 
@@ -63,7 +68,6 @@ public class ListController implements ListblService {
     public ResultMessage payment(PaymentVO paymentVO) throws RemoteException, MoneyException, DateException {
         return new Payment().save(paymentVO);
     }
-
 
 
     public ArrayList<ListVO> push() throws RemoteException {

@@ -5,15 +5,27 @@ import util.ResultMessage;
 import vo.ListVO;
 import vo.StockOutVO;
 
+import java.rmi.RemoteException;
+
 /**
- * Created by Administrator on 2015/11/16 0016.
+ * The type Stock out.
+ *
+ * @author myk
  */
-public class StockOut extends List{
+public class StockOut extends List {
+    /**
+     * Instantiates a new Stock out.
+     *
+     * @throws RemoteException the remote exception
+     */
+    public StockOut() throws RemoteException {
+    }
+
     @Override
-    public ResultMessage save(ListVO listVO) {
-        StockOutVO vo=null;
-        vo= (StockOutVO) listVO;
-        StockOutPO po=new StockOutPO(vo.getDeliveryNum(),vo.getOutDate(),vo.getEnd(),vo.getTransportType(),vo.getTransferNum());
+    public ResultMessage save(ListVO listVO) throws RemoteException {
+        StockOutVO vo = null;
+        vo = (StockOutVO) listVO;
+        StockOutPO po = new StockOutPO(vo.getDeliveryNum(), vo.getOutDate(), vo.getEnd(), vo.getTransportType(), vo.getTransferNum());
         listDataService.saveAsList(po);
         return listDataService.save(po);
     }

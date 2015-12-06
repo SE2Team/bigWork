@@ -3,16 +3,19 @@ package businesslogicservice;
 import businesslogic.Exception.DateException;
 import businesslogic.Exception.InputNullException;
 import businesslogic.Exception.InvalidDoubleException;
+import businesslogic.Exception.MoneyException;
 import util.ResultMessage;
-import vo.*;
+import vo.AccountVO;
+import vo.GatheringVO;
+import vo.PaymentVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface FinanceblService {
-    ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException;
+    ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException, RemoteException;
 
-    ResultMessage payment(PaymentVO paymentVO) throws InvalidDoubleException, DateException;
+    ResultMessage payment(PaymentVO paymentVO) throws InvalidDoubleException, DateException, RemoteException, MoneyException;
 
     ResultMessage generateForm();
 

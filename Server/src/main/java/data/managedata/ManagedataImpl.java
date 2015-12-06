@@ -11,6 +11,7 @@ import dataservice.managedataservice.ManageDataService;
 import po.ConstantPO;
 import po.DriverPO;
 import po.VehiclePO;
+import util.ExistException;
 import util.ResultMessage;
 
 /**
@@ -23,9 +24,13 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ResultMessage addDriver(DriverPO driverPO) throws RemoteException {
+	public ResultMessage addDriver(DriverPO driverPO) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
+		ArrayList<String> list=common.readData();
+		if(list.contains(this.driverPOToString(driverPO))){
+			throw new ExistException();
+		}
 		common.writeDataAdd(this.driverPOToString(driverPO));	
 		return ResultMessage.SUCCESS;
 	}
@@ -55,9 +60,13 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return null;
 	}
 
-	public ResultMessage addVehicle(VehiclePO vehiclePO) throws RemoteException {
+	public ResultMessage addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
+		ArrayList<String> list=common.readData();
+		if(list.contains(this.vehiclePOToString(vehiclePO))){
+			throw new ExistException();
+		}
 		common.writeDataAdd(this.vehiclePOToString(vehiclePO));
 		return ResultMessage.SUCCESS;
 	}

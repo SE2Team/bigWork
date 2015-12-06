@@ -8,6 +8,8 @@ import java.rmi.RemoteException;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
+ *
+ * @author myk
  */
 public class LoginController implements LoginblService {
 

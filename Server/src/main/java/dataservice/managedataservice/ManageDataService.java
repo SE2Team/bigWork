@@ -4,16 +4,17 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import po.*;
+import util.ExistException;
 import util.ResultMessage;
 
 public interface ManageDataService extends Remote{
-    public ResultMessage addDriver(DriverPO driverPO) throws RemoteException;
+    public ResultMessage addDriver(DriverPO driverPO) throws RemoteException, ExistException;
 
     public ResultMessage  deleteDriver(DriverPO po) throws RemoteException;
 
     public DriverPO checkDriver(String driveNumber) throws RemoteException;
 
-    public ResultMessage  addVehicle(VehiclePO vehiclePO) throws RemoteException;
+    public ResultMessage  addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException;
 
     public ResultMessage  deleteVehicle(VehiclePO po) throws RemoteException;
 

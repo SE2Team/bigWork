@@ -1,6 +1,5 @@
 package businesslogic.listbl;
 
-import businesslogic.Exception.OtherException;
 import po.OrderPO;
 import util.ResultMessage;
 import vo.ListVO;
@@ -10,23 +9,26 @@ import java.rmi.RemoteException;
 
 /**
  * Created by Administrator on 2015/11/16 0016.
+ *
+ * @author myk
  */
 public class Order extends List {
+    /**
+     * Instantiates a new Order.
+     *
+     * @throws RemoteException the remote exception
+     */
     public Order() throws RemoteException {
         super();
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws OtherException, RemoteException {
-        OrderVO vo=null;
-        vo= (OrderVO) listVO;
-        if(vo.getSenderTelephone()==""||vo.getSenderPhone()=="")
-            throw new OtherException("请输入寄件人电话");
-        if(vo.getReceiverPhone()==""||vo.getReceiverTelephone()=="")
-            throw new OtherException("请输入收件人电话");
+    public ResultMessage save(ListVO listVO) throws RemoteException {
+        OrderVO vo = null;
+        vo = (OrderVO) listVO;
 
-        OrderPO po = new OrderPO(vo.getSenderName(),vo.getSenderAddress(),vo.getSenderWorkplace(),vo.getSenderTelephone(),vo.getSenderPhone(),vo.getReceiverName(),vo.getReceiverAddress(),vo.getReceiverWorkplace(),vo.getReceiverTelephone(),vo.getReceiverPhone(),
-                vo.getOriginalNum(),vo.getWeight(),vo.getVolume(),vo.getGoods_Name(),vo.getDeliveryType(),vo.getWrapper(),vo.getDeliveryNum());
+        OrderPO po = new OrderPO(vo.getSenderName(), vo.getSenderAddress(), vo.getSenderWorkplace(), vo.getSenderTelephone(), vo.getSenderPhone(), vo.getReceiverName(), vo.getReceiverAddress(), vo.getReceiverWorkplace(), vo.getReceiverTelephone(), vo.getReceiverPhone(),
+                vo.getOriginalNum(), vo.getWeight(), vo.getVolume(), vo.getGoods_Name(), vo.getDeliveryType(), vo.getWrapper(), "1234", "1234", "1234", "1234", vo.getDeliveryNum());
 
 
         listDataService.saveAsList(po);

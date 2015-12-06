@@ -151,7 +151,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
 	/**
 	 * 
-	 * @param po
+	 * @param AddresseeInformationPO
 	 * @return
 	 */
 	private String addresseeInfoPOToString(AddresseeInformationPO po) {

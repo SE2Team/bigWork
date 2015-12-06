@@ -25,7 +25,7 @@ public class OrderPO extends ListPO implements Serializable {
     private String receiverPhone;
  
     //托运货物信息（原件数、实际重量、长宽高、内件品名），
-    private int originalNum;
+    private String originalNum;
     private String weight;
     private String volume;
     private String goods_Name;
@@ -66,7 +66,7 @@ public class OrderPO extends ListPO implements Serializable {
     
   public  OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
             String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
-            String receiverTelephone, String receiverPhone, int originalNum, String weight, String volume,
+            String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
             String goods_Name, DeliveryType DeliveryType, String wrapper,String expenseOfTransport,
             String expenseOfWrapper,String expense,String date,String deliveryNum) {
         this.senderName = senderName;
@@ -255,7 +255,7 @@ public class OrderPO extends ListPO implements Serializable {
      * 
      * @return 原件数
      */
-    public int getOriginalNum() {
+    public String getOriginalNum() {
         return originalNum;
     }
     
@@ -263,7 +263,7 @@ public class OrderPO extends ListPO implements Serializable {
      * 
      * @param 原件数
      */
-    public void setOriginalNum(int originalNum) {
+    public void setOriginalNum(String originalNum) {
         this.originalNum = originalNum;
     }
     
