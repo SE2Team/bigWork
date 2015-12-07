@@ -18,7 +18,7 @@ public class InquiryController implements InquiryblService {
     /**
      * The Inquiry.
      */
-    Inquiry inquiry;
+    private Inquiry inquiry;
 
     /**
      * Instantiates a new Inquiry controller.

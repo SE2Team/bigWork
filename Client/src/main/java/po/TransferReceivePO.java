@@ -1,5 +1,7 @@
 package po;
 
+import util.ListType;
+
 import java.io.Serializable;
 
 /**
@@ -18,18 +20,20 @@ public class TransferReceivePO extends ListPO implements Serializable{
 	private String cargoState;
 	private String transferCenterNum;
 	private String transferNum;
-	
-	public TransferReceivePO(String orderNum,String arriveDate,
-			String start, String cargoState, String transferCenterNum,
-			String transferNum){
-		this.orderNum=orderNum;
-		this.arriveDate=arriveDate;
-		this.start=start;
-		this.cargoState=cargoState;
-		this.transferCenterNum=transferCenterNum;
-		this.transferNum=transferNum;	
+
+	public TransferReceivePO(String orderNum, String arriveDate, String start,
+							 String cargoState, String transferCenterNum, String transferNum,
+							 boolean isCheck) {
+		super(isCheck);
+		this.orderNum = orderNum;
+		this.arriveDate = arriveDate;
+		this.start = start;
+		this.cargoState = cargoState;
+		this.transferCenterNum = transferCenterNum;
+		this.transferNum = transferNum;
+        setType(ListType.TRANSARRIVE);
 	}
-	
+
 	public void setOrderNum(String orderNum){
 		this.orderNum=orderNum;
 	}

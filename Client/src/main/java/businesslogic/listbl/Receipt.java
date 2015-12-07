@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.ReceiptPO;
-import util.ResultMessage;
 import vo.ListVO;
 import vo.ReceiptVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -23,15 +23,11 @@ public class Receipt extends List {
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         ReceiptVO vo = null;
         vo = (ReceiptVO) listVO;
-
-
-        ReceiptPO po = new ReceiptPO(vo.getReceiptDate(), vo.getReceiptMoney(), vo.getReceiptCourier(), vo.getOrderNum());
-
-        listDataService.saveAsList(po);
-
+        ReceiptPO po = VO2PO.convert(vo);
         return listDataService.save(po);
+
     }
 }

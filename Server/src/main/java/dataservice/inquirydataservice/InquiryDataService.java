@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import po.LogisticsPO;
 import po.OperationLogPO;
+import util.ExistException;
 import util.ResultMessage;
 
 public interface InquiryDataService extends Remote{
@@ -15,5 +16,5 @@ public interface InquiryDataService extends Remote{
 
     public String checkForm(String type) throws RemoteException;
     
-    public ResultMessage updateLogistics(LogisticsPO po) throws RemoteException;
+    public Boolean updateLogistics(LogisticsPO po) throws RemoteException, ExistException;
 }

@@ -4,6 +4,7 @@ import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.userdataservice.UserDataService;
 import po.UserPO;
+import util.ExistException;
 import vo.UserVO;
 
 import java.rmi.RemoteException;
@@ -35,7 +36,7 @@ public class Login {
      * @return user po
      * @throws RemoteException the remote exception
      */
-    public UserPO login(UserVO vo) throws RemoteException {
+    public UserPO login(UserVO vo) throws RemoteException, ExistException {
 
 
         return data.login(vo.getId(), vo.getPassword());

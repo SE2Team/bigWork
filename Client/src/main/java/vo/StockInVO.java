@@ -1,12 +1,14 @@
 package vo;
 
+import util.ListType;
+
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
 public class StockInVO extends ListVO{
-	
+	private static final long serialVersionUID = 1L;// 序列化编号
+
 	/**
-	 * 
 	 * 快递编号、入库日期、目的地、区号、排号、架号、位号
 	 */
 
@@ -18,18 +20,9 @@ public class StockInVO extends ListVO{
 	private String shelfNum;
 	private String positionNum;
 
-	/**
-	 * 
-	 * @param deliveryNum
-	 * @param inDate
-	 * @param end
-	 * @param zoneNum
-	 * @param rowNum
-	 * @param shelfNum
-	 * @param positionNum
-	 */
-	public StockInVO(String deliveryNum, String inDate, String end, String zoneNum, String rowNum, String shelfNum,
-			String positionNum) {
+	public StockInVO(String deliveryNum, String inDate, String end, String zoneNum,
+					 String rowNum, String shelfNum, String positionNum, boolean isCheck) {
+		super(isCheck);
 		this.deliveryNum = deliveryNum;
 		this.inDate = inDate;
 		this.end = end;
@@ -37,10 +30,9 @@ public class StockInVO extends ListVO{
 		this.rowNum = rowNum;
 		this.shelfNum = shelfNum;
 		this.positionNum = positionNum;
+		setType(ListType.STOCKIN);
 	}
-	
-	public StockInVO(){}
-	
+
 	public void setDeliveryNum(String deliveryNum) {
 		this.deliveryNum = deliveryNum;
 	}
@@ -96,4 +88,6 @@ public class StockInVO extends ListVO{
 	public String getPositionNum() {
 		return positionNum;
 	}
+
+
 }

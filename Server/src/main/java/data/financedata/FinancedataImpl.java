@@ -4,6 +4,7 @@ import dataservice.financedataservice.FinanceDataService;
 import po.AccountPO;
 import po.GatheringPO;
 import po.PaymentPO;
+import util.ExistException;
 import util.ResultMessage;
 
 import java.io.FileNotFoundException;
@@ -26,7 +27,7 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 
 	private static final long serialVersionUID = 1L;
 
-	public String get() {
+	public String get() throws RemoteException{
 		// TODO Auto-generated method stub
 		double paymentMoney=0;
 		double gatheringMoney=0;
@@ -87,11 +88,15 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 		return Double.toString(gatheringMoney-paymentMoney);
 	}
 
-	public ResultMessage addAccount(AccountPO accountPO) {
+	public Boolean addAccount(AccountPO accountPO) throws ExistException {
 		// TODO Auto-generated method stub
 		Common common = new Common("account");
+		ArrayList<String> list=common.readData();
+		if(list.contains(this.poToString(accountPO))){
+			throw new ExistException();
+		}
 		common.writeDataAdd(this.poToString(accountPO));
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
 	public ArrayList<AccountPO> searchAccount() throws RemoteException {
@@ -99,21 +104,19 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 		Common common = new Common("account");
 		ArrayList<String> s = common.readData();
 		ArrayList<AccountPO> list = new ArrayList<AccountPO>();
-		String[] str = new String[2];
 		for (int j = 0; j < s.size(); j++) {
-			str = s.get(j).split(";");
+			String[] str = s.get(j).split(";");
 			list.add(this.stringToAccountPO(str));
 		}
 		return list;
 	}
 
-	public AccountPO searchAccount(String name) {
+	public AccountPO searchAccount(String name) throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common = new Common("account");
 		ArrayList<String> s = common.readData();
-		String[] str = new String[2];
 		for (int j = 0; j < s.size(); j++) {
-			str = s.get(j).split(";");
+			String[] str = s.get(j).split(";");
 			if (str[0].equals(name)) {
 				return this.stringToAccountPO(str);
 			}
@@ -121,27 +124,28 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 		return null;
 	}
 
-	public ResultMessage DelAccount(AccountPO accountPO) {
+	public Boolean DelAccount(AccountPO accountPO) throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common = new Common("account");
 		ArrayList<String> s = common.readData();
 		s.remove(this.poToString(accountPO));
 		common.clearData("account");
 		common.writeData(s);           
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
-	public ResultMessage EditAccount(String name, AccountPO newAccountPO) {
+	public Boolean EditAccount(String name, AccountPO newAccountPO) throws RemoteException, ExistException{
 		// TODO Auto-generated method stub
 		Common common = new Common("account");
 		ArrayList<String> s = common.readData();
-		String[] str = new String[2];
 		for(int i=0;i<s.size();i++){
-			str=s.get(i) .split(";");
+			String[] str=s.get(i) .split(";");
 			if(this.stringToAccountPO(str).getAccountName().equals(name)){
 				s.remove(i);
 				s.add(this.poToString(newAccountPO));
-				return ResultMessage.SUCCESS;
+				return true;
+			}else{
+				throw new ExistException();
 			}
 		}
 		return null;
@@ -151,21 +155,29 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	 * 
 	 * po to String
 	 */
-	private String poToString(AccountPO po){
+	private String poToString(AccountPO po) {
 		return po.getAccountName()+";"+po.getAccountBalance();
 	
 	}
 	
-	private AccountPO stringToAccountPO(String[] str){
+	private AccountPO stringToAccountPO(String[] str) {
 		return new AccountPO(str[0], str[1]);
 	}
 	
 	private PaymentPO stringToPaymentPO(String[] str){
-		return new PaymentPO(str[0], str[1], str[2], str[3], str[4], str[5]);
+		boolean isCheck=false;
+		if(str[6].equals("true")){
+			isCheck=true;
+		}
+		return new PaymentPO(str[0], str[1], str[2], str[3], str[4], str[5],isCheck);
 	}
 	
 	private GatheringPO stringToGatheringPO(String[] str){
-		return new GatheringPO(str[0], str[1], str[2], str[3], str[4]);
+		boolean isCheck=false;
+		if(str[6].equals("true")){
+			isCheck=true;
+		}
+		return new GatheringPO(str[0], str[1], str[2], str[3], str[4],isCheck);
 	}
 	
 	private int DateToInt(String date) {

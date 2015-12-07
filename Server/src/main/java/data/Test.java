@@ -1,33 +1,32 @@
 package data;
 
-
+import data.Common.Common;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.listdataservice.ListDataService;
-import po.AddresseeInformationPO;
-import po.OrderPO;
-import po.StockInPO;
+import po.ExpenseAndDatePO;
 import util.DeliveryType;
 import util.ExistException;
 
-import java.io.File;
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class Test {
 		public static void main(String[] args) throws RemoteException, ExistException{
-			File directory = new File("");//设定为当前文件夹
-			try{
-				System.out.println(directory.getCanonicalPath());//获取标准的路径
-				System.out.println(directory.getAbsolutePath());//获取绝对路径
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			DataFactoryService dataFactoryService=new DataFactory();
-			ListDataService dataService=dataFactoryService.getListData();
-			dataService.save(new AddresseeInformationPO("000", "0000", "0000"));
-			dataService.save(new StockInPO("333", "333", "333", "333", "333", "333", "333"));
-			dataService.save(new OrderPO("3", "3", "3", "3", "3", "3", "3","3", "3", "3", "3", "3", "3", 
-					"3", DeliveryType.FAST, "3", "3", "3", "3","3", "3"));
-
+			DataFactoryService dataFactory=new DataFactory().getInstance();
+			Common common=new Common("order");
+			common.clearData("order");
+			common.clearData("addresseeInformation");
+			common.clearData("distribute");
+			common.clearData("gathering");
+//			common.clearData("list");
+			ListDataService listData=dataFactory.getListData();
+//			listData.saveAsList(new GatheringPO("3333", "44444", "5555", "6666", "77777", true));
+//			Iterator<ListPO> list=listData.checkList();
+//			while (list.hasNext()) {
+//				GatheringPO po=(GatheringPO)list.next();
+//				System.out.println(po.getDate()+po.getMan()+po.getType()+po.getIsCheck());
+//			}
+			ExpenseAndDatePO date=listData.getExpenseOfTransport(new ExpenseAndDatePO("南京", "北京", "纸箱", "0", "20", DeliveryType.FAST, "0", "0", "0"));
+			
+			System.out.println(date.getExpenseOfTransport()+"\n"+date.getExpenseOfWrap()+"\n"+date.getDays());
 		}
 }

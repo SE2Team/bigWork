@@ -1,36 +1,33 @@
 package vo;
 
+import util.ListType;
+
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
 public class ReceiveVO extends ListVO {
+	private static final long serialVersionUID = 1L;//序列化编号
 
-	// 到达日期、中转单编号、出发地、货物到达状态
+	//到达日期、中转单编号、出发地、货物到达状态
 	private String arriveDate;
 	private String transferNum;
 	private String start;
 	private String arriveState;
 
-	/**
-	 * 
-	 * @param arriveDate
-	 * @param transferNum
-	 * @param start
-	 * @param arriveState
-	 */
-	public ReceiveVO(String arriveDate, String transferNum, String start, String arriveState) {
+
+	public ReceiveVO(String arriveDate, String transferNum, String start, String arriveState,
+					 boolean isCheck) {
+		super(isCheck);
 		this.arriveDate = arriveDate;
 		this.transferNum = transferNum;
 		this.start = start;
 		this.arriveState = arriveState;
-	}
-
-	public ReceiveVO() {
+		setType(ListType.RECEIVEINFO);
 	}
 
 	/**
 	 * 到达日期
-	 * 
+	 *
 	 * @param arriveDate
 	 */
 	public void setArriveDate(String arriveDate) {
@@ -38,7 +35,6 @@ public class ReceiveVO extends ListVO {
 	}
 
 	/**
-	 * 
 	 * @return 到达日期
 	 */
 	public String getArriveDate() {
@@ -47,15 +43,15 @@ public class ReceiveVO extends ListVO {
 
 	/**
 	 * 中转单编号
-	 * 
+	 *
 	 * @param transferNum
 	 */
 	public void setTransferNum(String transferNum) {
 		this.transferNum = transferNum;
 	}
 
+
 	/**
-	 * 
 	 * @return 中转单编号
 	 */
 	public String getTransferNum() {
@@ -64,7 +60,7 @@ public class ReceiveVO extends ListVO {
 
 	/**
 	 * 出发地
-	 * 
+	 *
 	 * @param start
 	 */
 	public void setStart(String start) {
@@ -73,16 +69,17 @@ public class ReceiveVO extends ListVO {
 
 	/**
 	 * 出发地
-	 * 
+	 *
 	 * @return
 	 */
 	public String getStart() {
 		return start;
 	}
 
+
 	/**
 	 * 货物到达状态
-	 * 
+	 *
 	 * @param arriveState
 	 */
 	public void setArriveState(String arriveState) {
@@ -91,10 +88,11 @@ public class ReceiveVO extends ListVO {
 
 	/**
 	 * 货物到达状态
-	 * 
+	 *
 	 * @return
 	 */
 	public String getArriveState() {
 		return arriveState;
 	}
+
 }

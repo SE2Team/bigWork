@@ -1,9 +1,12 @@
 package businesslogic.listbl;
 
+import po.ExpenseAndDatePO;
 import po.OrderPO;
-import util.ResultMessage;
+import util.ExistException;
+import vo.ExpenseAndDateVO;
 import vo.ListVO;
 import vo.OrderVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -23,15 +26,21 @@ public class Order extends List {
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         OrderVO vo = null;
         vo = (OrderVO) listVO;
 
-        OrderPO po = new OrderPO(vo.getSenderName(), vo.getSenderAddress(), vo.getSenderWorkplace(), vo.getSenderTelephone(), vo.getSenderPhone(), vo.getReceiverName(), vo.getReceiverAddress(), vo.getReceiverWorkplace(), vo.getReceiverTelephone(), vo.getReceiverPhone(),
-                vo.getOriginalNum(), vo.getWeight(), vo.getVolume(), vo.getGoods_Name(), vo.getDeliveryType(), vo.getWrapper(), "1234", "1234", "1234", "1234", vo.getDeliveryNum());
+
+        OrderPO po = VO2PO.convert(vo);
 
 
-        listDataService.saveAsList(po);
         return listDataService.save(po);
+    }
+
+    public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException, ExistException {
+        ExpenseAndDatePO npo=listDataService.getExpenseOfTransport(new ExpenseAndDatePO(vo.getCity1(),vo.getCity2(),vo.getDays(),vo.getWrapper(),vo.getVolume(),vo.getDeliveryType(),
+                vo.getExpenseOfWrap(),vo.getExpenseOfTransport(),vo.getExpense()));
+        return new ExpenseAndDateVO(npo.getCity1(),npo.getCity2(),npo.getDays(),npo.getWrapper(),npo.getVolume(),npo.getDeliveryType(),
+                npo.getExpenseOfWrap(),npo.getExpenseOfTransport(),npo.getExpense());
     }
 }

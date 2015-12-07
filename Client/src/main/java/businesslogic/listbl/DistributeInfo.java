@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.DistributePO;
-import util.ResultMessage;
 import vo.DistributeVO;
 import vo.ListVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -23,17 +23,11 @@ public class DistributeInfo extends List {
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws  RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         DistributeVO vo = null;
         vo = (DistributeVO) listVO;
 
-        DistributePO po = new DistributePO(vo.getArriveDate(), vo.getOrderNum(), vo.getArriveDate());
-        listDataService.saveAsList(po);
+        DistributePO po = VO2PO.convert(vo);
         return listDataService.save(po);
-    }
-
-    @Override
-    public ResultMessage get() {
-        return super.get();
     }
 }

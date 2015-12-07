@@ -14,57 +14,58 @@ import dataservice.listdataservice.ListDataService;
 import dataservice.managedataservice.ManageDataService;
 import dataservice.userdataservice.UserDataService;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
-public class DataFactory extends UnicastRemoteObject implements DataFactoryService {
+public class DataFactory extends UnicastRemoteObject implements DataFactoryService,Serializable{
+
+	
+		private static DataFactory FACTORY=null;
+
+		protected DataFactory() throws RemoteException {
+			super();
+		}
+
+		public static DataFactory getInstance() throws RemoteException {
+			if(DataFactory.FACTORY==null)
+				FACTORY=new DataFactory();
+			return FACTORY;
+		}
+
+		public CommodityDataService getCommodityData() throws RemoteException {
+			// TODO Auto-generated method stub
+			return new CommoditydataImpl();
+		}
+
+		public FinanceDataService getFinanceData() throws RemoteException {
+			// TODO Auto-generated method stub
+			return new FinancedataImpl();
+		}
+
+		public InquiryDataService getInquiryData() throws RemoteException {
+			// TODO Auto-generated method stub
+			return new InquirydataImpl();
+		}
+
+		public ListDataService getListData() throws RemoteException {
+			// TODO Auto-generated method stub
+			return new ListdataImpl();
+		}
+
+		public ManageDataService getManageData() throws RemoteException {
+			// TODO Auto-generated method stub
+			return new ManagedataImpl();
+		}
+
+		public UserDataService getUserData() throws RemoteException {
+			// TODO Auto-generated method stub
+			return  new UserdataImpl();
+		}
 
 
-    private static DataFactory FACTORY = null;
-
-    protected DataFactory() throws RemoteException {
-        super();
-    }
-
-    public static DataFactory getInstance() throws RemoteException {
-        if (DataFactory.FACTORY == null) {
-            FACTORY = new DataFactory();
-        }
-        return FACTORY;
-    }
-
-    public CommodityDataService getCommodityData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new CommoditydataImpl();
-    }
-
-    public FinanceDataService getFinanceData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new FinancedataImpl();
-    }
-
-    public InquiryDataService getInquiryData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new InquirydataImpl();
-    }
-
-    public ListDataService getListData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new ListdataImpl();
-    }
-
-    public ManageDataService getManageData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new ManagedataImpl();
-    }
-
-    public UserDataService getUserData() throws RemoteException {
-        // TODO Auto-generated method stub
-        return new UserdataImpl();
-    }
-
-
+    
 }

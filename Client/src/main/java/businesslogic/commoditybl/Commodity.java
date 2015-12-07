@@ -10,7 +10,6 @@ import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
 import po.StockInPO;
 import po.StockPO;
-import util.ResultMessage;
 import vo.StockInVO;
 import vo.StockOutVO;
 import vo.StockVO;
@@ -59,7 +58,7 @@ public class Commodity {
      * @throws DateException     the date exception
      * @throws RemoteException   the remote exception
      */
-    public ResultMessage stockOut(StockOutVO stockOutVO) throws InvalidInput, TransferException, DateException, RemoteException {
+    public boolean stockOut(StockOutVO stockOutVO) throws InvalidInput, TransferException, DateException, RemoteException {
         ListblService list = new ListController();
 
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
@@ -70,7 +69,7 @@ public class Commodity {
 
         commodity.update(stockPO);
 
-        return ResultMessage.SUCCESS;
+        return true;
     }
 
     /**
@@ -82,11 +81,11 @@ public class Commodity {
      * @throws DateException   the date exception
      * @throws RemoteException the remote exception
      */
-    public ResultMessage stockIn(StockInVO stockInVO) throws InvalidInput, DateException, RemoteException {
+    public boolean stockIn(StockInVO stockInVO) throws InvalidInput, DateException, RemoteException {
         ListblService list = new ListController();
 
         StockInPO stockInPO = new StockInPO(stockInVO.getDeliveryNum(), stockInVO.getInDate(), stockInVO.getEnd(), stockInVO.getZoneNum(),
-                stockInVO.getRowNum(), stockInVO.getShelfNum(), stockInVO.getPositionNum());
+                stockInVO.getRowNum(), stockInVO.getShelfNum(), stockInVO.getPositionNum(),stockInVO.getIsCheck());
 
         list.stockIn(stockInVO);
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
@@ -96,7 +95,7 @@ public class Commodity {
         stockPO.add(stockInPO);
 
         commodity.update(stockPO);
-        return ResultMessage.SUCCESS;
+        return true;
     }
 
     /**
@@ -107,7 +106,7 @@ public class Commodity {
      * @return stock vo
      */
     public StockVO checkStock(String startDate, String endDate) {
-        StockVO stockVO = new StockVO(stockPO);
+        StockVO stockVO = new StockVO(stockPO.getStockState(),stockPO.getStockList());
         return stockVO;
     }
 
@@ -120,7 +119,7 @@ public class Commodity {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
             arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
-                    temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum()));
+                    temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(),temp.getIsCheck()));
         }
         return arrayList;
     }

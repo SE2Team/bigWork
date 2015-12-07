@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.TransferReceivePO;
-import util.ResultMessage;
 import vo.ListVO;
 import vo.TransferReceiveVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -22,11 +22,10 @@ public class TransArrive extends List {
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         TransferReceiveVO vo = null;
         vo = (TransferReceiveVO) listVO;
-        TransferReceivePO po = new TransferReceivePO(vo.getOrderNum(), vo.getArriveDate(), vo.getStart(), vo.getCargoState(), vo.getTransferCenterNum(), vo.getTransferNum());
-        listDataService.saveAsList(po);
+        TransferReceivePO po = VO2PO.convert(vo);
         return listDataService.save(po);
     }
 }

@@ -1,6 +1,7 @@
 package dataservice.financedataservice;
 
 import po.AccountPO;
+import util.ExistException;
 import util.ResultMessage;
 
 import java.rmi.Remote;
@@ -12,7 +13,7 @@ public interface FinanceDataService extends Remote{
      * TODO 只生成不返回？
      * @return
      */
-    public String get();
+    public String get() throws RemoteException;
 
     /**
      * TODO 同上啊？
@@ -22,11 +23,11 @@ public interface FinanceDataService extends Remote{
      */
     public String get(String startDate, String endDate) throws RemoteException;
 
-    public ResultMessage addAccount(AccountPO accountPO);
+    public Boolean addAccount(AccountPO accountPO) throws RemoteException, ExistException;
 
     public ArrayList<AccountPO> searchAccount()throws RemoteException;
 
-    public AccountPO searchAccount(String name);
+    public AccountPO searchAccount(String name) throws RemoteException;
 
     /**
      * 通过一个PO来找到对应的账户来删除
@@ -34,14 +35,15 @@ public interface FinanceDataService extends Remote{
      * @param accountPO
      * @return
      */
-    public ResultMessage DelAccount(AccountPO accountPO);
+    public Boolean DelAccount(AccountPO accountPO) throws RemoteException;
 
     /**
      * @param name
      * @param newAccountPO 新的账户信息
      * @return
+     * @throws ExistException 
      */
-    public ResultMessage EditAccount(String name, AccountPO newAccountPO);
+    public Boolean EditAccount(String name, AccountPO newAccountPO) throws RemoteException, ExistException;
 
 
 }

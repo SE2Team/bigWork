@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.AddresseeInformationPO;
-import util.ResultMessage;
 import vo.AddresseeInformationVO;
 import vo.ListVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -24,7 +24,7 @@ public class AddresseeInfomation extends List {
         super();
     }
 
-    public ResultMessage save(ListVO listvo) throws RemoteException {
+    public boolean save(ListVO listvo) throws RemoteException {
 
         AddresseeInformationVO vo = null;
         try {
@@ -34,15 +34,11 @@ public class AddresseeInfomation extends List {
             System.out.println("强制类型转换失败！");
         }
 
-        AddresseeInformationPO po = new AddresseeInformationPO(vo.getAddresseeNum(), vo.getAddresseeName(), vo.getAddresseeDate());
-        listDataService.saveAsList(po);
+        AddresseeInformationPO po = VO2PO.convert(vo);
+
         return listDataService.save(po);
     }
 
-    @Override
-    public ResultMessage get() {
-        return super.get();
-    }
 
 
 }

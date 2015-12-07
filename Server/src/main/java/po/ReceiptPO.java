@@ -1,5 +1,7 @@
 package po;
 
+import util.ListType;
+
 import java.io.Serializable;
 
 /**
@@ -13,22 +15,17 @@ public class ReceiptPO extends ListPO implements Serializable{
 	private String receiptMoney;
 	private String receiptCourier;
 	private String orderNum;
-	
-	/**
-	 * 
-	 * @param receiptDate
-	 * @param receiptMoney
-	 * @param receiptCourier
-	 * @param orderNum
-	 */
-	public ReceiptPO(String receiptDate, String receiptMoney, 
-			String receiptCourier,String orderNum){
-		this.receiptDate=receiptDate;
-		this.receiptMoney=receiptMoney;
-		this.receiptCourier=receiptCourier;
-		this.orderNum=orderNum;
+
+	public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier,
+					 String orderNum,boolean isCheck) {
+		super(isCheck);
+		this.receiptDate = receiptDate;
+		this.receiptMoney = receiptMoney;
+		this.receiptCourier = receiptCourier;
+		this.orderNum = orderNum;
+		setType(ListType.RECEIPT);
 	}
-	
+
 	/**
 	 * 收款日期
 	 * @param receiptDate

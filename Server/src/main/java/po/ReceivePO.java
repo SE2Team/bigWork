@@ -1,5 +1,7 @@
 package po;
 
+import util.ListType;
+
 import java.io.Serializable;
 
 /**
@@ -13,23 +15,18 @@ public class ReceivePO extends ListPO implements Serializable{
 	private String  transferNum;
 	private String  start;
 	private String  arriveState;
-	
-	
-	/**
-	 * 
-	 * @param arriveDate
-	 * @param transferNum
-	 * @param start
-	 * @param arriveState
-	 */
-	public ReceivePO(String  arriveDate,String  transferNum,
-	 String  start,String  arriveState){
-		this.arriveDate=arriveDate;
-		this.transferNum=transferNum;
-		this.start=start;
-		this.arriveState=arriveState;			
+
+
+	public ReceivePO(String arriveDate, String transferNum, String start, String arriveState,
+					 boolean isCheck) {
+		super(isCheck);
+		this.arriveDate = arriveDate;
+		this.transferNum = transferNum;
+		this.start = start;
+		this.arriveState = arriveState;
+        setType(ListType.RECEIVEINFO);
 	}
-	
+
 	/**
 	 * 到达日期
 	 * @param arriveDate
@@ -95,5 +92,7 @@ public class ReceivePO extends ListPO implements Serializable{
 	public String getArriveState(){
 		return arriveState;
 	}
-	
+
+
+
 }

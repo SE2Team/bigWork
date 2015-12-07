@@ -8,6 +8,7 @@ import data.Common.Common;
 import dataservice.inquirydataservice.InquiryDataService;
 import po.LogisticsPO;
 import po.OperationLogPO;
+import util.ExistException;
 import util.ResultMessage;
 
 /**
@@ -52,7 +53,7 @@ public class InquirydataImpl extends UnicastRemoteObject implements InquiryDataS
 		return null;
 	}
 
-	public ResultMessage updateLogistics(LogisticsPO po) throws RemoteException {
+	public Boolean updateLogistics(LogisticsPO po) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		Common common = new Common("logistics");
 		ArrayList<String> list = common.readData();
@@ -64,7 +65,9 @@ public class InquirydataImpl extends UnicastRemoteObject implements InquiryDataS
 				list.add(this.logisticsPOToString(po));
 				common.clearData("logistics");
 				common.writeData(list);
-				return ResultMessage.SUCCESS;
+				return true;
+			}else{
+				throw new ExistException();
 			}
 		}
 		return null;

@@ -4,7 +4,6 @@ import businesslogic.Exception.DateException;
 import businesslogic.Exception.InvalidInput;
 import businesslogic.Exception.TransferException;
 import businesslogicservice.CommodityblService;
-import util.ResultMessage;
 import vo.StockInVO;
 import vo.StockOutVO;
 import vo.StockVO;
@@ -22,7 +21,7 @@ public class CommodityController implements CommodityblService {
     /**
      * The Commodity.
      */
-    Commodity commodity;
+    private Commodity commodity;
 
     /**
      * Instantiates a new Commodity controller.
@@ -33,13 +32,13 @@ public class CommodityController implements CommodityblService {
         commodity = new Commodity();
     }
 
-    public ResultMessage stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException {
+    public boolean stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException {
 
         return commodity.stockOut(stockOutVO);
     }
 
 
-    public ResultMessage stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException {
+    public boolean stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException {
         return commodity.stockIn(stockInVO);
     }
 

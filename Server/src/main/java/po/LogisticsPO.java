@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class LogisticsPO extends ListPO implements Serializable{
+public class LogisticsPO implements Serializable{
 	private static final long serialVersionUID = 1L;// 序列化编号
 	
 	/**
@@ -36,7 +36,5 @@ public class LogisticsPO extends ListPO implements Serializable{
 	public String getTransportState(){
 		return transportState;
 	}
-	
-	
 
 }

@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.StockInPO;
-import util.ResultMessage;
 import vo.ListVO;
 import vo.StockInVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -22,11 +22,10 @@ public class StockIn extends List {
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         StockInVO vo = null;
         vo = (StockInVO) listVO;
-        StockInPO po = new StockInPO(vo.getDeliveryNum(), vo.getInDate(), vo.getEnd(), vo.getZoneNum(), vo.getRowNum(), vo.getShelfNum(), vo.getPositionNum());
-        listDataService.saveAsList(po);
+        StockInPO po = VO2PO.convert(vo);
         return listDataService.save(po);
     }
 }

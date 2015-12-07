@@ -1,6 +1,7 @@
 package vo;
 
 import util.DeliveryType;
+import util.ListType;
 
 import java.io.Serializable;
 
@@ -28,7 +29,7 @@ public class OrderVO extends ListVO implements Serializable {
 	private String originalNum;
 	private String weight;
 	private String volume;
-	private String goodsName;
+	private String goods_Name;
 
 	//快递类型，包装材料，运费和包装费，总费用，预计到达日期，订单条形码号（快递编号）。
 	private DeliveryType DeliveryType;
@@ -50,23 +51,25 @@ public class OrderVO extends ListVO implements Serializable {
 	 * @param receiverWorkplace
 	 * @param receiverTelephone
 	 * @param receiverPhone
-	 * @param originalNum 原件数
+	 * @param originalNum
 	 * @param weight
 	 * @param volume
-	 * @param goodsName
+	 * @param goods_Name
 	 * @param DeliveryType
 	 * @param wrapper
-	 * @param expenseOfTransport 自动计算
-	 * @param expenseOfWrapper  自动计算
-	 * @param expense 自动计算
-	 * @param date 预计到达日
+	 * @param expenseOfTransport
+	 * @param expenseOfWrapper
+	 * @param expense
+	 * @param date
 	 * @param deliveryNum
 	 */
 
 	public OrderVO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
 				   String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
 				   String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
-				   String goodsName, DeliveryType DeliveryType, String wrapper, String deliveryNum) {
+				   String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
+				   String expenseOfWrapper, String expense, String date, String deliveryNum, boolean isCheck) {
+		super(isCheck);
 		this.senderName = senderName;
 		this.senderAddress = senderAddress;
 		this.senderWorkplace = senderWorkplace;
@@ -80,15 +83,15 @@ public class OrderVO extends ListVO implements Serializable {
 		this.originalNum = originalNum;
 		this.weight = weight;
 		this.volume = volume;
-		this.goodsName = goodsName;
+		this.goods_Name = goods_Name;
 		this.DeliveryType = DeliveryType;
 		this.wrapper = wrapper;
-		//TODO 自动计算项目
-//        this.expenseOfTransport = expenseOfTransport;
-//        this.expenseOfWrapper = expenseOfWrapper;
-//        this.expense = expense;
-//        this.date = date;
+		this.expenseOfTransport = expenseOfTransport;
+		this.expenseOfWrapper = expenseOfWrapper;
+		this.expense = expense;
+		this.date = date;
 		this.deliveryNum = deliveryNum;
+		setType(ListType.ORDER);
 	}
 
 	/**
@@ -278,14 +281,14 @@ public class OrderVO extends ListVO implements Serializable {
 	 * @return 内件物品名称
 	 */
 	public String getGoods_Name() {
-		return goodsName;
+		return goods_Name;
 	}
 
 	/**
 	 * @param 内件物品名称
 	 */
 	public void setGoods_Name(String goods_Name) {
-		this.goodsName = goods_Name;
+		this.goods_Name = goods_Name;
 	}
 
 	/**

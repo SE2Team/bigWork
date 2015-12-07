@@ -23,7 +23,8 @@ public class ListTester extends TestCase{
     public void testOrder() throws Exception {
         bl=new ListController();
         bl.order(new OrderVO("123","123","123","123","123","123","123","123","123","123","123","123","123","123", DeliveryType.FAST,
-                "123","123"));
+                "123","123","123","123","123","123",true));
+
 
 
 

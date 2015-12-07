@@ -3,7 +3,6 @@ package businesslogicservice;
 import businesslogic.Exception.DateException;
 import businesslogic.Exception.InvalidInput;
 import businesslogic.Exception.TransferException;
-import util.ResultMessage;
 import vo.StockInVO;
 import vo.StockOutVO;
 import vo.StockVO;
@@ -20,27 +19,27 @@ public interface CommodityblService {
 
 
     /**
-     * Stock out result message.
+     * Stock out boolean.
      *
      * @param stockOutVO the stock out vo
-     * @return the result message
+     * @return the boolean
      * @throws TransferException the transfer exception
      * @throws InvalidInput      the invalid input
      * @throws DateException     the date exception
      * @throws RemoteException   the remote exception
      */
-    ResultMessage stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException;
+    boolean stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException;
 
     /**
-     * Stock in result message.
+     * Stock in boolean.
      *
      * @param stockInVO the stock in vo
-     * @return the result message
+     * @return the boolean
      * @throws DateException   the date exception
      * @throws InvalidInput    the invalid input
      * @throws RemoteException the remote exception
      */
-    ResultMessage stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException;
+    boolean stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException;
 
     /**
      * Check stock stock vo.

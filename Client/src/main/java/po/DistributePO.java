@@ -1,5 +1,7 @@
 package po;
 
+import util.ListType;
+
 import java.io.Serializable;
 
 /**
@@ -19,13 +21,14 @@ public class DistributePO extends ListPO implements Serializable {
 	 * @param orderNum
 	 * @param distributeHuman
 	 */
-	public DistributePO(String arriveDate, String orderNum, 
-			String distributeHuman){
-			this.arriveDate=arriveDate;
-			this.orderNum=orderNum;
-			this.distributeHuman=distributeHuman;
+	public DistributePO( String arriveDate, String orderNum, String distributeHuman,boolean isCheck) {
+		super(isCheck);
+		this.arriveDate = arriveDate;
+		this.orderNum = orderNum;
+		this.distributeHuman = distributeHuman;
+		setType(ListType.DISTRIBUTEINFO);
 	}
-	
+
 	/**
 	 * 到达日期
 	 * @param arriveDate

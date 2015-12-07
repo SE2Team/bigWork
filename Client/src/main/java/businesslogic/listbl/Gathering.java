@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.GatheringPO;
-import util.ResultMessage;
 import vo.GatheringVO;
 import vo.ListVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -24,16 +24,13 @@ public class Gathering extends List {
     }
 
     @Override
-    public ResultMessage save(ListVO listVO) throws RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         GatheringVO gatheringVO = (GatheringVO) listVO;
 
-        GatheringPO po = new GatheringPO(gatheringVO.getDate(), gatheringVO.getWorkplace(), gatheringVO.getMan(), gatheringVO.getMoney(), gatheringVO.getPlace());
-        listDataService.saveAsList(po);
+        GatheringPO po = VO2PO.convert(gatheringVO);
         return listDataService.save(po);
+
     }
 
-    @Override
-    public ResultMessage get() {
-        return super.get();
-    }
+
 }

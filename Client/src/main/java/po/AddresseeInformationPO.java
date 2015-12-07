@@ -1,5 +1,7 @@
 package po;
 
+import util.ListType;
+
 import java.io.Serializable;
 
 /**
@@ -18,13 +20,14 @@ public class AddresseeInformationPO extends ListPO implements Serializable {
 	 * @param addresseeName
 	 * @param addresseeDate
 	 */
-	public  AddresseeInformationPO(String addresseeNum,String 
-			addresseeName,String addresseeDate) {
-		this.addresseeNum=addresseeNum;
-		this.addresseeName=addresseeName;
-		this.addresseeDate=addresseeDate;
+	public AddresseeInformationPO(String addresseeNum, String addresseeName, String addresseeDate,boolean isCheck) {
+		super(isCheck);
+		this.addresseeNum = addresseeNum;
+		this.addresseeName = addresseeName;
+		this.addresseeDate = addresseeDate;
+        setType(ListType.ADDRESSEEINFOMATION);
 	}
-	
+
 	/**
 	 * 
 	 * @return 收件单号

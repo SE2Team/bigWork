@@ -1,18 +1,16 @@
 package data.managedata;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-
-import javax.print.DocFlavor.STRING;
-
 import data.Common.Common;
 import dataservice.managedataservice.ManageDataService;
 import po.ConstantPO;
 import po.DriverPO;
 import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
-import util.ResultMessage;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -24,7 +22,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ResultMessage addDriver(DriverPO driverPO) throws RemoteException, ExistException {
+	public Boolean addDriver(DriverPO driverPO) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
 		ArrayList<String> list=common.readData();
@@ -32,17 +30,17 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			throw new ExistException();
 		}
 		common.writeDataAdd(this.driverPOToString(driverPO));	
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
-	public ResultMessage deleteDriver(DriverPO po) throws RemoteException {
+	public Boolean deleteDriver(DriverPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
 		ArrayList<String> list=common.readData();
 		list.remove(this.driverPOToString(po));
 		common.clearData("driver");
 		common.writeData(list);
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
 	public DriverPO checkDriver(String driveNumber) throws RemoteException {
@@ -60,7 +58,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return null;
 	}
 
-	public ResultMessage addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException {
+	public Boolean addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
 		ArrayList<String> list=common.readData();
@@ -68,17 +66,17 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			throw new ExistException();
 		}
 		common.writeDataAdd(this.vehiclePOToString(vehiclePO));
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
-	public ResultMessage deleteVehicle(VehiclePO po) throws RemoteException {
+	public Boolean deleteVehicle(VehiclePO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("vehicle");
 		ArrayList<String> list=common.readData();
 		list.remove(this.vehiclePOToString(po));
 		common.clearData("vehicle");
 		common.writeData(list);
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
 	public VehiclePO checkVehicle(String vehicleNumber) throws RemoteException {
@@ -96,20 +94,30 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return null;
 	}
 
-	public ResultMessage updateSalary(String position, String Type) throws RemoteException {
+	public Boolean updateSalary(String position, String Type) throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("salary");
 		common.clearData("salary");
 		common.writeDataAdd(position+";"+Type);
-		return ResultMessage.SUCCESS;
+		return true;
 	}
 
-	public ResultMessage updateConstant(ConstantPO constantPO) throws RemoteException {
+	public Boolean updateConstant(ConstantPO constantPO) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		Common common=new Common("constant");
+		ArrayList<String> list=common.readData();
+		for(int i=0;i<list.size();i++){
+			String[] str=list.get(i).split(";");
+			if(str[0].equals(constantPO.getCity1())&&str[1].equals(constantPO.getCity2())){
+				list.remove(i);
+				list.add(this.constantPOToString(constantPO));
+			}else{
+				throw new ExistException();
+			}
+		}
 		common.clearData("constant");
-		common.writeDataAdd(this.constantPOToString(constantPO));
-		return ResultMessage.SUCCESS;
+		common.writeData(list);
+		return true;
 	}
 
 	public String[] getSalary() throws RemoteException {
@@ -128,11 +136,95 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return this.StringToConstantPO(str);
 	}
 	
+	@Override
+	public boolean addWorker(WorkerPO workerPO) throws RemoteException, ExistException{
+		// TODO Auto-generated method stub
+		Common common=new Common("worker");
+		ArrayList<String> list=common.readData();
+		if(list.contains(this.workerPOToString(workerPO))){
+			throw new ExistException();
+		}else{
+			common.writeDataAdd(this.workerPOToString(workerPO));
+			return true;
+		}
+	}
+
+	@Override
+	public boolean delWorker(WorkerPO workerPO) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common=new Common("worker");
+		ArrayList<String> list=common.readData();
+		if(list.contains(this.workerPOToString(workerPO))){
+			list.remove(this.workerPOToString(workerPO));
+			common.clearData("worker");
+			common.writeData(list);
+			return true;
+		}else{
+			throw new ExistException();
+			
+		}
+		
+	}
+
+	@Override
+	public ArrayList<WorkerPO> check() throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("worker");
+		ArrayList<String> list=common.readData();
+		ArrayList<WorkerPO> list2=new ArrayList<WorkerPO>();
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(this.stringToWorkerPO(str));
+		}
+		return list2;
+	}
+
+	@Override
+	public ArrayList<WorkerPO> check(String name) throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("worker");
+		ArrayList<String> list=common.readData();
+		ArrayList<WorkerPO> list2=new ArrayList<WorkerPO>();
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			if(str[0].equals(name)){
+				list2.add(this.stringToWorkerPO(str));
+			}
+		}
+		
+		return list2;
+	}
+
+	@Override
+	public boolean editWorker(WorkerPO oldWorkerPO,WorkerPO newWorkerPO) throws RemoteException, ExistException{
+		// TODO Auto-generated method stub
+		Common common=new Common("worker");
+		ArrayList<String> list=common.readData();
+		if(list.contains(this.workerPOToString(oldWorkerPO))){
+			list.remove(this.workerPOToString(oldWorkerPO));
+			list.add(this.workerPOToString(oldWorkerPO));
+			common.clearData("worker");
+			common.writeData(list);
+			return true;
+		}else{
+			throw new ExistException();
+		}
+		
+	}
+	
+	private String workerPOToString(WorkerPO po){
+		return po.getName()+";"+po.getIdNum()+";"+po.getPosition()+";"+po.getPosition()+";"+po.getUserId();
+	}
+	
 	private String driverPOToString(DriverPO po){
 		return po.getDriverNum()+";"+po.getDriverName()+";"+po.getBirthDate()+";"+po.getIdNum()+";"+po.getPhone()
 		+";"+po.getVehicleInstitution()+";"+po.getSex()+";"+po.getLicenseTime();
 	}
    
+	private WorkerPO stringToWorkerPO(String[] str){
+		return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5]);
+	}
+	
 	private String vehiclePOToString(VehiclePO po){
 		return po.getVehicleNum()+";"+po.getLicensePlate()+";"+po.getBuyDate()+";"+po.getUseTime();
 	}
@@ -152,4 +244,5 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	private ConstantPO StringToConstantPO(String[] str){
 		return new ConstantPO(str[0], str[1], str[2], str[3]);
 	}
+
 }

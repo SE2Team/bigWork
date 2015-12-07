@@ -1,15 +1,12 @@
 package businesslogic.financebl;
 
-import businesslogic.Exception.DateException;
-import businesslogic.Exception.InvalidDoubleException;
-import businesslogic.Exception.MoneyException;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountPO;
-import util.ResultMessage;
+import util.ExistException;
 import vo.AccountVO;
 import vo.GatheringVO;
 import vo.PaymentVO;
@@ -27,13 +24,13 @@ public class Finance {
     /**
      * The Data factory.
      */
-    DataFactoryService dataFactory;
+    private DataFactoryService dataFactory;
 
 
     /**
      * The Finance.
      */
-    FinanceDataService finance;
+    private FinanceDataService finance;
 
     /**
      * Instantiates a new Finance.
@@ -52,7 +49,7 @@ public class Finance {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public ResultMessage gathering(GatheringVO gatheringVO) throws RemoteException, InvalidDoubleException, DateException {
+    public boolean gathering(GatheringVO gatheringVO) throws RemoteException{
         ListblService list = new ListController();
         /**
          *判断输入是否合法
@@ -60,7 +57,7 @@ public class Finance {
 
         list.gathering(gatheringVO);
 
-        return ResultMessage.SUCCESS;
+        return false;
     }
 
     /**
@@ -70,7 +67,7 @@ public class Finance {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public ResultMessage payment(PaymentVO paymentVO) throws RemoteException, DateException, MoneyException {
+    public boolean payment(PaymentVO paymentVO) throws RemoteException{
         ListblService list = new ListController();
 
         /**
@@ -79,7 +76,7 @@ public class Finance {
 
 
         list.payment(paymentVO);
-        return ResultMessage.SUCCESS;
+        return true;
     }
 
     /**
@@ -87,10 +84,10 @@ public class Finance {
      *
      * @return the result message
      */
-    public ResultMessage generateForm() {
+    public boolean generateForm() throws RemoteException {
         finance.get();
 
-        return ResultMessage.SUCCESS;
+        return false;
     }
 
     /**
@@ -101,14 +98,14 @@ public class Finance {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public ResultMessage generateForm(String startDate, String endDate) throws RemoteException {
+    public boolean generateForm(String startDate, String endDate) throws RemoteException {
         /**
          *判断输入是否合法
          */
 
 
         finance.get(startDate, endDate);
-        return ResultMessage.SUCCESS;
+        return false;
     }
 
     /**
@@ -118,8 +115,8 @@ public class Finance {
      * @return the result message
      */
 //TODO data层接口待讨论
-    public ResultMessage initial(String institution) {
-        return null;
+    public boolean initial(String institution) {
+        return false;
     }
 
     /**
@@ -128,11 +125,11 @@ public class Finance {
      * @param accountVO the account vo
      * @return the result message
      */
-    public ResultMessage addAccount(AccountVO accountVO) {
+    public boolean addAccount(AccountVO accountVO) throws RemoteException, ExistException {
 
         finance.addAccount(new AccountPO(accountVO.getAccountName(), accountVO.getAccountBalance()));
         //数据层的异常……
-        return ResultMessage.SUCCESS;
+        return false;
     }
 
     /**
@@ -158,7 +155,7 @@ public class Finance {
      * @param name the name
      * @return the account vo
      */
-    public AccountVO searchAccount(String name) {
+    public AccountVO searchAccount(String name) throws RemoteException {
         if (name.length() == 0) {
             //抛出找不到的异常
         }
@@ -173,7 +170,7 @@ public class Finance {
      * @param accountVO the account vo
      * @return the result message
      */
-    public ResultMessage DelAccount(AccountVO accountVO) {
+    public boolean DelAccount(AccountVO accountVO) throws RemoteException {
         AccountPO accountPO = new AccountPO(accountVO.getAccountName(), accountVO.getAccountBalance());
 
         return finance.DelAccount(accountPO);
@@ -186,7 +183,7 @@ public class Finance {
      * @param accountVONew the account vo new
      * @return the result message
      */
-    public ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) {
+    public boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException {
         //判断输入的合法性
 
         //名字与已存在的是否冲突交给数据层判断

@@ -1,10 +1,6 @@
 package businesslogicservice;
 
-import businesslogic.Exception.DateException;
-import businesslogic.Exception.InputNullException;
-import businesslogic.Exception.InvalidDoubleException;
-import businesslogic.Exception.MoneyException;
-import util.ResultMessage;
+import util.ExistException;
 import vo.AccountVO;
 import vo.GatheringVO;
 import vo.PaymentVO;
@@ -13,24 +9,24 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface FinanceblService {
-    ResultMessage gathering(GatheringVO gatheringVO) throws InvalidDoubleException, DateException, RemoteException;
+    boolean gathering(GatheringVO gatheringVO) throws RemoteException;
 
-    ResultMessage payment(PaymentVO paymentVO) throws InvalidDoubleException, DateException, RemoteException, MoneyException;
+    boolean payment(PaymentVO paymentVO) throws RemoteException;
 
-    ResultMessage generateForm();
+    boolean generateForm() throws RemoteException;
 
-    ResultMessage generateForm(String startDate, String endDate) throws DateException, RemoteException;
+    boolean generateForm(String startDate, String endDate) throws RemoteException;
 
-    ResultMessage initial(String institution);
+    boolean initial(String institution);
 
-    ResultMessage addAccount(AccountVO accountVO) throws InvalidDoubleException, InputNullException;
+    boolean addAccount(AccountVO accountVO) throws  RemoteException, ExistException;
 
     ArrayList<AccountVO> searchAccount() throws RemoteException;
 
-    AccountVO searchAccount(String name);
+    AccountVO searchAccount(String name) throws RemoteException;
 
-    ResultMessage DelAccount(AccountVO accountVO);
+    boolean DelAccount(AccountVO accountVO) throws RemoteException;
 
-    ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws InvalidDoubleException;
+    boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException;
 
 }

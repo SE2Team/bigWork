@@ -6,13 +6,14 @@ import dataservice.managedataservice.ManageDataService;
 import po.ConstantPO;
 import po.DriverPO;
 import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
-import util.ResultMessage;
 import vo.ConstantVO;
 import vo.DriverVO;
 import vo.VehicleVO;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
@@ -23,11 +24,11 @@ public class Manage {
     /**
      * The Data factory.
      */
-    DataFactoryService dataFactory;
+    private DataFactoryService dataFactory;
     /**
      * The Manage.
      */
-    ManageDataService manage;
+    private ManageDataService manage;
 
     /**
      * Instantiates a new Manage.
@@ -61,10 +62,7 @@ public class Manage {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public ResultMessage delDriver(DriverVO driverVO) throws RemoteException {
-        //判断
-        //……
-
+    public Boolean delDriver(DriverVO driverVO) throws RemoteException {
         return manage.deleteDriver(convert(driverVO));
     }
 
@@ -90,7 +88,7 @@ public class Manage {
      * @throws RemoteException the remote exception
      * @throws ExistException  the exist exception
      */
-    public ResultMessage addVehicle(VehicleVO vehicleVO) throws RemoteException, ExistException {
+    public Boolean addVehicle(VehicleVO vehicleVO) throws RemoteException, ExistException {
         return manage.addVehicle(convert(vehicleVO));
     }
 
@@ -101,7 +99,7 @@ public class Manage {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public ResultMessage delVehicle(VehicleVO vehiclevO) throws RemoteException {
+    public Boolean delVehicle(VehicleVO vehiclevO) throws RemoteException {
         return manage.deleteVehicle(convert(vehiclevO));
     }
 
@@ -124,7 +122,7 @@ public class Manage {
      * @throws RemoteException the remote exception
      */
     public void updateSalary(String position, String Type) throws RemoteException {
-        manage.updateSalary(position, Type);
+        manage.updateSalary(position,Type);
     }
 
     /**
@@ -133,13 +131,32 @@ public class Manage {
      * @param constantVO the constant vo
      * @throws RemoteException the remote exception
      */
-    public void updateConstant(ConstantVO constantVO) throws RemoteException {
+    public void updateConstant(ConstantVO constantVO) throws RemoteException, ExistException {
 
         ConstantPO po = new ConstantPO(constantVO.getCity1(), constantVO.getCity2(), constantVO.getPrice(), constantVO.getDistance());
 
         manage.updateConstant(po);
     }
 
+    public boolean addWorker(WorkerPO po) throws RemoteException, ExistException {
+        return manage.addWorker(po);
+    }
+
+    public boolean delWorker(WorkerPO po) throws RemoteException, ExistException {
+        return manage.delWorker(po);
+    }
+
+    public ArrayList<WorkerPO> check() throws RemoteException {
+        return manage.check();
+    }
+
+    public ArrayList<WorkerPO> check(String name) throws RemoteException {
+        return manage.check(name);
+    }
+
+    public boolean editWorker(WorkerPO opo,WorkerPO npo) throws RemoteException, ExistException {
+        return manage.editWorker(opo,npo);
+    }
     /**
      * 私有vo和po之间转换的方法
      *

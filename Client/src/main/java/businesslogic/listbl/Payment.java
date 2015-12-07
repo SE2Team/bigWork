@@ -1,9 +1,9 @@
 package businesslogic.listbl;
 
 import po.PaymentPO;
-import util.ResultMessage;
 import vo.ListVO;
 import vo.PaymentVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 
@@ -22,18 +22,13 @@ public class Payment extends List {
         super();
     }
 
-    public ResultMessage save(ListVO listVO) throws RemoteException {
+    public boolean save(ListVO listVO) throws RemoteException {
         PaymentVO vo = null;
         vo = (PaymentVO) listVO;
 
-        PaymentPO po = new PaymentPO(vo.getPayDate(), vo.getPayMoney(), vo.getPayHuman(), vo.getPayAccount(), vo.getPayReason(), vo.getPayComment());
-        listDataService.saveAsList(po);
+        PaymentPO po = VO2PO.convert(vo);
         return listDataService.save(po);
-    }
 
-    @Override
-    public ResultMessage get() {
-        return super.get();
     }
 
 

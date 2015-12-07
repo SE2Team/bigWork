@@ -3,7 +3,7 @@ package vo;
 /**
  * Created by Administrator on 2015/10/24 0024.
  */
-public class OperationLogVO extends ListVO{
+public class OperationLogVO {
 	
 	private String time;// 操作时间
 	private String human;// 操作人员

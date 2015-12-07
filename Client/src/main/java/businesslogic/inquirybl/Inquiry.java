@@ -21,11 +21,11 @@ public class Inquiry {
     /**
      * The Data factory.
      */
-    DataFactoryService dataFactory;
+    private DataFactoryService dataFactory;
     /**
      * The Inquiry.
      */
-    InquiryDataService inquiry;
+    private InquiryDataService inquiry;
 
     /**
      * Instantiates a new Inquiry.

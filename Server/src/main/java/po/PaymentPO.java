@@ -1,5 +1,7 @@
 package po;
 
+import util.ListType;
+
 import java.io.Serializable;
 
 /**
@@ -19,26 +21,21 @@ public class PaymentPO extends ListPO implements Serializable{
 	private String payAccount;
 	private String payReason;
 	private String payComment;
-	
-	
-	/**
-	 * 
-	 * @param payDate
-	 * @param payMoney
-	 * @param payHuman
-	 * @param payAccount
-	 * @param payReason
-	 * @param payComment
-	 */
+
+
 	public PaymentPO(String payDate, String payMoney, String payHuman,
-			String payAccount,String payReason,String payComment){
-		this.payAccount=payAccount;
-		this.payComment=payComment;
-		this.payDate=payDate;
-		this.payHuman=payHuman;
-		this.payMoney=payMoney;
-		this.payReason=payReason;
+					 String payAccount, String payReason, String payComment,boolean isCheck) {
+		super(isCheck);
+		this.payDate = payDate;
+		this.payMoney = payMoney;
+		this.payHuman = payHuman;
+		this.payAccount = payAccount;
+		this.payReason = payReason;
+		this.payComment = payComment;
+        setType(ListType.PAYMENT);
 	}
+
+
 	
 	public  void setPayDate(String payDate){
 		this.payDate=payDate;
@@ -87,5 +84,7 @@ public class PaymentPO extends ListPO implements Serializable{
 	public String getPayComment(){
 		return payComment;
 	}
+
+
 	
 }
