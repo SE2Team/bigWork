@@ -146,11 +146,11 @@ public class Manage {
         return manage.delWorker(po);
     }
 
-    public ArrayList<WorkerPO> check() throws RemoteException {
+    public ArrayList<WorkerPO> checkWorker() throws RemoteException {
         return manage.check();
     }
 
-    public ArrayList<WorkerPO> check(String name) throws RemoteException {
+    public ArrayList<WorkerPO> checkWorker(String name) throws RemoteException {
         return manage.check(name);
     }
 

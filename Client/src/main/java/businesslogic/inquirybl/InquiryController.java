@@ -1,6 +1,5 @@
 package businesslogic.inquirybl;
 
-import businesslogic.Exception.DeliverNumException;
 import businesslogicservice.InquiryblService;
 import vo.LogisticsVO;
 import vo.OperationLogVO;
@@ -37,7 +36,7 @@ public class InquiryController implements InquiryblService {
         return inquiry.checkForm(type);
     }
 
-    public LogisticsVO checkLogistics(String num) throws RemoteException, DeliverNumException {
+    public LogisticsVO checkLogistics(String num) throws RemoteException {
         return inquiry.checkLogistics(num);
     }
 }

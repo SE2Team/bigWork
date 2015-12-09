@@ -1,6 +1,5 @@
 package businesslogic.inquirybl;
 
-import businesslogic.Exception.DeliverNumException;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.inquirydataservice.InquiryDataService;
@@ -69,10 +68,8 @@ public class Inquiry {
      * @param num the num
      * @return the logistics vo
      * @throws RemoteException     the remote exception
-     * @throws DeliverNumException the deliver num exception
      */
-    public LogisticsVO checkLogistics(String num) throws RemoteException, DeliverNumException {
-        DeliverNumException.isValid(num);
+    public LogisticsVO checkLogistics(String num) throws RemoteException {
         LogisticsPO po = inquiry.checkLogistics(num);
 
         return new LogisticsVO(po.getDeliveryNum(), po.getTransportState());

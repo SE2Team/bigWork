@@ -47,18 +47,19 @@ public interface ManageblService {
      *
      * @return 所有现有人员的列表
      */
-    ArrayList<WorkerPO> check() throws RemoteException;
+    ArrayList<WorkerPO> checkWorker() throws RemoteException;
 
     /**
      * 查找人员
      * @param name 人员名字
      * @return 符合条件的人员列表（可能只有一个人员的ArrayList）
      */
-    ArrayList<WorkerPO> check(String name) throws RemoteException;
+    ArrayList<WorkerPO> checkWorker(String name) throws RemoteException;
 
     /**
      * 编辑人员信息
-     * @param workerPO
+     * @param oldWorkerPO
+     * @param newWorkerPO
      * @return
      */
     boolean editWorker(WorkerPO oldWorkerPO,WorkerPO newWorkerPO) throws RemoteException, ExistException;

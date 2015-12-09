@@ -70,12 +70,12 @@ public class ManageController implements ManageblService {
         return manage.delWorker(workerPO);
     }
 
-    public ArrayList<WorkerPO> check() throws RemoteException {
-        return manage.check();
+    public ArrayList<WorkerPO> checkWorker() throws RemoteException {
+        return manage.checkWorker();
     }
 
-    public ArrayList<WorkerPO> check(String name) throws RemoteException {
-        return manage.check(name);
+    public ArrayList<WorkerPO> checkWorker(String name) throws RemoteException {
+        return manage.checkWorker(name);
     }
 
     public boolean editWorker(WorkerPO oldWorkerPO,WorkerPO newWorkerPO) throws RemoteException, ExistException {
