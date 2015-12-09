@@ -1,5 +1,6 @@
 package businesslogic.listbl;
 
+import businesslogic.commoditybl.CommodityController;
 import po.StockInPO;
 import vo.ListVO;
 import vo.StockInVO;
@@ -25,6 +26,7 @@ public class StockIn extends List {
     public boolean save(ListVO listVO) throws RemoteException {
         StockInVO vo = null;
         vo = (StockInVO) listVO;
+        new CommodityController().stockIn(vo);
         StockInPO po = VO2PO.convert(vo);
         return listDataService.save(po);
     }

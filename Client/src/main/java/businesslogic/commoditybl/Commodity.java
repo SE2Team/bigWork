@@ -3,9 +3,7 @@ package businesslogic.commoditybl;
 import businesslogic.Exception.DateException;
 import businesslogic.Exception.InvalidInput;
 import businesslogic.Exception.TransferException;
-import businesslogic.listbl.ListController;
 import businesslogic.utilitybl.Helper;
-import businesslogicservice.ListblService;
 import dataservice.DataFactory;
 import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
@@ -65,11 +63,11 @@ public class Commodity {
      * @throws RemoteException   the remote exception
      */
     public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
-        ListblService list = new ListController();
+//        ListblService list = new ListController();
 
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
         //……
-        list.stockOut(stockOutVO);
+//        list.stockOut(stockOutVO);
         //从库存中删去
         stockPO.remove(stockOutVO.getDeliveryNum());
 
@@ -88,12 +86,12 @@ public class Commodity {
      * @throws RemoteException the remote exception
      */
     public boolean stockIn(StockInVO stockInVO) throws RemoteException {
-        ListblService list = new ListController();
+//        ListblService list = new ListController();
 
         StockInPO stockInPO = new StockInPO(stockInVO.getDeliveryNum(), stockInVO.getInDate(), stockInVO.getEnd(), stockInVO.getZoneNum(),
-                stockInVO.getRowNum(), stockInVO.getShelfNum(), stockInVO.getPositionNum(),stockInVO.getIsCheck());
+                stockInVO.getRowNum(), stockInVO.getShelfNum(), stockInVO.getPositionNum(), stockInVO.getIsCheck());
 
-        list.stockIn(stockInVO);
+//        list.stockIn(stockInVO);
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
         //……
 
@@ -112,7 +110,7 @@ public class Commodity {
      * @return stock vo
      */
     public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
-        Iterator<Integer> itr=commodity.check(startDate,endDate);
+        Iterator<Integer> itr = commodity.check(startDate, endDate);
         return itr;
     }
 
@@ -124,24 +122,25 @@ public class Commodity {
     public ArrayList<StockInVO> stockSum() {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
-            if (Helper.isEqual(temp.getInDate())) {
-                arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
-                        temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
-            }
+
+            arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
+                    temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+
         }
         return arrayList;
     }
 
     /**
      * 生成时间段内库存状态
+     *
      * @param startDate
      * @param endDate
      * @return
      */
-    public Iterator<StockInVO> stockSum(String startDate, String endDate){
+    public Iterator<StockInVO> stockSum(String startDate, String endDate) {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
-            if (Helper.isBetween(startDate,temp.getInDate(),endDate)) {
+            if (Helper.isBetween(startDate, temp.getInDate(), endDate)) {
                 arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
                         temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
             }

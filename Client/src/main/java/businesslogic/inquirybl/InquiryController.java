@@ -6,7 +6,7 @@ import vo.LogisticsVO;
 import vo.OperationLogVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 没有类间协作
@@ -29,8 +29,8 @@ public class InquiryController implements InquiryblService {
         inquiry = new Inquiry();
     }
 
-    public ArrayList<OperationLogVO> checkOperationLog() throws RemoteException {
-        return inquiry.checkOperationLog();
+    public Iterator<OperationLogVO> checkOperationLog() throws RemoteException {
+        return inquiry.checkOperationLog().iterator();
     }
 
     public String checkForm(String type) throws RemoteException {

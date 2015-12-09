@@ -36,10 +36,11 @@ public class Login {
      * @return user po
      * @throws RemoteException the remote exception
      */
-    public UserPO login(UserVO vo) throws RemoteException, ExistException {
+    public UserVO login(UserVO vo) throws RemoteException, ExistException {
+        UserPO po=data.login(vo.getId(), vo.getPassword());
 
 
-        return data.login(vo.getId(), vo.getPassword());
+        return new UserVO(vo.getId(),vo.getPassword(),vo.getName(),vo.getPermission());
     }
 
 

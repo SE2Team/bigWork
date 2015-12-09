@@ -19,10 +19,6 @@ import java.util.ArrayList;
  */
 public class Inquiry {
     /**
-     * The Data factory.
-     */
-    private DataFactoryService dataFactory;
-    /**
      * The Inquiry.
      */
     private InquiryDataService inquiry;
@@ -33,7 +29,10 @@ public class Inquiry {
      * @throws RemoteException the remote exception
      */
     public Inquiry() throws RemoteException {
-        dataFactory = DataFactory.getInstance();
+        /*
+      The Data factory.
+     */
+        DataFactoryService dataFactory = DataFactory.getInstance();
         inquiry = dataFactory.getInquiryData();
     }
 
@@ -46,9 +45,9 @@ public class Inquiry {
     public ArrayList<OperationLogVO> checkOperationLog() throws RemoteException {
         ArrayList<OperationLogPO> po = inquiry.checkOperationLog();
         ArrayList<OperationLogVO> vo = new ArrayList<OperationLogVO>();
-        for (OperationLogPO temp : po)
+        for (OperationLogPO temp : po) {
             vo.add(new OperationLogVO(temp.getTime(), temp.getHuman(), temp.getType()));
-
+        }
         return vo;
     }
 

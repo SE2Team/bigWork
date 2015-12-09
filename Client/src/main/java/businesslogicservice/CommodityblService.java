@@ -1,13 +1,9 @@
 package businesslogicservice;
 
-import businesslogic.Exception.DateException;
-import businesslogic.Exception.InvalidInput;
-import businesslogic.Exception.TransferException;
 import vo.StockInVO;
 import vo.StockOutVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -23,9 +19,6 @@ public interface CommodityblService {
      *
      * @param stockOutVO the stock out vo
      * @return the boolean
-     * @throws TransferException the transfer exception
-     * @throws InvalidInput      the invalid input
-     * @throws DateException     the date exception
      * @throws RemoteException   the remote exception
      */
     boolean stockOut(StockOutVO stockOutVO) throws RemoteException;
@@ -35,8 +28,7 @@ public interface CommodityblService {
      *
      * @param stockInVO the stock in vo
      * @return the boolean
-     * @throws DateException   the date exception
-     * @throws InvalidInput    the invalid input
+     * @throws
      * @throws RemoteException the remote exception
      */
     boolean stockIn(StockInVO stockInVO) throws RemoteException;
@@ -56,7 +48,7 @@ public interface CommodityblService {
      *
      * @return the array list
      */
-    ArrayList<StockInVO> stockSum();
+    Iterator<StockInVO> stockSum();
 
     /**
      * 生成时间段内库存状态

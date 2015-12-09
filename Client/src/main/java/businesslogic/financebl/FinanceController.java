@@ -7,7 +7,7 @@ import vo.GatheringVO;
 import vo.PaymentVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
@@ -54,8 +54,8 @@ public class FinanceController implements FinanceblService {
         return finance.addAccount(accountVO);
     }
 
-    public ArrayList<AccountVO> searchAccount() throws RemoteException {
-        return finance.searchAccount();
+    public Iterator<AccountVO> searchAccount() throws RemoteException {
+        return finance.searchAccount().iterator();
     }
 
     public AccountVO searchAccount(String name) throws RemoteException {

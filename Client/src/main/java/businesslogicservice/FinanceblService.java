@@ -6,7 +6,7 @@ import vo.GatheringVO;
 import vo.PaymentVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 public interface FinanceblService {
     boolean gathering(GatheringVO gatheringVO) throws RemoteException;
@@ -21,7 +21,7 @@ public interface FinanceblService {
 
     boolean addAccount(AccountVO accountVO) throws  RemoteException, ExistException;
 
-    ArrayList<AccountVO> searchAccount() throws RemoteException;
+    Iterator<AccountVO> searchAccount() throws RemoteException;
 
     AccountVO searchAccount(String name) throws RemoteException;
 

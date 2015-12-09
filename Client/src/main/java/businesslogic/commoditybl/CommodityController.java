@@ -5,7 +5,6 @@ import vo.StockInVO;
 import vo.StockOutVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -45,8 +44,8 @@ public class CommodityController implements CommodityblService {
     }
 
 
-    public ArrayList<StockInVO> stockSum() {
-        return commodity.stockSum();
+    public Iterator<StockInVO> stockSum() {
+        return commodity.stockSum().iterator();
     }
 
     public Iterator<StockInVO> stockSum(String startDate, String endDate){

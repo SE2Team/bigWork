@@ -16,7 +16,7 @@ public class LoginController implements LoginblService {
 
     private Login login;
 
-    public UserPO login(UserVO userVO) throws RemoteException, ExistException {
+    public UserVO login(UserVO userVO) throws RemoteException, ExistException {
         login = new Login();
         return login.login(userVO);
     }

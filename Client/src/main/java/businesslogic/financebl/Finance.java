@@ -21,11 +21,6 @@ import java.util.ArrayList;
  */
 public class Finance {
 
-    /**
-     * The Data factory.
-     */
-    private DataFactoryService dataFactory;
-
 
     /**
      * The Finance.
@@ -38,7 +33,10 @@ public class Finance {
      * @throws RemoteException the remote exception
      */
     public Finance() throws RemoteException {
-        dataFactory = DataFactory.getInstance();
+        /*
+      The Data factory.
+     */
+        DataFactoryService dataFactory = DataFactory.getInstance();
         finance = dataFactory.getFinanceData();
     }
 
@@ -153,12 +151,8 @@ public class Finance {
      * @return the account vo
      */
     public AccountVO searchAccount(String name) throws RemoteException {
-        if (name.length() == 0) {
-            //抛出找不到的异常
-        }
         AccountPO accountPO = finance.searchAccount(name);
-        AccountVO accountVO = new AccountVO(accountPO.getAccountName(), accountPO.getAccountBalance());
-        return accountVO;
+        return new AccountVO(accountPO.getAccountName(), accountPO.getAccountBalance());
     }
 
     /**
