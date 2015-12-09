@@ -1,33 +1,35 @@
 package dataservice.financedataservice;
 
 import po.AccountPO;
+import po.StockPO;
+import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
-import util.ResultMessage;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public interface FinanceDataService extends Remote{
     /**
-     * TODO 只生成不返回？
+     *
      * @return
      */
-    public String get() throws RemoteException;
+     String get() throws RemoteException;
 
     /**
-     * TODO 同上啊？
      * @param startDate
      * @param endDate
      * @return
      */
-    public String get(String startDate, String endDate) throws RemoteException;
+     String get(String startDate, String endDate) throws RemoteException;
 
-    public Boolean addAccount(AccountPO accountPO) throws RemoteException, ExistException;
+     Boolean addAccount(AccountPO accountPO) throws RemoteException, ExistException;
 
-    public ArrayList<AccountPO> searchAccount()throws RemoteException;
+     ArrayList<AccountPO> searchAccount()throws RemoteException;
 
-    public AccountPO searchAccount(String name) throws RemoteException;
+     AccountPO searchAccount(String name) throws RemoteException;
 
     /**
      * 通过一个PO来找到对应的账户来删除
@@ -35,7 +37,7 @@ public interface FinanceDataService extends Remote{
      * @param accountPO
      * @return
      */
-    public Boolean DelAccount(AccountPO accountPO) throws RemoteException;
+     Boolean DelAccount(AccountPO accountPO) throws RemoteException;
 
     /**
      * @param name
@@ -43,7 +45,27 @@ public interface FinanceDataService extends Remote{
      * @return
      * @throws ExistException 
      */
-    public Boolean EditAccount(String name, AccountPO newAccountPO) throws RemoteException, ExistException;
+     Boolean EditAccount(String name, AccountPO newAccountPO) throws RemoteException, ExistException;
 
+    boolean initial(WorkerPO po) throws RemoteException;
+
+    boolean initial(VehiclePO po) throws RemoteException;
+
+    /**
+     * 设置库存的报警值和上限
+     * @param po
+     * @return
+     */
+    boolean initial(StockPO po) throws RemoteException;
+
+    boolean initial(AccountPO po) throws RemoteException;
+
+    Iterator<WorkerPO> checkInitWorker() throws RemoteException;
+
+    Iterator<VehiclePO> checkInitVehicle() throws RemoteException;
+
+    Iterator<AccountPO> checkInitAccount() throws RemoteException;
+
+    StockPO checkInitStock() throws RemoteException;
 
 }

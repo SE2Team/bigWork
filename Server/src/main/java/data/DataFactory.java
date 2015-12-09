@@ -1,5 +1,8 @@
 package data;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 import data.commoditydata.CommoditydataImpl;
 import data.financedata.FinancedataImpl;
 import data.inquirydata.InquirydataImpl;
@@ -9,19 +12,16 @@ import data.userdata.UserdataImpl;
 import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
+import dataservice.impl.ListDataServiceImpl;
 import dataservice.inquirydataservice.InquiryDataService;
 import dataservice.listdataservice.ListDataService;
 import dataservice.managedataservice.ManageDataService;
 import dataservice.userdataservice.UserDataService;
 
-import java.io.Serializable;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
-public class DataFactory extends UnicastRemoteObject implements DataFactoryService,Serializable{
+public class DataFactory extends UnicastRemoteObject implements DataFactoryService{
 
 	
 		private static DataFactory FACTORY=null;

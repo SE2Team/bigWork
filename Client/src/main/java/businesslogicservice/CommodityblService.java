@@ -5,10 +5,10 @@ import businesslogic.Exception.InvalidInput;
 import businesslogic.Exception.TransferException;
 import vo.StockInVO;
 import vo.StockOutVO;
-import vo.StockVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * The interface Commoditybl service.
@@ -28,7 +28,7 @@ public interface CommodityblService {
      * @throws DateException     the date exception
      * @throws RemoteException   the remote exception
      */
-    boolean stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException;
+    boolean stockOut(StockOutVO stockOutVO) throws RemoteException;
 
     /**
      * Stock in boolean.
@@ -39,23 +39,30 @@ public interface CommodityblService {
      * @throws InvalidInput    the invalid input
      * @throws RemoteException the remote exception
      */
-    boolean stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException;
+    boolean stockIn(StockInVO stockInVO) throws RemoteException;
 
     /**
-     * Check stock stock vo.
+     * 这个迭代器包含出库、入库数量和库存数量
      *
      * @param startDate the start date
      * @param endDate   the end date
      * @return the stock vo
      */
-//日期的格式必须是：yyyy-mm-dd
-    StockVO checkStock(String startDate, String endDate);
+    Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException;
 
 
-    /**
+    /**截取当日的库存状态
      * Stock sum array list.
      *
      * @return the array list
      */
     ArrayList<StockInVO> stockSum();
+
+    /**
+     * 生成时间段内库存状态
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    Iterator<StockInVO> stockSum(String startDate, String endDate);
 }

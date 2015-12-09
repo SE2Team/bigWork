@@ -56,7 +56,7 @@ public interface ListblService {
     Iterator<ListVO> push()throws RemoteException;
 
     /**
-     * 真正保存到数据中。根据不同类型不同保存方法实现
+     * 保存为待审批
      * @param vo 要保存的单据
      * @throws ExistException 重复的编号错误
      * @throws RemoteException

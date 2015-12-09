@@ -1,21 +1,30 @@
 package data.managedata;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+
+import javax.print.DocFlavor.STRING;
+
 import data.Common.Common;
 import dataservice.managedataservice.ManageDataService;
 import po.ConstantPO;
 import po.DriverPO;
+import po.OrderPO;
 import po.VehiclePO;
 import po.WorkerPO;
 import util.ExistException;
-
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
+import util.ResultMessage;
 
 /**
  * Created by MYK on 2015/11/23 0023.
  */
 public class ManagedataImpl extends UnicastRemoteObject implements ManageDataService{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public ManagedataImpl() throws RemoteException {
 		super();

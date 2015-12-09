@@ -49,7 +49,7 @@ public class Finance {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public boolean gathering(GatheringVO gatheringVO) throws RemoteException{
+    public boolean gathering(GatheringVO gatheringVO) throws RemoteException {
         ListblService list = new ListController();
         /**
          *判断输入是否合法
@@ -67,7 +67,7 @@ public class Finance {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public boolean payment(PaymentVO paymentVO) throws RemoteException{
+    public boolean payment(PaymentVO paymentVO) throws RemoteException {
         ListblService list = new ListController();
 
         /**
@@ -109,12 +109,11 @@ public class Finance {
     }
 
     /**
-     * Initial result message.
+     * 期初建账
      *
      * @param institution the institution
      * @return the result message
      */
-//TODO data层接口待讨论
     public boolean initial(String institution) {
         return false;
     }
@@ -126,9 +125,7 @@ public class Finance {
      * @return the result message
      */
     public boolean addAccount(AccountVO accountVO) throws RemoteException, ExistException {
-
         finance.addAccount(new AccountPO(accountVO.getAccountName(), accountVO.getAccountBalance()));
-        //数据层的异常……
         return false;
     }
 

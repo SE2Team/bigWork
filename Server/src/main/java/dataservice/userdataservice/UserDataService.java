@@ -1,10 +1,10 @@
 package dataservice.userdataservice;
 
-import po.UserPO;
-import util.ExistException;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
+import po.UserPO;
+import util.ExistException;
 
 
 public interface UserDataService extends Remote{

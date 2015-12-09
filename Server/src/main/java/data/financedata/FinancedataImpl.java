@@ -4,15 +4,16 @@ import dataservice.financedataservice.FinanceDataService;
 import po.AccountPO;
 import po.GatheringPO;
 import po.PaymentPO;
+import po.StockInPO;
+import po.StockPO;
+import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
-import util.ResultMessage;
 
-import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-
-import javax.print.attribute.standard.RequestingUserName;
+import java.util.Iterator;
 
 import data.Common.Common;
 
@@ -67,7 +68,7 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 		}
 		
 		Common common2=new Common("gathering");
-		ArrayList<String> list2=common.readData();
+		ArrayList<String> list2=common2.readData();
 		for(int i=0;i<list2.size();i++){
 			String[] str=list2.get(i).split(";");
 			int date=this.DateToInt(this.stringToGatheringPO(str).getDate());
@@ -160,6 +161,10 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	
 	}
 	
+	private VehiclePO stringToVehiclePO(String[] str) {
+		return new VehiclePO(str[0], str[1], str[2], str[3]);
+	}
+	
 	private AccountPO stringToAccountPO(String[] str) {
 		return new AccountPO(str[0], str[1]);
 	}
@@ -186,6 +191,131 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			str[0]=str[0]+str[i];
 		}
 		 return Integer.parseInt(str[0]);
+	}
+	
+	private String pOToString(WorkerPO po) {
+		return po.getName()+";"+po.getIdNum()+";"+po.getPosition()+";"+po.getOrganization()+";"+po.getUserId();
+	}
+	
+	private String pOToString(VehiclePO po){
+		return po.getVehicleNum()+";"+po.getLicensePlate()+";"+po.getBuyDate()+";"+po.getUseTime();
+	}
+	
+	private ArrayList<String> pOToString(StockPO po){
+		ArrayList<StockInPO> list=po.getStockList();
+		ArrayList<String> list2=new ArrayList<String>();
+		list2.add(po.getStockState()+"");
+		for(int i=0;i<list.size();i++){
+			StockInPO po1=list.get(i);
+			String str=po1.getIsCheck()+";"+po1.getType()+";"+po1.getDeliveryNum()+";"+po1.getInDate()+";"+po1.getEnd()+";"+po1.getZoneNum()+";"+po1.getShelfNum()+";"+po1.getPositionNum();
+			list2.add(str);
+		}
+		return list2;
+	}
+	
+	private WorkerPO stringToWorkerPO(String[] str){
+		return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5]);
+	}
+	
+	@Override
+	public boolean initial(WorkerPO po) throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("initialWorker");
+		common.writeDataAdd(this.pOToString(po));
+		return true;
+	}
+
+	@Override
+	public boolean initial(VehiclePO po) throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("initialVehicle");
+		common.writeDataAdd(this.pOToString(po));
+		return true;
+	}
+
+	@Override
+	public boolean initial(StockPO po) throws RemoteException{
+		// TODO Auto-generated method stub
+		ArrayList<String> list=this.pOToString(po);
+		Common common=new Common("initialStock");
+		common.clearData("initialStock");
+		common.writeData(list);
+		return true;
+	}
+
+	@Override
+	public boolean initial(AccountPO po) throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("initialAccount");
+		common.writeDataAdd(poToString(po));
+		return true;
+	}
+
+	@Override
+	public Iterator<WorkerPO> checkInitWorker() throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("initialWorker");
+		ArrayList<String> list=common.readData();
+		ArrayList<WorkerPO> list2=new ArrayList<WorkerPO>();
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(this.stringToWorkerPO(str));
+		}
+		return list2.iterator();
+		
+	}
+
+	@Override
+	public Iterator<VehiclePO> checkInitVehicle() throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("initialVehicle");
+		ArrayList<String> list=common.readData();
+		ArrayList<VehiclePO> list2=new ArrayList<VehiclePO>();
+		
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(stringToVehiclePO(str));
+		}
+		return list2.iterator();
+	}
+
+	@Override
+	public Iterator<AccountPO> checkInitAccount() throws RemoteException{
+		// TODO Auto-generated method stub
+		Common common=new Common("initialAccount");
+		ArrayList<String> list=common.readData();
+		ArrayList<AccountPO> list2=new ArrayList<>();
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(stringToAccountPO(str));
+		}
+		return list2.iterator();
+	}
+
+	@Override
+	public StockPO checkInitStock() throws RemoteException{
+		// TODO Auto-generated method stub
+		Boolean stockState=false;
+		Common common=new Common("initialStock");
+		ArrayList<StockInPO> list2=new ArrayList<>();
+		ArrayList<String> list=common.readData();
+		if(list.get(0).equals("true")){
+			stockState=true;
+		}
+		for(int j=1;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(stringToPO(str));
+		}
+		
+		return new StockPO(stockState, list2);
+	}
+	
+	private StockInPO stringToPO(String[] str){
+		boolean isCheck=false;
+		if(str[0].equals("true")){
+			isCheck=true;
+		}
+		return new StockInPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8],isCheck);
 	}
 	
 }

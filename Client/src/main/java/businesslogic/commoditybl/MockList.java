@@ -1,6 +1,9 @@
 package businesslogic.commoditybl;
 
 import businesslogic.listbl.List;
+import businesslogic.managebl.Manage;
+import businesslogicservice.CommodityblService;
+import vo.StockInVO;
 
 import java.rmi.RemoteException;
 
@@ -27,16 +30,13 @@ public class MockList extends List {
      * @throws RemoteException the remote exception
      */
     public static void main(String[] args) throws RemoteException {
-//        CommodityblService commodity = new CommodityController();
-//        StockInVO vo = new StockInVO("121", "121", "121", "121", "121", "121", "121");
-//        try {
-//            commodity.stockIn(vo);
-//        } catch (DateException e) {
-//            System.out.print(e.getMessage());
-//        } catch (InvalidInput invalidInput) {
-//            System.out.print(invalidInput.getMessage());
-//
-//        }
+        CommodityblService commodity = new CommodityController();
+
+        StockInVO vo = new StockInVO("121", "121", "121", "121", "121", "121", "121",true);
+        commodity.stockIn(vo);
+        Manage manage=new Manage();
+        List list=new List();
+        list.save(vo);
     }
 
 

@@ -1,15 +1,12 @@
 package businesslogic.commoditybl;
 
-import businesslogic.Exception.DateException;
-import businesslogic.Exception.InvalidInput;
-import businesslogic.Exception.TransferException;
 import businesslogicservice.CommodityblService;
 import vo.StockInVO;
 import vo.StockOutVO;
-import vo.StockVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -32,23 +29,27 @@ public class CommodityController implements CommodityblService {
         commodity = new Commodity();
     }
 
-    public boolean stockOut(StockOutVO stockOutVO) throws TransferException, InvalidInput, DateException, RemoteException {
+    public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
 
         return commodity.stockOut(stockOutVO);
     }
 
 
-    public boolean stockIn(StockInVO stockInVO) throws DateException, InvalidInput, RemoteException {
+    public boolean stockIn(StockInVO stockInVO) throws RemoteException {
         return commodity.stockIn(stockInVO);
     }
 
 
-    public StockVO checkStock(String startDate, String endDate) {
+    public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
         return commodity.checkStock(startDate, endDate);
     }
 
 
     public ArrayList<StockInVO> stockSum() {
         return commodity.stockSum();
+    }
+
+    public Iterator<StockInVO> stockSum(String startDate, String endDate){
+        return commodity.stockSum(startDate, endDate);
     }
 }

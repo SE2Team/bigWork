@@ -4,6 +4,7 @@ import businesslogic.Exception.DateException;
 import businesslogic.Exception.InvalidInput;
 import businesslogic.Exception.TransferException;
 import businesslogic.listbl.ListController;
+import businesslogic.utilitybl.Helper;
 import businesslogicservice.ListblService;
 import dataservice.DataFactory;
 import dataservice.commoditydataservice.CommodityDataService;
@@ -12,10 +13,10 @@ import po.StockInPO;
 import po.StockPO;
 import vo.StockInVO;
 import vo.StockOutVO;
-import vo.StockVO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/11/1 0001.
@@ -42,9 +43,14 @@ public class Commodity {
      * @throws RemoteException the remote exception
      */
     public Commodity() throws RemoteException {
-        stockPO = commodity.check();
         dataFactory = DataFactory.getInstance();
         commodity = dataFactory.getCommodityData();
+        try {
+            stockPO = commodity.check();
+        } catch (NullPointerException e) {
+            System.out.println("没有连接到服务器！");
+        }
+
     }
 
 
@@ -58,7 +64,7 @@ public class Commodity {
      * @throws DateException     the date exception
      * @throws RemoteException   the remote exception
      */
-    public boolean stockOut(StockOutVO stockOutVO) throws InvalidInput, TransferException, DateException, RemoteException {
+    public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
         ListblService list = new ListController();
 
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
@@ -81,7 +87,7 @@ public class Commodity {
      * @throws DateException   the date exception
      * @throws RemoteException the remote exception
      */
-    public boolean stockIn(StockInVO stockInVO) throws InvalidInput, DateException, RemoteException {
+    public boolean stockIn(StockInVO stockInVO) throws RemoteException {
         ListblService list = new ListController();
 
         StockInPO stockInPO = new StockInPO(stockInVO.getDeliveryNum(), stockInVO.getInDate(), stockInVO.getEnd(), stockInVO.getZoneNum(),
@@ -105,22 +111,42 @@ public class Commodity {
      * @param endDate   the end date
      * @return stock vo
      */
-    public StockVO checkStock(String startDate, String endDate) {
-        StockVO stockVO = new StockVO(stockPO.getStockState(),stockPO.getStockList());
-        return stockVO;
+    public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
+        Iterator<Integer> itr=commodity.check(startDate,endDate);
+        return itr;
     }
 
     /**
      * 截取当日的库存状态
      *
-     * @return array list
+     * @return 一个当日入库单数组
      */
     public ArrayList<StockInVO> stockSum() {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
-            arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
-                    temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(),temp.getIsCheck()));
+            if (Helper.isEqual(temp.getInDate())) {
+                arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
+                        temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+            }
         }
         return arrayList;
     }
+
+    /**
+     * 生成时间段内库存状态
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public Iterator<StockInVO> stockSum(String startDate, String endDate){
+        ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
+        for (StockInPO temp : stockPO.getStockList()) {
+            if (Helper.isBetween(startDate,temp.getInDate(),endDate)) {
+                arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
+                        temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+            }
+        }
+        return arrayList.iterator();
+    }
+
 }

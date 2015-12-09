@@ -1,27 +1,28 @@
 package data.listdata;
 
-import java.awt.List;
-import java.io.Serializable;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.StringTokenizer;
-
-import javax.print.attribute.standard.RequestingUserName;
-
 import data.Common.Common;
 import dataservice.listdataservice.ListDataService;
 import po.*;
 import util.DeliveryType;
 import util.ExistException;
-import util.ResultMessage;
 import util.TransportType;
 
 /**
  * Created by MYK on 2015/11/23 0023.
  */
-public class ListdataImpl extends UnicastRemoteObject implements ListDataService,Serializable {
+public class ListdataImpl extends UnicastRemoteObject implements ListDataService {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 
 	public ListdataImpl() throws RemoteException {
 		super();
@@ -115,7 +116,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	}
 
 	public Boolean saveAsList(ListPO listPo) throws RemoteException {
-        Common common = new Common("list");
+		 Common common = new Common("list");
 	        String str = "";
 	        switch (listPo.getType()) {
 	            case LOADINGINFO:
@@ -322,7 +323,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 * @return
 	 */
 	private String stockInPOToString(StockInPO po) {
-		return po.getType()+";"+po.getIsCheck()+";"+po.getDeliveryNum() + ";" + po.getInDate() + po.getEnd() + ";" + po.getZoneNum() + ";" + po.getRowNum()
+		return po.getType()+";"+po.getIsCheck()+";"+po.getDeliveryNum() + ";" + po.getInDate() +";"+ po.getEnd() + ";" + po.getZoneNum() + ";" + po.getRowNum()
 				+ ";" + po.getShelfNum() + ";" + po.getPositionNum();
 	}
 	
@@ -360,7 +361,6 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		// TODO Auto-generated method stub
 		double transport=0;
 		double wrapper=0;
-		Double t=3.3;
 		
 		//计算运费和时间
 		Common common=new Common("constant");

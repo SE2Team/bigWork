@@ -12,29 +12,29 @@ import java.awt.*;
  * Created by Administrator on 2015/10/28 0025.
  */
 public class ListFinanceView extends JPanel {
-    private ListblService bl;
-    private GatheringVO gatheringVO;
+    protected ListblService bl;
+    protected GatheringVO gatheringVO;
 
-    private DefaultTableModel financeTableModel;
-    private JTable financeTable;
+    protected DefaultTableModel financeTableModel;
+    protected JTable financeTable;
 
-    private JTextField date;
-    private JTextField workplace;
-    private JTextField man;
-    private JTextField money;
-    private JTextField place;
-    private JLabel info;
+    protected JTextField date;
+    protected JTextField workplace;
+    protected JTextField man;
+    protected JTextField money;
+    protected JTextField place;
+    protected JLabel info;
 
     public ListFinanceView(ListblService bl) {
         this.bl = bl;
 //        this.setLayout(new FlowLayout());
         initItemField();
-//        initInfo();
+//        initInfo();d
         initSaveButton();
         this.validate();
     }
 
-    private void initSaveButton() {
+    protected void initSaveButton() {
         JButton saveButton = new JButton("提交收款单");
 
 //        saveButton.addActionListener(new ActionListener() {
@@ -60,7 +60,7 @@ public class ListFinanceView extends JPanel {
         this.add(BorderLayout.SOUTH, saveButton);
     }
 
-    private void initItemField() {
+    protected void initItemField() {
         JLabel dateLabel = new JLabel("收款日期：");
         date = new JTextField(10);
         JLabel workplaceLabel = new JLabel("收款单位：");
@@ -87,12 +87,12 @@ public class ListFinanceView extends JPanel {
         this.add(BorderLayout.NORTH, inputPanel);
     }
 
-    private void initInfo() {
+    protected void initInfo() {
         info = new JLabel("无收款信息");
         this.add(BorderLayout.CENTER, info);
     }
 
-    private void updateInfo(String info) {
+    protected void updateInfo(String info) {
         this.info = new JLabel(info);
         this.add(BorderLayout.CENTER, this.info);
 

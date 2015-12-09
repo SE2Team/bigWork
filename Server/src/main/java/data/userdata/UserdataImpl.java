@@ -8,13 +8,16 @@ import data.Common.Common;
 import dataservice.userdataservice.UserDataService;
 import po.UserPO;
 import util.ExistException;
-import util.ResultMessage;
 import util.UserType;
 
 /**
  * Created by MYK on 2015/11/23 0023.
  */
 public class UserdataImpl extends UnicastRemoteObject implements UserDataService{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Common common;
 	public UserdataImpl() throws RemoteException {
 		super();

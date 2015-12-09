@@ -29,7 +29,12 @@ public class UserVO {
 		this.permission=permission;
 	}
 
-	public String getPassword() {
+    public UserVO(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
+
+    public String getPassword() {
 		return password;
 	}
 
