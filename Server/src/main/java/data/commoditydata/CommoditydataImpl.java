@@ -1,16 +1,16 @@
 package data.commoditydata;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import data.Common.Common;
 import dataservice.commoditydataservice.CommodityDataService;
 import po.StockInPO;
 import po.StockOutPO;
 import po.StockPO;
 import util.TransportType;
-
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class CommoditydataImpl extends UnicastRemoteObject implements CommodityDataService{
 
@@ -43,11 +43,11 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 	}
 
 	public StockPO check() throws RemoteException {
-		boolean stockState=false;
+		// TODO Auto-generated method stub
+		Boolean stockState=false;
 		Common common=new Common("stock");
 		ArrayList<StockInPO> list2=new ArrayList<>();
 		ArrayList<String> list=common.readData();
-
 		if(list.get(0).equals("true")){
 			stockState=true;
 		}

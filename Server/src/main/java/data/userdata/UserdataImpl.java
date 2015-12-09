@@ -41,18 +41,22 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 	/**
 	 *@param UserPo 
 	 * 如果原来账号就不存在的异常尚未实现
+	 * @throws  
 	 */
 	public Boolean deleteUser(UserPO po) throws RemoteException {
 		// TODO Auto-generated method stub
 		ArrayList<String> list=common.readData();
-		list.remove(this.userPOToString(po));
-		common.clearData("user");
-		common.writeData(list);
-		return true;
+		if(list.contains(this.userPOToString(po))){	
+			list.remove(this.userPOToString(po));
+			common.clearData("user");
+			common.writeData(list);
+			return true;
+		}
+		return false;
 	}
 
 
-	public UserPO login(String id, String password) throws RemoteException, ExistException {
+	public UserPO login(String id, String password) throws RemoteException{
 		// TODO Auto-generated method stub
 		String[] str=new String[4];
 		ArrayList<String> list=common.readData();
@@ -60,15 +64,13 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 			str=list.get(j).split(";");
 			if(str[0].equals(id)&&str[1].equals(password)){
 				return this.stringToPO(str);
-			}else{
-				throw new ExistException();
 			}
 		}
 		return null;
 	}
 
 
-	public Boolean editUser(UserPO oldPO, UserPO newPO) throws RemoteException, ExistException {
+	public Boolean editUser(UserPO oldPO, UserPO newPO) throws RemoteException{
 		// TODO Auto-generated method stub
 		ArrayList<String> list=common.readData();
 		if(list.contains(this.userPOToString(oldPO))){
@@ -77,17 +79,15 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 			common.clearData("user");
 			common.writeData(list);
 			return true;
-		}else{
-			throw new ExistException();
-		}
+			}
+		return false;
 	}
 
 
 	public UserPO find(String id, String password) throws RemoteException {
-		String[] str=new String[4];
 		ArrayList<String> list=common.readData();
 		for(int j=0;j<list.size();j++){
-			str=list.get(j).split(";");
+			String[] str=list.get(j).split(";");
 			if(str[0].equals(id)&&str[1].equals(password)){
 				return this.stringToPO(str);
 			}
@@ -123,6 +123,8 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 		case "TRANSFERMAN":
 			userType=UserType.TRANSFERMAN;
 			break;
+		case "ADMIN":
+			userType=UserType.ADMIN;
 		default:
 			break;
 		}

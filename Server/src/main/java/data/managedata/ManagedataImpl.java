@@ -3,6 +3,7 @@ package data.managedata;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.print.DocFlavor.STRING;
 
@@ -252,6 +253,33 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	
 	private ConstantPO StringToConstantPO(String[] str){
 		return new ConstantPO(str[0], str[1], str[2], str[3]);
+	}
+
+	@Override
+	public Iterator<DriverPO> checkDriver() throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common=new Common("driver");
+		ArrayList<String> list=common.readData();
+		ArrayList<DriverPO> list2=new ArrayList<>();
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(this.stringToDriverPO(str));
+		}
+		return list2.iterator();
+	}
+
+	@Override
+	public Iterator<VehiclePO> checkVehicle() throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common=new Common("vehicle");
+		ArrayList<String> list=common.readData();
+		ArrayList<VehiclePO> list2=new ArrayList<>();
+		for(int j=0;j<list.size();j++){
+			String[] str=list.get(j).split(";");
+			list2.add(this.stringToVehiclePO(str));
+		}
+		return list2.iterator();
+
 	}
 
 }

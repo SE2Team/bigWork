@@ -5,26 +5,28 @@ package presentation.listui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.DateChooser;
+import presentation.commonui.Empty;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
 import vo.TransferReceiveVO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class TransferReceivePanel extends JPanel {
 
-	protected int x = 30, y = 60, addx1 = 130, addx2 = 180, addy = 100, width = 130,
-			height = 30;
+	protected int x = 30, y = 60, addx1 = 130, addx2 = 180, addy = 100,
+			width = 130, height = 30;
 
 	// 定义中转中心编号，到达日期，中转单编号，出发地，货物到达状态的label
-	protected JLabel transferCenterNum, arriveDate, transferNum, departure, arriveState,orderNum;
+	protected JLabel transferCenterNum, arriveDate, transferNum, departure,
+			arriveState;
 	// 定义对应的文本框
-	protected JTextField jtf_CenterNum, jtf_arriveDate, jtf_transferNum, jtf_departure,jtf_orderNum;
+	protected JTextField jtf_CenterNum, jtf_arriveDate, jtf_transferNum,
+			jtf_departure,jtf_orderNum;
 	// 定义下拉框
 	protected JComboBox state;
 	// 定义确定 取消按钮
@@ -32,8 +34,12 @@ public class TransferReceivePanel extends JPanel {
 	// 定义文本框下拉框按钮的字体
 	protected Font font = new Font("宋体", Font.PLAIN, 20);
 	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
-	//定义错误提示信息的label
-	protected JLabel tip1,tip2;
+	// 定义错误提示信息的label
+	protected JLabel tip1, tip2;
+	// 定义日期选择器
+	protected DateChooser datechooser;
+	// 定义文本框的数组
+	protected JTextField[] transReceiveJtf;
 
 	public TransferReceivePanel() {
 
@@ -54,7 +60,18 @@ public class TransferReceivePanel extends JPanel {
 
 		jtf_arriveDate = new JTextField();
 		jtf_arriveDate.setFont(font2);
-		jtf_arriveDate.setBounds(x + 2 * addx1 + addx2, y, width, height);
+		jtf_arriveDate.setEditable(false);
+		jtf_arriveDate.setBounds(x + 2 * addx1 + addx2, y, width - 30, height);
+
+		datechooser = new DateChooser("yyyy-MM-dd", jtf_arriveDate);
+		datechooser
+				.setBounds(x + 2 * addx1 + addx2 + width - 30, y, 30, height);
+		jtf_arriveDate.setText(datechooser.commit());
+		datechooser.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me) {
+				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 
 		transferNum = new JLabel("中转单编号", JLabel.CENTER);
 		transferNum.setFont(font);
@@ -64,7 +81,7 @@ public class TransferReceivePanel extends JPanel {
 		jtf_transferNum.setFont(font2);
 		jtf_transferNum.setBounds(x + 2 * addx1, y + addy, 2 * width, height);
 		jtf_transferNum.addFocusListener(new TextFocus());
-		
+
 		departure = new JLabel("出发地", JLabel.CENTER);
 		departure.setFont(font);
 		departure.setBounds(x, y + 2 * addy, width, height);
@@ -90,19 +107,29 @@ public class TransferReceivePanel extends JPanel {
 		sure.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				performSure();
+				 performSure();
 			}
 
 		});
 
+		transReceiveJtf = new JTextField[] { jtf_CenterNum, jtf_transferNum,
+				jtf_departure };
+
 		cancel = new JButton("取消");
 		cancel.setFont(font);
 		cancel.setBounds(x + addx2 + 150, y + 3 * addy, 80, height);
+		cancel.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				Empty emptyLoading = new Empty(transReceiveJtf);
+			}
+		});
 
 		this.add(transferCenterNum);
 		this.add(jtf_CenterNum);
 		this.add(arriveDate);
 		this.add(jtf_arriveDate);
+		this.add(datechooser);
 		this.add(transferNum);
 		this.add(jtf_transferNum);
 		this.add(departure);
@@ -113,37 +140,21 @@ public class TransferReceivePanel extends JPanel {
 		this.add(cancel);
 	}
 
-	protected void performSure() {
-		TransferReceiveVO vo = new TransferReceiveVO(jtf_orderNum.getText(),jtf_arriveDate.getText(),
-				jtf_departure.getText(), state.getSelectedItem().toString(),
-				jtf_CenterNum.getText(), jtf_transferNum.getText(), false);
+	// 错误提示信息是否已经被添加
+	boolean isCenterNumAdd = false;
+	boolean isTransAdd = false;
 
-		try {
-			ListblService bl = new ListController();
-		} catch (RemoteException e) {
-			JLabel tip = new JLabel("提示：网络异常");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}
-		JLabel tip = new JLabel("提示：保存成功");
-		tip.setFont(font);
-		JOptionPane.showMessageDialog(null, tip);
-	}
-
-	//错误提示信息是否已经被添加
-	protected boolean isCenterNumAdd = false;
-	protected boolean isTransAdd = false;
-	
 	/**
 	 * 监听焦点
+	 * 
 	 * @author Administrator
 	 *
 	 */
-	class TextFocus implements FocusListener{
+	class TextFocus implements FocusListener {
 
 		public void focusGained(FocusEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		public void focusLost(FocusEvent e) {
@@ -151,41 +162,68 @@ public class TransferReceivePanel extends JPanel {
 			JTextField temp = (JTextField) e.getSource();
 			if (temp == jtf_CenterNum) {
 				if (!NumExceptioin.isTransCenterValid(jtf_CenterNum)) {
-					isCenterNumAdd=true;
+					isCenterNumAdd = true;
 					if (tip1 == null) {
 						tip1 = new JLabel("中转中心编号位数应为4位", JLabel.CENTER);
-						tip1.setBounds(x+70 , y+height, 2*width, height);
+						tip1.setBounds(x + 70, y + height, 2 * width, height);
 						tip1.setFont(font2);
 						tip1.setForeground(Color.RED);
 						addTip(tip1);
 					}
-				}
-				else{
-					if (isCenterNumAdd&&!"".equalsIgnoreCase(jtf_CenterNum.getText().trim())) {
+				} else {
+					if (isCenterNumAdd
+							&& !"".equalsIgnoreCase(jtf_CenterNum.getText()
+									.trim())) {
 						removeTip(tip1);
 					}
 				}
 			}
-			if(temp==jtf_transferNum){
+			if (temp == jtf_transferNum) {
 				if (!NumExceptioin.isTransListValid(jtf_transferNum)) {
-					isTransAdd=true;
+					isTransAdd = true;
 					if (tip2 == null) {
 						tip2 = new JLabel("中转单编号位数应为19位", JLabel.CENTER);
-						tip2.setBounds(x + 2 * addx1, y + addy+height, 2 * width, height);
+						tip2.setBounds(x + 2 * addx1, y + addy + height,
+								2 * width, height);
 						tip2.setFont(font2);
 						tip2.setForeground(Color.RED);
 						addTip(tip2);
 					}
-				}
-				else{
-					if (isTransAdd&&!"".equalsIgnoreCase(jtf_transferNum.getText().trim())) {
+				} else {
+					if (isTransAdd
+							&& !"".equalsIgnoreCase(jtf_transferNum.getText()
+									.trim())) {
 						removeTip(tip2);
 					}
 				}
 			}
 		}
-		
+
 	}
+
+    protected void performSure(){
+        TransferReceiveVO vo = new TransferReceiveVO("1",jtf_arriveDate
+                .getText(), jtf_departure.getText(), state
+                .getSelectedItem().toString(), jtf_CenterNum.getText(),
+                jtf_transferNum.getText(), false);
+
+        try {
+            ListblService bl = new ListController();
+            try {
+                bl.save(vo);
+            } catch (ExistException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } catch (RemoteException e) {
+            JLabel tip = new JLabel("提示：网络异常");
+            tip.setFont(font2);
+            JOptionPane.showMessageDialog(null, tip);
+        }
+        JLabel tip = new JLabel("提示：保存成功");
+        tip.setFont(font);
+        JOptionPane.showMessageDialog(null, tip);
+    }
 	/**
 	 * 添加错误提示信息
 	 * 

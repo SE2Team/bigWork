@@ -1,6 +1,9 @@
 package presentation.financeui;
 
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import presentation.commonui.DateChooser;
 
 /**
  * 财务人员查看统计分析界面
@@ -34,6 +39,8 @@ public class FinanceAnalysisPanel extends JPanel{
 	private JButton getButton;
 	private JScrollPane jsp2;
 	private JTable costTable;
+	//定义日期选择器
+	private DateChooser datechooser1,datechooser2;
 	
 	Font font1=new Font("楷体", Font.PLAIN, 25);
 	Font font2 = new Font("宋体", Font.PLAIN, 15);
@@ -60,12 +67,32 @@ public class FinanceAnalysisPanel extends JPanel{
 		startLabel.setFont(font2);
 		startLabel.setBounds(60, 45, width, height);
 		
-		startField.setBounds(130, 45, 150, height);
+		startField.setBounds(130, 45, 120, height);
+		startField.setEditable(false);
+		
+		datechooser1 = new DateChooser("yyyy-MM-dd",startField);
+		datechooser1.setBounds(250, 45, 30, height);
+		startField.setText(datechooser1.commit());
+		datechooser1.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me){
+				datechooser1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 		
 		endLabel.setFont(font2);
 		endLabel.setBounds(310, 45, width, height);
 		
-		endField.setBounds(380, 45, 150, height);
+		endField.setBounds(380, 45, 120, height);
+		endField.setEditable(false);
+		
+		datechooser2 = new DateChooser("yyyy-MM-dd",endField);
+		datechooser2.setBounds(500, 45, 30, height);
+		startField.setText(datechooser2.commit());
+		datechooser2.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me){
+				datechooser2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 		
 		gotButton.setFont(font2);
 		gotButton.setBounds(550, 45, width, height);
@@ -73,8 +100,10 @@ public class FinanceAnalysisPanel extends JPanel{
 		bussingPanel.add(t1Label);
 		bussingPanel.add(startLabel);
 		bussingPanel.add(startField);
+		bussingPanel.add(datechooser1);
 		bussingPanel.add(endLabel);
 		bussingPanel.add(endField);
+		bussingPanel.add(datechooser2);
 		bussingPanel.add(gotButton);
 		
 		
@@ -103,8 +132,8 @@ public class FinanceAnalysisPanel extends JPanel{
 		costPanel.add(t2Label);
 		costPanel.add(getButton);
 		
-		String[] column2 = { "序号","账户名称","余额"};
-		String[] t1 = {"000x1","张XX","50" };
+		String[] column2 = { "总收入","总支出","总利润"};
+		String[] t1 = {"10000","1000","9000" };
 		String row2[][] = { t1 };
 		costTable = new JTable(row2, column2);
 		costTable.setFont(font2);

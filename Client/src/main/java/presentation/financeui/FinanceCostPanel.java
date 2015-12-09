@@ -1,7 +1,12 @@
 package presentation.financeui;
 
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +17,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
+
+import presentation.commonui.DateChooser;
+import presentation.commonui.Empty;
 
 /**
  * 财务人员成本管理界面
@@ -39,6 +47,10 @@ public class FinanceCostPanel extends JPanel {
 	private JScrollPane jsp1,jsp2;
 	Font font1 = new Font("楷体", Font.PLAIN, 25);
 	Font font2 = new Font("宋体", Font.PLAIN, 15);
+	// 定义文本框的数组
+	protected JTextField[] costJtf;
+	//定义日期选择器
+	protected DateChooser datechooser;
 
 	public FinanceCostPanel() {
 		int width = 70, height = 30;
@@ -78,7 +90,17 @@ public class FinanceCostPanel extends JPanel {
 		dateLabel.setBounds(80, 120, width, height);
 
 		dateTextField.setFont(font2);
-		dateTextField.setBounds(160, 120, 150, height);
+		dateTextField.setEditable(false);
+		dateTextField.setBounds(160, 120, 120, height);
+		
+		datechooser = new DateChooser("yyyy-MM-dd",dateTextField);
+		datechooser.setBounds(280, 120, 30, height);
+		dateTextField.setText(datechooser.commit());
+		datechooser.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me){
+				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 
 		nameLabel.setFont(font2);
 		nameLabel.setBounds(350, 120, width, height);
@@ -117,14 +139,25 @@ public class FinanceCostPanel extends JPanel {
 		sureButton.setFont(font2);
 		sureButton.setBounds(180, 400, width, height);
 
+		costJtf = new JTextField[]{nameTextField,sumTextField,numTextField};
+		
 		deleteButton.setFont(font2);
 		deleteButton.setBounds(380, 400, width, height);
+		deleteButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				Empty emptyLoading = new Empty(costJtf);
+				reasonTextArea.setText("");
+				otherTextArea.setText("");
+			}
+		});
 
 		add(creatButton);
 		add(checkButton);
 		add(titleLabel);
 		add(dateLabel);
 		add(dateTextField);
+		add(datechooser);
 		add(sumLabel);
 		add(sumTextField);
 		add(nameLabel);

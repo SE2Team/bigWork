@@ -94,7 +94,7 @@ public class NumExceptioin {
 	}
 
 	/**
-	 * 判断手机号是否符合规范（18位）
+	 * 判断手机号是否符合规范（11位）
 	 * @param text
 	 * @return
 	 */
@@ -150,6 +150,30 @@ public class NumExceptioin {
 	 */
 	public static boolean islicensePlateValid(JTextField text){
 		if(!"".equalsIgnoreCase(text.getText().trim())&&text.getText().length()!=7){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 判断账号输入是否符合规范(6~10位)
+	 * @param text
+	 * @return
+	 */
+	public static boolean isAccountNumValid(JTextField text){
+		if(!"".equalsIgnoreCase(text.getText().trim())&&!(text.getText().length()>=6&&text.getText().length()<=10)){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 判断机构编号输入是否符合规范(4位)
+	 * @param text
+	 * @return
+	 */
+	public static boolean isInstitutionValid(JTextField text){
+		if(!"".equalsIgnoreCase(text.getText().trim())&&text.getText().length()!=6){
 			return false;
 		}
 		return true;

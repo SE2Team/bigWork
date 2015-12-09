@@ -5,16 +5,15 @@ package presentation.listui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.DateChooser;
+import presentation.commonui.Empty;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.ReceiveVO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class ReceivePanel extends JPanel {
@@ -22,21 +21,25 @@ public class ReceivePanel extends JPanel {
 	protected int x = 120, y = 100, width = 200, height = 30, addx = 200, addy = 70;
 
 	// 定义接收单，到达日期，出发地，货物到达状态的label
-	protected JLabel receiveList, arriveDate, transferNum, departure, arriveState;
+	protected  JLabel receiveList, arriveDate, transferNum, departure, arriveState;
 	// 定义对应的文本框
-	protected JTextField jtf_arriveDate, jtf_transferNum, jtf_departure;
+	protected  JTextField jtf_arriveDate, jtf_transferNum, jtf_departure;
 	// 定义货物状态的下拉框
-	protected JComboBox jcb_arrivestate;
+	protected  JComboBox jcb_arrivestate;
 	// 定义确定，取消按钮
-	protected JButton sure, cancel;
+	protected  JButton sure, cancel;
 	// 定义接收单的字体
-	protected Font font1 = new Font("楷体", Font.PLAIN, 30);
+	protected  Font font1 = new Font("楷体", Font.PLAIN, 30);
 	// 定义文本框下拉框的字体
-	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected  Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义其他Label的字体
-	protected Font font3 = new Font("宋体", Font.PLAIN, 20);
+	protected  Font font3 = new Font("宋体", Font.PLAIN, 20);
 	// 定义错误提示的label
-	protected JLabel tip;
+	protected  JLabel tip;
+	//定义日期选择器
+	protected  DateChooser datechooser;
+	// 定义文本框的数组
+	protected JTextField[] receiveJtf;
 
 	public ReceivePanel() {
 
@@ -52,7 +55,17 @@ public class ReceivePanel extends JPanel {
 
 		jtf_arriveDate = new JTextField();
 		jtf_arriveDate.setFont(font2);
-		jtf_arriveDate.setBounds(x + addx, y, width, height);
+		jtf_arriveDate.setEditable(false);
+		jtf_arriveDate.setBounds(x + addx, y, width-30, height);
+		
+		datechooser = new DateChooser("yyyy-MM-dd",jtf_arriveDate);
+		datechooser.setBounds(x + addx+ width-30, y, 30, height);
+		jtf_arriveDate.setText(datechooser.commit());
+		datechooser.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me){
+				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 
 		transferNum = new JLabel("中转单编号", JLabel.CENTER);
 		transferNum.setFont(font3);
@@ -88,18 +101,27 @@ public class ReceivePanel extends JPanel {
 		sure.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-
+                performSure();
 			}
 
 		});
 
+		receiveJtf = new JTextField[]{jtf_transferNum, jtf_departure};
+		
 		cancel = new JButton("取消");
 		cancel.setFont(font2);
 		cancel.setBounds(x + addx + 60, y + 4 * addy + 20, 80, height);
+		cancel.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				Empty emptyLoading = new Empty(receiveJtf);
+			}
+		});
 
 		this.add(receiveList);
 		this.add(arriveDate);
 		this.add(jtf_arriveDate);
+		this.add(datechooser);
 		this.add(transferNum);
 		this.add(jtf_transferNum);
 		this.add(departure);
@@ -111,7 +133,7 @@ public class ReceivePanel extends JPanel {
 	}
 
 	// 错误提示信息是否已经被添加
-	protected boolean isTransferNumAdd = false;
+	boolean isTransferNumAdd = false;
 
 	/**
 	 * 监听焦点
@@ -149,28 +171,31 @@ public class ReceivePanel extends JPanel {
 		}
 
 	}
+
 	protected void performSure(){
-        ReceiveVO receive_vo = new ReceiveVO(jtf_arriveDate.getText(),
-                jtf_transferNum.getText(), jtf_departure.getText(),
-                jcb_arrivestate.getSelectedItem().toString(),false);
-        ListblService bl;
-        try {
-            bl = new ListController();
-            bl.save(receive_vo);
-        } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        } catch (ExistException e) {
-            e.printStackTrace();
-        }
+		ReceiveVO receive_vo = new ReceiveVO(jtf_arriveDate.getText(),
+				jtf_transferNum.getText(), jtf_departure.getText(),
+				jcb_arrivestate.getSelectedItem().toString(),false);
+		ListblService bl;
+		try {
+			bl = new ListController();
+			try {
+				bl.save(receive_vo);
+			} catch (ExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			JLabel tip = new JLabel("提示：网络异常");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
 
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font2);
-        JOptionPane.showMessageDialog(null, tip);
-    }
-
+		JLabel tip = new JLabel("提示：保存成功");
+		tip.setFont(font2);
+		JOptionPane.showMessageDialog(null, tip);
+	}
 
 	/**
 	 * 添加错误提示信息

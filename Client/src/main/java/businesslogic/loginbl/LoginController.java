@@ -1,8 +1,6 @@
 package businesslogic.loginbl;
 
 import businesslogicservice.LoginblService;
-import po.UserPO;
-import util.ExistException;
 import vo.UserVO;
 
 import java.rmi.RemoteException;
@@ -16,7 +14,7 @@ public class LoginController implements LoginblService {
 
     private Login login;
 
-    public UserVO login(UserVO userVO) throws RemoteException, ExistException {
+    public UserVO login(UserVO userVO) throws RemoteException {
         login = new Login();
         return login.login(userVO);
     }

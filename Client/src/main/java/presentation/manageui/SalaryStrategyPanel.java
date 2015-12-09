@@ -27,8 +27,10 @@ public class SalaryStrategyPanel extends JPanel{
 	private ButtonGroup group;
 	private JButton sure ,cancel;
 	
+	//定义所有字体
 	Font font1=new Font("楷体", Font.PLAIN, 25);
 	Font font2 = new Font("宋体", Font.PLAIN, 20);
+	Font font3 = new Font("宋体", Font.PLAIN, 18);
 
 	public SalaryStrategyPanel(){
 		
@@ -47,14 +49,14 @@ public class SalaryStrategyPanel extends JPanel{
 		wayLabel.setBounds(x, y+addy, width2, height);
 		
 		etBox=new JComboBox(employeeType);
-		etBox.setFont(font2);
+		etBox.setFont(font3);
 		etBox.setBounds(x+addx, y, width2, height);
 		jrdMonth=new JRadioButton("按月");
 		jrdTimes=new JRadioButton("计次");
 		jrdCount=new JRadioButton("提成");
-		jrdMonth.setFont(font2);
-		jrdTimes.setFont(font2);
-		jrdCount.setFont(font2);
+		jrdMonth.setFont(font3);
+		jrdTimes.setFont(font3);
+		jrdCount.setFont(font3);
 		jrdMonth.setBounds(x+addx, 170, width, height);
 		jrdTimes.setBounds(x+addx, 200, width, height);
 		jrdCount.setBounds(x+addx, 230, width, height);

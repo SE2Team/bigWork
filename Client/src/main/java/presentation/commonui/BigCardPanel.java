@@ -7,6 +7,7 @@ import util.ExistException;
 import vo.UserVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,8 @@ public class BigCardPanel extends JPanel implements ActionListener{
 	CardLayout bigCard;
     CommonPanel commonPanel = null;
 
+    Font font = new Font("宋体", Font.PLAIN, 18);
+    
 	public BigCardPanel() {
 		
 		bigCard = new CardLayout();
@@ -37,10 +40,18 @@ public class BigCardPanel extends JPanel implements ActionListener{
         try {
             vo=bl.login(lg.getVO());
         } catch (RemoteException e1) {
-            e1.printStackTrace();
-        } catch (ExistException e1) {
-            e1.printStackTrace();
+        	JLabel tip = new JLabel("提示：网络异常");
+			tip.setFont(font);
+			JOptionPane.showMessageDialog(null, tip);
+            return;
         }
+        if(vo==null){
+        	JLabel tip = new JLabel("提示：用户名或密码错误");
+			tip.setFont(font);
+			JOptionPane.showMessageDialog(null, tip);
+			return;
+        }
+        
         switch (vo.getPermission()){
             case COURIER:
                 commonPanel=new CourierPanel();

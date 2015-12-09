@@ -1,6 +1,19 @@
 package po;
 
-import vo.*;
+import vo.AddresseeInformationVO;
+import vo.DistributeVO;
+import vo.GatheringVO;
+import vo.ListVO;
+import vo.LoadingVO;
+import vo.OrderVO;
+import vo.PaymentVO;
+import vo.ReceiptVO;
+import vo.ReceiveVO;
+import vo.StockInVO;
+import vo.StockOutVO;
+import vo.TransferReceiveVO;
+import vo.TransferVO;
+import vo.UserVO;
 
 /**
  * Created by MYK on 2015/12/7 0007.

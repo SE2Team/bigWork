@@ -4,9 +4,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.*;
+import po.ConstantPO;
+import po.DriverPO;
+import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
-import util.ResultMessage;
 
 public interface ManageDataService extends Remote{
     public Boolean addDriver(DriverPO driverPO) throws RemoteException, ExistException;

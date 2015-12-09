@@ -1,25 +1,36 @@
 package po;
 
+import java.io.Serializable;
+
 import util.DeliveryType;
 
-public class ExpenseAndDatePO {
+public class ExpenseAndDatePO implements Serializable {
+	private static final long serialVersionUID = 1L;//序列化编号
 	private String city1;
 	private String city2;
 	private String wrapper;
 	private String days;
+
+	public String getVolume() {
+		return volume;
+	}
+
+	public void setVolume(String volume) {
+		this.volume = volume;
+	}
+
 	private String volume;
 	private DeliveryType deliveryType;
 	private String expenseOfWrap;
 	private String expenseOfTransport;
 	private String expense;
 	
-	public ExpenseAndDatePO(String city1,String city2,String wrapper,String days,String volume
+	public ExpenseAndDatePO(String city1,String city2,String wrapper,String days
 	 ,DeliveryType deliveryType,String expenseOfWrap,String expenseOfTransport,String expense){
 		this.city1=city1;
 		this.city2=city2;
 		this.wrapper=wrapper;
 		this.days=days;
-		this.volume=volume;
 		this.deliveryType=deliveryType;
 		this.expenseOfWrap=expenseOfWrap;
 		this.expenseOfTransport=expenseOfTransport;
@@ -88,13 +99,5 @@ public class ExpenseAndDatePO {
 	
 	public void setExpense(String expense){
 		this.expense=expense;
-	}
-	
-	public String getVolume(){
-		return this.volume;
-	}
-	
-	public void setVolume(String volume){
-		this.volume=volume;
 	}
 }

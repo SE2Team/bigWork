@@ -5,15 +5,15 @@ package presentation.listui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.DateChooser;
+import presentation.commonui.Empty;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
 import vo.TransferVO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class TransferPanel extends JPanel {
@@ -24,8 +24,8 @@ public class TransferPanel extends JPanel {
 	 * 定义装运方式，装运日期、本中转中心航/货/汽运编号、航班号/车次号、货柜号/车厢号、
 	 * 出发地、到达地、运费、监装员、押运员（仅汽运有）、本次装箱所有托运单号
 	 */
-	protected JLabel loadingWay, loadingDate, transferNum, vehicleNum, containerNum,
-			start, end, money, monitor, supercargo, orderNums;
+	protected JLabel loadingWay, loadingDate, transferNum, vehicleNum,
+			containerNum, start, end, money, monitor, supercargo, orderNums;
 	// 定义对应的文本框
 	protected JTextField jtf_loadingDate, jtf_transferNum, jtf_vehicleNum,
 			jtf_containerNum, jtf_start, jtf_end, jtf_money, jtf_monitor,
@@ -43,6 +43,10 @@ public class TransferPanel extends JPanel {
 	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义错误提示信息的label
 	protected JLabel tip1;
+	// 定义日期选择器
+	protected DateChooser datechooser;
+	// 定义文本框的数组
+	protected JTextField[] transferJtf;
 
 	public TransferPanel() {
 
@@ -65,19 +69,30 @@ public class TransferPanel extends JPanel {
 
 		jtf_loadingDate = new JTextField();
 		jtf_loadingDate.setFont(font2);
-		jtf_loadingDate.setBounds(x + 2 * addx1 + addx2, y, jtf_width, height);
+		jtf_loadingDate.setEditable(false);
+		jtf_loadingDate.setBounds(x + 2 * addx1 + addx2, y, jtf_width - 30,
+				height);
+
+		datechooser = new DateChooser("yyyy-MM-dd", jtf_loadingDate);
+		datechooser.setBounds(x + 2 * addx1 + addx2 + jtf_width - 30, y, 30,
+				height);
+		jtf_loadingDate.setText(datechooser.commit());
+		datechooser.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me) {
+				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 
 		transferNum = new JLabel("本中转中心航/货/汽运编号", JLabel.CENTER);
 		transferNum.setFont(font);
 		transferNum.setBounds(x, y + addy, width2, height);
-		
 
 		jtf_transferNum = new JTextField();
 		jtf_transferNum.setFont(font2);
 		jtf_transferNum.setBounds(x + addx2 + 50, y + addy, 2 * jtf_width,
 				height);
 		jtf_transferNum.addFocusListener(new TextFocus());
-		
+
 		vehicleNum = new JLabel("航班号/车次号", JLabel.CENTER);
 		vehicleNum.setFont(font);
 		vehicleNum.setBounds(x, y + 2 * addy, width2, height);
@@ -118,6 +133,7 @@ public class TransferPanel extends JPanel {
 
 		jtf_money = new JTextField();
 		jtf_money.setFont(font2);
+		jtf_money.setEditable(false);
 		jtf_money.setBounds(x + 2 * addx2 + addx1 - 50, y + 4 * addy, width1,
 				height);
 
@@ -154,20 +170,32 @@ public class TransferPanel extends JPanel {
 		sure.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-
+				performSure();
 			}
 
 		});
+
+		transferJtf = new JTextField[] { jtf_transferNum, jtf_vehicleNum,
+				jtf_containerNum, jtf_start, jtf_end, jtf_money, jtf_monitor,
+				jtf_supercargo };
 
 		cancel = new JButton("取消");
 		cancel.setFont(font);
 		cancel.setBounds(x + 2 * addx2, y + 7 * addy + 10, width1 - 10,
 				height + 5);
+		cancel.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				Empty emptyLoading = new Empty(transferJtf);
+				jta_orderNums.setText("");
+			}
+		});
 
 		this.add(loadingWay);
 		this.add(jcb_way);
 		this.add(loadingDate);
 		this.add(jtf_loadingDate);
+		this.add(datechooser);
 		this.add(transferNum);
 		this.add(jtf_transferNum);
 		this.add(vehicleNum);
@@ -190,11 +218,12 @@ public class TransferPanel extends JPanel {
 		this.add(cancel);
 	}
 
-	//错误提示信息是否已经被添加
-	protected boolean isTransAdd = false;
-	
+	// 错误提示信息是否已经被添加
+	boolean isTransAdd = false;
+
 	/**
 	 * 监听焦点
+	 * 
 	 * @author Administrator
 	 *
 	 */
@@ -210,18 +239,19 @@ public class TransferPanel extends JPanel {
 			JTextField temp = (JTextField) e.getSource();
 			if (temp == jtf_transferNum) {
 				if (!NumExceptioin.isTransListValid(jtf_transferNum)) {
-					isTransAdd=true;
+					isTransAdd = true;
 					if (tip1 == null) {
 						tip1 = new JLabel("中转中心航/货/汽运编号位数应为19位", JLabel.CENTER);
-						tip1.setBounds(x + addx2 + 40, y + addy+25, 2 * jtf_width+10,
-								height);
+						tip1.setBounds(x + addx2 + 40, y + addy + 25,
+								2 * jtf_width + 10, height);
 						tip1.setFont(font2);
 						tip1.setForeground(Color.RED);
 						addTip(tip1);
 					}
-				}
-				else{
-					if (isTransAdd&&!"".equalsIgnoreCase(jtf_transferNum.getText().trim())) {
+				} else {
+					if (isTransAdd
+							&& !"".equalsIgnoreCase(jtf_transferNum.getText()
+									.trim())) {
 						removeTip(tip1);
 					}
 				}
@@ -229,29 +259,34 @@ public class TransferPanel extends JPanel {
 		}
 
 	}
+	protected void performSure(){
+		TransferVO transfervo = new TransferVO(jcb_way
+				.getSelectedItem().toString(), jtf_loadingDate
+				.getText(), jtf_transferNum.getText(), jtf_vehicleNum
+				.getText(), jtf_start.getText(), jtf_end.getText(),
+				jtf_containerNum.getText(), jtf_monitor.getText(),
+				jtf_supercargo.getText(), jta_orderNums.getText(),
+				jtf_money.getText(), false);
+		ListblService bl;
+		try {
+			bl = new ListController();
+			try {
+				bl.save(transfervo);
+			} catch (ExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			JLabel tip = new JLabel("提示：网络异常");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
 
-    protected void performSure(){
-        TransferVO transfervo = new TransferVO(jcb_way
-                .getSelectedItem().toString(), jtf_loadingDate
-                .getText(), jtf_transferNum.getText(), jtf_vehicleNum
-                .getText(), jtf_start.getText(), jtf_end.getText(),
-                jtf_containerNum.getText(), jtf_monitor.getText(),
-                jtf_supercargo.getText(), jta_orderNums.getText(),
-                jtf_money.getText(),false);
-        ListblService bl;
-        try {
-            bl = new ListController();
-        } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        }
-
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font);
-        JOptionPane.showMessageDialog(null, tip);
-    }
+		JLabel tip = new JLabel("提示：保存成功");
+		tip.setFont(font);
+		JOptionPane.showMessageDialog(null, tip);
+	}
 	/**
 	 * 添加错误提示信息
 	 * 

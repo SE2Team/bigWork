@@ -3,16 +3,12 @@
  */
 package presentation.financeui;
 
-import businesslogic.financebl.FinanceController;
-import businesslogicservice.FinanceblService;
-import util.ExistException;
 import vo.AccountVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
 public class addAccountDialog extends JDialog {
 
@@ -39,6 +35,8 @@ public class addAccountDialog extends JDialog {
 		JTextField jtf_accountName, jtf_balance;
 		// 定义确定，取消按钮
 		JButton sure, cancel;
+		//定义用来存放用户输入信息的数组
+		String[] rowContent;
 
 		public addAccountPanel() {
 			this.setLayout(null);
@@ -70,23 +68,33 @@ public class addAccountDialog extends JDialog {
 				public void actionPerformed(ActionEvent arg0) {
 					AccountVO account_vo = new AccountVO(jtf_accountName
 							.getText(), jtf_balance.getText());
-					FinanceblService bl = null;
-					try {
-						bl = new FinanceController();
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						JLabel tip = new JLabel("提示：网络异常");
-						tip.setFont(font);
-						JOptionPane.showMessageDialog(null, tip);
-					}
-					try {
-						bl.addAccount(account_vo);
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					} catch (ExistException e) {
-						e.printStackTrace();
-					}
-
+					rowContent = new String[]{jtf_accountName
+							.getText(), jtf_balance.getText()};
+					parent.addAfterConfirm(rowContent);
+//					FinanceblService bl = null;
+//					try {
+//						bl = new FinanceController();
+//					} catch (RemoteException e1) {
+//						// TODO Auto-generated catch block
+//						JLabel tip = new JLabel("提示：网络异常");
+//						tip.setFont(font);
+//						JOptionPane.showMessageDialog(null, tip);
+//					}
+//					try {
+//						bl.addAccount(account_vo);
+//					} catch (InvalidDoubleException e) {
+//						// TODO Auto-generated catch block
+//						JLabel tip = new JLabel(e.getMessage());
+//						tip.setFont(font);
+//						JOptionPane.showMessageDialog(null, tip);
+//						e.printStackTrace();
+//					} catch (InputNullException e) {
+//						// TODO Auto-generated catch block
+//						JLabel tip = new JLabel(e.getMessage());
+//						tip.setFont(font);
+//						JOptionPane.showMessageDialog(null, tip);
+//						e.printStackTrace();
+//					}
 					dispose();
 				}
 			});

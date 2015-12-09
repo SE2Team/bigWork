@@ -60,7 +60,7 @@ public class FinancePanel extends CommonPanel{
 
         cardPanel.add("结算管理", new FinanceSettlePanel());
         cardPanel.add("成本管理", new FinanceCostPanel());
-        cardPanel.add("期初建账", new CheckStockPanel());
+        cardPanel.add("期初建账", new FinanceInitialPanel());
         cardPanel.add("统计报表", new FinanceAnalysisPanel());
         cardPanel.add("账户管理", new FinanceAccountPanel());
         cardPanel.add("查看操作日志", new FinanceOperationLogPanel());

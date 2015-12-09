@@ -51,7 +51,7 @@ public class OrderChecking extends OrderPanel{
     }
 
     @Override
-    protected void perfomButton1() {
+    protected void performButton1() {
         if (o_type.getSelectedItem().toString().equals("经济快递")) {
             deliveryType = DeliveryType.ECONOMIC;
         } else if (o_type.getSelectedItem().toString().equals("标准快递")) {

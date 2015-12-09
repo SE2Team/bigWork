@@ -10,11 +10,11 @@ import java.awt.event.ActionListener;
 
 public class ReceiveAndDistribute extends JPanel{
 	//定义接受与派件按钮
-	protected JButton receive,distribute;
+	JButton receive,distribute;
 	//定义字体
-	protected Font font = new Font("楷体",Font.PLAIN,25);
-
-	protected int x=200, y=150, addy=100,width=250,height=60;
+	Font font = new Font("楷体",Font.PLAIN,25);
+	
+	int x=200, y=150, addy=100,width=250,height=60;
 	
 	public ReceiveAndDistribute(){
 		this.setLayout(null);
@@ -25,7 +25,8 @@ public class ReceiveAndDistribute extends JPanel{
 		receive.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				performReceive();
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
@@ -35,24 +36,16 @@ public class ReceiveAndDistribute extends JPanel{
 		distribute.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				performDistribute();
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
 		this.add(receive);
 		this.add(distribute);
 	}
-
-	protected void performReceive(){
-
-    }
-
-    protected void performDistribute(){
-
-    }
-
-
-    /*
+	
+	/*
 	 * 获取输入接收单按钮
 	 */
 	public JButton getReceive() {

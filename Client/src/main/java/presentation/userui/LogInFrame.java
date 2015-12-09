@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import presentation.commonui.BigCardPanel;
 import presentation.commonui.CommonPanel;
 import presentation.listui.OrderPanel;
+import presentation.listui.check.StockInChecking;
+import vo.StockInVO;
+import vo.StockVO;
 
 public class LogInFrame extends JFrame{
 	
@@ -17,6 +20,8 @@ public class LogInFrame extends JFrame{
 		this.setSize(900,600);//设置窗体大小
 		this.setResizable(false);//不允许用户改变窗体大小
 		this.add(new BigCardPanel());
+//		StockInVO vo = new StockInVO("1", "1", "1", "1", "1", "1", "1", false);
+//		this.add(new StockInChecking(vo));
 		this.setVisible(true);
 		//居中
 		Toolkit toolkit=Toolkit.getDefaultToolkit();

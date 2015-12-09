@@ -5,41 +5,55 @@ package presentation.listui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.DateChooser;
+import presentation.commonui.Empty;
 import presentation.exception.NumExceptioin;
 import vo.StockInVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 
 public class StockInPanel extends JPanel {
 
-	protected int x = 110, y = 80, width = 200, height = 30, addx = 210, addy = 65,
-			addx2 = 130, width2 = 100;
+	protected int x = 110, y = 80, width = 200, height = 30, addx = 210,
+			addy = 65, addx2 = 130, width2 = 100;
 
 	// 定义入库单，快递编号，入库日期、目的地、区号，排号，架号，位号的label
-	protected JLabel StockInList, deliveryNum, inDate, destination, zoneNum, rowNum,
-			shelfNum, positionNum;
+	protected JLabel StockInList, deliveryNum, inDate, destination, zoneNum,
+			rowNum, shelfNum, positionNum;
 	// 定义对应的文本框
-	protected JTextField jtf_deliveryNum, jtf_inDate, jtf_destination, jtf_zoneNum,
-			jtf_rowNum, jtf_shelfNum, jtf_positionNum;
-	// 定义确定，取消按钮
-    protected JButton sure, cancel;
-	// 定义出库单的字体
-    protected Font font1 = new Font("楷体", Font.PLAIN, 30);
-	// 定义文本框下拉框的字体
-    protected Font font2 = new Font("宋体", Font.PLAIN, 18);
-	//定义其他字体
-    protected Font font3 = new Font("宋体", Font.PLAIN, 20);
-	//定义错误提示信息的label
-    protected JLabel tip1;
+	protected JTextField jtf_deliveryNum, jtf_inDate, jtf_destination,
+			jtf_zoneNum;
 
-    //错误提示信息是否已经被添加
-    protected boolean isDelivAdd = false;
+	protected JTextField jtf_rowNum;
+
+	protected JTextField jtf_shelfNum;
+
+	protected JTextField jtf_positionNum;
+	// 定义确定，取消按钮
+	protected JButton sure, cancel;
+	// 定义出库单的字体
+	protected Font font1 = new Font("楷体", Font.PLAIN, 30);
+	// 定义文本框下拉框的字体
+	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	// 定义其他字体
+	protected Font font3 = new Font("宋体", Font.PLAIN, 20);
+	// 定义错误提示信息的label
+	protected JLabel tip1;
+	// 错误提示信息是否已经被添加
+	protected boolean isDelivAdd = false;
+	// 定义日期选择器
+	protected DateChooser datechooser;
+	// 定义文本框的数组
+	protected JTextField[] stockInJtf;
 
 	public StockInPanel() {
 
@@ -52,7 +66,6 @@ public class StockInPanel extends JPanel {
 		deliveryNum = new JLabel("快递编号", JLabel.CENTER);
 		deliveryNum.setFont(font3);
 		deliveryNum.setBounds(x, y, width, height);
-		
 
 		jtf_deliveryNum = new JTextField();
 		jtf_deliveryNum.setFont(font2);
@@ -65,7 +78,17 @@ public class StockInPanel extends JPanel {
 
 		jtf_inDate = new JTextField();
 		jtf_inDate.setFont(font2);
-		jtf_inDate.setBounds(x + addx, y + addy, width, height);
+		jtf_inDate.setEditable(false);
+		jtf_inDate.setBounds(x + addx, y + addy, width - 30, height);
+
+		datechooser = new DateChooser("yyyy-MM-dd", jtf_inDate);
+		datechooser.setBounds(x + addx + width - 30, y + addy, 30, height);
+		jtf_inDate.setText(datechooser.commit());
+		datechooser.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me) {
+				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
 
 		destination = new JLabel("目的地", JLabel.CENTER);
 		destination.setFont(font3);
@@ -119,15 +142,25 @@ public class StockInPanel extends JPanel {
 
 		});
 
+		stockInJtf = new JTextField[] { jtf_deliveryNum, jtf_destination,
+				jtf_zoneNum, jtf_rowNum, jtf_shelfNum, jtf_positionNum };
+
 		cancel = new JButton("取消");
 		cancel.setFont(font3);
 		cancel.setBounds(x + addx + 100, y + 5 * addy + 20, 80, height);
+		cancel.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				Empty emptyLoading = new Empty(stockInJtf);
+			}
+		});
 
 		this.add(StockInList);
 		this.add(deliveryNum);
 		this.add(jtf_deliveryNum);
 		this.add(inDate);
 		this.add(jtf_inDate);
+		this.add(datechooser);
 		this.add(destination);
 		this.add(jtf_destination);
 		this.add(zoneNum);
@@ -142,64 +175,65 @@ public class StockInPanel extends JPanel {
 		this.add(cancel);
 	}
 
-    protected void performSure(){
-        StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
-                jtf_inDate.getText(), jtf_destination.getText(),
-                jtf_zoneNum.getText(), jtf_rowNum.getText(),
-                jtf_shelfNum.getText(), jtf_positionNum.getText(),false);
-        ListblService bl;
-        try {
-            bl = new ListController();
-            bl.stockIn(in_vo);
-        } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        }
+	protected void performSure() {
+		StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
+				jtf_inDate.getText(), jtf_destination.getText(),
+				jtf_zoneNum.getText(), jtf_rowNum.getText(),
+				jtf_shelfNum.getText(), jtf_positionNum.getText(), false);
+		ListblService bl;
+		try {
+			bl = new ListController();
+			bl.stockIn(in_vo);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			JLabel tip = new JLabel("提示：网络异常");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
 
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font2);
-        JOptionPane.showMessageDialog(null, tip);
-    }
+		JLabel tip = new JLabel("提示：保存成功");
+		tip.setFont(font2);
+		JOptionPane.showMessageDialog(null, tip);
+	}
 
-	
 	/**
 	 * 监听焦点
+	 * 
 	 * @author Administrator
 	 *
 	 */
-	class TextFocus implements FocusListener{
+	class TextFocus implements FocusListener {
 
 		public void focusGained(FocusEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		public void focusLost(FocusEvent e) {
 			// TODO Auto-generated method stub
 			JTextField temp = (JTextField) e.getSource();
-			if(temp==jtf_deliveryNum){
+			if (temp == jtf_deliveryNum) {
 				if (!NumExceptioin.isOrderValid(jtf_deliveryNum)) {
-					isDelivAdd=true;
+					isDelivAdd = true;
 					if (tip1 == null) {
 						tip1 = new JLabel("快递编号位数应为10位", JLabel.CENTER);
-						tip1.setBounds(x + addx, y+height, width, height);
+						tip1.setBounds(x + addx, y + height, width, height);
 						tip1.setFont(font2);
 						tip1.setForeground(Color.RED);
 						addTip(tip1);
 					}
-				}
-				else{
-					if (isDelivAdd&&!"".equalsIgnoreCase(jtf_deliveryNum.getText().trim())) {
+				} else {
+					if (isDelivAdd
+							&& !"".equalsIgnoreCase(jtf_deliveryNum.getText()
+									.trim())) {
 						removeTip(tip1);
 					}
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 添加错误提示信息
 	 * 

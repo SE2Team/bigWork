@@ -1,19 +1,20 @@
-/*
- * 营业厅业务员装车管理界面
- */
 package presentation.listui;
 
+/**
+ * 营业厅业务员装车管理界面
+ * 
+ */
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.DateChooser;
+import presentation.commonui.Empty;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
 import vo.LoadingVO;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class LoadingPanel extends JPanel {
@@ -39,7 +40,11 @@ public class LoadingPanel extends JPanel {
 	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义错误提示的label
 	protected JLabel tip1, tip2, tip3;
-
+	//定义日期选择器
+	protected DateChooser datechooser;
+	// 定义文本框的数组
+	protected JTextField[] loadingJtf;
+		
 	public LoadingPanel() {
 
 		this.setLayout(null);
@@ -50,8 +55,18 @@ public class LoadingPanel extends JPanel {
 
 		jtf_loadingDate = new JTextField();
 		jtf_loadingDate.setFont(font2);
-		jtf_loadingDate.setBounds(x + addx1, y, width, height);
+		jtf_loadingDate.setEditable(false);
+		jtf_loadingDate.setBounds(x + addx1, y, width-30, height);
 
+		datechooser = new DateChooser("yyyy-MM-dd",jtf_loadingDate);
+		datechooser.setBounds(x + addx1+ width-30, y, 30, height);
+		jtf_loadingDate.setText(datechooser.commit());
+		datechooser.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me){
+				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		});
+		
 		hallNum = new JLabel("本营业厅编号", JLabel.CENTER);
 		hallNum.setFont(font);
 		hallNum.setBounds(x + addx2, y, jl_width, height);
@@ -129,7 +144,8 @@ public class LoadingPanel extends JPanel {
 		jtf_Money = new JTextField();
 		jtf_Money.setFont(font2);
 		jtf_Money.setBounds(x + addx1 + addx2, y + 5 * addy, width, height);
-
+		jtf_Money.setEditable(false);
+		
 		sure = new JButton("确定");
 		sure.setFont(font);
 		sure.setBounds(x + 160, 450, 80, height);
@@ -141,12 +157,24 @@ public class LoadingPanel extends JPanel {
 
 		});
 
+		loadingJtf = new JTextField[]{jtf_hallNum, jtf_start, jtf_end,
+				jtf_supercargo, jtf_monitor, jtf_transportNum, jtf_vehicleNum,
+				jtf_Money};
+		
 		cancel = new JButton("取消");
 		cancel.setFont(font);
 		cancel.setBounds(x + addx2 + 20, 450, 80, height);
+		cancel.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				Empty emptyLoading = new Empty(loadingJtf);
+				jta_consignList.setText("");
+			}
+		});
 
 		this.add(loadingDate);
 		this.add(jtf_loadingDate);
+		this.add(datechooser);
 		this.add(hallNum);
 		this.add(jtf_hallNum);
 		this.add(start);
@@ -173,6 +201,35 @@ public class LoadingPanel extends JPanel {
 	protected boolean isHallNumAdd = false;
 	protected boolean isTransportNumAdd = false;
 	protected boolean isVehicleNumAdd = false;
+
+	protected void performSure(){
+		LoadingVO loading_vo = new LoadingVO(jtf_loadingDate.getText(),
+				jtf_hallNum.getText(), jtf_transportNum.getText(),
+				jtf_start.getText(), jtf_end.getText(), jtf_monitor
+				.getText(), jtf_supercargo.getText(),
+				jtf_vehicleNum.getText(), jta_consignList.getText(),
+				jtf_Money.getText(),false);
+		ListblService bl;
+		try {
+			bl = new ListController();
+			try {
+				bl.save(loading_vo);
+			} catch (ExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+
+			JLabel tip = new JLabel("提示：网络异常");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+
+		JLabel tip = new JLabel("提示：保存成功");
+		tip.setFont(font);
+		JOptionPane.showMessageDialog(null, tip);
+	}
 
 	/**
 	 * 监听焦点
@@ -247,35 +304,12 @@ public class LoadingPanel extends JPanel {
 
 	}
 
-	protected void performSure(){
-        LoadingVO loading_vo = new LoadingVO(jtf_loadingDate.getText(),
-                jtf_hallNum.getText(), jtf_transportNum.getText(),
-                jtf_start.getText(), jtf_end.getText(), jtf_monitor
-                .getText(), jtf_supercargo.getText(),
-                jtf_vehicleNum.getText(), jta_consignList.getText(),
-                jtf_Money.getText(),false);
-        ListblService bl;
-        try {
-            bl = new ListController();
-        } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        }
-
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font);
-        JOptionPane.showMessageDialog(null, tip);
-    }
-
 	/**
 	 * 添加错误提示信息
 	 * 
 	 * @param tip
 	 */
-	protected  void addTip(JLabel tip) {
+	private void addTip(JLabel tip) {
 		this.add(tip);
 		this.repaint();
 	}
@@ -285,7 +319,7 @@ public class LoadingPanel extends JPanel {
 	 * 
 	 * @param tip
 	 */
-	protected  void removeTip(JLabel tip) {
+	private void removeTip(JLabel tip) {
 		this.remove(tip);
 		this.repaint();
 	}

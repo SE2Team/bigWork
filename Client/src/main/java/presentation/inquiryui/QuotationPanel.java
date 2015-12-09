@@ -29,6 +29,8 @@ public class QuotationPanel extends JPanel{
 	Font font2 = new Font("宋体",Font.PLAIN,18);
 	//定义错误提示的label
 	JLabel tip;
+	//错误提示信息是否已经被添加
+	boolean isOrderAdd = false;
 	
 	public QuotationPanel(){
 
@@ -48,9 +50,8 @@ public class QuotationPanel extends JPanel{
 		search.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				if(!NumExceptioin.isOrderValid(jtf_ordernum)){
-					System.out.println("a");
+					isOrderAdd=true;
 					tip=new JLabel("订单号位数应为10位",JLabel.CENTER);
 					tip.setBounds(x+addx, y+30, width, height);
 					tip.setFont(font2);
@@ -58,7 +59,7 @@ public class QuotationPanel extends JPanel{
 					addTip(tip);
 				}
 				else{
-					if(!"".equalsIgnoreCase(jtf_ordernum.getText().trim())){
+					if(isOrderAdd&&!"".equalsIgnoreCase(jtf_ordernum.getText().trim())){
 						removeTip(tip);
 					}
 				}

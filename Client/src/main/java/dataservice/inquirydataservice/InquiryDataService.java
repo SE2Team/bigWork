@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import po.LogisticsPO;
 import po.OperationLogPO;
 import util.ExistException;
-import util.ResultMessage;
 
 public interface InquiryDataService extends Remote{
     public LogisticsPO checkLogistics(String num) throws RemoteException;

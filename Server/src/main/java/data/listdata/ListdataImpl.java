@@ -167,9 +167,9 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		Common common=new Common("list");
 		ArrayList<String> list=common.readData();
 		ArrayList<ListPO> list2=new ArrayList<ListPO>();
-		boolean isCheck=false;
 		ListPO listPO=null;
 		for(int i=0;i<list.size();i++){
+			boolean isCheck=false;
 			String[] str=list.get(i).split(";");
 			if(str[1].equals("true")){
 				isCheck=true;
@@ -188,9 +188,11 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
             			listPO=new GatheringPO(str[2], str[3], str[4], str[5], str[6], isCheck);
             					break;
             case "ORDER":
-            			DeliveryType deliveryType=DeliveryType.NORMAL;
+            			DeliveryType deliveryType=DeliveryType.ECONOMIC;
             			if(str[16].equals("FAST")){
             				deliveryType=DeliveryType.FAST;
+            			}else if(str[16].equals("STANDARD")){
+            				deliveryType=DeliveryType.STANDARD;
             			}
             			listPO=new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8],str[9], str[10], str[11], str[12], str[13], str[14], str[15],deliveryType, str[17], str[18], str[19], str[20], str[21],str[22],isCheck);
             			break;
@@ -342,6 +344,14 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		return po.getType()+";"+po.getIsCheck()+";"+po.getPayDate()+";"+po.getPayMoney()+";"+po.getPayHuman()+";"+po.getPayAccount()+";"+po.getPayReason()+";"+po.getPayComment();
 	}
 	
+	private int DateToInt(String date) {
+		String[] str=date.split("-");
+		for(int i=1;i<str.length;i++){
+			str[0]=str[0]+str[i];
+		}
+		 return Integer.parseInt(str[0]);
+	}
+	
 	/**
 	 * 
 	 * @param po
@@ -374,6 +384,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 				expenseAndDate.setDays(days.intValue()/300+"");
 				if(expenseAndDate.getDeliveryType()==DeliveryType.FAST){
 					transport=transport*2;
+					}else if(expenseAndDate.getDeliveryType()==DeliveryType.ECONOMIC){
+						transport=transport/2;
 					}
 				expenseAndDate.setExpenseOfTransport(transport+"");
 				}else{
@@ -398,6 +410,64 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		}
 		expenseAndDate.setExpense((wrapper+transport)+"");
 		return expenseAndDate;
+	}
+
+	@Override
+	public Iterator<ListPO> getRecent(String start, String end) throws RemoteException {
+		// TODO Auto-generated method stub
+		int startDate=this.DateToInt(start);
+		int endDate1=this.DateToInt(end);
+		Iterator<ListPO> list=this.checkList();
+		ArrayList<ListPO> list2=new ArrayList<>();
+		while(list.hasNext()){
+			int date=0;
+			ListPO listPO=list.next();
+			switch (listPO.getType()){
+            case LOADINGINFO:
+                date=this.DateToInt(((LoadingPO) listPO).getLoadingDate());
+                
+                break;
+            case ADDRESSEEINFOMATION:
+                date=this.DateToInt(((AddresseeInformationPO) listPO).getAddresseeDate());
+                break;
+            case DISTRIBUTEINFO:
+                date=this.DateToInt(((DistributePO) listPO).getArriveDate());
+                break;
+            case GATHERING:
+            	date=this.DateToInt(((GatheringPO) listPO).getDate());
+                break;
+            case ORDER:
+                date=this.DateToInt(((OrderPO) listPO).getDate());
+                break;
+            case PAYMENT:
+                date = this.DateToInt(((PaymentPO) listPO).getPayDate());
+                break;
+            case RECEIPT:
+                date =this.DateToInt(((ReceiptPO) listPO).getReceiptDate());
+                break;
+            case RECEIVEINFO:
+                date =this.DateToInt(((ReceivePO) listPO).getArriveDate());
+                break;
+            case STOCKIN:
+                date = this.DateToInt(((StockInPO) listPO).getInDate());
+                break;
+            case STOCKOUT:
+            	date = this.DateToInt(((StockOutPO) listPO).getOutDate());
+                break;
+            case TRANSARRIVE:
+            	date = this.DateToInt(((TransferReceivePO) listPO).getArriveDate());
+                break;
+            case TRANSINFO:
+            	date = this.DateToInt(((TransferPO) listPO).getLoadingDate());
+                break;
+            default:
+                return null;
+			}
+			if(date>=startDate&&date<=endDate1){
+				list2.add(listPO);
+			}
+		}
+		return list2.iterator();
 	}
 	
 }
