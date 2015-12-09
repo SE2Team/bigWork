@@ -26,7 +26,7 @@ public class TransferReceivePanel extends JPanel {
 			arriveState;
 	// 定义对应的文本框
 	protected JTextField jtf_CenterNum, jtf_arriveDate, jtf_transferNum,
-			jtf_departure,jtf_orderNum;
+			jtf_departure;
 	// 定义下拉框
 	protected JComboBox state;
 	// 定义确定 取消按钮
@@ -202,7 +202,7 @@ public class TransferReceivePanel extends JPanel {
 	}
 
     protected void performSure(){
-        TransferReceiveVO vo = new TransferReceiveVO("1",jtf_arriveDate
+        TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate
                 .getText(), jtf_departure.getText(), state
                 .getSelectedItem().toString(), jtf_CenterNum.getText(),
                 jtf_transferNum.getText(), false);

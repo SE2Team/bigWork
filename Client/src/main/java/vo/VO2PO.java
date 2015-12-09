@@ -70,7 +70,7 @@ public class VO2PO {
     }
 
     public static TransferReceivePO convert(TransferReceiveVO vo){
-        return new TransferReceivePO(vo.getOrderNum(), vo.getArriveDate(), vo.getStart(),
+        return new TransferReceivePO( vo.getArriveDate(), vo.getStart(),
                 vo.getCargoState(), vo.getTransferCenterNum(), vo.getTransferNum(),vo.getIsCheck());
     }
 

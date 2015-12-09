@@ -20,7 +20,7 @@ public class TransferReceiveChecking extends TransferReceivePanel{
         this();
         sure.setText("通过");
         cancel.setText("否决");
-        jtf_orderNum.setText(vo.getOrderNum());
+//        jtf_orderNum.setText(vo.getOrderNum());
         jtf_arriveDate.setText(vo.getArriveDate());
         jtf_departure.setText(vo.getStart());
         state.setSelectedItem(vo.getCargoState());
@@ -31,7 +31,7 @@ public class TransferReceiveChecking extends TransferReceivePanel{
 
     @Override
     protected void performSure() {
-        TransferReceiveVO vo = new TransferReceiveVO(jtf_orderNum.getText(),jtf_arriveDate.getText(),
+        TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate.getText(),
                 jtf_departure.getText(), state.getSelectedItem().toString(),
                 jtf_CenterNum.getText(), jtf_transferNum.getText(), false);
 

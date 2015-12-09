@@ -12,18 +12,18 @@ public class TransferReceiveVO extends ListVO{
 	 * 括寄件单编号，到达日期，出发地，货物状态（损坏、完整、丢失），中转中心编号，中转单编号
 	 */
 
-	private String orderNum;
+//	private String orderNum;
 	private String arriveDate;
 	private String start;
 	private String cargoState;
 	private String transferCenterNum;
 	private String transferNum;
 
-	public TransferReceiveVO(String orderNum, String arriveDate, String start,
+	public TransferReceiveVO( String arriveDate, String start,
 							 String cargoState, String transferCenterNum, String transferNum,
 							 boolean isCheck) {
 		super(isCheck);
-		this.orderNum = orderNum;
+//		this.orderNum = orderNum;
 		this.arriveDate = arriveDate;
 		this.start = start;
 		this.cargoState = cargoState;
@@ -31,14 +31,14 @@ public class TransferReceiveVO extends ListVO{
 		this.transferNum = transferNum;
 		setType(ListType.TRANSARRIVE);
 	}
-
-	public void setOrderNum(String orderNum){
-		this.orderNum=orderNum;
-	}
-
-	public String getOrderNum(){
-		return orderNum;
-	}
+//
+//	public void setOrderNum(String orderNum){
+//		this.orderNum=orderNum;
+//	}
+//
+//	public String getOrderNum(){
+//		return orderNum;
+//	}
 
 	public void setArriveDate(String arriveDate){
 		this.arriveDate=arriveDate;
