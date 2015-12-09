@@ -8,10 +8,10 @@ import java.io.Serializable;
  * Created by Administrator on 2015/10/25 0025.
  */
 public class TransferReceivePO extends ListPO implements Serializable{
-	private static final long serialVersionUID = 1L;//ĞòÁĞ»¯±àºÅ
+	private static final long serialVersionUID = 1L;//åºåˆ—åŒ–ç¼–å·
 	/**
 	 * 
-	 * À¨¼Ä¼şµ¥±àºÅ£¬µ½´ïÈÕÆÚ£¬³ö·¢µØ£¬»õÎï×´Ì¬£¨Ëğ»µ¡¢ÍêÕû¡¢¶ªÊ§£©£¬ÖĞ×ªÖĞĞÄ±àºÅ£¬ÖĞ×ªµ¥±àºÅ
+	 * æ‹¬å¯„ä»¶å•ç¼–å·ï¼Œåˆ°è¾¾æ—¥æœŸï¼Œå‡ºå‘åœ°ï¼Œè´§ç‰©çŠ¶æ€ï¼ˆæŸåã€å®Œæ•´ã€ä¸¢å¤±ï¼‰ï¼Œä¸­è½¬ä¸­å¿ƒç¼–å·ï¼Œä¸­è½¬å•ç¼–å·
 	 */
 	
 //	private String orderNum;
