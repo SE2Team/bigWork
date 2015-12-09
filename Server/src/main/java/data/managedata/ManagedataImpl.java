@@ -1,21 +1,17 @@
 package data.managedata;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.print.DocFlavor.STRING;
-
 import data.Common.Common;
 import dataservice.managedataservice.ManageDataService;
 import po.ConstantPO;
 import po.DriverPO;
-import po.OrderPO;
 import po.VehiclePO;
 import po.WorkerPO;
 import util.ExistException;
-import util.ResultMessage;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -255,7 +251,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return new ConstantPO(str[0], str[1], str[2], str[3]);
 	}
 
-	@Override
 	public Iterator<DriverPO> checkDriver() throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
