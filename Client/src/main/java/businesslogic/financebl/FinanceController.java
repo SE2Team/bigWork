@@ -1,53 +1,72 @@
 package businesslogic.financebl;
 
 import businesslogicservice.FinanceblService;
-import util.ResultMessage;
+import util.ExistException;
 import vo.AccountVO;
 import vo.GatheringVO;
 import vo.PaymentVO;
 
+import java.rmi.RemoteException;
+import java.util.Iterator;
+
 /**
  * Created by Administrator on 2015/11/7 0007.
+ *
+ * @author myk
  */
 public class FinanceController implements FinanceblService {
+    /**
+     * The Finance.
+     */
+    private Finance finance;
 
-    public ResultMessage gathering(GatheringVO gatheringVO) {
-        return null;
+    /**
+     * Instantiates a new Finance controller.
+     *
+     * @throws RemoteException the remote exception
+     */
+    public FinanceController() throws RemoteException {
+        finance = new Finance();
     }
 
-    public ResultMessage payment(PaymentVO paymentVO) {
-        return null;
+
+    public boolean gathering(GatheringVO gatheringVO) throws RemoteException {
+        return finance.gathering(gatheringVO);
     }
 
-    public ResultMessage generateForm() {
-        return null;
+    public boolean payment(PaymentVO paymentVO) throws RemoteException{
+        return finance.payment(paymentVO);
     }
 
-    public ResultMessage generateForm(String startDate, String endDate) {
-        return null;
+    public boolean generateForm() throws RemoteException {
+        return finance.generateForm();
     }
 
-    public ResultMessage initial(String institution) {
-        return null;
+    public boolean generateForm(String startDate, String endDate) throws RemoteException {
+        return finance.generateForm(startDate, endDate);
     }
 
-    public ResultMessage addAccount(AccountVO accountVO) {
-        return null;
+    public boolean initial(String institution) {
+        return finance.initial(institution);
     }
 
-    public ResultMessage searchAccount() {
-        return null;
+    public boolean addAccount(AccountVO accountVO) throws RemoteException, ExistException {
+        return finance.addAccount(accountVO);
     }
 
-    public ResultMessage searchAccount(String name) {
-        return null;
+    public Iterator<AccountVO> searchAccount() throws RemoteException {
+        return finance.searchAccount().iterator();
     }
 
-    public ResultMessage DelAccount(AccountVO accountVO) {
-        return null;
+    public AccountVO searchAccount(String name) throws RemoteException {
+        return finance.searchAccount(name);
     }
 
-    public ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew) {
-        return null;
+    public boolean DelAccount(AccountVO accountVO) throws RemoteException {
+        return finance.DelAccount(accountVO);
+    }
+
+    public boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException {
+        return finance.EditAccount(accountVOOld, accountVONew);
     }
 }

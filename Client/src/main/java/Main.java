@@ -1,3 +1,5 @@
+import presentation.userui.LogInFrame;
+
 
 /**
  * Created by Administrator on 2015/10/25 0025.
@@ -12,6 +14,6 @@ class Main {
 //        mFrame.getContentPane().add(panel);
 //        mFrame.setTitle("ss�");
 //        mFrame.setVisible(true);
-        System.out.println("jsidfh");
+        LogInFrame loginframe = new LogInFrame();
     }
 }

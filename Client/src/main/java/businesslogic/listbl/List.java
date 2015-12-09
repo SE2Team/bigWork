@@ -1,46 +1,108 @@
 package businesslogic.listbl;
 
+import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
-import util.ResultMessage;
-import vo.ListVO;
+import dataservice.listdataservice.ListDataService;
+import po.ListPO;
+import po.PO2VO;
+import vo.*;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
+ *
+ * @author myk
  */
 public class List {
-    DataFactoryService dataFactory;
+    /**
+     * The Data factory.
+     */
+    protected DataFactoryService dataFactory;
+    /**
+     * The List data service.
+     */
+    protected ListDataService listDataService;
 
     /**
-     * 以对应类型序列化或者txt
+     * Instantiates a new List.
      *
-     * @param listVO
-     * @return
+     * @throws RemoteException the remote exception
      */
-    public ResultMessage save(ListVO listVO) {
-        return ResultMessage.FAILED;//留空，子类实现
-    }
-
-    public ResultMessage get() {
-        return ResultMessage.FAILED;
+    public List() throws RemoteException {
+        dataFactory = DataFactory.getInstance();
+        listDataService = dataFactory.getListData();
     }
 
     /**
-     * 作为待审核单据保存
-     * 每个子类实现
-     *
+     * 保存为待审批单据
+     * @param vo
      * @return
+     * @throws RemoteException
      */
-    public ResultMessage saveAsList() {
-        return ResultMessage.FAILED;
+    public boolean save(ListVO vo) throws  RemoteException{
+        ListPO po=null;
+        switch (vo.getType()){
+            case LOADINGINFO:
+                po=VO2PO.convert((LoadingVO) vo);
+                break;
+            case ADDRESSEEINFOMATION:
+                po=VO2PO.convert((AddresseeInformationVO) vo);
+                break;
+            case DISTRIBUTEINFO:
+                po=VO2PO.convert((DistributeVO) vo);
+                break;
+            case GATHERING:
+                po=VO2PO.convert((GatheringVO) vo);
+                break;
+            case ORDER:
+                po=VO2PO.convert((OrderVO) vo);
+                break;
+            case PAYMENT:
+                po=VO2PO.convert((PaymentVO) vo);
+                break;
+            case RECEIPT:
+                po=VO2PO.convert((ReceiptVO) vo);
+                break;
+            case RECEIVEINFO:
+                po=VO2PO.convert((ReceiveVO) vo);
+                break;
+            case STOCKIN:
+                po=VO2PO.convert((StockInVO) vo);
+                break;
+            case STOCKOUT:
+                po=VO2PO.convert((StockOutVO) vo);
+                break;
+            case TRANSARRIVE:
+                po=VO2PO.convert((TransferReceiveVO) vo);
+                break;
+            case TRANSINFO:
+                po=VO2PO.convert((TransferVO) vo);
+                break;
+        }
+
+        return listDataService.saveAsList(po);//保存为待审批
     }
 
 
     /**
-     * 将单据推送，不允许继承
+     * 返回一个待审批单据列表
      *
-     * @return
+     * @return array list
+     * @throws RemoteException the remote exception
      */
-    public final ListVO push() {
+    public final Iterator<ListVO> push() throws RemoteException {
+        Iterator<ListPO> itr=listDataService.checkList();
+        ArrayList<ListVO> vos=new ArrayList<ListVO>();
+        while (itr.hasNext()){
+            vos.add(PO2VO.convert(itr.next()));
+        }
+        return vos.iterator();
+    }
+
+    public Iterator<ListVO> getRecent(){
         return null;
     }
 }

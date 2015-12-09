@@ -1,27 +1,86 @@
 package businesslogicservice;
 
-import util.ResultMessage;
-import vo.*;
+import util.ExistException;
+import vo.AccountVO;
+import vo.GatheringVO;
+import vo.PaymentVO;
 
+import java.rmi.RemoteException;
+import java.util.Iterator;
+
+/**
+ * @author WANXING
+ */
 public interface FinanceblService {
-    ResultMessage gathering(GatheringVO gatheringVO);
+    /**
+     * @param gatheringVO 传入一个收款单VO
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    boolean gathering(GatheringVO gatheringVO) throws RemoteException;
 
-    ResultMessage payment(PaymentVO paymentVO);
+    /**
+     * @param paymentVO 传入一个paymentVO
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    boolean payment(PaymentVO paymentVO) throws RemoteException;
 
-    ResultMessage generateForm();
+    /**
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    boolean generateForm() throws RemoteException;
 
-    ResultMessage generateForm(String startDate, String endDate);
+    /**
+     * @param startDate 传入起始日期
+     * @param endDate   传入截止日期
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    boolean generateForm(String startDate, String endDate) throws RemoteException;
 
-    ResultMessage initial(String institution);
+    /**
+     * @param institution 传入机构名称
+     * @return
+     */
+    boolean initial(String institution);
 
-    ResultMessage addAccount(AccountVO accountVO);
+    /**
+     * @param accountVO 传入账单vo
+     * @return
+     * @throws RemoteException 网络异常
+     * @throws ExistException  异常，该账单已存在，无法添加
+     */
+    boolean addAccount(AccountVO accountVO) throws RemoteException, ExistException;
 
-    ResultMessage searchAccount();
+    /**
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    Iterator<AccountVO> searchAccount() throws RemoteException;
 
-    ResultMessage searchAccount(String name);
+    /**
+     * @param name 传入名称string
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    AccountVO searchAccount(String name) throws RemoteException;
 
-    ResultMessage DelAccount(AccountVO accountVO);
+    /**
+     * @param accountVO 传入账单vo
+     * @return
+     * @throws RemoteException 网络异常
+     */
+    boolean DelAccount(AccountVO accountVO) throws RemoteException;
 
-    ResultMessage EditAccount(AccountVO accountVOOld, AccountVO accountVONew);
+    /**
+     * @param accountVOOld 传入原来账单
+     * @param accountVONew 传入新的账单
+     * @return
+     * @throws RemoteException 网络异常
+     * @throws ExistException
+     */
+    boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException;
 
 }

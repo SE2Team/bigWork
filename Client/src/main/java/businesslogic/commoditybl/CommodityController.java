@@ -1,35 +1,54 @@
 package businesslogic.commoditybl;
 
 import businesslogicservice.CommodityblService;
-import util.ResultMessage;
 import vo.StockInVO;
 import vo.StockOutVO;
 
+import java.rmi.RemoteException;
+import java.util.Iterator;
 
 
 /**
  * Created by Administrator on 2015/11/1 0001.
+ *
+ * @author myk
  */
 public class CommodityController implements CommodityblService {
-    Commodity commodity = new Commodity();
+    /**
+     * The Commodity.
+     */
+    private Commodity commodity;
 
-    public ResultMessage stockOut(StockOutVO stockOutVO) {
+    /**
+     * Instantiates a new Commodity controller.
+     *
+     * @throws RemoteException the remote exception
+     */
+    public CommodityController() throws RemoteException {
+        commodity = new Commodity();
+    }
+
+    public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
 
         return commodity.stockOut(stockOutVO);
     }
 
 
-    public ResultMessage stockIn(StockInVO stockInVO) {
-        return null;
+    public boolean stockIn(StockInVO stockInVO) throws RemoteException {
+        return commodity.stockIn(stockInVO);
     }
 
 
-    public ResultMessage checkStock(String startDate, String endDate) {
-        return null;
+    public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
+        return commodity.checkStock(startDate, endDate);
     }
 
 
-    public ResultMessage StockSum(String startDate, String endDate) {
-        return null;
+    public Iterator<StockInVO> stockSum() {
+        return commodity.stockSum().iterator();
+    }
+
+    public Iterator<StockInVO> stockSum(String startDate, String endDate){
+        return commodity.stockSum(startDate, endDate);
     }
 }

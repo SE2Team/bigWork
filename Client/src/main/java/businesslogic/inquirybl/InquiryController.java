@@ -4,20 +4,39 @@ import businesslogicservice.InquiryblService;
 import vo.LogisticsVO;
 import vo.OperationLogVO;
 
+import java.rmi.RemoteException;
+import java.util.Iterator;
+
 /**
  * 没有类间协作
  * Created by Administrator on 2015/11/7 0007.
+ *
+ * @author myk
  */
 public class InquiryController implements InquiryblService {
-    public OperationLogVO checkOperationLog() {
-        return null;
+    /**
+     * The Inquiry.
+     */
+    private Inquiry inquiry;
+
+    /**
+     * Instantiates a new Inquiry controller.
+     *
+     * @throws RemoteException the remote exception
+     */
+    public InquiryController() throws RemoteException {
+        inquiry = new Inquiry();
     }
 
-    public String checkForm(String type) {
-        return null;
+    public Iterator<OperationLogVO> checkOperationLog() throws RemoteException {
+        return inquiry.checkOperationLog().iterator();
     }
 
-    public LogisticsVO checkLogistics(String num) {
-        return null;
+    public String checkForm(String type) throws RemoteException {
+        return inquiry.checkForm(type);
+    }
+
+    public LogisticsVO checkLogistics(String num) throws RemoteException {
+        return inquiry.checkLogistics(num);
     }
 }

@@ -1,22 +1,29 @@
 package po;
 
+import util.ListType;
+
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class GatheringPO extends ListPO {
+public class GatheringPO extends ListPO implements Serializable {
+    private static final long serialVersionUID = 1L;//序列化编号
+
     String date;
     String workplace;
     String man;
     String money;
     String place;
 
-    public GatheringPO(String date, String workplace, String man,
-                       String money, String place) {
+    public GatheringPO(String date, String workplace, String man, String money, String place, boolean isCheck) {
+        super(isCheck);
         this.date = date;
         this.workplace = workplace;
         this.man = man;
         this.money = money;
         this.place = place;
+        setType(ListType.GATHERING);
     }
 
     public String getDate() {
@@ -59,14 +66,5 @@ public class GatheringPO extends ListPO {
         this.place = place;
     }
 
-    @Override
-    public String toString() {
-        return "GatheringPO{" +
-                "date='" + date + '\'' +
-                ", workplace='" + workplace + '\'' +
-                ", man='" + man + '\'' +
-                ", money=" + money +
-                ", place='" + place + '\'' +
-                '}';
-    }
+
 }

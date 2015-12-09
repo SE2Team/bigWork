@@ -1,36 +1,148 @@
 package businesslogic.commoditybl;
 
-import util.ResultMessage;
+import businesslogic.utilitybl.Helper;
+import dataservice.DataFactory;
+import dataservice.commoditydataservice.CommodityDataService;
+import dataservice.datafactoryservice.DataFactoryService;
+import po.StockInPO;
+import po.StockPO;
 import vo.StockInVO;
 import vo.StockOutVO;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * Created by Administrator on 2015/11/1 0001.
+ *
+ * @author myk
  */
 public class Commodity {
-    public ResultMessage stockOut(StockOutVO stockOutVO) {
-        return null;
+    /**
+     * The Data factory.
+     */
+    private DataFactoryService dataFactory;
+    /**
+     * The Commodity.
+     */
+    private CommodityDataService commodity;
+    /**
+     * The Stock po.
+     */
+    private StockPO stockPO;
+
+    /**
+     * Instantiates a new Commodity.
+     *
+     * @throws RemoteException the remote exception
+     */
+    public Commodity() throws RemoteException {
+        dataFactory = DataFactory.getInstance();
+        commodity = dataFactory.getCommodityData();
+        try {
+            stockPO = commodity.check();
+        } catch (NullPointerException e) {
+            System.out.println("没有连接到服务器！");
+        }
+
     }
 
-    public ResultMessage stockIn(StockInVO stockInVO) {
-        return null;
-    }
 
+    /**
+     * Stock out result message.
+     *
+     * @param stockOutVO the stock out vo
+     * @return the result message
+     * @throws InvalidInput      the invalid input
+     * @throws TransferException the transfer exception
+     * @throws DateException     the date exception
+     * @throws RemoteException   the remote exception
+     */
+    public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
+//        ListblService list = new ListController();
 
-    public ResultMessage checkStock(String startDate, String endDate) {
-        return null;
-    }
+        //判断异常代码（数据层返回改对象是否存在等ResultMessage）
+        //……
+//        list.stockOut(stockOutVO);
+        //从库存中删去
+        stockPO.remove(stockOutVO.getDeliveryNum());
 
-    public ResultMessage StockSum(String startDate, String endDate) {
-        return null;
+        commodity.update(stockPO);
+
+        return true;
     }
 
     /**
-     * 待完善的内部判断代码
+     * Stock in result message.
      *
+     * @param stockInVO the stock in vo
+     * @return the result message
+     * @throws InvalidInput    the invalid input
+     * @throws DateException   the date exception
+     * @throws RemoteException the remote exception
+     */
+    public boolean stockIn(StockInVO stockInVO) throws RemoteException {
+//        ListblService list = new ListController();
+
+        StockInPO stockInPO = new StockInPO(stockInVO.getDeliveryNum(), stockInVO.getInDate(), stockInVO.getEnd(), stockInVO.getZoneNum(),
+                stockInVO.getRowNum(), stockInVO.getShelfNum(), stockInVO.getPositionNum(), stockInVO.getIsCheck());
+
+//        list.stockIn(stockInVO);
+        //判断异常代码（数据层返回改对象是否存在等ResultMessage）
+        //……
+
+        //添加到库存
+        stockPO.add(stockInPO);
+
+        commodity.update(stockPO);
+        return true;
+    }
+
+    /**
+     * Check stock stock vo.
+     *
+     * @param startDate the start date
+     * @param endDate   the end date
+     * @return stock vo
+     */
+    public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
+        Iterator<Integer> itr = commodity.check(startDate, endDate);
+        return itr;
+    }
+
+    /**
+     * 截取当日的库存状态
+     *
+     * @return 一个当日入库单数组
+     */
+    public ArrayList<StockInVO> stockSum() {
+        ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
+        for (StockInPO temp : stockPO.getStockList()) {
+
+            arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
+                    temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+
+        }
+        return arrayList;
+    }
+
+    /**
+     * 生成时间段内库存状态
+     *
+     * @param startDate
+     * @param endDate
      * @return
      */
-    private boolean isFull() {
-        return false;
+    public Iterator<StockInVO> stockSum(String startDate, String endDate) {
+        ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
+        for (StockInPO temp : stockPO.getStockList()) {
+            if (Helper.isBetween(startDate, temp.getInDate(), endDate)) {
+                arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
+                        temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+            }
+        }
+        return arrayList.iterator();
     }
+
 }
