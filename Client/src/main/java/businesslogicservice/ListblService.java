@@ -123,4 +123,12 @@ public interface ListblService {
      * @throws RemoteException 网络异常
      */
     boolean save(ListVO vo) throws ExistException, RemoteException;
+
+    /**
+     * 获取到目前最近订单的审批状态，传入一个起始日期
+     * @param date
+     * @return
+     * @throws RemoteException
+     */
+    Iterator<ListVO> getRecent(String date) throws RemoteException;
 }

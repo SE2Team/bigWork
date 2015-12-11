@@ -11,16 +11,47 @@ import dataservice.managedataservice.ManageDataService;
 import dataservice.userdataservice.UserDataService;
 
 public interface DataFactoryService extends Remote{
-
-    public CommodityDataService getCommodityData() throws RemoteException;
-
-    public FinanceDataService getFinanceData() throws RemoteException;
-
-    public InquiryDataService getInquiryData() throws RemoteException;
-
-    public ListDataService getListData() throws RemoteException;
-
-    public ManageDataService getManageData() throws RemoteException;
-
-    public UserDataService getUserData( )throws RemoteException;
+	
+	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	CommodityDataService getCommodityData() throws RemoteException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	FinanceDataService getFinanceData() throws RemoteException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	InquiryDataService getInquiryData() throws RemoteException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	ListDataService getListData() throws RemoteException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	ManageDataService getManageData() throws RemoteException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	UserDataService getUserData() throws RemoteException;
 }

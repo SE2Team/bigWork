@@ -24,11 +24,29 @@ public interface FinanceDataService extends Remote{
      * @return
      */
      String get(String startDate, String endDate) throws RemoteException;
-
+     
+     /**
+      * 
+      * @param accountPO
+      * @return
+      * @throws RemoteException
+      * @throws ExistException
+      */
      Boolean addAccount(AccountPO accountPO) throws RemoteException, ExistException;
-
+     
+     /**
+      * 
+      * @return
+      * @throws RemoteException
+      */
      ArrayList<AccountPO> searchAccount()throws RemoteException;
-
+     
+     /**
+      * 
+      * @param name
+      * @return
+      * @throws RemoteException
+      */
      AccountPO searchAccount(String name) throws RemoteException;
 
     /**
@@ -46,9 +64,21 @@ public interface FinanceDataService extends Remote{
      * @throws ExistException 
      */
      Boolean EditAccount(String name, AccountPO newAccountPO) throws RemoteException, ExistException;
-
+     
+     /**
+      * 
+      * @param po
+      * @return
+      * @throws RemoteException
+      */
     boolean initial(WorkerPO po) throws RemoteException;
-
+    
+    /**
+     * 
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
     boolean initial(VehiclePO po) throws RemoteException;
 
     /**
@@ -57,15 +87,41 @@ public interface FinanceDataService extends Remote{
      * @return
      */
     boolean initial(StockPO po) throws RemoteException;
-
+    
+    /**
+     * 
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
     boolean initial(AccountPO po) throws RemoteException;
-
+    
+    /**
+     * 
+     * @return
+     * @throws RemoteException
+     */
     Iterator<WorkerPO> checkInitWorker() throws RemoteException;
-
+    
+    /**
+     * 
+     * @return
+     * @throws RemoteException
+     */
     Iterator<VehiclePO> checkInitVehicle() throws RemoteException;
-
+    
+    /**
+     * 
+     * @return
+     * @throws RemoteException
+     */
     Iterator<AccountPO> checkInitAccount() throws RemoteException;
-
+    
+    /**
+     * 
+     * @return
+     * @throws RemoteException
+     */
     StockPO checkInitStock() throws RemoteException;
 
 }

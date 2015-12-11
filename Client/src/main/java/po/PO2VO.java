@@ -1,19 +1,6 @@
 package po;
 
-import vo.AddresseeInformationVO;
-import vo.DistributeVO;
-import vo.GatheringVO;
-import vo.ListVO;
-import vo.LoadingVO;
-import vo.OrderVO;
-import vo.PaymentVO;
-import vo.ReceiptVO;
-import vo.ReceiveVO;
-import vo.StockInVO;
-import vo.StockOutVO;
-import vo.TransferReceiveVO;
-import vo.TransferVO;
-import vo.UserVO;
+import vo.*;
 
 /**
  * Created by MYK on 2015/12/7 0007.
@@ -127,5 +114,18 @@ public class PO2VO {
 
         }
         return null;
+    }
+
+    public static WorkerVO convert(WorkerPO po){
+        return new WorkerVO(po.getName(),po.getIdNum(),po.getPosition(),po.getOrganization(),po.getUserId());
+    }
+
+    public static VehicleVO convert(VehiclePO po){
+        return new VehicleVO(po.getVehicleNum(),po.getLicensePlate(),po.getBuyDate(),po.getUseTime());
+    }
+
+    public static DriverVO convert(DriverPO po){
+        return new DriverVO(po.getDriverNum(),po.getDriverName(),po.getBirthDate(),po.getIdNum(),po.getPhone(),
+                po.getVehicleInstitution(),po.getSex(),po.getLicenseTime());
     }
 }

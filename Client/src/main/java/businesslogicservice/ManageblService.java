@@ -5,9 +5,10 @@ import util.ExistException;
 import vo.ConstantVO;
 import vo.DriverVO;
 import vo.VehicleVO;
+import vo.WorkerVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/10/24 0024.
@@ -90,7 +91,7 @@ public interface ManageblService {
     /**
      * @return 所有现有人员的列表
      */
-    ArrayList<WorkerPO> checkWorker() throws RemoteException;
+    Iterator<WorkerVO> checkWorker() throws RemoteException;
 
     /**
      * 查找人员
@@ -98,7 +99,7 @@ public interface ManageblService {
      * @param name 人员名字
      * @return 符合条件的人员列表（可能只有一个人员的ArrayList）
      */
-    ArrayList<WorkerPO> checkWorker(String name) throws RemoteException;
+    Iterator<WorkerVO> checkWorker(String name) throws RemoteException;
 
     /**
      * 编辑人员信息

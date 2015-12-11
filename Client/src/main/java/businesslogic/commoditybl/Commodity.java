@@ -54,9 +54,6 @@ public class Commodity {
      *
      * @param stockOutVO the stock out vo
      * @return the result message
-     * @throws InvalidInput      the invalid input
-     * @throws TransferException the transfer exception
-     * @throws DateException     the date exception
      * @throws RemoteException   the remote exception
      */
     public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
@@ -78,8 +75,6 @@ public class Commodity {
      *
      * @param stockInVO the stock in vo
      * @return the result message
-     * @throws InvalidInput    the invalid input
-     * @throws DateException   the date exception
      * @throws RemoteException the remote exception
      */
     public boolean stockIn(StockInVO stockInVO) throws RemoteException {

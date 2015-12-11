@@ -23,8 +23,7 @@ public class TransArrive extends List {
 
     @Override
     public boolean save(ListVO listVO) throws RemoteException {
-        TransferReceiveVO vo = null;
-        vo = (TransferReceiveVO) listVO;
+        TransferReceiveVO vo = (TransferReceiveVO) listVO;
         TransferReceivePO po = VO2PO.convert(vo);
         return listDataService.save(po);
     }

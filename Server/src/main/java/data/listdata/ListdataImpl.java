@@ -1,16 +1,17 @@
 package data.listdata;
 
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Iterator;
 import data.Common.Common;
 import dataservice.listdataservice.ListDataService;
 import po.*;
 import util.DeliveryType;
 import util.ExistException;
 import util.TransportType;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -232,12 +233,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		
 		return list2.iterator();
 	}
-	
+
 	/**
-	 * 
-	 * @param OrderPO
+	 *
+	 * @param po
 	 * @return
-	 */
+     */
 	private String orderPoToString(OrderPO po) {
 		return po.getType()+";"+po.getIsCheck()+";"+po.getSenderName() + ";" + po.getSenderAddress() + ";" + po.getSenderWorkplace() + ";"
 				+ po.getSenderTelephone() + ";" + po.getSenderPhone() + ";" + po.getReceiverName() + ";"
@@ -248,11 +249,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 				+ po.getDate() + ";" + po.getDeliveryNum()+";";
 	}
 
-	/**
-	 * 
-	 * @param AddresseeInformationPO
-	 * @return
-	 */
+
 	private String addresseeInfoPOToString(AddresseeInformationPO po) {
 		return po.getType()+";"+po.getIsCheck()+";"+po.getAddresseeNum() + ";" + po.getAddresseeName() + ";" + po.getAddresseeDate()+";";
 
@@ -260,7 +257,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
 	/**
 	 * 
-	 * @param LoadingPO
+	 * @param po
 	 * @return
 	 */
 	private String loadingPOToString(LoadingPO po) {
@@ -272,7 +269,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
 	/**
 	 * 
-	 * @param ReceivePO
+	 * @param po
 	 * @return
 	 */
 	private String receivePOToString(ReceivePO po) {
@@ -281,7 +278,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
 	/**
 	 * 
-	 * @param DistributePO
+	 * @param po
 	 * @return
 	 */
 	private String distributePOToString(DistributePO po) {
@@ -290,7 +287,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
 	/**
 	 * 
-	 * @param TransferPO
+	 * @param po
 	 * @return
 	 */
 	private String transferPOToString(TransferPO po) {
@@ -300,7 +297,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	}
 	
 	/**
-	 * 
+	 * todo 写了两遍getArriveDate?
 	 * @param po
 	 * @return
 	 */
