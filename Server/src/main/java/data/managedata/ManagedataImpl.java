@@ -173,8 +173,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	}
 
 	@Override
-	public ArrayList<WorkerPO> check() throws RemoteException{
-		// TODO Auto-generated method stub
+	public Iterator<WorkerPO> checkWorker() throws RemoteException{
 		Common common=new Common("worker");
 		ArrayList<String> list=common.readData();
 		ArrayList<WorkerPO> list2=new ArrayList<WorkerPO>();
@@ -182,11 +181,11 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			String[] str=list.get(j).split(";");
 			list2.add(this.stringToWorkerPO(str));
 		}
-		return list2;
+		return list2.iterator();
 	}
 
 	@Override
-	public ArrayList<WorkerPO> check(String name) throws RemoteException{
+	public Iterator<WorkerPO> checkWorker(String name) throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common=new Common("worker");
 		ArrayList<String> list=common.readData();
@@ -198,7 +197,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			}
 		}
 		
-		return list2;
+		return list2.iterator();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.listdataservice.ListDataService;
@@ -102,7 +103,12 @@ public class List {
         return vos.iterator();
     }
 
-    public Iterator<ListVO> getRecent(){
-        return null;
+    public Iterator<ListVO> getRecent(String date) throws RemoteException {
+        Iterator<ListPO> itr=listDataService.getRecent(date, Helper.getTime());
+        ArrayList<ListVO> arrayList=new ArrayList<ListVO>();
+        while(itr.hasNext()){
+            arrayList.add(PO2VO.convert(itr.next()));
+        }
+        return arrayList.iterator();
     }
 }

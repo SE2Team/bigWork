@@ -1,13 +1,14 @@
 package dataservice.managedataservice;
 
+import po.ConstantPO;
+import po.DriverPO;
+import po.VehiclePO;
+import po.WorkerPO;
+import util.ExistException;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Iterator;
-
-import po.*;
-import util.ExistException;
-import util.ResultMessage;
 
 public interface ManageDataService extends Remote{
 	
@@ -128,18 +129,18 @@ public interface ManageDataService extends Remote{
      *
      * @return 所有现有人员的列表
      */
-    ArrayList<WorkerPO> check() throws RemoteException;
+    Iterator<WorkerPO> checkWorker() throws RemoteException;
 
     /**
      * 查找人员
      * @param name 人员名字
      * @return 符合条件的人员列表（可能只有一个人员的ArrayList）
      */
-    ArrayList<WorkerPO> check(String name) throws RemoteException;
+    Iterator<WorkerPO> checkWorker(String name) throws RemoteException;
 
     /**
      * 编辑人员信息
-     * @param workerPO
+     * @param
      * @return
      * @throws ExistException 
      */

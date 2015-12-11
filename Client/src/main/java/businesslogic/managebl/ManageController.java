@@ -6,9 +6,10 @@ import util.ExistException;
 import vo.ConstantVO;
 import vo.DriverVO;
 import vo.VehicleVO;
+import vo.WorkerVO;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/11/7 0007.
@@ -38,6 +39,15 @@ public class ManageController implements ManageblService {
         return manage.delDriver(drivervO);
     }
 
+    /**
+     * show all Driver info
+     * @return
+     * @throws RemoteException
+     */
+    public Iterator<DriverVO> checkDriver() throws RemoteException {
+        return manage.checkDriver();
+    }
+
     public DriverVO checkDriver(String driveNumber) throws RemoteException {
         return manage.checkDriver(driveNumber);
     }
@@ -50,6 +60,21 @@ public class ManageController implements ManageblService {
         return manage.delVehicle(vehiclevO);
     }
 
+    /**
+     * show all Vehivles info
+     * @return
+     * @throws RemoteException
+     */
+    public Iterator<VehicleVO> checkVehicle() throws RemoteException {
+        return manage.checkVehicle();
+    }
+
+    /**
+     * 按照编号查找
+     * @param vehicleNumber 传入车辆编号
+     * @return
+     * @throws RemoteException
+     */
     public VehicleVO checkVehicle(String vehicleNumber) throws RemoteException {
         return manage.checkVehicle(vehicleNumber);
     }
@@ -70,11 +95,11 @@ public class ManageController implements ManageblService {
         return manage.delWorker(workerPO);
     }
 
-    public ArrayList<WorkerPO> checkWorker() throws RemoteException {
+    public Iterator<WorkerVO> checkWorker() throws RemoteException {
         return manage.checkWorker();
     }
 
-    public ArrayList<WorkerPO> checkWorker(String name) throws RemoteException {
+    public Iterator<WorkerVO> checkWorker(String name) throws RemoteException {
         return manage.checkWorker(name);
     }
 

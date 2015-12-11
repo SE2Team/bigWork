@@ -7,13 +7,38 @@ import java.util.ArrayList;
 import po.LogisticsPO;
 import po.OperationLogPO;
 import util.ExistException;
+import util.ResultMessage;
 
 public interface InquiryDataService extends Remote{
-    public LogisticsPO checkLogistics(String num) throws RemoteException;
-
-    public ArrayList<OperationLogPO> checkOperationLog() throws RemoteException;
-
-    public String checkForm(String type) throws RemoteException;
+	/**
+	 * 
+	 * @param num
+	 * @return
+	 * @throws RemoteException
+	 */
+     LogisticsPO checkLogistics(String num) throws RemoteException;
+     
+     /**
+      * 
+      * @return
+      * @throws RemoteException
+      */
+     ArrayList<OperationLogPO> checkOperationLog() throws RemoteException;
+     
+     /**
+      * 
+      * @param type
+      * @return
+      * @throws RemoteException
+      */
+     String checkForm(String type) throws RemoteException;
     
-    public Boolean updateLogistics(LogisticsPO po) throws RemoteException, ExistException;
+     /**
+      * 
+      * @param po
+      * @return
+      * @throws RemoteException
+      * @throws ExistException
+      */
+     Boolean updateLogistics(LogisticsPO po) throws RemoteException, ExistException;
 }

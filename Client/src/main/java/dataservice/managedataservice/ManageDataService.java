@@ -1,35 +1,112 @@
 package dataservice.managedataservice;
 
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-
 import po.ConstantPO;
 import po.DriverPO;
 import po.VehiclePO;
 import po.WorkerPO;
 import util.ExistException;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Iterator;
+
 public interface ManageDataService extends Remote{
-    public Boolean addDriver(DriverPO driverPO) throws RemoteException, ExistException;
+	
+	/**
+	 * 
+	 * @param driverPO
+	 * @return
+	 * @throws RemoteException
+	 * @throws ExistException
+	 */
+     Boolean addDriver(DriverPO driverPO) throws RemoteException, ExistException;
+     
+     /**
+      * 
+      * @param po
+      * @return
+      * @throws RemoteException
+      */
+     Boolean  deleteDriver(DriverPO po) throws RemoteException;
 
-    public Boolean  deleteDriver(DriverPO po) throws RemoteException;
-
-    public DriverPO checkDriver(String driveNumber) throws RemoteException;
-
-    public Boolean  addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException;
-
-    public Boolean  deleteVehicle(VehiclePO po) throws RemoteException;
-
-    public VehiclePO checkVehicle(String vehicleNumber) throws RemoteException;
-
-    public Boolean updateSalary(String position, String Type) throws RemoteException;
-
-    public Boolean updateConstant(ConstantPO constantPO) throws RemoteException, ExistException;
+     /**
+      * 
+      * @param driveNumber
+      * @return
+      * @throws RemoteException
+      */
+     DriverPO checkDriver(String driveNumber) throws RemoteException;
+     
+     /**
+      * 
+      * @return
+      * @throws RemoteException
+      */
+     Iterator<DriverPO> checkDriver() throws RemoteException;
+     
+     /**
+      * 
+      * @param vehiclePO
+      * @return
+      * @throws RemoteException
+      * @throws ExistException
+      */
+     Boolean  addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException;
+     
+     /**
+      * 
+      * @param po
+      * @return
+      * @throws RemoteException
+      */
+     Boolean  deleteVehicle(VehiclePO po) throws RemoteException;
+     
+     /**
+      * 
+      * @param vehicleNumber
+      * @return
+      * @throws RemoteException
+      */
+     VehiclePO checkVehicle(String vehicleNumber) throws RemoteException;
+     
+     /**
+      * 
+      * @return
+      * @throws RemoteException
+      */
+     Iterator<VehiclePO> checkVehicle() throws RemoteException;
+     
+     /**
+      * 
+      * @param position
+      * @param Type
+      * @return
+      * @throws RemoteException
+      */
+     Boolean updateSalary(String position, String Type) throws RemoteException;
+     
+     /**
+      * 
+      * @param constantPO
+      * @return
+      * @throws RemoteException
+      * @throws ExistException
+      */
+     Boolean updateConstant(ConstantPO constantPO) throws RemoteException, ExistException;
+     
+     /**
+      * 
+      * @return
+      * @throws RemoteException
+      */
+     String[] getSalary() throws RemoteException;
     
-    public String[] getSalary() throws RemoteException;
-    
-    public ConstantPO getConstant() throws RemoteException;
+     /**
+      * 
+      * @return
+      * @throws RemoteException
+      */
+     ConstantPO getConstant() throws RemoteException;
   
 
     /**
@@ -52,18 +129,18 @@ public interface ManageDataService extends Remote{
      *
      * @return 所有现有人员的列表
      */
-    ArrayList<WorkerPO> check() throws RemoteException;
+    Iterator<WorkerPO> checkWorker() throws RemoteException;
 
     /**
      * 查找人员
      * @param name 人员名字
      * @return 符合条件的人员列表（可能只有一个人员的ArrayList）
      */
-    ArrayList<WorkerPO> check(String name) throws RemoteException;
+    Iterator<WorkerPO> checkWorker(String name) throws RemoteException;
 
     /**
      * 编辑人员信息
-     * @param workerPO
+     * @param
      * @return
      * @throws ExistException 
      */

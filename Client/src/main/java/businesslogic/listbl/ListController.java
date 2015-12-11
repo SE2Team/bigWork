@@ -109,4 +109,8 @@ public class ListController implements ListblService {
         list.save(vo);
         return true;
     }
+
+    public Iterator<ListVO> getRecent(String date) throws RemoteException {
+        return list.getRecent(date);
+    }
 }
