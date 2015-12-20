@@ -7,17 +7,21 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import util.TransportType;
 import vo.StockOutVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class StockOutPanel extends JPanel {
+
+	private static final JTextField[] stockInJtf = null;
 
 	protected int x = 110, y = 80, width = 200, height = 30, addx = 210,
 			addy = 65;
@@ -44,6 +48,8 @@ public class StockOutPanel extends JPanel {
 	protected DateChooser datechooser;
 	// 定义文本框的数组
 	protected JTextField[] stockOutJtf;
+	//定义装运形式
+	protected TransportType transportType;
 
 	public StockOutPanel() {
 
@@ -183,7 +189,9 @@ public class StockOutPanel extends JPanel {
 					if (isDelivAdd
 							&& !"".equalsIgnoreCase(jtf_deliveryNum.getText()
 									.trim())) {
+						isDelivAdd = false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}
@@ -202,7 +210,9 @@ public class StockOutPanel extends JPanel {
 					if (isTransferAdd
 							&& !"".equalsIgnoreCase(jtf_deliveryNum.getText()
 									.trim())) {
+						isTransferAdd = false;
 						removeTip(tip2);
+						tip2 = null;
 					}
 				}
 			}
@@ -211,29 +221,54 @@ public class StockOutPanel extends JPanel {
 	}
 
     protected void performSure(){
-        // jcb_loadingWay.getSelectedItem().toString()
-        StockOutVO out_vo = new StockOutVO(jtf_deliveryNum.getText(),
-                jtf_outDate.getText(), jtf_destination.getText(),
-                TransportType.TRAIN, jtf_transferNum.getText(), false);
-        ListblService bl;
-        try {
-            bl = new ListController();
-            try {
-                bl.save(out_vo);
-            } catch (ExistException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        }
+    	boolean isOk = NumExceptioin.isOrderValid(jtf_deliveryNum)
+    			&&NumExceptioin.isTransListValid(jtf_transferNum);
+    	if(isOk&&isAllEntered.isEntered(stockOutJtf)){
+    		if(jcb_loadingWay.getSelectedItem().toString().equals("火车")){
+    	    	   transportType = TransportType.TRAIN;
+    	       }
+    	       if(jcb_loadingWay.getSelectedItem().toString().equals("汽车")){
+    	    	   transportType = TransportType.CAR;
+    	       }
+    	       if(jcb_loadingWay.getSelectedItem().toString().equals("飞机")){
+    	    	   transportType = TransportType.AIRPLANE;
+    	       }
+    	        StockOutVO out_vo = new StockOutVO(jtf_deliveryNum.getText(),
+    	                jtf_outDate.getText(), jtf_destination.getText(),
+    	                transportType, jtf_transferNum.getText(), false);
+    	        ListblService bl;
+    	        try {
+    	            bl = new ListController();
+    	            try {
+    	                bl.save(out_vo);
+    	            } catch (ExistException e) {
+    	                // TODO Auto-generated catch block
+    	                e.printStackTrace();
+    	            }
+    	        } catch (RemoteException e1) {
+    	            // TODO Auto-generated catch block
+    	            JLabel tip = new JLabel("提示：网络异常");
+    	            tip.setFont(font2);
+    	            JOptionPane.showMessageDialog(null, tip);
+    	        }
 
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font2);
-        JOptionPane.showMessageDialog(null, tip);
+    	        JLabel tip = new JLabel("提示：保存成功");
+    	        tip.setFont(font2);
+    	        JOptionPane.showMessageDialog(null, tip);
+    	}else if((!isOk)&&isAllEntered.isEntered(stockInJtf)){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isAllEntered.isEntered(stockInJtf)){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isAllEntered.isEntered(stockInJtf)){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+       
     }
 
 

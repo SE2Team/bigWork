@@ -9,22 +9,19 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import businesslogic.managebl.ManageController;
-import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import presentation.manageui.addDriverDialog.TextFocus;
-import presentation.manageui.addDriverDialog.addDriverPanel;
 import vo.DriverVO;
 
 public class modifyDriverDialog extends JDialog {
@@ -40,15 +37,15 @@ public class modifyDriverDialog extends JDialog {
 		this.setResizable(false);
 	}
 
-	private int x = 15, y = 40, addx = 120, addy = 55, addx2 = 80, jl_width = 100,
-			jtf_width = 200, height = 25, jtf_width2 = 100;
-	
+	private int x = 15, y = 40, addx = 120, addy = 55, addx2 = 80,
+			jl_width = 100, jtf_width = 200, height = 25, jtf_width2 = 100;
+
 	// 设置文字的字体
 	private Font font = new Font("宋体", Font.PLAIN, 20);
 	private Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义添加司机信息，司机姓名，性别，编号，出生日期，身份证号，手机，车辆单位，行驶证期限的label
-	private JLabel addInfo, driverName, sex, driverNum, birthDate, idNum, phone,
-			vehicleInstitution, licenseTime;
+	private JLabel addInfo, driverName, sex, driverNum, birthDate, idNum,
+			phone, vehicleInstitution, licenseTime;
 	// 定义对应的文本框
 	private JTextField jtf_driverName, jtf_driverNum, jtf_birthDate, jtf_idNum,
 			jtf_phone, jtf_Institution, jtf_licenseTime;
@@ -59,15 +56,17 @@ public class modifyDriverDialog extends JDialog {
 	private JButton sure, cancel;
 	// 定义错误提示的label
 	private JLabel tip1, tip2, tip3;
-	//定义用来存放用户输入信息的数组
+	// 定义文本框的数组
+	private JTextField[] driverJtf;
+	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
-	//定义日期选择器
+	// 定义日期选择器
 	private DateChooser datechooser;
 
 	class modifyDriverPanel extends JPanel {
 
 		RadioButtonListener radioButtonListener = new RadioButtonListener();
-		
+
 		public modifyDriverPanel() {
 			this.setLayout(null);
 
@@ -94,7 +93,7 @@ public class modifyDriverDialog extends JDialog {
 			if (jrb_male.isSelected()) {
 				saveValue = jrb_male.getText();
 			}
-			
+
 			jrb_female = new JRadioButton("女");
 			jrb_female.setFont(font);
 			jrb_female.addActionListener(radioButtonListener);
@@ -103,7 +102,7 @@ public class modifyDriverDialog extends JDialog {
 			if (jrb_female.isSelected()) {
 				saveValue = jrb_female.getText();
 			}
-			
+
 			group = new ButtonGroup();
 			group.add(jrb_male);
 			group.add(jrb_female);
@@ -123,18 +122,20 @@ public class modifyDriverDialog extends JDialog {
 
 			jtf_birthDate = new JTextField();
 			jtf_birthDate.setFont(font);
-			//jtf_birthDate.setEditable(false);
-			jtf_birthDate.setBounds(x + addx, y + 2 * addy, jtf_width-30, height);
+			// jtf_birthDate.setEditable(false);
+			jtf_birthDate.setBounds(x + addx, y + 2 * addy, jtf_width - 30,
+					height);
 
-			datechooser = new DateChooser("yyyy-MM-dd",jtf_birthDate);
-			datechooser.setBounds(x + addx+ jtf_width-30, y+ 2 * addy, 30, height);
+			datechooser = new DateChooser("yyyy-MM-dd", jtf_birthDate);
+			datechooser.setBounds(x + addx + jtf_width - 30, y + 2 * addy, 30,
+					height);
 			jtf_birthDate.setText(datechooser.commit());
 			datechooser.addMouseListener(new MouseAdapter() {
-				public void mouseEntered(MouseEvent me){
+				public void mouseEntered(MouseEvent me) {
 					datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			});
-			
+
 			idNum = new JLabel("身份证号", JLabel.CENTER);
 			idNum.setFont(font);
 			idNum.setBounds(x, y + 3 * addy, jl_width, height);
@@ -176,27 +177,65 @@ public class modifyDriverDialog extends JDialog {
 			sure.setBounds(80, y + 7 * addy, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					DriverVO driver_vo = new DriverVO(jtf_driverNum.getText(),
-							jtf_driverName.getText(), jtf_birthDate.getText(),
-							jtf_idNum.getText(), jtf_phone.getText(),
-							jtf_Institution.getText(), saveValue,
-							jtf_licenseTime.getText());
-					try {
-						ManageblService bl = new ManageController();
-						
-					} catch (RemoteException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
+					driverJtf = new JTextField[] { jtf_driverNum,
+							jtf_driverName, jtf_idNum, jtf_phone,
+							jtf_Institution, jtf_licenseTime };
+					boolean isOk = NumExceptioin.isDriverValid(jtf_driverNum)
+							&& NumExceptioin.isIdValid(jtf_idNum)
+							&& NumExceptioin.isPhoneValid(jtf_phone);
+					boolean isenter = isAllEntered.isEntered(driverJtf)
+							&& (jrb_male.isSelected() || jrb_female
+									.isSelected());
+					if (isOk && isenter) {
+						DriverVO driver_vo = new DriverVO(jtf_driverNum
+								.getText(), jtf_driverName.getText(),
+								jtf_birthDate.getText(), jtf_idNum.getText(),
+								jtf_phone.getText(), jtf_Institution.getText(),
+								saveValue, jtf_licenseTime.getText());
+						// TODO
+						// ManageblService bl;
+						// try {
+						// bl = new ManageController();
+						// try {
+						// bl.addDriver(driver_vo);
+						// } catch (ExistException e) {
+						// // TODO Auto-generated catch block
+						// JLabel tip = new JLabel("提示：该司机信息已存在");
+						// tip.setFont(font2);
+						// JOptionPane.showMessageDialog(null, tip);
+						// return;
+						// }
+						// } catch (RemoteException e) {
+						// // TODO Auto-generated catch block
+						// JLabel tip = new JLabel("提示：网络异常");
+						// tip.setFont(font2);
+						// JOptionPane.showMessageDialog(null, tip);
+						// return;
+						// }
+
+						rowContent = new String[] { jtf_driverNum.getText(),
+								jtf_driverName.getText(), saveValue,
+								jtf_birthDate.getText(), jtf_idNum.getText(),
+								jtf_phone.getText(), jtf_Institution.getText(),
+								jtf_licenseTime.getText() };
+						parent.updateAfterConfirm(rowContent);
+						dispose();
+						JLabel tip = new JLabel("提示：修改成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if ((!isOk) && isenter) {
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (isOk && !isenter) {
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (!isOk && !isenter) {
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
 					}
-					rowContent = new String[]{jtf_driverNum.getText(),
-							jtf_driverName.getText(),saveValue, jtf_birthDate.getText(),
-							jtf_idNum.getText(), jtf_phone.getText(),
-							jtf_Institution.getText(), 
-							jtf_licenseTime.getText()};
-					parent.updateAfterConfirm(rowContent);
-//					ManageblService bl = new ManageController();
-//					bl.addDriver(driver_vo);
-					dispose();
 				}
 			});
 
@@ -230,83 +269,94 @@ public class modifyDriverDialog extends JDialog {
 			this.add(jtf_licenseTime);
 			this.add(sure);
 			this.add(cancel);
-		
+
 		}
 	}
-	
+
 	/**
 	 * 获取司机姓名的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getDriverName(){
+	public JTextField getDriverName() {
 		return jtf_driverName;
 	}
-	
+
 	/**
 	 * 获取单选按钮男
+	 * 
 	 * @return
 	 */
-	public JRadioButton getMale(){
+	public JRadioButton getMale() {
 		return jrb_male;
 	}
-	
+
 	/**
 	 * 获取单选按钮女
+	 * 
 	 * @return
 	 */
-	public JRadioButton getFemale(){
+	public JRadioButton getFemale() {
 		return jrb_female;
 	}
-	
+
 	/**
 	 * 获取司机编号的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getDriverNum(){
+	public JTextField getDriverNum() {
 		return jtf_driverNum;
 	}
-	
+
 	/**
 	 * 获取司机出生日期的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getBirthDate(){
+	public JTextField getBirthDate() {
 		return jtf_birthDate;
 	}
-	
+
 	/**
 	 * 获取司机身份证号的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getIdNum(){
+	public JTextField getIdNum() {
 		return jtf_idNum;
 	}
-	
+
 	/**
 	 * 获取司机手机号的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getPhone(){
+	public JTextField getPhone() {
 		return jtf_phone;
 	}
-	
+
 	/**
 	 * 获取车辆单位的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getInstitution(){
+	public JTextField getInstitution() {
 		return jtf_Institution;
 	}
-	
+
 	/**
 	 * 获取司机行驶证期限的文本框
+	 * 
 	 * @return
 	 */
-	public JTextField getLicenseTime(){
+	public JTextField getLicenseTime() {
 		return jtf_licenseTime;
 	}
+
 	/**
 	 * 单选按钮的监听
+	 * 
 	 * @author Administrator
 	 *
 	 */
@@ -324,13 +374,14 @@ public class modifyDriverDialog extends JDialog {
 
 	}
 
-	//错误提示信息是否已经被添加
+	// 错误提示信息是否已经被添加
 	boolean isDriverNumAdd = false;
 	boolean isIdNumAdd = false;
 	boolean isPhoneAdd = false;
-	
+
 	/**
 	 * 监听焦点
+	 * 
 	 * @author Administrator
 	 *
 	 */
@@ -355,8 +406,12 @@ public class modifyDriverDialog extends JDialog {
 					}
 
 				} else {
-					if (isDriverNumAdd&&!"".equalsIgnoreCase(jtf_driverNum.getText().trim())) {
+					if (isDriverNumAdd
+							&& !"".equalsIgnoreCase(jtf_driverNum.getText()
+									.trim())) {
+						isDriverNumAdd = false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}
@@ -374,8 +429,11 @@ public class modifyDriverDialog extends JDialog {
 					}
 
 				} else {
-					if (isIdNumAdd&&!"".equalsIgnoreCase(jtf_idNum.getText().trim())) {
+					if (isIdNumAdd
+							&& !"".equalsIgnoreCase(jtf_idNum.getText().trim())) {
+						isIdNumAdd = false;
 						removeTip(tip2);
+						tip2 = null;
 					}
 				}
 			}
@@ -393,8 +451,11 @@ public class modifyDriverDialog extends JDialog {
 					}
 
 				} else {
-					if (isPhoneAdd&&!"".equalsIgnoreCase(jtf_phone.getText().trim())) {
+					if (isPhoneAdd
+							&& !"".equalsIgnoreCase(jtf_phone.getText().trim())) {
+						isPhoneAdd = false;
 						removeTip(tip3);
+						tip3 = null;
 					}
 				}
 			}

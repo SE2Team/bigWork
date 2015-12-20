@@ -12,15 +12,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 
 import javax.swing.*;
 
 import presentation.commonui.DateChooser;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import businesslogic.listbl.ListController;
 import businesslogic.managebl.ManageController;
-import businesslogicservice.ListblService;
 import businesslogicservice.ManageblService;
+import util.ExistException;
 import vo.VehicleVO;
 
 public class addVehicleDialog extends JDialog {
@@ -34,8 +35,8 @@ public class addVehicleDialog extends JDialog {
 		this.setResizable(false);
 	}
 
-	private int x = 40, y = 60, addx = 110, addy = 55, jl_width = 100, jtf_width = 200,
-			height = 25;
+	private int x = 40, y = 60, addx = 110, addy = 55, jl_width = 100,
+			jtf_width = 200, height = 25;
 
 	// 设置所有文字的字体
 	private Font font = new Font("宋体", Font.PLAIN, 20);
@@ -45,7 +46,8 @@ public class addVehicleDialog extends JDialog {
 	private JLabel addInfo, vehicleNum, licensePlate, buyDate, useTime;
 
 	// 定义对应的文本框
-	private JTextField jtf_vehicleNum, jtf_licensePlate, jtf_buyDate, jtf_useTime;
+	private JTextField jtf_vehicleNum, jtf_licensePlate, jtf_buyDate,
+			jtf_useTime;
 
 	// 定义确定，取消按钮
 	private JButton sure, cancel;
@@ -53,10 +55,13 @@ public class addVehicleDialog extends JDialog {
 	// 定义错误提示信息的label
 	private JLabel tip1, tip2;
 
-	//定义用来存放用户输入信息的数组
+	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
-	
-	//定义日期选择器
+
+	// 定义文本框的数组
+	private JTextField[] vehicleJtf;
+
+	// 定义日期选择器
 	private DateChooser datechooser;
 
 	class addVehiclePanel extends JPanel {
@@ -93,17 +98,19 @@ public class addVehicleDialog extends JDialog {
 			jtf_buyDate = new JTextField();
 			jtf_buyDate.setFont(font2);
 			jtf_buyDate.setEditable(false);
-			jtf_buyDate.setBounds(x + addx, y + 2 * addy, jtf_width-30, height);
+			jtf_buyDate.setBounds(x + addx, y + 2 * addy, jtf_width - 30,
+					height);
 
-			datechooser = new DateChooser("yyyy-MM-dd",jtf_buyDate);
-			datechooser.setBounds(x + addx+ jtf_width-30, y+ 2 * addy, 30, height);
+			datechooser = new DateChooser("yyyy-MM-dd", jtf_buyDate);
+			datechooser.setBounds(x + addx + jtf_width - 30, y + 2 * addy, 30,
+					height);
 			jtf_buyDate.setText(datechooser.commit());
 			datechooser.addMouseListener(new MouseAdapter() {
-				public void mouseEntered(MouseEvent me){
+				public void mouseEntered(MouseEvent me) {
 					datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			});
-			
+
 			useTime = new JLabel("服役时间", JLabel.CENTER);
 			useTime.setFont(font);
 			useTime.setBounds(x, y + 3 * addy, jl_width, height);
@@ -117,23 +124,58 @@ public class addVehicleDialog extends JDialog {
 			sure.setBounds(80, y + 4 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					boolean isOk = NumExceptioin.isVehicleValid(jtf_vehicleNum)
+							&& NumExceptioin
+									.islicensePlateValid(jtf_licensePlate);
+					vehicleJtf = new JTextField[] { jtf_vehicleNum,
+							jtf_licensePlate, jtf_useTime };
+					if (isOk && isAllEntered.isEntered(vehicleJtf)) {
+						VehicleVO vehicle_vo = new VehicleVO(jtf_vehicleNum
+								.getText(), jtf_licensePlate.getText(), jtf_buyDate
+								.getText(), jtf_useTime.getText());
 
-					VehicleVO vehicle_vo = new VehicleVO(jtf_vehicleNum
-							.getText(), jtf_licensePlate.getText(), jtf_buyDate
-							.getText(), jtf_useTime.getText());
-					rowContent = new String[] { jtf_vehicleNum.getText(),
-							jtf_licensePlate.getText(), jtf_buyDate.getText(),
-							jtf_useTime.getText() };
-
-					parent.addAfterConfirm(rowContent);
-					// ManageblService bl = new ManageController();
-					// try {
-					// bl.addVehicle(vehicle_vo);
-					// } catch (Exception e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
-					dispose();
+						 ManageblService bl;
+						try {
+							bl = new ManageController(); 
+							try {
+								bl.addVehicle(vehicle_vo);
+							} catch (ExistException e) {
+								// TODO Auto-generated catch block
+								JLabel tip = new JLabel("提示：该司机信息已存在");
+								tip.setFont(font2);
+								JOptionPane.showMessageDialog(null, tip);
+								return;
+							}
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							JLabel tip = new JLabel("提示：网络异常");
+							tip.setFont(font2);
+							JOptionPane.showMessageDialog(null, tip);
+							return;
+						}
+				
+						rowContent = new String[] { jtf_vehicleNum.getText(),
+								jtf_licensePlate.getText(), jtf_buyDate.getText(),
+								jtf_useTime.getText() };
+						parent.addAfterConfirm(rowContent);
+						
+						dispose();
+						JLabel tip = new JLabel("提示：添加成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if((!isOk)&&isAllEntered.isEntered(vehicleJtf)){
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if(isOk&&!isAllEntered.isEntered(vehicleJtf)){
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if(!isOk&&!isAllEntered.isEntered(vehicleJtf)){
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}				
 				}
 			});
 
@@ -162,7 +204,7 @@ public class addVehicleDialog extends JDialog {
 			this.add(cancel);
 		}
 	}
-	
+
 	// 错误提示信息是否已经被添加
 	boolean isVehicleNumAdd = false;
 	boolean isLicenseAdd = false;
@@ -200,7 +242,9 @@ public class addVehicleDialog extends JDialog {
 					if (isVehicleNumAdd
 							&& !"".equalsIgnoreCase(jtf_vehicleNum.getText()
 									.trim())) {
+						isVehicleNumAdd = false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}
@@ -222,7 +266,9 @@ public class addVehicleDialog extends JDialog {
 					if (isLicenseAdd
 							&& !"".equalsIgnoreCase(jtf_licensePlate.getText()
 									.trim())) {
+						isLicenseAdd = false;
 						removeTip(tip2);
+						tip2 = null;
 					}
 				}
 			}

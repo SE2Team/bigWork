@@ -3,6 +3,7 @@ package presentation.userui;
 import vo.UserVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -168,8 +169,29 @@ public class LogInPanel extends JPanel{
 		}		
 
 	}
+	
+	/**
+	 * 获取登录按钮
+	 * @return
+	 */
 	public JButton getButton(){
 		return jb1;
+	}
+	
+	/**
+	 * 获取用户名的文本框
+	 * @return
+	 */
+	public TextField getUsername(){
+		return username;
+	}
+	
+	/**
+	 * 获取密码的文本框
+	 * @return
+	 */
+	public TextField getPassword(){
+		return password;
 	}
 
 	public UserVO getVO(){

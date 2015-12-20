@@ -7,11 +7,13 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.TransferVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -46,7 +48,7 @@ public class TransferPanel extends JPanel {
 	// 定义日期选择器
 	protected DateChooser datechooser;
 	// 定义文本框的数组
-	protected JTextField[] transferJtf;
+	protected JTextField[] transferJtf, transferJtf2;
 
 	public TransferPanel() {
 
@@ -252,41 +254,66 @@ public class TransferPanel extends JPanel {
 					if (isTransAdd
 							&& !"".equalsIgnoreCase(jtf_transferNum.getText()
 									.trim())) {
+						isTransAdd = false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}
 		}
 
 	}
-	protected void performSure(){
-		TransferVO transfervo = new TransferVO(jcb_way
-				.getSelectedItem().toString(), jtf_loadingDate
-				.getText(), jtf_transferNum.getText(), jtf_vehicleNum
-				.getText(), jtf_start.getText(), jtf_end.getText(),
-				jtf_containerNum.getText(), jtf_monitor.getText(),
-				jtf_supercargo.getText(), jta_orderNums.getText(),
-				jtf_money.getText(), false);
-		ListblService bl;
-		try {
-			bl = new ListController();
+
+	protected void performSure() {
+		transferJtf2 = new JTextField[] { jtf_transferNum, jtf_vehicleNum,
+				jtf_containerNum, jtf_start, jtf_end, jtf_monitor,
+				jtf_supercargo };
+		boolean isOk = NumExceptioin.isTransListValid(jtf_transferNum);
+		boolean isenter = isAllEntered.isEntered(transferJtf2)
+				&& !"".equalsIgnoreCase(jta_orderNums.getText().trim());
+		if(isOk&&isenter){
+			TransferVO transfervo = new TransferVO(jcb_way.getSelectedItem()
+					.toString(), jtf_loadingDate.getText(),
+					jtf_transferNum.getText(), jtf_vehicleNum.getText(),
+					jtf_start.getText(), jtf_end.getText(),
+					jtf_containerNum.getText(), jtf_monitor.getText(),
+					jtf_supercargo.getText(), jta_orderNums.getText(),
+					jtf_money.getText(), false);
+			ListblService bl;
 			try {
-				bl.save(transfervo);
-			} catch (ExistException e) {
+				bl = new ListController();
+				try {
+					bl.save(transfervo);
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
 			}
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			JLabel tip = new JLabel("提示：网络异常");
+
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if((!isOk)&&isenter){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isenter){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isenter){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
 		}
-
-		JLabel tip = new JLabel("提示：保存成功");
-		tip.setFont(font);
-		JOptionPane.showMessageDialog(null, tip);
+		
 	}
+
 	/**
 	 * 添加错误提示信息
 	 * 

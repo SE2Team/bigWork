@@ -10,10 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import businesslogic.managebl.ManageController;
-import businesslogicservice.ManageblService;
-import vo.ConstantVO;
-
 public class addCityStrategyDialog extends JDialog {
 
 	private CityStrategyPanel parent;

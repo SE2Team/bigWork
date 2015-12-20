@@ -6,12 +6,14 @@ package presentation.listui;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.DeliveryType;
 import util.ExistException;
 import vo.OrderVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,7 +62,7 @@ public class OrderPanel extends JPanel {
 	protected JLabel tip1, tip2, tip3, tip4, tip5;
 
 	// 定义文本框的数组
-	protected JTextField[] OrderJtf;
+	protected JTextField[] OrderJtf, OrderJtf2;
 
 	public OrderPanel() {
 		this.setLayout(null);
@@ -266,6 +268,7 @@ public class OrderPanel extends JPanel {
 		o_transExpense.setFont(font3);
 		o_transExpense.setBounds(x + addx + addx1 + jl_width, 0, jtf_width,
 				height);
+		o_transExpense.setEditable(false);
 
 		ordernum = new JLabel("订单条形码号", JLabel.CENTER);
 		ordernum.setFont(font2);
@@ -297,6 +300,7 @@ public class OrderPanel extends JPanel {
 		o_wrapperExpense.setFont(font3);
 		o_wrapperExpense.setBounds(x + addx + addx1 + jl_width, addy,
 				jtf_width, height);
+		o_wrapperExpense.setEditable(false);
 
 		expense = new JLabel("总费用", JLabel.CENTER);
 		expense.setFont(font2);
@@ -306,7 +310,8 @@ public class OrderPanel extends JPanel {
 		o_expense.setFont(font3);
 		o_expense.setBounds(x + 2 * addx + 2 * addx1 + jl_width + 40, addy,
 				jtf_width, height);
-		o_expense.setEnabled(false);
+		o_expense.setEditable(false);
+
 		dueDate = new JLabel("预计到达时间", JLabel.CENTER);
 		dueDate.setFont(font2);
 		dueDate.setBounds(x + addx1 + 30, 2 * addy, 2 * jl_width, height);
@@ -342,24 +347,27 @@ public class OrderPanel extends JPanel {
 		button_1.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-                performButton1();
+				performButton1();
 			}
 
 		});
 
 		OrderJtf = new JTextField[] { s_name, s_address, s_workplace, s_tele,
 				s_phone, r_name, r_address, r_workplace, r_tele, r_phone,
-				g_name, g_num, g_weight, g_volume,
-				o_transExpense, o_wrapperExpense, o_expense, o_ordernum,
-				o_dueDate };
+				g_name, g_num, g_weight, g_volume, o_transExpense,
+				o_wrapperExpense, o_expense, o_ordernum, o_dueDate };
 
+		OrderJtf2 = new JTextField[] { s_name, s_address, s_workplace, s_tele,
+				s_phone, r_name, r_address, r_workplace, r_tele, r_phone,
+				g_name, g_num, g_weight, g_volume, o_ordernum };
+		
 		button_2 = new JButton("取消");
 		button_2.setFont(font2);
 		button_2.setBounds(x + 2 * addx1 + addx, 0, 70, 25);
 		button_2.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				Empty empty_order = new Empty(OrderJtf);
+				new Empty(OrderJtf);
 			}
 		});
 
@@ -380,7 +388,7 @@ public class OrderPanel extends JPanel {
 	protected boolean isReceiverPhoneAdd = false;
 	protected boolean isOrdernumAdd = false;
 
-	protected void performButton1(){
+	protected void performButton1() {
 
 		if (o_type.getSelectedItem().toString().equals("经济快递")) {
 			deliveryType = DeliveryType.ECONOMIC;
@@ -389,38 +397,57 @@ public class OrderPanel extends JPanel {
 		} else if (o_type.getSelectedItem().toString().equals("特快快递")) {
 			deliveryType = DeliveryType.FAST;
 		}
-		OrderVO order_vo = new OrderVO(s_name.getText(), s_address
-				.getText(), s_workplace.getText(), s_tele.getText(),
-				s_phone.getText(), r_name.getText(), r_address
-				.getText(), r_workplace.getText(), r_tele
-				.getText(), r_phone.getText(), g_num.getText(),
-				g_weight.getText(), g_volume.getText(), g_name
-				.getText(), deliveryType, o_wrapper
-				.getSelectedItem().toString(), o_transExpense
-				.getText(), o_wrapperExpense.getText(),
-				o_expense.getText(), o_dueDate.getText(), o_ordernum
-				.getText(), false);
 
-		ListblService bl;
+		boolean isOk = NumExceptioin.isTeleValid(s_tele)
+				&& NumExceptioin.isPhoneValid(s_phone)
+				&& NumExceptioin.isTeleValid(r_tele)
+				&& NumExceptioin.isPhoneValid(r_phone)
+				&& NumExceptioin.isOrderValid(o_ordernum);
+		if (isOk && isAllEntered.isEntered(OrderJtf2)) {
+			OrderVO order_vo = new OrderVO(s_name.getText(),
+					s_address.getText(), s_workplace.getText(),
+					s_tele.getText(), s_phone.getText(), r_name.getText(),
+					r_address.getText(), r_workplace.getText(),
+					r_tele.getText(), r_phone.getText(), g_num.getText(),
+					g_weight.getText(), g_volume.getText(), g_name.getText(),
+					deliveryType, o_wrapper.getSelectedItem().toString(),
+					o_transExpense.getText(), o_wrapperExpense.getText(),
+					o_expense.getText(), o_dueDate.getText(),
+					o_ordernum.getText(), false);
 
-		try {
-			bl = new ListController();
+			ListblService bl;
+
 			try {
-				bl.save(order_vo);
-			} catch (ExistException e) {
+				bl = new ListController();
+				try {
+					bl.save(order_vo);
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
 			}
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			JLabel tip = new JLabel("提示：网络异常");
+
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if ((!isOk) && isAllEntered.isEntered(OrderJtf2)) {
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (isOk && !isAllEntered.isEntered(OrderJtf2)) {
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (!isOk && !isAllEntered.isEntered(OrderJtf2)) {
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
 		}
-
-		JLabel tip = new JLabel("提示：保存成功");
-		tip.setFont(font2);
-		JOptionPane.showMessageDialog(null, tip);
 	}
 
 	/**
@@ -451,8 +478,10 @@ public class OrderPanel extends JPanel {
 				} else {
 					if (isSenderTeleAdd
 							&& !"".equalsIgnoreCase(s_tele.getText().trim())) {
+						isSenderTeleAdd = false;
 						sender.remove(tip1);
 						sender.repaint();
+						tip1 = null;
 					}
 				}
 			}
@@ -472,8 +501,10 @@ public class OrderPanel extends JPanel {
 				} else {
 					if (isSenderPhoneAdd
 							&& !"".equalsIgnoreCase(s_phone.getText().trim())) {
+						isSenderPhoneAdd = false;
 						sender.remove(tip2);
 						sender.repaint();
+						tip2 = null;
 					}
 				}
 			}
@@ -493,8 +524,10 @@ public class OrderPanel extends JPanel {
 				} else {
 					if (isReceiverTeleAdd
 							&& !"".equalsIgnoreCase(r_tele.getText().trim())) {
+						isReceiverTeleAdd = false;
 						receiver.remove(tip3);
 						receiver.repaint();
+						tip3 = null;
 					}
 				}
 			}

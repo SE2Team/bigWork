@@ -1,3 +1,6 @@
+/**
+ * 财务人员添加收款信息界面
+ */
 package presentation.financeui;
 
 import java.awt.Cursor;
@@ -10,10 +13,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import presentation.commonui.DateChooser;
+import presentation.commonui.isAllEntered;
 
 public class addSettleDialog extends JDialog {
 
@@ -34,15 +39,19 @@ public class addSettleDialog extends JDialog {
 
 		// 设置所有文字的字体
 		private Font font = new Font("宋体", Font.PLAIN, 20);
+		private Font font2 = new Font("宋体", Font.PLAIN, 18);
 		// 定义添加收款信息，收款日期，收款单位，收款人，收款金额，收款地点的label
-		private JLabel addInfo, gatheringDate, gatheringOrg, payee, amount, place;
+		private JLabel addInfo, gatheringDate, gatheringOrg, payee, amount,
+				place;
 		// 定义对应的文本框
 		private JTextField jtf_date, jtf_org, jtf_payee, jtf_amount, jtf_place;
 		// 定义确定，取消按钮
 		private JButton sure, cancel;
 		// 定义用来存放用户输入信息的数组
 		private String[] rowContent;
-		//定义日期选择器
+		// 定义文本框的数组
+		private JTextField[] settleJtf;
+		// 定义日期选择器
 		private DateChooser datechooser;
 
 		addSettlePanel() {
@@ -59,13 +68,13 @@ public class addSettleDialog extends JDialog {
 			jtf_date = new JTextField();
 			jtf_date.setFont(font);
 			jtf_date.setEditable(false);
-			jtf_date.setBounds(x + addx, y, jtf_width-30, height);
-			
-			datechooser = new DateChooser("yyyy-MM-dd",jtf_date);
-			datechooser.setBounds(x + addx+ jtf_width-30, y, 30, height);
+			jtf_date.setBounds(x + addx, y, jtf_width - 30, height);
+
+			datechooser = new DateChooser("yyyy-MM-dd", jtf_date);
+			datechooser.setBounds(x + addx + jtf_width - 30, y, 30, height);
 			jtf_date.setText(datechooser.commit());
 			datechooser.addMouseListener(new MouseAdapter() {
-				public void mouseEntered(MouseEvent me){
+				public void mouseEntered(MouseEvent me) {
 					datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			});
@@ -107,11 +116,24 @@ public class addSettleDialog extends JDialog {
 			sure.setBounds(80, y + 5 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					rowContent = new String[] { jtf_date.getText(),
-							jtf_org.getText(), jtf_payee.getText(),
-							jtf_amount.getText(), jtf_place.getText()};
-					parent.addAfterConfirm(rowContent);
-					dispose();
+					settleJtf = new JTextField[] { jtf_org, jtf_payee,
+							jtf_amount, jtf_place };
+					if (isAllEntered.isEntered(settleJtf)) {
+						rowContent = new String[] { jtf_date.getText(),
+								jtf_org.getText(), jtf_payee.getText(),
+								jtf_amount.getText(), jtf_place.getText() };
+						parent.addAfterConfirm(rowContent);
+						
+						dispose();
+						JLabel tip = new JLabel("提示：添加成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else{
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}
+
 				}
 			});
 

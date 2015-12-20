@@ -38,9 +38,11 @@ public class Order extends List {
     }
 
     public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException, ExistException {
-        ExpenseAndDatePO npo=listDataService.getExpenseOfTransport(new ExpenseAndDatePO(vo.getCity1(),vo.getCity2(),vo.getDays(),vo.getWrapper(),vo.getVolume(),vo.getDeliveryType(),
+        ExpenseAndDatePO npo=listDataService.getExpenseOfTransport(new ExpenseAndDatePO(vo.getCity1(),vo.getCity2(),
+                vo.getWrapper(),vo.getVolume(),vo.getDays(),vo.getDeliveryType(),
                 vo.getExpenseOfWrap(),vo.getExpenseOfTransport(),vo.getExpense()));
-        return new ExpenseAndDateVO(npo.getCity1(),npo.getCity2(),npo.getDays(),npo.getWrapper(),npo.getVolume(),npo.getDeliveryType(),
+        return new ExpenseAndDateVO(npo.getCity1(),npo.getCity2(),npo.getWrapper(),npo.getVolume(),npo.getDays(),
+                npo.getDeliveryType(),
                 npo.getExpenseOfWrap(),npo.getExpenseOfTransport(),npo.getExpense());
     }
 }
