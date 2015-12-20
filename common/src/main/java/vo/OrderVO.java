@@ -383,7 +383,7 @@ public class OrderVO extends ListVO implements Serializable {
 	}
 
 	/**
-	 * @param 
+	 * @param
 	 */
 	public void setDeliveryNum(String deliveryNum) {
 		this.deliveryNum = deliveryNum;
