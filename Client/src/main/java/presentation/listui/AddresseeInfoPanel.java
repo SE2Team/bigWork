@@ -7,19 +7,21 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.AddresseeInformationVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class AddresseeInfoPanel extends JPanel {
 
-	protected int x = 100, y = 80, width = 200, height = 30, addx = 160, addy = 90,
-			jb_width = 80;
+	protected int x = 100, y = 80, width = 200, height = 30, addx = 160,
+			addy = 90, jb_width = 80;
 
 	// 定义收件单号，收件人姓名，收件时间的label
 	protected JLabel receiveNum, receiver, receiveDate;
@@ -36,10 +38,10 @@ public class AddresseeInfoPanel extends JPanel {
 	// 定义字体
 	protected Font font = new Font("宋体", Font.PLAIN, 20);
 	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
-	
-	//定义日期选择器
+
+	// 定义日期选择器
 	protected DateChooser datechooser;
-	
+
 	// 定义文本框的数组
 	protected JTextField[] addresseeJtf;
 
@@ -71,17 +73,17 @@ public class AddresseeInfoPanel extends JPanel {
 		jtf_receiveDate = new JTextField();
 		jtf_receiveDate.setFont(font2);
 		jtf_receiveDate.setEditable(false);
-		jtf_receiveDate.setBounds(x + addx, y + 2 * addy, width-30, height);
+		jtf_receiveDate.setBounds(x + addx, y + 2 * addy, width - 30, height);
 
-		datechooser = new DateChooser("yyyy-MM-dd",jtf_receiveDate);
-		datechooser.setBounds(x + addx+ width-30, y+ 2 * addy, 30, height);
+		datechooser = new DateChooser("yyyy-MM-dd", jtf_receiveDate);
+		datechooser.setBounds(x + addx + width - 30, y + 2 * addy, 30, height);
 		jtf_receiveDate.setText(datechooser.commit());
 		datechooser.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent me){
+			public void mouseEntered(MouseEvent me) {
 				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		});
-		
+
 		jb1 = new JButton("确定");
 		jb1.setFont(font);
 		jb1.setBounds(x + 80, y + 3 * addy, jb_width, height);
@@ -93,13 +95,13 @@ public class AddresseeInfoPanel extends JPanel {
 
 		});
 
-		addresseeJtf = new JTextField[]{jtf_receiveNum, jtf_receiver};
-		
+		addresseeJtf = new JTextField[] { jtf_receiveNum, jtf_receiver };
+
 		jb2 = new JButton("取消");
 		jb2.setFont(font);
 		jb2.setBounds(x + addx + 80, y + 3 * addy, jb_width, height);
 		jb2.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				new Empty(addresseeJtf);
 			}
@@ -116,31 +118,46 @@ public class AddresseeInfoPanel extends JPanel {
 		this.add(jb2);
 	}
 
+	protected void performJb1() {
+		boolean isOk = NumExceptioin.isOrderValid(jtf_receiveNum);
+		if (isOk && isAllEntered.isEntered(addresseeJtf)) {
+			AddresseeInformationVO addressInfo_vo = new AddresseeInformationVO(
+					jtf_receiveNum.getText(), jtf_receiver.getText(),
+					jtf_receiveDate.getText(), false);
+			ListblService bl;
+			try {
+				bl = new ListController();
+				bl.save(addressInfo_vo);
 
-    protected void performJb1(){
-        AddresseeInformationVO addressInfo_vo = new AddresseeInformationVO(
-                jtf_receiveNum.getText(), jtf_receiver.getText(),
-                jtf_receiveDate.getText(), false);
-        ListblService bl;
-        try {
-            bl = new ListController();
-            bl.save(addressInfo_vo);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
+			} catch (ExistException e) {
+				e.printStackTrace();
+			}
 
-        } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        } catch (ExistException e) {
-            e.printStackTrace();
-        }
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if((!isOk)&&isAllEntered.isEntered(addresseeJtf)){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isAllEntered.isEntered(addresseeJtf)){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isAllEntered.isEntered(addresseeJtf)){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+	}
 
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font);
-        JOptionPane.showMessageDialog(null, tip);
-    }
 	// 错误提示信息是否已经被添加
-    protected boolean isReceiveNumAdd = false;
+	protected boolean isReceiveNumAdd = false;
 
 	/**
 	 * 监听焦点
@@ -171,7 +188,9 @@ public class AddresseeInfoPanel extends JPanel {
 					if (isReceiveNumAdd
 							&& !"".equalsIgnoreCase(jtf_receiveNum.getText()
 									.trim())) {
+						isReceiveNumAdd=false;
 						removeTip(tip1);
+						tip1=null;
 					}
 				}
 			}

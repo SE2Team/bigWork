@@ -150,7 +150,9 @@ public class modifyInstitutionDialog extends JDialog {
 				if (isInstitutionAdd
 						&& !"".equalsIgnoreCase(jtf_institutionNum.getText()
 								.trim())) {
+					isInstitutionAdd = false;
 					removeTip(tip1);
+					tip1 = null;
 				}
 			}
 		}

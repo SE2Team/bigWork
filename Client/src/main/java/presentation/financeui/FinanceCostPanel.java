@@ -1,16 +1,20 @@
 package presentation.financeui;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -20,6 +24,8 @@ import org.omg.CORBA.PRIVATE_MEMBER;
 
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
 
 /**
  * 财务人员成本管理界面
@@ -27,48 +33,44 @@ import presentation.commonui.Empty;
  * @author WANXING 完成
  */
 public class FinanceCostPanel extends JPanel {
-	private JButton creatButton;
-	private JButton checkButton;
-	private JButton sureButton;
-	private JButton deleteButton;
-	private JLabel titleLabel;
-	private JLabel dateLabel;
-	private JLabel nameLabel;
-	private JLabel sumLabel;
-	private JLabel numLabel;
-	private JLabel reasonLabel;
-	private JLabel otherLabel;
-	private JTextField dateTextField;
-	private JTextField nameTextField;
-	private JTextField sumTextField;
-	private JTextField numTextField;
-	private JTextArea reasonTextArea;
-	private JTextArea otherTextArea;
-	private JScrollPane jsp1,jsp2;
+	int x = 40, y = 70, addx1 = 120, addx2 = 160, addy = 100, width = 160,
+			height = 30;
+	// 定义确定取消按钮
+	private JButton sure, cancel;
+	// 定义付款单，付款日期，付款人，付款金额，付款账号，条目，备注的label
+	private JLabel titleLabel, dateLabel, payer, amount, num, clause, remark;
+	// 定义付款日期，付款人，付款金额，付款账号对应的文本框
+	private JTextField dateTextField, nameTextField, sumTextField,
+			numTextField;
+	// 定义条目，备注对应的文本域
+	private JTextArea reasonTextArea, otherTextArea;
+	// 定义scrollPane
+	private JScrollPane jsp1, jsp2;
+	// 定义字体
 	Font font1 = new Font("楷体", Font.PLAIN, 25);
-	Font font2 = new Font("宋体", Font.PLAIN, 15);
+	Font font2 = new Font("宋体", Font.PLAIN, 16);
+	// 定义错误提示的文字
+	protected JLabel tip1;
 	// 定义文本框的数组
 	protected JTextField[] costJtf;
-	//定义日期选择器
+	// 定义日期选择器
 	protected DateChooser datechooser;
 
 	public FinanceCostPanel() {
-		int width = 70, height = 30;
+
 		// 初始化组件
 		this.setSize(650, 530);
 		this.setLayout(null);
 
-		creatButton = new JButton("新建付款单");
-		checkButton = new JButton("单据查看");
-		sureButton = new JButton("确定");
-		deleteButton = new JButton("取消");
-		titleLabel = new JLabel("付款单");
-		dateLabel = new JLabel("付款日期");
-		nameLabel = new JLabel("付款人 ");
-		sumLabel = new JLabel("付款金额");
-		numLabel = new JLabel("付款账号");
-		reasonLabel = new JLabel("条目  ");
-		otherLabel = new JLabel("备注");
+		sure = new JButton("确定");
+		cancel = new JButton("取消");
+		titleLabel = new JLabel("付款单", JLabel.CENTER);
+		dateLabel = new JLabel("付款日期", JLabel.CENTER);
+		payer = new JLabel("付款人 ", JLabel.CENTER);
+		amount = new JLabel("付款金额", JLabel.CENTER);
+		num = new JLabel("付款账号", JLabel.CENTER);
+		clause = new JLabel("条目 ", JLabel.CENTER);
+		remark = new JLabel("备注", JLabel.CENTER);
 		dateTextField = new JTextField();
 		nameTextField = new JTextField();
 		sumTextField = new JTextField();
@@ -77,103 +79,189 @@ public class FinanceCostPanel extends JPanel {
 		otherTextArea = new JTextArea();
 
 		// 界面
-		creatButton.setFont(font2);
-		creatButton.setBounds(150, 20, 150, height);
-
-		checkButton.setFont(font2);
-		checkButton.setBounds(350, 20, 150, height);
-
 		titleLabel.setFont(font1);
-		titleLabel.setBounds(270, 80, 200, height);
+		titleLabel.setBounds(250, 10, width, height);
 
 		dateLabel.setFont(font2);
-		dateLabel.setBounds(80, 120, width, height);
+		dateLabel.setBounds(x, y, width, height);
 
 		dateTextField.setFont(font2);
 		dateTextField.setEditable(false);
-		dateTextField.setBounds(160, 120, 120, height);
-		
-		datechooser = new DateChooser("yyyy-MM-dd",dateTextField);
-		datechooser.setBounds(280, 120, 30, height);
+		dateTextField.setBounds(x + addx1, y, width - 30, height);
+
+		datechooser = new DateChooser("yyyy-MM-dd", dateTextField);
+		datechooser.setBounds(x + addx1 + width - 30, y, 30, height);
 		dateTextField.setText(datechooser.commit());
 		datechooser.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent me){
+			public void mouseEntered(MouseEvent me) {
 				datechooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		});
 
-		nameLabel.setFont(font2);
-		nameLabel.setBounds(350, 120, width, height);
+		payer.setFont(font2);
+		payer.setBounds(x + addx1 + addx2, y, width, height);
 
 		nameTextField.setFont(font2);
-		nameTextField.setBounds(430, 120, 150, height);
+		nameTextField.setBounds(x + 2 * addx1 + addx2, y, width, height);
 
-		sumLabel.setFont(font2);
-		sumLabel.setBounds(80, 220, width, height);
+		amount.setFont(font2);
+		amount.setBounds(x, y + addy, width, height);
 
 		sumTextField.setFont(font2);
-		sumTextField.setBounds(160, 220, 150, height);
+		sumTextField.setBounds(x + addx1, y + addy, width, height);
 
-		numLabel.setFont(font2);
-		numLabel.setBounds(350, 220, width, height);
+		num.setFont(font2);
+		num.setBounds(x + addx1 + addx2, y + addy, width, height);
 
 		numTextField.setFont(font2);
-		numTextField.setBounds(430, 220, 150, height);
-
-		reasonLabel.setFont(font2);
-		reasonLabel.setBounds(80, 320, width, height);
+		numTextField.setBounds(x + 2 * addx1 + addx2, y + addy, width, height);
+		numTextField.addFocusListener(new TextFocus());
+		
+		clause.setFont(font2);
+		clause.setBounds(x, y + 2 * addy + 30, width, height);
 
 		reasonTextArea.setFont(font2);
-		
-		jsp1 = new JScrollPane(reasonTextArea);
-		jsp1.setBounds(160, 280, 150, 3 * height);
 
-		otherLabel.setFont(font2);
-		otherLabel.setBounds(350, 310, width, height);
+		jsp1 = new JScrollPane(reasonTextArea);
+		jsp1.setBounds(x + addx1, y + 2 * addy, width, 3 * height);
+
+		remark.setFont(font2);
+		remark.setBounds(x + addx1 + addx2, y + 2 * addy + 30, width, height);
 
 		otherTextArea.setFont(font2);
-		
+
 		jsp2 = new JScrollPane(otherTextArea);
-		jsp2.setBounds(430, 280, 150, 3 * height);
+		jsp2.setBounds(x + 2 * addx1 + addx2, y + 2 * addy, width, 3 * height);
 
-		sureButton.setFont(font2);
-		sureButton.setBounds(180, 400, width, height);
-
-		costJtf = new JTextField[]{nameTextField,sumTextField,numTextField};
-		
-		deleteButton.setFont(font2);
-		deleteButton.setBounds(380, 400, width, height);
-		deleteButton.addActionListener(new ActionListener() {
+		sure.setFont(font2);
+		sure.setBounds(2 * x + addx1, y + 3 * addy + 50, 80, height);
+		sure.addActionListener(new ActionListener() {
 			
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				performSure();
+			}
+		});
+
+		costJtf = new JTextField[] { nameTextField, sumTextField, numTextField };
+
+		cancel.setFont(font2);
+		cancel.setBounds(2 * x + addx1 + addx2 + 20, y + 3 * addy + 50, 80,
+				height);
+		cancel.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				Empty emptyLoading = new Empty(costJtf);
+				new Empty(costJtf);
 				reasonTextArea.setText("");
 				otherTextArea.setText("");
 			}
 		});
 
-		add(creatButton);
-		add(checkButton);
 		add(titleLabel);
 		add(dateLabel);
 		add(dateTextField);
 		add(datechooser);
-		add(sumLabel);
+		add(amount);
 		add(sumTextField);
-		add(nameLabel);
+		add(payer);
 		add(nameTextField);
-		add(numLabel);
+		add(num);
 		add(numTextField);
-		add(reasonLabel);
+		add(clause);
 		add(jsp1);
-		add(otherLabel);
+		add(remark);
 		add(jsp2);
-		add(sureButton);
-		add(deleteButton);
+		add(sure);
+		add(cancel);
 	}
 
-	public void paintComponent(java.awt.Graphics g) {
-		super.paintComponent(g);
-		g.drawLine(0, 60, 650, 60);
+	/**
+	 * 确认按钮监听动作
+	 */
+	protected void performSure(){
+		boolean isOk = NumExceptioin.isBankNumValid(numTextField);
+		if(isOk&&isAllEntered.isEntered(costJtf)){
+			//TODO
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);	
+		}else if((!isOk)&&isAllEntered.isEntered(costJtf)){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isAllEntered.isEntered(costJtf)){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isAllEntered.isEntered(costJtf)){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
 	}
+	
+	// 错误提示信息是否已经被添加
+	protected boolean isBankNumAdd = false;
+
+	/**
+	 * 监听焦点
+	 * 
+	 * @author Administrator
+	 *
+	 */
+	class TextFocus implements FocusListener {
+
+		public void focusGained(FocusEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void focusLost(FocusEvent e) {
+			// TODO Auto-generated method stub
+			JTextField temp = (JTextField) e.getSource();
+			if (temp == numTextField) {
+				if (!NumExceptioin.isBankNumValid(numTextField)) {
+					isBankNumAdd = true;
+					if (tip1 == null) {
+						tip1 = new JLabel("账号位数不符规范",JLabel.CENTER);
+						tip1.setBounds(x + 2 * addx1 + addx2,
+								y + addy + height, width, height);
+						tip1.setFont(font2);
+						tip1.setForeground(Color.RED);
+						addTip(tip1);
+					}
+
+				} else {
+					if (isBankNumAdd
+							&& !"".equalsIgnoreCase(numTextField.getText()
+									.trim())) {
+						isBankNumAdd = false;
+						removeTip(tip1);
+						tip1=null;				
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 添加错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void addTip(JLabel tip) {
+		this.add(tip);
+		this.repaint();
+	}
+
+	/**
+	 * 移除错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void removeTip(JLabel tip) {
+		this.remove(tip);
+		this.repaint();
+	}
+
 }

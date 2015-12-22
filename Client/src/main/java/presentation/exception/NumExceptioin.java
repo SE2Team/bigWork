@@ -149,7 +149,7 @@ public class NumExceptioin {
 	 * @return
 	 */
 	public static boolean islicensePlateValid(JTextField text){
-		if(!"".equalsIgnoreCase(text.getText().trim())&&text.getText().length()!=7){
+		if(!"".equalsIgnoreCase(text.getText().trim())&&text.getText().replaceAll(" ", "").length()!=7){
 			return false;
 		}
 		return true;
@@ -174,6 +174,18 @@ public class NumExceptioin {
 	 */
 	public static boolean isInstitutionValid(JTextField text){
 		if(!"".equalsIgnoreCase(text.getText().trim())&&text.getText().length()!=6){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 判断付款账号是否符合规范(16位或19位)
+	 * @param text
+	 * @return
+	 */
+	public static boolean isBankNumValid(JTextField text){
+		if(!"".equalsIgnoreCase(text.getText().trim())&&(text.getText().length()!=16&&text.getText().length()!=19)){
 			return false;
 		}
 		return true;

@@ -60,7 +60,9 @@ public class QuotationPanel extends JPanel{
 				}
 				else{
 					if(isOrderAdd&&!"".equalsIgnoreCase(jtf_ordernum.getText().trim())){
+						isOrderAdd = false;
 						removeTip(tip);
+						tip=null;
 					}
 				}
 			}

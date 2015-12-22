@@ -114,7 +114,6 @@ public class Commodity {
     public ArrayList<StockInVO> stockSum() {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
-
             arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
                     temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
 

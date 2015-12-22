@@ -14,6 +14,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import presentation.manageui.addInstituInfoDialog;
+
 public class FinanceInitialPanel extends JPanel {
 	int x = 5, y = 10, width = 70, height = 30;
 	private JTabbedPane tab;
@@ -147,7 +149,7 @@ public class FinanceInitialPanel extends JPanel {
 	 */
 	// 期初建账机构界面
 	public JPanel a1() {
-		int x = 10, y = 0;
+		int x = 10, y = 5;
 		JLabel subLabel;
 		JButton addButton;
 		JButton deleteButton;
@@ -168,6 +170,15 @@ public class FinanceInitialPanel extends JPanel {
 		addButton = new JButton("添加");
 		addButton.setFont(font2);
 		addButton.setBounds(x + 390, y, width, height);
+		addButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("a");
+				new addInstituInfoDialog(FinanceInitialPanel.this)
+						.setVisible(true);
+			}
+		});
 
 		deleteButton = new JButton("删除");
 		deleteButton.setFont(font2);

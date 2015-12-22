@@ -232,7 +232,9 @@ public class addEmployeeInfoDialog extends JDialog {
 					if (isAccountNumAdd
 							&& !"".equalsIgnoreCase(jtf_accountNum.getText()
 									.trim())) {
+						isAccountNumAdd = false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}
@@ -251,7 +253,9 @@ public class addEmployeeInfoDialog extends JDialog {
 				} else {
 					if (isIdNumAdd
 							&& !"".equalsIgnoreCase(jtf_idNum.getText().trim())) {
+						isIdNumAdd = false;
 						removeTip(tip2);
+						tip2 = null;
 					}
 				}
 			}

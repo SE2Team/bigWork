@@ -7,10 +7,12 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import util.ExistException;
 import vo.ReceiptVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -128,27 +130,34 @@ public class ReceiptPanel extends JPanel {
 	}
 
 	protected void performSure(){
-		ReceiptVO receipt_vo = new ReceiptVO(jtf_date.getText(),
-				jtf_money.getText(), jtf_courier.getText(),
-				jta_ordernum.getText(), false);
-		try {
-			ListblService bl = new ListController();
+		if(isAllEntered.isEntered(receiptJtf)){
+			ReceiptVO receipt_vo = new ReceiptVO(jtf_date.getText(),
+					jtf_money.getText(), jtf_courier.getText(),
+					jta_ordernum.getText(), false);
 			try {
-				bl.save(receipt_vo);
-			} catch (ExistException e) {
+				ListblService bl = new ListController();
+				try {
+					bl.save(receipt_vo);
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
 			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			JLabel tip = new JLabel("提示：网络异常");
+
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else{
+			JLabel tip = new JLabel("提示：仍有信息未输入");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
 		}
-
-		JLabel tip = new JLabel("提示：保存成功");
-		tip.setFont(font);
-		JOptionPane.showMessageDialog(null, tip);
+		
 	}
 
 }

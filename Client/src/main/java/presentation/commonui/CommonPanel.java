@@ -1,11 +1,16 @@
 package presentation.commonui;
 
 import presentation.listui.ReceiveAndDistribute;
+import util.UserType;
+import vo.UserVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CommonPanel extends JPanel implements ActionListener {
 
@@ -18,33 +23,42 @@ public class CommonPanel extends JPanel implements ActionListener {
 	protected CardLayout smallCard;
 
 	// 定义欢迎、职位、退出label
-	protected JLabel upper_wel, upper_pos, upper_exit;
+	protected JLabel welcome, position, upper_wel, upper_pos, upper_exit;
 
 	// 快递员功能的按钮
 	protected JButton jb_inputOrder, jb_quatation, jb_inputReceive;
 
 	// 营业厅业务员功能的按钮
-	protected JButton jb_loading, jb_recAndDis, jb_recordReceipt, jb_vehicleInfo,
-			jb_driverInfo;
+	protected JButton jb_loading, jb_recAndDis, jb_recordReceipt,
+			jb_vehicleInfo, jb_driverInfo;
 
 	// 中转中心业务员功能的按钮
 	protected JButton jb_loadManage, jb_transferRec;
 
 	// 中转中心库存管理人员功能的按钮
-	protected JButton jb_stockIn, jb_stockOut, jb_stockCheck, jb_stockInfo, jb_warning;
+	protected JButton jb_stockIn, jb_stockOut, jb_stockCheck, jb_stockInfo,
+			jb_warning;
 
 	// 财务人员功能的按钮
-	protected JButton jb_settle, jb_cost, jb_init, jb_statis, jb_account, jb_log1,
-			jb_analy1;
+	protected JButton jb_settle, jb_cost, jb_init, jb_statis, jb_account,
+			jb_log1, jb_analy1;
 
 	// 总经理功能的按钮
-	protected JButton jb_empAndIns, jb_approval, jb_salary, jb_city, jb_log2, jb_analy2;
+	protected JButton jb_empAndIns, jb_approval, jb_salary, jb_city, jb_log2,
+			jb_analy2;
 
 	// 管理员功能的按钮
 	protected JButton jb_user;
 
 	// 定义字体
 	protected Font jb_font = new Font("隶书", Font.PLAIN, 25);
+	protected Font font1 = new Font("楷体", Font.PLAIN, 20);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+
+	// 定义枚举类型的用户类型
+	protected UserType userType;
+	// 定义String类型的用户类型
+	protected String user_pos;
 
 	protected ReceiveAndDistribute recAndDis = new ReceiveAndDistribute();
 
@@ -53,21 +67,70 @@ public class CommonPanel extends JPanel implements ActionListener {
 		this.setLayout(null);
 
 		initPanel();
-        init();
-//		initCourierPanel();
-//		initHallPanel();
-//		initTrans();
-//		initStockManage();
-//		initFinance();
-//		initManager();
-//		initAdmin();
+		init();
+	}
+
+	public void initUpper(UserVO vo) {
+		int x=350,y=20,addx1=90,addx2=120,width=90,width2=180,height=30;
+		// 构建欢迎您的label
+		welcome = new JLabel("欢迎您:",JLabel.RIGHT);
+		welcome.setFont(font1);
+		welcome.setBounds(x, y, width, height);
+		upper.add(welcome);
+		// 构建欢迎对象的label
+		upper_wel = new JLabel(vo.getName());
+		upper_wel.setFont(font2);
+		upper_wel.setBounds(x+addx1, y, width-30, height);
+		upper.add(upper_wel);
+		//构建您的职位的label
+		position = new JLabel("您的职位:",JLabel.LEFT);
+		position.setFont(font1);
+		position.setBounds(x+addx1+addx2,y,width,height);
+		upper.add(position);
+		//判断职位类型
+		if (vo.getPermission() == userType.ADMIN) {
+			user_pos = "管理员";
+		} else if (vo.getPermission() == userType.COURIER) {
+			user_pos = "快递员";
+		} else if (vo.getPermission() == userType.FINANCIAL) {
+			user_pos = "财务人员";
+		} else if (vo.getPermission() == userType.MANAGER) {
+			user_pos = "总经理";
+		} else if (vo.getPermission() == userType.SALESMAN) {
+			user_pos = "营业厅业务员";
+		} else if (vo.getPermission() == userType.STOCKMANAGER) {
+			user_pos = "库存管理人员";
+		} else if (vo.getPermission() == userType.TRANSFERMAN) {
+			user_pos = "中转中心业务员";
+		}
+		//构建职位信息的label
+		upper_pos = new JLabel(user_pos);
+		upper_pos.setFont(font2);
+		upper_pos.setBounds(x+addx2+2*addx1, y, width2, height);
+		upper.add(upper_pos);
+		//构建退出的label
+		upper_exit = new JLabel("退出",JLabel.LEFT);
+		upper_exit.setFont(font1);
+		upper_exit.setBounds(x+2*addx2+2*addx1+50, y, width, height);
+		final BigCardPanel bigPanel = new BigCardPanel();
+		upper_exit.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent me) {
+				upper_exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				upper_exit.setForeground(Color.RED);
+			}
+			public void mouseExited(MouseEvent me) {
+				upper_exit.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				upper_exit.setForeground(Color.BLACK);
+			}
+		});
+		
+		upper.add(upper_exit);
+	}
+
+	protected void init() {
 
 	}
 
-
-	protected void init(){
-
-	}
 	/**
 	 * 展示相应的Panel
 	 */
@@ -170,7 +233,7 @@ public class CommonPanel extends JPanel implements ActionListener {
 	/**
 	 * 初始化所有的Panel
 	 */
-    protected void initPanel() {
+	protected void initPanel() {
 		// 初始化上方的Panel
 		upper = new JPanel() {
 			public void paintComponent(Graphics g) {
@@ -178,6 +241,7 @@ public class CommonPanel extends JPanel implements ActionListener {
 				g.drawImage(upper_pic, 0, 0, 900, 70, this);
 			}
 		};
+		upper.setLayout(null);
 		upper.setBounds(0, 0, 900, 70);
 		this.add(upper);
 
@@ -209,4 +273,8 @@ public class CommonPanel extends JPanel implements ActionListener {
 		this.add(left);
 	}
 
+	public JLabel getExit(){
+		return upper_exit;
+	}
+	
 }

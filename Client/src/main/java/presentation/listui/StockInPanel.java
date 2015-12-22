@@ -7,6 +7,7 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import vo.StockInVO;
 
@@ -176,24 +177,40 @@ public class StockInPanel extends JPanel {
 	}
 
 	protected void performSure() {
-		StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
-				jtf_inDate.getText(), jtf_destination.getText(),
-				jtf_zoneNum.getText(), jtf_rowNum.getText(),
-				jtf_shelfNum.getText(), jtf_positionNum.getText(), false);
-		ListblService bl;
-		try {
-			bl = new ListController();
-			bl.stockIn(in_vo);
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			JLabel tip = new JLabel("提示：网络异常");
+		boolean isOk = NumExceptioin.isOrderValid(jtf_deliveryNum);
+		if(isOk&&isAllEntered.isEntered(stockInJtf)){
+			StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
+					jtf_inDate.getText(), jtf_destination.getText(),
+					jtf_zoneNum.getText(), jtf_rowNum.getText(),
+					jtf_shelfNum.getText(), jtf_positionNum.getText(), false);
+			ListblService bl;
+			try {
+				bl = new ListController();
+				bl.stockIn(in_vo);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
+			}
+
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if((!isOk)&&isAllEntered.isEntered(stockInJtf)){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isAllEntered.isEntered(stockInJtf)){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isAllEntered.isEntered(stockInJtf)){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
 		}
-
-		JLabel tip = new JLabel("提示：保存成功");
-		tip.setFont(font2);
-		JOptionPane.showMessageDialog(null, tip);
+		
 	}
 
 	/**
@@ -226,7 +243,9 @@ public class StockInPanel extends JPanel {
 					if (isDelivAdd
 							&& !"".equalsIgnoreCase(jtf_deliveryNum.getText()
 									.trim())) {
+						isDelivAdd = false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}

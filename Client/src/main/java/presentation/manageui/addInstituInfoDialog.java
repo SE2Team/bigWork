@@ -15,13 +15,23 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import presentation.exception.NumExceptioin;
+import presentation.financeui.FinanceInitialPanel;
 
 public class addInstituInfoDialog extends JDialog {
 
 	private EmpAndInsPanel parent;
-
+	private FinanceInitialPanel parent2;
+	
 	public addInstituInfoDialog(EmpAndInsPanel parent) {
 		this.parent = parent;
+		this.setContentPane(new addInstituInfoPanel());
+		this.setSize(400, 380);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+	}
+	
+	public addInstituInfoDialog(FinanceInitialPanel parent) {
+		this.parent2 = parent;
 		this.setContentPane(new addInstituInfoPanel());
 		this.setSize(400, 380);
 		this.setLocationRelativeTo(null);
@@ -130,7 +140,9 @@ public class addInstituInfoDialog extends JDialog {
 
 			} else {
 				if (isInstitutionAdd&&!"".equalsIgnoreCase(jtf_institutionNum.getText().trim())) {
+					isInstitutionAdd = false;
 					removeTip(tip1);
+					tip1 = null;
 				}
 			}
 		}

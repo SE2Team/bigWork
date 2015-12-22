@@ -7,11 +7,13 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.TransferReceiveVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -107,7 +109,7 @@ public class TransferReceivePanel extends JPanel {
 		sure.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				 performSure();
+				performSure();
 			}
 
 		});
@@ -174,7 +176,9 @@ public class TransferReceivePanel extends JPanel {
 					if (isCenterNumAdd
 							&& !"".equalsIgnoreCase(jtf_CenterNum.getText()
 									.trim())) {
+						isCenterNumAdd =false;
 						removeTip(tip1);
+						tip1 = null;
 					}
 				}
 			}
@@ -193,7 +197,9 @@ public class TransferReceivePanel extends JPanel {
 					if (isTransAdd
 							&& !"".equalsIgnoreCase(jtf_transferNum.getText()
 									.trim())) {
+						isTransAdd = false;
 						removeTip(tip2);
+						tip2 = null;
 					}
 				}
 			}
@@ -201,29 +207,46 @@ public class TransferReceivePanel extends JPanel {
 
 	}
 
-    protected void performSure(){
-        TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate
-                .getText(), jtf_departure.getText(), state
-                .getSelectedItem().toString(), jtf_CenterNum.getText(),
-                jtf_transferNum.getText(), false);
+	protected void performSure() {
+		boolean isOk = NumExceptioin.isTransCenterValid(jtf_CenterNum)
+				&& NumExceptioin.isTransListValid(jtf_transferNum);
+		if(isOk&&isAllEntered.isEntered(transReceiveJtf)){
+			TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate.getText(),
+					jtf_departure.getText(), state.getSelectedItem().toString(),
+					jtf_CenterNum.getText(), jtf_transferNum.getText(), false);
 
-        try {
-            ListblService bl = new ListController();
-            try {
-                bl.save(vo);
-            } catch (ExistException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (RemoteException e) {
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        }
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font);
-        JOptionPane.showMessageDialog(null, tip);
-    }
+			try {
+				ListblService bl = new ListController();
+				try {
+					bl.save(vo);
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (RemoteException e) {
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
+			}
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if((!isOk)&&isAllEntered.isEntered(transReceiveJtf)){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isAllEntered.isEntered(transReceiveJtf)){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isAllEntered.isEntered(transReceiveJtf)){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+		
+	}
+
 	/**
 	 * 添加错误提示信息
 	 * 

@@ -7,11 +7,13 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.DistributeVO;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -118,28 +120,44 @@ public class DistributePanel extends JPanel {
 	}
 
 	protected void performSure(){
-		DistributeVO dis_vo = new DistributeVO(
-				jtf_arriveDate.getText(), jtf_orderNum.getText(),
-				jtf_distributeHuman.getText(),false);
-		ListblService bl;
-		try {
-			bl = new ListController();
+		boolean isOk = NumExceptioin.isOrderValid(jtf_orderNum);
+		if(isOk&&isAllEntered.isEntered(distributeJtf)){
+			DistributeVO dis_vo = new DistributeVO(
+					jtf_arriveDate.getText(), jtf_orderNum.getText(),
+					jtf_distributeHuman.getText(),false);
+			ListblService bl;
 			try {
-				bl.save(dis_vo);
-			} catch (ExistException e) {
+				bl = new ListController();
+				try {
+					bl.save(dis_vo);
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
 			}
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			JLabel tip = new JLabel("提示：网络异常");
+
+			JLabel tip = new JLabel("提示：保存成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if((!isOk)&&isAllEntered.isEntered(distributeJtf)){
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(isOk&&!isAllEntered.isEntered(distributeJtf)){
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}else if(!isOk&&!isAllEntered.isEntered(distributeJtf)){
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
 		}
-
-		JLabel tip = new JLabel("提示：保存成功");
-		tip.setFont(font2);
-		JOptionPane.showMessageDialog(null, tip);
+		
 	}
 
 	//错误提示信息是否已经被添加
@@ -171,7 +189,9 @@ public class DistributePanel extends JPanel {
 				}
 			} else {
 				if (isOrderAdd&&!"".equalsIgnoreCase(jtf_orderNum.getText().trim())) {
+					isOrderAdd=false;
 					removeTip(tip);
+					tip=null;
 				}
 			}
 		}
