@@ -1,5 +1,9 @@
 package businesslogicservice;
 
+import po.AccountPO;
+import po.StockPO;
+import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
 import vo.AccountVO;
 import vo.GatheringVO;
@@ -44,7 +48,34 @@ public interface FinanceblService {
      * @param institution 传入机构名称
      * @return
      */
-    boolean initial(String institution);
+    /**
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    boolean initial(WorkerPO po) throws RemoteException;
+
+    /**
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    boolean initial(VehiclePO po) throws RemoteException;
+
+    /**
+     * 设置库存的报警值和上限
+     *
+     * @param po
+     * @return
+     */
+    boolean initial(StockPO po) throws RemoteException;
+
+    /**
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    boolean initial(AccountPO po) throws RemoteException;
 
     /**
      * @param accountVO 传入账单vo

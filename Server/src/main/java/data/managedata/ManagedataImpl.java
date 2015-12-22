@@ -66,7 +66,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	public Boolean addVehicle(VehiclePO vehiclePO) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
-		Common common=new Common("driver");
+		Common common=new Common("vehicle");
 		ArrayList<String> list=common.readData();
 		if(list.contains(this.vehiclePOToString(vehiclePO))){
 			throw new ExistException();

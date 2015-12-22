@@ -10,7 +10,11 @@ import java.rmi.RemoteException;
  * Created by MYK on 2015/12/7 0007.
  */
 public class UserController implements UserblService{
-    private User user=new User();
+    private User user;
+
+    public UserController() throws RemoteException {
+        user = new User();
+    }
 
     public boolean add(UserVO userVO) throws RemoteException, ExistException {
         return user.add(userVO);

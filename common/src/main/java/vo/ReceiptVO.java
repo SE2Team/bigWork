@@ -2,6 +2,8 @@ package vo;
 
 import util.ListType;
 
+import java.util.Iterator;
+
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
@@ -12,10 +14,10 @@ public class ReceiptVO extends ListVO{
 	private String receiptDate;
 	private String receiptMoney;
 	private String receiptCourier;
-	private String orderNum;
+	private Iterator<String> orderNum;
 
 	public ReceiptVO(String receiptDate, String receiptMoney, String receiptCourier,
-					 String orderNum,boolean isCheck) {
+					 Iterator<String> orderNum,boolean isCheck) {
 		super(isCheck);
 		this.receiptDate = receiptDate;
 		this.receiptMoney = receiptMoney;
@@ -76,7 +78,7 @@ public class ReceiptVO extends ListVO{
 	 * 对应的所有快递订单条形码号
 	 * @param orderNum
 	 */
-	public void setOrderNum(String orderNum){
+	public void setOrderNum(Iterator<String> orderNum){
 		this.orderNum=orderNum;
 	}
 
@@ -84,7 +86,7 @@ public class ReceiptVO extends ListVO{
 	 * 对应的所有快递订单条形码号
 	 * @return
 	 */
-	public String getOrderNum(){
+	public Iterator<String> getOrderNum(){
 		return orderNum;
 	}
 }

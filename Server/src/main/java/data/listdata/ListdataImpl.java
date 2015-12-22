@@ -201,7 +201,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
                 		listPO=new PaymentPO( str[2], str[3], str[4], str[5],str[6],str[7], isCheck);
                 		break;
             case "RECEIPT":
-            			listPO=new ReceiptPO(str[2], str[3],str[4],str[5] ,isCheck);
+						ArrayList<String> list3=new ArrayList<String>();
+						for(int j=5;j<str.length;j++){
+							list3.add(str[j]);
+						}
+
+            			listPO=new ReceiptPO(str[2], str[3],str[4],list3.iterator() ,isCheck);
             			break;
             case "RECEIVEINFO":
                 		listPO=new ReceivePO(str[2], str[3], str[4], str[5], isCheck);
@@ -219,7 +224,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
             			listPO=new StockOutPO(str[2], str[3], str[4],transportType,str[6] ,isCheck);
                 break;
             case "TRANSARRIVE":
-            			listPO=new TransferReceivePO(str[2], str[3], str[4], str[5],str[6],str[7], isCheck);
+            			listPO=new TransferReceivePO(str[2], str[3], str[4], str[5],str[6], isCheck);
             			break;
             case "TRANSINFO":
             			listPO=new TransferPO( str[2], str[3],str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[10],str[11],isCheck);
@@ -333,8 +338,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 */
 	
 	private String receiptPOToString(ReceiptPO po){
-		return po.getType()+";"+po.getIsCheck()+";"+po.getReceiptDate()+";"+po.getReceiptMoney()+";"+po.getReceiptCourier()+";"+po.getOrderNum();
-
+		String s=po.getType()+";"+po.getIsCheck()+";"+po.getReceiptDate()+";"+po.getReceiptMoney()+";"+po.getReceiptCourier()+";";
+		Iterator<String> itr=po.getOrderNum();
+		while(itr.hasNext()){
+			s=s+";"+itr.next();
+		}
+		return s;
 	}
 	
 	private String paymentPOToString(PaymentPO po){

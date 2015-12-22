@@ -6,6 +6,9 @@ import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
 import po.AccountPO;
+import po.StockPO;
+import po.VehiclePO;
+import po.WorkerPO;
 import util.ExistException;
 import vo.AccountVO;
 import vo.GatheringVO;
@@ -180,5 +183,44 @@ public class Finance {
         //名字与已存在的是否冲突交给数据层判断
         AccountPO accountPO = new AccountPO(accountVONew.getAccountName(), accountVONew.getAccountBalance());
         return finance.EditAccount(accountVOOld.getAccountName(), accountPO);
+    }
+
+    /**
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    boolean initial(WorkerPO po) throws RemoteException{
+        return finance.initial(po);
+    }
+
+    /**
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    boolean initial(VehiclePO po) throws RemoteException{
+        return finance.initial(po);
+    }
+
+    /**
+     *
+     *
+     * @param po
+     * @return
+     */
+    boolean initial(StockPO po) throws RemoteException{
+        return finance.initial(po);
+
+    }
+
+    /**
+     * @param po
+     * @return
+     * @throws RemoteException
+     */
+    boolean initial(AccountPO po) throws RemoteException{
+        return finance.initial(po);
+
     }
 }
