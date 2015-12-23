@@ -1,5 +1,6 @@
 package businesslogic.loginbl;
 
+import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.userdataservice.UserDataService;
@@ -41,7 +42,7 @@ public class Login {
             return null;
         }
 
-
+        Helper.setUserType(po.getPermission());
         return new UserVO(po.getId(),po.getPassword(),po.getName(),po.getPermission());
     }
 

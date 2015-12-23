@@ -48,7 +48,7 @@ public interface CommodityblService {
      *
      * @return the array list
      */
-    Iterator<StockInVO> stockSum();
+    Iterator<StockInVO> stockSum() throws RemoteException;
 
     /**
      * 生成时间段内库存状态
@@ -57,5 +57,5 @@ public interface CommodityblService {
      * @param endDate   传入截止日期
      * @return返回一个<StockInVO>
      */
-    Iterator<StockInVO> stockSum(String startDate, String endDate);
+    Iterator<StockInVO> stockSum(String startDate, String endDate) throws RemoteException;
 }

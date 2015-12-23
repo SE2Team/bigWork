@@ -3,6 +3,7 @@ package businesslogic.listbl;
 import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
+import dataservice.inquirydataservice.InquiryDataService;
 import dataservice.listdataservice.ListDataService;
 import po.ListPO;
 import po.PO2VO;
@@ -27,6 +28,8 @@ public class List {
      */
     protected ListDataService listDataService;
 
+    protected InquiryDataService inquiryDataService;
+
     /**
      * Instantiates a new List.
      *
@@ -35,6 +38,7 @@ public class List {
     public List() throws RemoteException {
         dataFactory = DataFactory.getInstance();
         listDataService = dataFactory.getListData();
+        inquiryDataService=dataFactory.getInquiryData();
     }
 
     /**

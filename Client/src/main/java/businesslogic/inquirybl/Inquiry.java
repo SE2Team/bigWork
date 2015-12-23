@@ -1,5 +1,6 @@
 package businesslogic.inquirybl;
 
+import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.inquirydataservice.InquiryDataService;
@@ -28,9 +29,6 @@ public class Inquiry {
      * @throws RemoteException the remote exception
      */
     public Inquiry() throws RemoteException {
-        /*
-      The Data factory.
-     */
         DataFactoryService dataFactory = DataFactory.getInstance();
         inquiry = dataFactory.getInquiryData();
     }
@@ -57,8 +55,10 @@ public class Inquiry {
      * @return the string
      * @throws RemoteException the remote exception
      */
-//type待商讨
     public String checkForm(String type) throws RemoteException {
+
+        inquiry.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"查看报表"));
         return inquiry.checkForm(type);
     }
 
