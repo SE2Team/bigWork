@@ -1,5 +1,7 @@
 package businesslogic.utilitybl;
 
+import util.UserType;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,6 +12,9 @@ import java.util.Date;
  * @author myk
  */
 public class Helper {
+
+
+    private static UserType type;
     /**
      * Gets time.
      *
@@ -90,6 +95,13 @@ public class Helper {
 
         i=Integer.parseInt(temp);
         return i;
+    }
+    public static UserType getUserType() {
+        return type;
+    }
+
+    public static void setUserType(UserType type) {
+        Helper.type = type;
     }
 
 }

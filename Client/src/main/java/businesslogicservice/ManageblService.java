@@ -110,4 +110,6 @@ public interface ManageblService {
      */
     boolean editWorker(WorkerPO oldWorkerPO, WorkerPO newWorkerPO) throws RemoteException, ExistException;
 
+    Iterator<DriverVO> checkDriver() throws RemoteException;
+    Iterator<VehicleVO> checkVehicle() throws RemoteException;
 }

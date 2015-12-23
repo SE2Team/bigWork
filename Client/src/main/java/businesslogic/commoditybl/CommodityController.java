@@ -44,11 +44,11 @@ public class CommodityController implements CommodityblService {
     }
 
 
-    public Iterator<StockInVO> stockSum() {
+    public Iterator<StockInVO> stockSum() throws RemoteException {
         return commodity.stockSum().iterator();
     }
 
-    public Iterator<StockInVO> stockSum(String startDate, String endDate){
+    public Iterator<StockInVO> stockSum(String startDate, String endDate) throws RemoteException {
         return commodity.stockSum(startDate, endDate);
     }
 }

@@ -4,6 +4,8 @@ import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
+import dataservice.inquirydataservice.InquiryDataService;
+import po.OperationLogPO;
 import po.StockInPO;
 import po.StockPO;
 import vo.StockInVO;
@@ -32,6 +34,8 @@ public class Commodity {
      */
     private StockPO stockPO;
 
+    private InquiryDataService inquiryDataService;
+
     /**
      * Instantiates a new Commodity.
      *
@@ -40,6 +44,7 @@ public class Commodity {
     public Commodity() throws RemoteException {
         dataFactory = DataFactory.getInstance();
         commodity = dataFactory.getCommodityData();
+        inquiryDataService=dataFactory.getInquiryData();
         try {
             stockPO = commodity.check();
         } catch (NullPointerException e) {
@@ -67,6 +72,8 @@ public class Commodity {
 
         commodity.update(stockPO);
 
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"出库"));
+
         return true;
     }
 
@@ -91,6 +98,9 @@ public class Commodity {
         stockPO.add(stockInPO);
 
         commodity.update(stockPO);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"入库"));
+
         return true;
     }
 
@@ -103,6 +113,9 @@ public class Commodity {
      */
     public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
         Iterator<Integer> itr = commodity.check(startDate, endDate);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"查看库存"));
+
         return itr;
     }
 
@@ -111,13 +124,17 @@ public class Commodity {
      *
      * @return 一个当日入库单数组
      */
-    public ArrayList<StockInVO> stockSum() {
+    public ArrayList<StockInVO> stockSum() throws RemoteException {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
             arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
                     temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
 
         }
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"库存盘点"));
+
         return arrayList;
     }
 
@@ -128,7 +145,7 @@ public class Commodity {
      * @param endDate
      * @return
      */
-    public Iterator<StockInVO> stockSum(String startDate, String endDate) {
+    public Iterator<StockInVO> stockSum(String startDate, String endDate) throws RemoteException {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
             if (Helper.isBetween(startDate, temp.getInDate(), endDate)) {
@@ -136,6 +153,9 @@ public class Commodity {
                         temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
             }
         }
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"库存盘点"));
         return arrayList.iterator();
     }
 

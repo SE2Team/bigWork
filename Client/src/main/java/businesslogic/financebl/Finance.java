@@ -1,14 +1,13 @@
 package businesslogic.financebl;
 
 import businesslogic.listbl.ListController;
+import businesslogic.utilitybl.Helper;
 import businesslogicservice.ListblService;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
-import po.AccountPO;
-import po.StockPO;
-import po.VehiclePO;
-import po.WorkerPO;
+import dataservice.inquirydataservice.InquiryDataService;
+import po.*;
 import util.ExistException;
 import vo.AccountVO;
 import vo.GatheringVO;
@@ -23,6 +22,8 @@ import java.util.ArrayList;
  * @author myk
  */
 public class Finance {
+
+    private InquiryDataService inquiryDataService;
 
 
     /**
@@ -41,6 +42,7 @@ public class Finance {
      */
         DataFactoryService dataFactory = DataFactory.getInstance();
         finance = dataFactory.getFinanceData();
+        inquiryDataService=dataFactory.getInquiryData();
     }
 
     /**
@@ -56,9 +58,12 @@ public class Finance {
          *判断输入是否合法
          */
 
-        list.gathering(gatheringVO);
 
-        return false;
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"新建收款单"));
+
+        return list.gathering(gatheringVO);
     }
 
     /**
@@ -75,20 +80,25 @@ public class Finance {
          *判断输入是否合法
          */
 
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"新建付款单"));
 
-        list.payment(paymentVO);
-        return true;
+        return list.payment(paymentVO);
     }
 
     /**
      * Generate form result message.
+     * 看不到内容
      *
      * @return the result message
      */
     public boolean generateForm() throws RemoteException {
         finance.get();
 
-        return false;
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"生成报表"));
+
+        return true;
     }
 
     /**
@@ -100,24 +110,14 @@ public class Finance {
      * @throws RemoteException the remote exception
      */
     public boolean generateForm(String startDate, String endDate) throws RemoteException {
-        /**
-         *判断输入是否合法
-         */
 
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"生成报表"));
 
         finance.get(startDate, endDate);
         return false;
     }
 
-    /**
-     * 期初建账
-     *
-     * @param institution the institution
-     * @return the result message
-     */
-    public boolean initial(String institution) {
-        return false;
-    }
 
     /**
      * Add account result message.
@@ -126,8 +126,12 @@ public class Finance {
      * @return the result message
      */
     public boolean addAccount(AccountVO accountVO) throws RemoteException, ExistException {
-        finance.addAccount(new AccountPO(accountVO.getAccountName(), accountVO.getAccountBalance()));
-        return false;
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"新增账户"));
+
+
+        return finance.addAccount(new AccountPO(accountVO.getAccountName(), accountVO.getAccountBalance()));
     }
 
     /**
@@ -143,6 +147,7 @@ public class Finance {
         for (AccountPO temp : accountPOList) {
             accountVOList.add(new AccountVO(temp.getAccountName(), temp.getAccountBalance()));
         }
+
 
         return accountVOList;
     }
@@ -167,6 +172,9 @@ public class Finance {
     public boolean DelAccount(AccountVO accountVO) throws RemoteException {
         AccountPO accountPO = new AccountPO(accountVO.getAccountName(), accountVO.getAccountBalance());
 
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"删除账户"));
+
         return finance.DelAccount(accountPO);
     }
 
@@ -178,10 +186,12 @@ public class Finance {
      * @return the result message
      */
     public boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException {
-        //判断输入的合法性
 
-        //名字与已存在的是否冲突交给数据层判断
         AccountPO accountPO = new AccountPO(accountVONew.getAccountName(), accountVONew.getAccountBalance());
+
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"编辑账户"));
         return finance.EditAccount(accountVOOld.getAccountName(), accountPO);
     }
 
@@ -191,6 +201,9 @@ public class Finance {
      * @throws RemoteException
      */
     boolean initial(WorkerPO po) throws RemoteException{
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：机构信息"));
         return finance.initial(po);
     }
 
@@ -200,6 +213,9 @@ public class Finance {
      * @throws RemoteException
      */
     boolean initial(VehiclePO po) throws RemoteException{
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：车辆信息"));
         return finance.initial(po);
     }
 
@@ -210,6 +226,10 @@ public class Finance {
      * @return
      */
     boolean initial(StockPO po) throws RemoteException{
+
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：库存信息"));
         return finance.initial(po);
 
     }
@@ -220,6 +240,11 @@ public class Finance {
      * @throws RemoteException
      */
     boolean initial(AccountPO po) throws RemoteException{
+
+
+
+        inquiryDataService.saveOperationLog(new
+                OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：账户信息"));
         return finance.initial(po);
 
     }
