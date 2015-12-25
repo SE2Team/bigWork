@@ -2,13 +2,14 @@ package vo;
 
 import util.ListType;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class ListVO {
+public class ListVO implements Serializable{
     private static final long serialVersionUID = 1L;//序列化编号
     protected String id;
     protected String content;
@@ -29,11 +30,11 @@ public class ListVO {
     public ListVO() {
         SimpleDateFormat df = new SimpleDateFormat("MMddHHmmss");//设置日期格式
         this.id = df.format(new Date());
+        type=ListType.ADDRESSEEINFOMATION;
     }
 
     public ListVO(boolean isCheck) {
         this.isCheck = isCheck;
-        this.type = type;
     }
 
     public String getId() {

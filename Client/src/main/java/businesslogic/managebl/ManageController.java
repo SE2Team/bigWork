@@ -1,7 +1,6 @@
 package businesslogic.managebl;
 
 import businesslogicservice.ManageblService;
-import po.WorkerPO;
 import util.ExistException;
 import vo.ConstantVO;
 import vo.DriverVO;
@@ -87,12 +86,12 @@ public class ManageController implements ManageblService {
         manage.updateConstant(constantVO);
     }
 
-    public boolean addWorker(WorkerPO workerPO) throws RemoteException, ExistException {
-        return manage.addWorker(workerPO);
+    public boolean addWorker(WorkerVO workerVO) throws RemoteException, ExistException {
+        return manage.addWorker(workerVO);
     }
 
-    public boolean delWorker(WorkerPO workerPO) throws RemoteException, ExistException {
-        return manage.delWorker(workerPO);
+    public boolean delWorker(WorkerVO workerVO) throws RemoteException, ExistException {
+        return manage.delWorker(workerVO);
     }
 
     public Iterator<WorkerVO> checkWorker() throws RemoteException {
@@ -103,8 +102,9 @@ public class ManageController implements ManageblService {
         return manage.checkWorker(name);
     }
 
-    public boolean editWorker(WorkerPO oldWorkerPO,WorkerPO newWorkerPO) throws RemoteException, ExistException {
-        return manage.editWorker(oldWorkerPO,newWorkerPO);
+    public boolean editWorker(WorkerVO oldWorkerVO,WorkerVO newWorkerVO) throws RemoteException, ExistException {
+        return manage.editWorker(oldWorkerVO,newWorkerVO);
     }
+
 
 }

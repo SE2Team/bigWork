@@ -1,6 +1,8 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
 import po.ExpenseAndDatePO;
+import po.OperationLogPO;
 import po.OrderPO;
 import util.ExistException;
 import vo.ExpenseAndDateVO;
@@ -32,6 +34,9 @@ public class Order extends List {
 
 
         OrderPO po = VO2PO.convert(vo);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存快递单"));
 
 
         return listDataService.save(po);

@@ -1,18 +1,13 @@
 package businesslogic.managebl;
 
+import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
+import dataservice.inquirydataservice.InquiryDataService;
 import dataservice.managedataservice.ManageDataService;
-import po.ConstantPO;
-import po.DriverPO;
-import po.PO2VO;
-import po.VehiclePO;
-import po.WorkerPO;
+import po.*;
 import util.ExistException;
-import vo.ConstantVO;
-import vo.DriverVO;
-import vo.VehicleVO;
-import vo.WorkerVO;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -28,6 +23,7 @@ public class Manage {
      * The Manage.
      */
     private ManageDataService manage;
+    private InquiryDataService inquiryDataService;
 
     /**
      * Instantiates a new Manage.
@@ -35,11 +31,10 @@ public class Manage {
      * @throws RemoteException the remote exception
      */
     public Manage() throws RemoteException {
-        /*
-      The Data factory.
-     */
+
         DataFactoryService dataFactory = DataFactory.getInstance();
         manage = dataFactory.getManageData();
+        inquiryDataService=dataFactory.getInquiryData();
     }
 
     /**
@@ -54,6 +49,8 @@ public class Manage {
         DriverPO po = new DriverPO(driverVO.getDriverNum(), driverVO.getDriverName(), driverVO.getBirthDate(), driverVO.getIdNum(),
                 driverVO.getPhone(), driverVO.getVehicleInstitution(), driverVO.getSex(), driverVO.getLicenseTime());
 
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "新增司机信息"));
         return manage.addDriver(po);
     }
 
@@ -65,15 +62,21 @@ public class Manage {
      * @throws RemoteException the remote exception
      */
     public Boolean delDriver(DriverVO driverVO) throws RemoteException {
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "删除司机信息"));
         return manage.deleteDriver(convert(driverVO));
     }
 
     public Iterator<DriverVO> checkDriver() throws RemoteException {
-        Iterator<DriverPO> itr=manage.checkDriver();
+        ArrayList<DriverPO> itr=manage.checkDriver();
         ArrayList<DriverVO> arrayList=new ArrayList<DriverVO>();
-        while (itr.hasNext()){
-            arrayList.add(PO2VO.convert(itr.next()));
+
+        for(DriverPO temp:itr){
+            arrayList.add(PO2VO.convert(temp));
         }
+
+
         return arrayList.iterator();
     }
 
@@ -85,8 +88,6 @@ public class Manage {
      * @throws RemoteException the remote exception
      */
     public DriverVO checkDriver(String driveNumber) throws RemoteException {
-        //判断
-        //……
 
         return convert(manage.checkDriver(driveNumber));
     }
@@ -100,6 +101,8 @@ public class Manage {
      * @throws ExistException  the exist exception
      */
     public Boolean addVehicle(VehicleVO vehicleVO) throws RemoteException, ExistException {
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "增加车辆信息"));
         return manage.addVehicle(convert(vehicleVO));
     }
 
@@ -111,6 +114,8 @@ public class Manage {
      * @throws RemoteException the remote exception
      */
     public Boolean delVehicle(VehicleVO vehiclevO) throws RemoteException {
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "删除车辆信息"));
         return manage.deleteVehicle(convert(vehiclevO));
     }
 
@@ -120,10 +125,10 @@ public class Manage {
      * @throws RemoteException
      */
     public Iterator<VehicleVO> checkVehicle() throws RemoteException {
-        Iterator<VehiclePO> itr=manage.checkVehicle();
+        ArrayList<VehiclePO> itr=manage.checkVehicle();
         ArrayList<VehicleVO> arrayList=new ArrayList<VehicleVO>();
-        while (itr.hasNext()){
-            arrayList.add(PO2VO.convert(itr.next()));
+        for(VehiclePO temp:itr){
+            arrayList.add(PO2VO.convert(temp));
         }
         return arrayList.iterator();
     }
@@ -147,6 +152,8 @@ public class Manage {
      * @throws RemoteException the remote exception
      */
     public void updateSalary(String position, String Type) throws RemoteException {
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "更新薪水策略"));
         manage.updateSalary(position,Type);
     }
 
@@ -159,42 +166,48 @@ public class Manage {
     public void updateConstant(ConstantVO constantVO) throws RemoteException, ExistException {
 
         ConstantPO po = new ConstantPO(constantVO.getCity1(), constantVO.getCity2(), constantVO.getPrice(), constantVO.getDistance());
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "更新城市距离价格信息"));
 
         manage.updateConstant(po);
     }
 
-    public boolean addWorker(WorkerPO po) throws RemoteException, ExistException {
-        return manage.addWorker(po);
+    public boolean addWorker(WorkerVO vo) throws RemoteException, ExistException {
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "增加人员机构信息"));
+        return manage.addWorker(VO2PO.convert(vo));
     }
 
-    public boolean delWorker(WorkerPO po) throws RemoteException, ExistException {
-        return manage.delWorker(po);
+    public boolean delWorker(WorkerVO vo) throws RemoteException, ExistException {
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "删除人员机构信息"));
+        return manage.delWorker(VO2PO.convert(vo));
     }
 
     public Iterator<WorkerVO> checkWorker() throws RemoteException {
-        Iterator<WorkerPO> itr=manage.checkWorker();
+        ArrayList<WorkerPO> itr=manage.checkWorker();
         ArrayList<WorkerVO> arrayList=new ArrayList<WorkerVO>();
-        while (itr.hasNext()){
-            arrayList.add(PO2VO.convert(itr.next()));
+        for(WorkerPO temp:itr){
+            arrayList.add(PO2VO.convert(temp));
         }
-
         return arrayList.iterator();
     }
 
     public Iterator<WorkerVO> checkWorker(String name) throws RemoteException {
 
-        Iterator<WorkerPO> itr=manage.checkWorker(name);
+        ArrayList<WorkerPO> itr=manage.checkWorker(name);
         ArrayList<WorkerVO> arrayList=new ArrayList<WorkerVO>();
-        while (itr.hasNext()){
-            arrayList.add(PO2VO.convert(itr.next()));
+        for(WorkerPO temp:itr){
+            arrayList.add(PO2VO.convert(temp));
         }
 
         return arrayList.iterator();
     }
 
-    public boolean editWorker(WorkerPO opo,WorkerPO npo) throws RemoteException, ExistException {
-        return manage.editWorker(opo,npo);
+    public boolean editWorker(WorkerVO opo,WorkerVO npo) throws RemoteException, ExistException {
+        return manage.editWorker(VO2PO.convert(opo),VO2PO.convert(npo));
     }
+
     /**
      * 私有vo和po之间转换的方法
      *
@@ -218,4 +231,5 @@ public class Manage {
     private VehiclePO convert(VehicleVO vehicleVO) {
         return new VehiclePO(vehicleVO.getVehicleNum(), vehicleVO.getLicensePlate(), vehicleVO.getBuyDate(), vehicleVO.getUseTime());
     }
+
 }

@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import vo.AccountVO;
+
 /**
  * 财务人员账户管理界面
  * @author WANXING
@@ -49,6 +51,8 @@ public class FinanceAccountPanel extends JPanel{
 	Object c0, c1;
 	//被选中的要修改的行号
 	int modRowNum;
+	AccountVO oaccount_vo;
+	
 	public FinanceAccountPanel(){
 		//初始化各组件
 		this.setLayout(null);
@@ -112,6 +116,8 @@ public class FinanceAccountPanel extends JPanel{
 		operation4.setBounds(560, 20, width, height);
 		add(operation4);
 		
+		
+		
 		String[] column = {"账户名称","余额"};
 		String[] s1 = {"张XX","50" };
 		String row[][] = { s1 };
@@ -125,6 +131,7 @@ public class FinanceAccountPanel extends JPanel{
 				c1 = tableModel.getValueAt(selectedRow, 1);
 				modAccount.getAccountName().setText(c0.toString());
 				modAccount.getAccountBalance().setText(c1.toString());
+				oaccount_vo = new AccountVO(c0.toString(), c1.toString());
         	}
 		});
 		accountTable.setFont(font2);
@@ -134,6 +141,13 @@ public class FinanceAccountPanel extends JPanel{
 		add(jsp);	
 	}
 	
+	/**
+	 * 获取原来的账户信息的vo
+	 * @return
+	 */
+	public AccountVO getVo(){
+		return oaccount_vo;
+	}
 	/**
 	 * 添加用户输入的账户信息
 	 * 

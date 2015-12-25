@@ -10,6 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,10 +23,13 @@ import javax.swing.JTextField;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import vo.PaymentVO;
 
 /**
  * 财务人员成本管理界面
@@ -50,7 +54,7 @@ public class FinanceCostPanel extends JPanel {
 	Font font1 = new Font("楷体", Font.PLAIN, 25);
 	Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义错误提示的文字
-	protected JLabel tip1;
+	protected JLabel tip1, tip2;
 	// 定义文本框的数组
 	protected JTextField[] costJtf;
 	// 定义日期选择器
@@ -109,6 +113,7 @@ public class FinanceCostPanel extends JPanel {
 
 		sumTextField.setFont(font2);
 		sumTextField.setBounds(x + addx1, y + addy, width, height);
+		sumTextField.addFocusListener(new TextFocus());
 
 		num.setFont(font2);
 		num.setBounds(x + addx1 + addx2, y + addy, width, height);
@@ -116,7 +121,7 @@ public class FinanceCostPanel extends JPanel {
 		numTextField.setFont(font2);
 		numTextField.setBounds(x + 2 * addx1 + addx2, y + addy, width, height);
 		numTextField.addFocusListener(new TextFocus());
-		
+
 		clause.setFont(font2);
 		clause.setBounds(x, y + 2 * addy + 30, width, height);
 
@@ -136,7 +141,7 @@ public class FinanceCostPanel extends JPanel {
 		sure.setFont(font2);
 		sure.setBounds(2 * x + addx1, y + 3 * addy + 50, 80, height);
 		sure.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				performSure();
@@ -154,6 +159,16 @@ public class FinanceCostPanel extends JPanel {
 				new Empty(costJtf);
 				reasonTextArea.setText("");
 				otherTextArea.setText("");
+				if(tip1==null){
+					isBankNumAdd = false;
+					removeTip(tip1);
+					tip1 = null;
+				}
+				if(tip2==null){
+					isMoneyAdd = false;
+					removeTip(tip2);
+					tip2 = null;
+				}
 			}
 		});
 
@@ -178,30 +193,46 @@ public class FinanceCostPanel extends JPanel {
 	/**
 	 * 确认按钮监听动作
 	 */
-	protected void performSure(){
-		boolean isOk = NumExceptioin.isBankNumValid(numTextField);
-		if(isOk&&isAllEntered.isEntered(costJtf)){
-			//TODO
+	protected void performSure() {
+		boolean isOk = NumExceptioin.isBankNumValid(numTextField)
+				&& NumExceptioin.isDouble(sumTextField);
+		if (isOk && isAllEntered.isEntered(costJtf)) {
+			PaymentVO vo = new PaymentVO(dateTextField.getText().trim(),
+					sumTextField.getText().trim(), nameTextField.getText()
+							.trim(), numTextField.getText().trim(),
+					reasonTextArea.getText().trim(), otherTextArea.getText()
+							.trim(), false);
+			FinanceblService bl;
+			try {
+				bl = new FinanceController();
+				bl.payment(vo);
+			} catch (RemoteException e) {
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
+				return;
+			}
 			JLabel tip = new JLabel("提示：保存成功");
 			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);	
-		}else if((!isOk)&&isAllEntered.isEntered(costJtf)){
+			JOptionPane.showMessageDialog(null, tip);
+		} else if ((!isOk) && isAllEntered.isEntered(costJtf)) {
 			JLabel tip = new JLabel("提示：请输入正确格式的信息");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
-		}else if(isOk&&!isAllEntered.isEntered(costJtf)){
+		} else if (isOk && !isAllEntered.isEntered(costJtf)) {
 			JLabel tip = new JLabel("提示：仍有信息未输入");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
-		}else if(!isOk&&!isAllEntered.isEntered(costJtf)){
+		} else if (!isOk && !isAllEntered.isEntered(costJtf)) {
 			JLabel tip = new JLabel("请输入所有正确格式的信息");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
 		}
 	}
-	
+
 	// 错误提示信息是否已经被添加
 	protected boolean isBankNumAdd = false;
+	protected boolean isMoneyAdd = false;
 
 	/**
 	 * 监听焦点
@@ -223,7 +254,7 @@ public class FinanceCostPanel extends JPanel {
 				if (!NumExceptioin.isBankNumValid(numTextField)) {
 					isBankNumAdd = true;
 					if (tip1 == null) {
-						tip1 = new JLabel("账号位数不符规范",JLabel.CENTER);
+						tip1 = new JLabel("账号位数不符规范", JLabel.CENTER);
 						tip1.setBounds(x + 2 * addx1 + addx2,
 								y + addy + height, width, height);
 						tip1.setFont(font2);
@@ -237,7 +268,29 @@ public class FinanceCostPanel extends JPanel {
 									.trim())) {
 						isBankNumAdd = false;
 						removeTip(tip1);
-						tip1=null;				
+						tip1 = null;
+					}
+				}
+			}
+			if (temp == sumTextField) {
+				if (!NumExceptioin.isDouble(sumTextField)) {
+					isMoneyAdd = true;
+					if (tip2 == null) {
+						tip2 = new JLabel("请输入数据", JLabel.CENTER);
+						tip2.setBounds(x + addx1, y + addy + height, width,
+								height);
+						tip2.setFont(font2);
+						tip2.setForeground(Color.RED);
+						addTip(tip2);
+					}
+
+				} else {
+					if (isMoneyAdd
+							&& !"".equalsIgnoreCase(sumTextField.getText()
+									.trim())) {
+						isMoneyAdd = false;
+						removeTip(tip2);
+						tip2 = null;
 					}
 				}
 			}

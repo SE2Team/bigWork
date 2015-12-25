@@ -11,28 +11,31 @@ import java.awt.event.FocusListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
+import sun.net.www.content.image.jpeg;
 
 public class addInstituInfoDialog extends JDialog {
 
 	private EmpAndInsPanel parent;
 	private FinanceInitialPanel parent2;
-	
+
 	public addInstituInfoDialog(EmpAndInsPanel parent) {
 		this.parent = parent;
-		this.setContentPane(new addInstituInfoPanel());
+		this.setContentPane(new addInstituInfoPanel(parent));
 		this.setSize(400, 380);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 	}
-	
+
 	public addInstituInfoDialog(FinanceInitialPanel parent) {
 		this.parent2 = parent;
-		this.setContentPane(new addInstituInfoPanel());
+		this.setContentPane(new addInstituInfoPanel(parent2));
 		this.setSize(400, 380);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -52,12 +55,14 @@ public class addInstituInfoDialog extends JDialog {
 	JButton sure, cancel;
 	// 定义错误提示的label
 	JLabel tip1;
-	//定义用来存放用户输入信息的数组
+	// 定义用来存放用户输入信息的数组
 	String[] rowContent;
-	
+	// 定义文本框的数组
+	JTextField[] insJtf;
+
 	class addInstituInfoPanel extends JPanel {
 
-		addInstituInfoPanel() {
+		addInstituInfoPanel(final JPanel jp) {
 			this.setLayout(null);
 
 			addInfo = new JLabel("添加机构信息", JLabel.CENTER);
@@ -83,24 +88,52 @@ public class addInstituInfoDialog extends JDialog {
 
 			sure = new JButton("确定");
 			sure.setFont(font);
-			sure.setBounds(80, y+2*addy+10, 80, height);
-			sure.addActionListener(new ActionListener() {		
-				public void actionPerformed(ActionEvent arg0) {	
-					rowContent = new String[]{jtf_institution.getText(),jtf_institutionNum.getText()};
-					parent.addInsInfo(rowContent);
-					dispose();
+			sure.setBounds(80, y + 2 * addy + 10, 80, height);
+			sure.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					insJtf = new JTextField[] { jtf_institution,
+							jtf_institutionNum };
+					boolean isOk = NumExceptioin
+							.isInstitutionValid(jtf_institutionNum);
+					if (isOk && isAllEntered.isEntered(insJtf)) {
+						rowContent = new String[] { jtf_institution.getText(),
+								jtf_institutionNum.getText() };
+						if (jp == parent) {
+							parent.addInsInfo(rowContent);
+						}
+						if (jp == parent2) {
+							parent2.addInsInfo(rowContent);
+						}
+						dispose();
+						JLabel tip = new JLabel("提示：保存成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if((!isOk)&&isAllEntered.isEntered(insJtf)){
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if(isOk&&!isAllEntered.isEntered(insJtf)){
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if(!isOk&&!isAllEntered.isEntered(insJtf)){
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}
+
 				}
 			});
-			
+
 			cancel = new JButton("取消");
 			cancel.setFont(font);
-			cancel.setBounds(120+addx, y+2*addy+10, 80, height);
-			cancel.addActionListener(new ActionListener() {		
-				public void actionPerformed(ActionEvent arg0) {					
+			cancel.setBounds(120 + addx, y + 2 * addy + 10, 80, height);
+			cancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
 					dispose();
 				}
 			});
-			
+
 			this.add(addInfo);
 			this.add(institution);
 			this.add(jtf_institution);
@@ -110,20 +143,21 @@ public class addInstituInfoDialog extends JDialog {
 			this.add(cancel);
 		}
 	}
-	
-	//错误提示信息是否已经被添加
+
+	// 错误提示信息是否已经被添加
 	boolean isInstitutionAdd = false;
-	
+
 	/**
 	 * 监听焦点
+	 * 
 	 * @author Administrator
 	 *
 	 */
-	class TextFocus implements FocusListener{
+	class TextFocus implements FocusListener {
 
 		public void focusGained(FocusEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		public void focusLost(FocusEvent e) {
@@ -131,24 +165,27 @@ public class addInstituInfoDialog extends JDialog {
 			if (!NumExceptioin.isInstitutionValid(jtf_institutionNum)) {
 				isInstitutionAdd = true;
 				if (tip1 == null) {
-					tip1 = new JLabel("机构编号位数应为4位", JLabel.CENTER);
-					tip1.setBounds(x + addx, y + addy+height, jtf_width, height);
+					tip1 = new JLabel("机构编号位数应为6位", JLabel.CENTER);
+					tip1.setBounds(x + addx, y + addy + height, jtf_width,
+							height);
 					tip1.setFont(font2);
 					tip1.setForeground(Color.RED);
 					addTip(tip1);
 				}
 
 			} else {
-				if (isInstitutionAdd&&!"".equalsIgnoreCase(jtf_institutionNum.getText().trim())) {
+				if (isInstitutionAdd
+						&& !"".equalsIgnoreCase(jtf_institutionNum.getText()
+								.trim())) {
 					isInstitutionAdd = false;
 					removeTip(tip1);
 					tip1 = null;
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 添加错误提示信息
 	 * 

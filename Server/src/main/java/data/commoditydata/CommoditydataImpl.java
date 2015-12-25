@@ -1,16 +1,15 @@
 package data.commoditydata;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import data.Common.Common;
 import dataservice.commoditydataservice.CommodityDataService;
 import po.StockInPO;
 import po.StockOutPO;
 import po.StockPO;
 import util.TransportType;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 public class CommoditydataImpl extends UnicastRemoteObject implements CommodityDataService{
 
@@ -115,7 +114,7 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 	 * @return 出库数量/入库数量      库存数量
 	 * @throws RemoteException
 	 */
-	public Iterator<Integer> check(String start, String end) throws RemoteException {
+	public ArrayList<Integer> check(String start, String end) throws RemoteException {
 		// TODO Auto-generated method stub
 		int inNum=0;
 		int outNum=0;
@@ -159,7 +158,7 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 		integers.add(inNum);
 		integers.add(outNum);
 		integers.add(stockNum);
-		return integers.iterator();
+		return integers;
 	}
 
 }

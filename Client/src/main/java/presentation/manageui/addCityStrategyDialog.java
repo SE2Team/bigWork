@@ -7,8 +7,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import presentation.commonui.isAllEntered;
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
+import vo.ConstantVO;
+
+/**
+ * 总经理添加城市价格距离界面
+ * 
+ * @author Administrator
+ *
+ */
 
 public class addCityStrategyDialog extends JDialog {
 
@@ -28,12 +41,17 @@ public class addCityStrategyDialog extends JDialog {
 
 		// 设置所有文字的字体
 		Font font = new Font("宋体", Font.PLAIN, 20);
+		Font font2 = new Font("宋体", Font.PLAIN, 18);
 		// 定义添加常量信息，城市1，城市2，距离，价格的label
 		JLabel addConstant, city1, city2, distance, price;
 		// 定义对应的文本框
 		JTextField jtf_city1, jtf_city2, jtf_distance, jtf_price;
 		// 定义确定，取消按钮
 		JButton sure, cancel;
+		// 定义用来存放用户输入信息的数组
+		String[] rowContent;
+		// 定义文本框的数组
+		JTextField[] CityJtf;
 
 		addCityStrategyPanel() {
 			this.setLayout(null);
@@ -78,9 +96,41 @@ public class addCityStrategyDialog extends JDialog {
 			sure.setFont(font);
 			sure.setBounds(80, y + 4 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {
-				
+
 				public void actionPerformed(ActionEvent arg0) {
-					dispose();
+					CityJtf = new JTextField[] { jtf_city1, jtf_city2,
+							jtf_distance, jtf_price };
+					// TODO 判断金额和距离
+					boolean isOk = true;
+					if (isOk && isAllEntered.isEntered(CityJtf)) {
+						ConstantVO vo = new ConstantVO(jtf_city1.getText(),
+								jtf_city2.getText(), jtf_price.getText(),
+								jtf_distance.getText());
+						ManageblService bl;
+						//bl = new ManageController();
+						
+						rowContent = new String[] { jtf_city1.getText(),
+								jtf_city2.getText(), jtf_distance.getText(),
+								jtf_price.getText() };
+						parent.addCityInfo(rowContent);
+						dispose();
+						JLabel tip = new JLabel("提示：添加成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if ((!isOk) && isAllEntered.isEntered(CityJtf)) {
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (isOk && !isAllEntered.isEntered(CityJtf)) {
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (!isOk && !isAllEntered.isEntered(CityJtf)) {
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}
+
 				}
 			});
 

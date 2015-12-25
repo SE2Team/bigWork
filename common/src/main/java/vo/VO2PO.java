@@ -1,18 +1,6 @@
 package vo;
 
-import po.AddresseeInformationPO;
-import po.DistributePO;
-import po.GatheringPO;
-import po.LoadingPO;
-import po.OrderPO;
-import po.PaymentPO;
-import po.ReceiptPO;
-import po.ReceivePO;
-import po.StockInPO;
-import po.StockOutPO;
-import po.TransferPO;
-import po.TransferReceivePO;
-import po.UserPO;
+import po.*;
 
 /**
  * Created by MYK on 2015/12/7 0007.
@@ -84,5 +72,22 @@ public class VO2PO {
 
     public static UserPO convert(UserVO vo){
         return new UserPO(vo.getId(),vo.getPassword(),vo.getName(),vo.getPermission());
+    }
+
+
+    public static AccountPO convert(AccountVO vo){
+        return new AccountPO(vo.getAccountName(),vo.getAccountBalance());
+    }
+
+    public static WorkerPO convert(WorkerVO vo){
+        return new WorkerPO(vo.getName(),vo.getIdNum(),vo.getPosition(),vo.getOrganization(),vo.getUserId(),vo.getSex());
+    }
+
+    public static StockPO convert(StockVO vo){
+        return new StockPO(vo.getStockState(),vo.getStockList());
+    }
+
+    public static VehiclePO convert(VehicleVO vo){
+        return new VehiclePO(vo.getVehicleNum(),vo.getLicensePlate(),vo.getBuyDate(),vo.getUseTime());
     }
 }

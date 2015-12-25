@@ -3,29 +3,14 @@
  */
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-
-import businesslogic.managebl.Manage;
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class DriverPanel extends JPanel {
 
@@ -118,9 +103,8 @@ public class DriverPanel extends JPanel {
 
 		String[] column = { "司机编号", "姓名", "性别", "出生日期", "身份证号", "手机", "车辆单位",
 				"行驶证期限" };
-		String[] s1 = { "025000000", "张三", "男", "1988-8-8",
-				"320682198808082631", "18322913658", "", "2" };
-		String row[][] = { s1 };
+		
+		String row[][] = {};
 		tableModel = new DefaultTableModel(row, column);
 		driverTable = new JTable(tableModel);
 		driverTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选

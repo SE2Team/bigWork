@@ -9,7 +9,6 @@ import util.ExistException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public interface FinanceDataService extends Remote {
     /**
@@ -94,19 +93,19 @@ public interface FinanceDataService extends Remote {
      * @return
      * @throws RemoteException
      */
-    Iterator<WorkerPO> checkInitWorker() throws RemoteException;
+    ArrayList<WorkerPO> checkInitWorker() throws RemoteException;
 
     /**
      * @return
      * @throws RemoteException
      */
-    Iterator<VehiclePO> checkInitVehicle() throws RemoteException;
+    ArrayList<VehiclePO> checkInitVehicle() throws RemoteException;
 
     /**
      * @return
      * @throws RemoteException
      */
-    Iterator<AccountPO> checkInitAccount() throws RemoteException;
+    ArrayList<AccountPO> checkInitAccount() throws RemoteException;
 
     /**
      * @return

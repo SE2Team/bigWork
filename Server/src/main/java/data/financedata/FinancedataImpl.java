@@ -1,21 +1,13 @@
 package data.financedata;
 
+import data.Common.Common;
 import dataservice.financedataservice.FinanceDataService;
-import po.AccountPO;
-import po.GatheringPO;
-import po.PaymentPO;
-import po.StockInPO;
-import po.StockPO;
-import po.VehiclePO;
-import po.WorkerPO;
+import po.*;
 import util.ExistException;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import data.Common.Common;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -252,7 +244,7 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	}
 
 	@Override
-	public Iterator<WorkerPO> checkInitWorker() throws RemoteException{
+	public ArrayList<WorkerPO> checkInitWorker() throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common=new Common("initialWorker");
 		ArrayList<String> list=common.readData();
@@ -261,12 +253,12 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			String[] str=list.get(j).split(";");
 			list2.add(this.stringToWorkerPO(str));
 		}
-		return list2.iterator();
+		return list2;
 		
 	}
 
 	@Override
-	public Iterator<VehiclePO> checkInitVehicle() throws RemoteException{
+	public ArrayList<VehiclePO> checkInitVehicle() throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common=new Common("initialVehicle");
 		ArrayList<String> list=common.readData();
@@ -276,11 +268,11 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			String[] str=list.get(j).split(";");
 			list2.add(stringToVehiclePO(str));
 		}
-		return list2.iterator();
+		return list2;
 	}
 
 	@Override
-	public Iterator<AccountPO> checkInitAccount() throws RemoteException{
+	public ArrayList<AccountPO> checkInitAccount() throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common=new Common("initialAccount");
 		ArrayList<String> list=common.readData();
@@ -289,7 +281,7 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			String[] str=list.get(j).split(";");
 			list2.add(stringToAccountPO(str));
 		}
-		return list2.iterator();
+		return list2;
 	}
 
 	@Override

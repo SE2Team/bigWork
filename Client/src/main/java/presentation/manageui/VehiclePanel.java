@@ -5,15 +5,8 @@ package presentation.manageui;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Vector;
+import java.awt.event.*;
 
 public class VehiclePanel extends JPanel {
 
@@ -101,8 +94,7 @@ public class VehiclePanel extends JPanel {
 		search.setBounds(x + 4 * addx + 50, y, width, height);
 
 		String[] column = { "车辆代号", "车牌号", "购买时间", "服役时间" };
-		String[] s1 = { "025000000", "苏A 00000", "2008-8-8", "3" };
-		String row[][] = { s1 };
+		String row[][] = {};
 		tableModel = new DefaultTableModel(row, column);
 		vehicleTable = new JTable(tableModel);
 		vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选

@@ -1,5 +1,7 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
+import po.OperationLogPO;
 import po.TransferReceivePO;
 import vo.ListVO;
 import vo.TransferReceiveVO;
@@ -25,6 +27,8 @@ public class TransArrive extends List {
     public boolean save(ListVO listVO) throws RemoteException {
         TransferReceiveVO vo = (TransferReceiveVO) listVO;
         TransferReceivePO po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存中转到达单"));
         return listDataService.save(po);
     }
 }

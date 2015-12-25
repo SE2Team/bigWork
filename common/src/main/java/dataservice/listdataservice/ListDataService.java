@@ -5,7 +5,7 @@ import util.ExistException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Iterator;
+import java.util.ArrayList;
 
 public interface ListDataService extends Remote{
 	/**
@@ -126,7 +126,7 @@ public interface ListDataService extends Remote{
       * @return
       * @throws RemoteException
       */
-     Iterator<ListPO> checkList() throws RemoteException;
+     ArrayList<ListPO> checkList() throws RemoteException;
 
     /**
      * 获取最近的单据的审批情况
@@ -135,5 +135,5 @@ public interface ListDataService extends Remote{
      * @return
      * @throws RemoteException 
      */
-    Iterator<ListPO> getRecent(String start, String end) throws RemoteException;
+    ArrayList<ListPO> getRecent(String start, String end) throws RemoteException;
 }

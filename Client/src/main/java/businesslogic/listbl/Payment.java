@@ -1,5 +1,7 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
+import po.OperationLogPO;
 import po.PaymentPO;
 import vo.ListVO;
 import vo.PaymentVO;
@@ -27,6 +29,9 @@ public class Payment extends List {
         vo = (PaymentVO) listVO;
 
         PaymentPO po = VO2PO.convert(vo);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存付款单"));
         return listDataService.save(po);
 
     }

@@ -8,6 +8,7 @@ import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.ReceiptVO;
 
@@ -16,9 +17,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ReceiptPanel extends JPanel {
 	protected int x = 100, y = 70, width = 200, height = 30, addx = 160,
@@ -28,18 +33,22 @@ public class ReceiptPanel extends JPanel {
 	protected JLabel CourierReceipt, receiptDate, receiptMoney, receiptCourier,
 			orderNum;
 	// 定义收款日期、金额、快递员的文本框
-	protected JTextField jtf_date, jtf_money, jtf_courier;
+	protected JTextField jtf_date, jtf_money, jtf_courier, jtf_ordernum;
 	// 定义快递单号的文本域
 	protected JTextArea jta_ordernum;
 	// 定义确定，取消按钮
-	protected JButton sure, cancel;
+	protected JButton sure, cancel, jb_add;
 	// 定义字体
 	protected Font font = new Font("宋体", Font.PLAIN, 20);
-	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 16);
+	// 定义错误提示的文字
+	protected JLabel tip1, tip2;
 	// 定义日期选择器
 	protected DateChooser datechooser;
 	// 定义文本框的数组
 	protected JTextField[] receiptJtf;
+	// 定义订单号的数组
+	protected ArrayList<String> ordernumList;
 
 	public ReceiptPanel() {
 		this.setLayout(null);
@@ -73,6 +82,7 @@ public class ReceiptPanel extends JPanel {
 		jtf_money = new JTextField();
 		jtf_money.setFont(font2);
 		jtf_money.setBounds(x + addx, y + addy, width, height);
+		jtf_money.addFocusListener(new TextFocus());
 
 		receiptCourier = new JLabel("收款快递员", JLabel.CENTER);
 		receiptCourier.setFont(font);
@@ -86,14 +96,32 @@ public class ReceiptPanel extends JPanel {
 		orderNum.setFont(font);
 		orderNum.setBounds(x, y + 3 * addy, width, height);
 
+		ordernumList = new ArrayList<String>();
+
+		jtf_ordernum = new JTextField();
+		jtf_ordernum.setFont(font2);
+		jtf_ordernum.setBounds(x + addx, y + 3 * addy, width - 30, height);
+		jtf_ordernum.addFocusListener(new TextFocus());
+
+		jb_add = new JButton(new ImageIcon("images/add.jpg"));
+		jb_add.setFont(font2);
+		jb_add.setBounds(x + addx + width - 30, y + 3 * addy, 30, height);
+		jb_add.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				performAdd();
+			}
+		});
+
 		jta_ordernum = new JTextArea();
 		jta_ordernum.setFont(font2);
+		jta_ordernum.setEditable(false);
 		JScrollPane jsp = new JScrollPane(jta_ordernum);
-		jsp.setBounds(x + addx, y + 3 * addy - 30, width, 4 * height);
+		jsp.setBounds(x + addx, y + 3 * addy + height, width, 3 * height);
 
 		sure = new JButton("确定");
 		sure.setFont(font);
-		sure.setBounds(x + 80, 430, 80, height);
+		sure.setBounds(x + 80, 450, 80, height);
 		sure.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -106,7 +134,7 @@ public class ReceiptPanel extends JPanel {
 
 		cancel = new JButton("取消");
 		cancel.setFont(font);
-		cancel.setBounds(x + addx + 80, 430, 80, height);
+		cancel.setBounds(x + addx + 100, 450, 80, height);
 		cancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -124,26 +152,70 @@ public class ReceiptPanel extends JPanel {
 		this.add(receiptCourier);
 		this.add(jtf_courier);
 		this.add(orderNum);
+		this.add(jtf_ordernum);
+		this.add(jb_add);
 		this.add(jsp);
 		this.add(sure);
 		this.add(cancel);
 	}
 
-	protected void performSure(){
-		if(isAllEntered.isEntered(receiptJtf)){
+	/**
+	 * 添加订单号
+	 */
+	protected void performAdd() {
+		boolean flag = NumExceptioin.isOrderValid(jtf_ordernum)
+				&& NumExceptioin.isInt(jtf_ordernum)
+				&& !"".equalsIgnoreCase(jtf_ordernum.getText().trim())
+				&& !isExist(jtf_ordernum.getText().trim());
+		if (flag) {
+			jta_ordernum.append(jtf_ordernum.getText().trim() + "\n");
+			jtf_ordernum.setText("");
+		} else if (isExist(jtf_ordernum.getText().trim())) {
+			JLabel tip = new JLabel("该订单号已存在");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+
+	}
+
+	/**
+	 * 判断订单号是否已存在
+	 */
+	protected boolean isExist(String num) {
+
+		for (String list : ordernumList) {
+			System.out.println(list);
+			if (num.equals(list)) {
+				return true;
+			}
+		}
+		if (NumExceptioin.isOrderValid(jtf_ordernum)
+				&& NumExceptioin.isInt(jtf_ordernum)
+				&& !"".equalsIgnoreCase(jtf_ordernum.getText().trim())) {
+			ordernumList.add(num);
+		}
+		return false;
+	}
+
+	/**
+	 * 确认按钮的action
+	 */
+	protected void performSure() {
+		boolean isOk = NumExceptioin.isDouble(jtf_money)
+				&& NumExceptioin.isOrderValid(jtf_ordernum);
+		if (isOk && isAllEntered.isEntered(receiptJtf)) {
 			ReceiptVO receipt_vo = new ReceiptVO(jtf_date.getText(),
 					jtf_money.getText(), jtf_courier.getText(),
-					jta_ordernum.getText(), false);
+					ordernumList, false);
 			try {
 				ListblService bl = new ListController();
 				try {
 					bl.save(receipt_vo);
 				} catch (ExistException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 				JLabel tip = new JLabel("提示：网络异常");
 				tip.setFont(font2);
 				JOptionPane.showMessageDialog(null, tip);
@@ -152,12 +224,113 @@ public class ReceiptPanel extends JPanel {
 			JLabel tip = new JLabel("提示：保存成功");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
-		}else{
+		} else if ((!isOk) && isAllEntered.isEntered(receiptJtf)) {
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (isOk && !isAllEntered.isEntered(receiptJtf)) {
 			JLabel tip = new JLabel("提示：仍有信息未输入");
 			tip.setFont(font2);
 			JOptionPane.showMessageDialog(null, tip);
+		} else if (!isOk && !isAllEntered.isEntered(receiptJtf)) {
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
 		}
-		
+
 	}
 
+	// 错误提示信息是否已经被添加
+	protected boolean isMoneyAdd = false;
+	protected boolean isOrdernumAdd = false;
+
+	/**
+	 * 监听焦点
+	 * 
+	 * @author Administrator
+	 *
+	 */
+
+	class TextFocus implements FocusListener {
+
+		public void focusGained(FocusEvent arg0) {
+			// TODO Auto-generated method stub
+			String[] o = new String[2];
+			Iterator<String> itr;
+			ArrayList<String> list = new ArrayList<String>();
+			list.iterator();
+			itr = list.iterator();
+			while (itr.hasNext()) {
+				itr.next();
+			}
+
+		}
+
+		public void focusLost(FocusEvent e) {
+			JTextField temp = (JTextField) e.getSource();
+			if (temp == jtf_money) {
+				if (!NumExceptioin.isDouble(jtf_money)) {
+					isMoneyAdd = true;
+					if (tip1 == null) {
+						tip1 = new JLabel("请输入数据");
+						tip1.setBounds(x + addx, y + addy + height, width,
+								height);
+						tip1.setFont(font2);
+						tip1.setForeground(Color.RED);
+						addTip(tip1);
+					}
+				} else {
+					if (isMoneyAdd
+							&& !"".equalsIgnoreCase(jtf_money.getText().trim())) {
+						isMoneyAdd = false;
+						removeTip(tip1);
+						tip1 = null;
+					}
+				}
+			}
+			if (temp == jtf_ordernum) {
+				if (!NumExceptioin.isOrderValid(jtf_ordernum)) {
+					isOrdernumAdd = true;
+					if (tip2 == null) {
+						tip2 = new JLabel("订单号为10位0~9的整数");
+						tip2.setBounds(x + addx + width, y + 3 * addy, width,
+								height);
+						tip2.setFont(font2);
+						tip2.setForeground(Color.RED);
+						addTip(tip2);
+					}
+				} else {
+					if (isOrdernumAdd
+							&& !"".equalsIgnoreCase(jtf_ordernum.getText()
+									.trim())) {
+						isOrdernumAdd = false;
+						removeTip(tip2);
+						tip2 = null;
+					}
+
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * 添加错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void addTip(JLabel tip) {
+		this.add(tip);
+		this.repaint();
+	}
+
+	/**
+	 * 移除错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void removeTip(JLabel tip) {
+		this.remove(tip);
+		this.repaint();
+	}
 }

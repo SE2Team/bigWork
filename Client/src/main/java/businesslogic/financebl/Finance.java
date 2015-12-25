@@ -7,11 +7,10 @@ import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
 import dataservice.inquirydataservice.InquiryDataService;
-import po.*;
+import po.AccountPO;
+import po.OperationLogPO;
 import util.ExistException;
-import vo.AccountVO;
-import vo.GatheringVO;
-import vo.PaymentVO;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -196,56 +195,54 @@ public class Finance {
     }
 
     /**
-     * @param po
+     * @param vo
      * @return
      * @throws RemoteException
      */
-    boolean initial(WorkerPO po) throws RemoteException{
+    boolean initial(WorkerVO vo) throws RemoteException{
 
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：机构信息"));
-        return finance.initial(po);
+        return finance.initial(VO2PO.convert(vo));
     }
 
     /**
-     * @param po
+     * @param vo
      * @return
      * @throws RemoteException
      */
-    boolean initial(VehiclePO po) throws RemoteException{
+    boolean initial(VehicleVO vo) throws RemoteException{
 
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：车辆信息"));
-        return finance.initial(po);
+        return finance.initial(VO2PO.convert(vo));
     }
 
     /**
      *
      *
-     * @param po
+     * @param vo
      * @return
      */
-    boolean initial(StockPO po) throws RemoteException{
+    boolean initial(StockVO vo) throws RemoteException{
 
 
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：库存信息"));
-        return finance.initial(po);
+        return finance.initial(VO2PO.convert(vo));
 
     }
 
     /**
-     * @param po
+     * @param vo
      * @return
      * @throws RemoteException
      */
-    boolean initial(AccountPO po) throws RemoteException{
-
-
+    boolean initial(AccountVO vo) throws RemoteException{
 
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：账户信息"));
-        return finance.initial(po);
+        return finance.initial(VO2PO.convert(vo));
 
     }
 }

@@ -30,8 +30,8 @@ public class Test {
 			ArrayList<String> list=new ArrayList<>();
 			list.add("123456");
 			list.add("1234560");
-			listData.save(new ReceiptPO("333","4444","5555",list.iterator(),true));
-			System.out.println("lkdl");
+			listData.save(new ReceiptPO("333","4444","5555",list,true));
+
  			//
 //			Iterator<Integer> list=commodityData.check("2015-10-01", "2015-10-30");
 //			while (list.hasNext()){

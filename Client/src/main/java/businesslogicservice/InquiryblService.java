@@ -13,4 +13,6 @@ public interface InquiryblService {
     String checkForm(String type) throws RemoteException;
 
     LogisticsVO checkLogistics(String num) throws RemoteException;
+
+
 }

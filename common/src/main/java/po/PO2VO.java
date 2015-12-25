@@ -117,7 +117,7 @@ public class PO2VO {
     }
 
     public static WorkerVO convert(WorkerPO po){
-        return new WorkerVO(po.getName(),po.getIdNum(),po.getPosition(),po.getOrganization(),po.getUserId());
+        return new WorkerVO(po.getName(),po.getIdNum(),po.getPosition(),po.getOrganization(),po.getUserId(),po.getSex());
     }
 
     public static VehicleVO convert(VehiclePO po){

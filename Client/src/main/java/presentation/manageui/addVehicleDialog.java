@@ -19,17 +19,29 @@ import javax.swing.*;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import presentation.financeui.FinanceInitialPanel;
+import businesslogic.listbl.ListController;
 import businesslogic.managebl.ManageController;
+import businesslogicservice.ListblService;
 import businesslogicservice.ManageblService;
 import util.ExistException;
 import vo.VehicleVO;
 
 public class addVehicleDialog extends JDialog {
 	private VehiclePanel parent;
+	private FinanceInitialPanel parent2;
 
 	public addVehicleDialog(VehiclePanel parent) {
 		this.parent = parent;
-		this.setContentPane(new addVehiclePanel());
+		this.setContentPane(new addVehiclePanel(parent));
+		this.setSize(400, 400);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+	}
+
+	public addVehicleDialog(FinanceInitialPanel parent) {
+		this.parent2 = parent;
+		this.setContentPane(new addVehiclePanel(parent2));
 		this.setSize(400, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -53,7 +65,7 @@ public class addVehicleDialog extends JDialog {
 	private JButton sure, cancel;
 
 	// 定义错误提示信息的label
-	private JLabel tip1, tip2;
+	private JLabel tip1, tip2,tip3;
 
 	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
@@ -66,7 +78,7 @@ public class addVehicleDialog extends JDialog {
 
 	class addVehiclePanel extends JPanel {
 
-		addVehiclePanel() {
+		addVehiclePanel(final JPanel jp) {
 			this.setLayout(null);
 
 			addInfo = new JLabel("添加车辆信息", JLabel.CENTER);
@@ -118,7 +130,8 @@ public class addVehicleDialog extends JDialog {
 			jtf_useTime = new JTextField();
 			jtf_useTime.setFont(font2);
 			jtf_useTime.setBounds(x + addx, y + 3 * addy, jtf_width, height);
-
+			jtf_useTime.addFocusListener(new TextFocus());
+			
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 4 * addy + 10, 80, height);
@@ -131,17 +144,17 @@ public class addVehicleDialog extends JDialog {
 							jtf_licensePlate, jtf_useTime };
 					if (isOk && isAllEntered.isEntered(vehicleJtf)) {
 						VehicleVO vehicle_vo = new VehicleVO(jtf_vehicleNum
-								.getText(), jtf_licensePlate.getText(), jtf_buyDate
-								.getText(), jtf_useTime.getText());
+								.getText(), jtf_licensePlate.getText(),
+								jtf_buyDate.getText(), jtf_useTime.getText());
 
-						 ManageblService bl;
+						ManageblService bl;
 						try {
-							bl = new ManageController(); 
+							bl = new ManageController();
 							try {
 								bl.addVehicle(vehicle_vo);
 							} catch (ExistException e) {
 								// TODO Auto-generated catch block
-								JLabel tip = new JLabel("提示：该司机信息已存在");
+								JLabel tip = new JLabel("提示：该车辆信息已存在");
 								tip.setFont(font2);
 								JOptionPane.showMessageDialog(null, tip);
 								return;
@@ -153,29 +166,34 @@ public class addVehicleDialog extends JDialog {
 							JOptionPane.showMessageDialog(null, tip);
 							return;
 						}
-				
+
 						rowContent = new String[] { jtf_vehicleNum.getText(),
-								jtf_licensePlate.getText(), jtf_buyDate.getText(),
-								jtf_useTime.getText() };
-						parent.addAfterConfirm(rowContent);
-						
+								jtf_licensePlate.getText(),
+								jtf_buyDate.getText(), jtf_useTime.getText() };
+						if (jp == parent) {
+							parent.addAfterConfirm(rowContent);
+						}
+						if (jp == parent2) {
+							parent2.addVehInfo(rowContent);
+						}
+
 						dispose();
 						JLabel tip = new JLabel("提示：添加成功");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if((!isOk)&&isAllEntered.isEntered(vehicleJtf)){
+					} else if ((!isOk) && isAllEntered.isEntered(vehicleJtf)) {
 						JLabel tip = new JLabel("提示：请输入正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if(isOk&&!isAllEntered.isEntered(vehicleJtf)){
+					} else if (isOk && !isAllEntered.isEntered(vehicleJtf)) {
 						JLabel tip = new JLabel("提示：仍有信息未输入");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if(!isOk&&!isAllEntered.isEntered(vehicleJtf)){
+					} else if (!isOk && !isAllEntered.isEntered(vehicleJtf)) {
 						JLabel tip = new JLabel("请输入所有正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}				
+					}
 				}
 			});
 
@@ -208,7 +226,8 @@ public class addVehicleDialog extends JDialog {
 	// 错误提示信息是否已经被添加
 	boolean isVehicleNumAdd = false;
 	boolean isLicenseAdd = false;
-
+	boolean isUsetimeAdd = false;
+	
 	/**
 	 * 监听焦点
 	 * 
@@ -227,11 +246,11 @@ public class addVehicleDialog extends JDialog {
 			JTextField temp = (JTextField) e.getSource();
 
 			if (temp == jtf_vehicleNum) {
-				// boolean isAdd=false;
-				if (!NumExceptioin.isVehicleValid(jtf_vehicleNum)) {
+				if ((!NumExceptioin.isVehicleValid(jtf_vehicleNum))
+						|| (!NumExceptioin.isInt(jtf_vehicleNum))) {
 					isVehicleNumAdd = true;
 					if (tip1 == null) {
-						tip1 = new JLabel("车辆代号应为9位", JLabel.CENTER);
+						tip1 = new JLabel("车辆代号为9位0~9整数", JLabel.CENTER);
 						tip1.setBounds(x + addx, y + height, jtf_width, height);
 						tip1.setFont(font2);
 						tip1.setForeground(Color.RED);
@@ -272,7 +291,27 @@ public class addVehicleDialog extends JDialog {
 					}
 				}
 			}
+			if(temp==jtf_useTime){
+				if (!NumExceptioin.isInt(jtf_useTime)) {
+					isUsetimeAdd = true;
+					if (tip3 == null) {
+						tip3 = new JLabel("请输入整数", JLabel.CENTER);
+						tip3.setBounds(x + addx, y + 3 * addy+height, jtf_width, height);
+						tip3.setFont(font2);
+						tip3.setForeground(Color.RED);
+						addTip(tip3);
+					}
 
+				} else {
+					if (isUsetimeAdd
+							&& !"".equalsIgnoreCase(jtf_useTime.getText()
+									.trim())) {
+						isUsetimeAdd = false;
+						removeTip(tip3);
+						tip3 = null;
+					}
+				}
+			}
 		}
 	}
 

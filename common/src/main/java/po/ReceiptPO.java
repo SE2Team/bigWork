@@ -2,23 +2,21 @@ package po;
 
 import util.ListType;
 
-import java.io.Serializable;
-import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class ReceiptPO extends ListPO implements Serializable{
-	private static final long serialVersionUID = 1L;//序列化编号
+public class ReceiptPO extends ListPO{
 	//收款日期、收款金额、收款快递员、对应的所有快递订单条形码号
 	
 	private String receiptDate;
 	private String receiptMoney;
 	private String receiptCourier;
-	private Iterator<String> orderNum;
+	private ArrayList<String> orderNum;
 
-	public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier,
-                     Iterator<String> orderNum,boolean isCheck) {
+	public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier,ArrayList<String> orderNum,
+					 boolean isCheck) {
 		super(isCheck);
 		this.receiptDate = receiptDate;
 		this.receiptMoney = receiptMoney;
@@ -79,15 +77,15 @@ public class ReceiptPO extends ListPO implements Serializable{
 	 * 对应的所有快递订单条形码号
 	 * @param orderNum
 	 */
-	public void setOrderNum(Iterator<String> orderNum){
+	public void setOrderNum(ArrayList<String> orderNum){
 		this.orderNum=orderNum;
 	}
-	
+
 	/**
 	 * 对应的所有快递订单条形码号
 	 * @return
 	 */
-	public Iterator<String> getOrderNum(){
+	public ArrayList<String> getOrderNum(){
 		return orderNum;
 	}
 }

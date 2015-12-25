@@ -14,7 +14,7 @@ import java.util.Date;
 public class Helper {
 
 
-    private static UserType type;
+    private static UserType type=UserType.ADMIN;
     /**
      * Gets time.
      *

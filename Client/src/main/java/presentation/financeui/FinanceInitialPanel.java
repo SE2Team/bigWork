@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,8 +15,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
+import presentation.manageui.addEmployeeInfoDialog;
 import presentation.manageui.addInstituInfoDialog;
+import presentation.manageui.addVehicleDialog;
 
 public class FinanceInitialPanel extends JPanel {
 	int x = 5, y = 10, width = 70, height = 30;
@@ -32,6 +38,12 @@ public class FinanceInitialPanel extends JPanel {
 	private JPanel a3;// 车辆
 	private JPanel a4;// 库存
 	private JPanel a5;// 账户
+	private DefaultTableModel tableModel1;//机构表格模型
+	private DefaultTableModel tableModel2;//人员表格模型
+	private DefaultTableModel tableModel3;//车辆表格模型
+	private DefaultTableModel tableModel4;//库存表格模型
+	private DefaultTableModel tableModel5;//账户表格模型
+	
 
 	// 当前期初信息
 	private JLabel t2Label;
@@ -157,7 +169,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		JTable Table;
+		final JTable Table;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -174,15 +186,10 @@ public class FinanceInitialPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("a");
 				new addInstituInfoDialog(FinanceInitialPanel.this)
 						.setVisible(true);
 			}
 		});
-
-		deleteButton = new JButton("删除");
-		deleteButton.setFont(font2);
-		deleteButton.setBounds(x + 490, y, width, height);
 
 		yesButton = new JButton("提交");
 		yesButton.setFont(font2);
@@ -192,25 +199,46 @@ public class FinanceInitialPanel extends JPanel {
 		noButton.setFont(font2);
 		noButton.setBounds(x + 440, y + 350, width, height);
 
-		panel.add(subLabel);
-		panel.add(addButton);
-		panel.add(deleteButton);
-		panel.add(yesButton);
-		panel.add(noButton);
-
-		String[] column1 = { "序号", "机构名称", "机构编号" };
-		String[] s1 = { "", "", "" };
+		String[] column1 = { "机构名称", "机构编号" };
+		String[] s1 = {"", "" };
 		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
+		
+		tableModel1 = new DefaultTableModel(row1,column1);
+		Table = new JTable(tableModel1);
 		Table.setFont(font2);
 		Table.setRowHeight(20);
 		jsp = new JScrollPane(Table);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
+		deleteButton = new JButton("删除");
+		deleteButton.setFont(font2);
+		deleteButton.setBounds(x + 490, y, width, height);
+		deleteButton.addActionListener(new ActionListener() {		
+			public void actionPerformed(ActionEvent arg0) {
+				int rowNum = Table.getSelectedRow();
+				if(rowNum!=-1){
+					tableModel1.removeRow(rowNum);
+				}				
+			}
+		});
+		
+		panel.add(subLabel);
+		panel.add(addButton);
+		panel.add(deleteButton);
+		panel.add(yesButton);
+		panel.add(noButton);
 		return panel;
 	}
 
+	/**
+	 * 添加用户输入的机构信息
+	 * @param row
+	 */
+	public void addInsInfo(String[] row){
+		tableModel1.addRow(row);
+	}
+	
 	// 期初建账人员界面
 	public JPanel a2() {
 		int x = 10, y = 0;
@@ -221,7 +249,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		JTable Table;
+		final JTable Table;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -231,14 +259,6 @@ public class FinanceInitialPanel extends JPanel {
 		subLabel.setFont(font1);
 		subLabel.setBounds(x, y, 150, 40);
 
-		addButton = new JButton("添加");
-		addButton.setFont(font2);
-		addButton.setBounds(x + 390, y, width, height);
-
-		deleteButton = new JButton("删除");
-		deleteButton.setFont(font2);
-		deleteButton.setBounds(x + 490, y, width, height);
-
 		yesButton = new JButton("提交");
 		yesButton.setFont(font2);
 		yesButton.setBounds(x + 90, y + 350, width, height);
@@ -247,25 +267,57 @@ public class FinanceInitialPanel extends JPanel {
 		noButton.setFont(font2);
 		noButton.setBounds(x + 440, y + 350, width, height);
 
-		panel.add(subLabel);
-		panel.add(addButton);
-		panel.add(deleteButton);
-		panel.add(yesButton);
-		panel.add(noButton);
+		
 
-		String[] column1 = { "序号", "姓名", "年龄", "职位", "账号" };
-		String[] s1 = { "", "", "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
+		String[] column1 = {"姓名","性别", "年龄","身份证号", "职位", "所属机构","系统用户名" };
+		String row1[][] = {};
+		tableModel2 = new DefaultTableModel(row1,column1);
+		Table = new JTable(tableModel2);
 		Table.setFont(font2);
 		Table.setRowHeight(20);
 		jsp = new JScrollPane(Table);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
+		addButton = new JButton("添加");
+		addButton.setFont(font2);
+		addButton.setBounds(x + 390, y, width, height);
+		addButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new addEmployeeInfoDialog(FinanceInitialPanel.this).setVisible(true);
+			}
+		});
+
+		deleteButton = new JButton("删除");
+		deleteButton.setFont(font2);
+		deleteButton.setBounds(x + 490, y, width, height);
+		deleteButton.addActionListener(new ActionListener() {		
+			public void actionPerformed(ActionEvent arg0) {
+				int rowNum = Table.getSelectedRow();
+				if(rowNum!=-1){
+					tableModel2.removeRow(rowNum);
+				}				
+			}
+		});
+		
+		panel.add(subLabel);
+		panel.add(addButton);
+		panel.add(deleteButton);
+		panel.add(yesButton);
+		panel.add(noButton);
+		
 		return panel;
 	}
 
+	/**
+	 * 添加用户输入的人员信息
+	 * @param row
+	 */
+	public void addEmpInfo(String[] row){
+		tableModel2.addRow(row);
+	}
+	
 	// 期初建账车辆界面
 	public JPanel a3() {
 		int x = 10, y = 0;
@@ -276,7 +328,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		JTable Table;
+		final JTable Table;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -286,13 +338,7 @@ public class FinanceInitialPanel extends JPanel {
 		subLabel.setFont(font1);
 		subLabel.setBounds(x, y, 150, 40);
 
-		addButton = new JButton("添加");
-		addButton.setFont(font2);
-		addButton.setBounds(x + 390, y, width, height);
-
-		deleteButton = new JButton("删除");
-		deleteButton.setFont(font2);
-		deleteButton.setBounds(x + 490, y, width, height);
+		
 
 		yesButton = new JButton("提交");
 		yesButton.setFont(font2);
@@ -302,25 +348,55 @@ public class FinanceInitialPanel extends JPanel {
 		noButton.setFont(font2);
 		noButton.setBounds(x + 440, y + 350, width, height);
 
-		panel.add(subLabel);
-		panel.add(addButton);
-		panel.add(deleteButton);
-		panel.add(yesButton);
-		panel.add(noButton);
-
-		String[] column1 = { "序号", "车辆代号", "车牌号", "服役时间（年）" };
-		String[] s1 = { "", "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
+		String[] column1 = {"车辆代号", "车牌号", "购买时间","服役时间（年）" };
+		String row1[][] = {};
+		tableModel3 = new DefaultTableModel(row1,column1);
+		Table = new JTable(tableModel3);
 		Table.setFont(font2);
 		Table.setRowHeight(20);
 		jsp = new JScrollPane(Table);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
+		addButton = new JButton("添加");
+		addButton.setFont(font2);
+		addButton.setBounds(x + 390, y, width, height);
+		addButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				new addVehicleDialog(FinanceInitialPanel.this).setVisible(true);
+			}
+		});
+
+		deleteButton = new JButton("删除");
+		deleteButton.setFont(font2);
+		deleteButton.setBounds(x + 490, y, width, height);
+		deleteButton.addActionListener(new ActionListener() {		
+			public void actionPerformed(ActionEvent arg0) {
+				int rowNum = Table.getSelectedRow();
+				if(rowNum!=-1){
+					tableModel3.removeRow(rowNum);
+				}				
+			}
+		});
+		
+		panel.add(subLabel);
+		panel.add(addButton);
+		panel.add(deleteButton);
+		panel.add(yesButton);
+		panel.add(noButton);
+		
 		return panel;
 	}
 
+	/**
+	 * 添加用户输入的车辆信息
+	 * @param row
+	 */
+	public void addVehInfo(String[] row){
+		tableModel3.addRow(row);
+	}
+	
 	// 期初建账库存界面
 	public JPanel a4() {
 		int x = 10, y = 0;
@@ -386,7 +462,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		JTable Table;
+		final JTable Table;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -396,14 +472,6 @@ public class FinanceInitialPanel extends JPanel {
 		subLabel.setFont(font1);
 		subLabel.setBounds(x, y, 150, 40);
 
-		addButton = new JButton("添加");
-		addButton.setFont(font2);
-		addButton.setBounds(x + 390, y, width, height);
-
-		deleteButton = new JButton("删除");
-		deleteButton.setFont(font2);
-		deleteButton.setBounds(x + 490, y, width, height);
-
 		yesButton = new JButton("提交");
 		yesButton.setFont(font2);
 		yesButton.setBounds(x + 90, y + 350, width, height);
@@ -412,25 +480,55 @@ public class FinanceInitialPanel extends JPanel {
 		noButton.setFont(font2);
 		noButton.setBounds(x + 440, y + 350, width, height);
 
+		String[] column1 = {"账户名称", "余额" };
+		String row1[][] = {};
+		tableModel5 = new DefaultTableModel(row1,column1);
+		Table = new JTable(tableModel5);
+		Table.setFont(font2);
+		Table.setRowHeight(20);
+		jsp = new JScrollPane(Table);
+		jsp.setBounds(x - 10, y + 50, 650, 280);
+		panel.add(jsp);
+		
+		addButton = new JButton("添加");
+		addButton.setFont(font2);
+		addButton.setBounds(x + 390, y, width, height);
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new addAccountDialog(FinanceInitialPanel.this).setVisible(true);
+			}
+		});
+
+		deleteButton = new JButton("删除");
+		deleteButton.setFont(font2);
+		deleteButton.setBounds(x + 490, y, width, height);
+		deleteButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				int rowNum = Table.getSelectedRow();
+				if(rowNum!=-1){
+					tableModel5.removeRow(rowNum);
+				}
+			}
+		});
+		
 		panel.add(subLabel);
 		panel.add(addButton);
 		panel.add(deleteButton);
 		panel.add(yesButton);
 		panel.add(noButton);
 
-		String[] column1 = { "序号", "账户名称", "余额" };
-		String[] s1 = { "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
-		jsp.setBounds(x - 10, y + 50, 650, 280);
-		panel.add(jsp);
-
 		return panel;
 	}
 
+	/**
+	 * 添加用户输入的账户信息
+	 * @param row
+	 */
+	public void addAccInfo(String[] row){
+		tableModel5.addRow(row);
+	}
+	
 	/**
 	 * 当前期初信息
 	 * 
@@ -454,9 +552,8 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "序号", "机构名称", "机构编号" };
-		String[] s1 = { "", "", "" };
-		String row1[][] = { s1 };
+		String[] column1 = { "机构名称", "机构编号" };
+		String row1[][] = {};
 		Table = new JTable(row1, column1);
 		Table.setFont(font2);
 		Table.setRowHeight(20);

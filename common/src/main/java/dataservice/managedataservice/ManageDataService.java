@@ -8,7 +8,7 @@ import util.ExistException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Iterator;
+import java.util.ArrayList;
 
 public interface ManageDataService extends Remote{
 	
@@ -42,7 +42,7 @@ public interface ManageDataService extends Remote{
       * @return
       * @throws RemoteException
       */
-     Iterator<DriverPO> checkDriver() throws RemoteException;
+     ArrayList<DriverPO> checkDriver() throws RemoteException;
      
      /**
       * 
@@ -74,7 +74,7 @@ public interface ManageDataService extends Remote{
       * @return
       * @throws RemoteException
       */
-     Iterator<VehiclePO> checkVehicle() throws RemoteException;
+     ArrayList<VehiclePO> checkVehicle() throws RemoteException;
      
      /**
       * 
@@ -129,21 +129,16 @@ public interface ManageDataService extends Remote{
      *
      * @return 所有现有人员的列表
      */
-    Iterator<WorkerPO> checkWorker() throws RemoteException;
+    ArrayList<WorkerPO> checkWorker() throws RemoteException;
 
     /**
      * 查找人员
      * @param name 人员名字
      * @return 符合条件的人员列表（可能只有一个人员的ArrayList）
      */
-    Iterator<WorkerPO> checkWorker(String name) throws RemoteException;
+    ArrayList<WorkerPO> checkWorker(String name) throws RemoteException;
 
-    /**
-     * 编辑人员信息
-     * @param
-     * @return
-     * @throws ExistException 
-     */
+
     boolean editWorker(WorkerPO oldWorkerPO, WorkerPO newWorkerPO) throws RemoteException, ExistException;
 
 

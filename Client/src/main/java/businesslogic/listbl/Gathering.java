@@ -1,6 +1,8 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
 import po.GatheringPO;
+import po.OperationLogPO;
 import vo.GatheringVO;
 import vo.ListVO;
 import vo.VO2PO;
@@ -28,6 +30,9 @@ public class Gathering extends List {
         GatheringVO gatheringVO = (GatheringVO) listVO;
 
         GatheringPO po = VO2PO.convert(gatheringVO);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存收款单（财务）"));
         return listDataService.save(po);
 
     }

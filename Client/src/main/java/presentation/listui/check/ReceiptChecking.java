@@ -23,13 +23,18 @@ public class ReceiptChecking extends ReceiptPanel{
         jtf_date.setText(vo.getReceiptDate());
         jtf_money.setText(vo.getReceiptMoney());
         jtf_courier.setText(vo.getReceiptCourier());
-        jta_ordernum.setText(vo.getOrderNum());
+
+        String str="";
+        for(String num:vo.getOrderNum()){
+            str+=num+"\n";
+        }
+        jta_ordernum.setText(str);
     }
 
     @Override
     protected void performSure() {
         ReceiptVO receipt_vo = new ReceiptVO(jtf_date.getText(), jtf_money.getText(), jtf_courier.getText(),
-                jta_ordernum.getText(),false);
+                ordernumList,false);
         try {
             ListblService bl = new ListController();
             bl.receipt(receipt_vo);

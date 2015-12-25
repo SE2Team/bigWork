@@ -3,12 +3,16 @@
  */
 package presentation.financeui;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,8 +21,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
+import vo.GatheringVO;
 
 public class addSettleDialog extends JDialog {
 
@@ -33,26 +41,28 @@ public class addSettleDialog extends JDialog {
 		this.setResizable(false);
 	}
 
-	class addSettlePanel extends JPanel {
-		private int x = 20, y = 60, addx = 120, addy = 45, jl_width = 100,
-				jtf_width = 200, height = 25;
+	private int x = 20, y = 50, addx = 120, addy = 50, jl_width = 100,
+			jtf_width = 200, height = 25;
 
-		// 设置所有文字的字体
-		private Font font = new Font("宋体", Font.PLAIN, 20);
-		private Font font2 = new Font("宋体", Font.PLAIN, 18);
-		// 定义添加收款信息，收款日期，收款单位，收款人，收款金额，收款地点的label
-		private JLabel addInfo, gatheringDate, gatheringOrg, payee, amount,
-				place;
-		// 定义对应的文本框
-		private JTextField jtf_date, jtf_org, jtf_payee, jtf_amount, jtf_place;
-		// 定义确定，取消按钮
-		private JButton sure, cancel;
-		// 定义用来存放用户输入信息的数组
-		private String[] rowContent;
-		// 定义文本框的数组
-		private JTextField[] settleJtf;
-		// 定义日期选择器
-		private DateChooser datechooser;
+	// 设置所有文字的字体
+	private Font font = new Font("宋体", Font.PLAIN, 20);
+	private Font font2 = new Font("宋体", Font.PLAIN, 18);
+	// 定义添加收款信息，收款日期，收款单位，收款人，收款金额，收款地点的label
+	private JLabel addInfo, gatheringDate, gatheringOrg, payee, amount, place;
+	// 定义对应的文本框
+	private JTextField jtf_date, jtf_org, jtf_payee, jtf_amount, jtf_place;
+	// 定义确定，取消按钮
+	private JButton sure, cancel;
+	// 定义用来存放用户输入信息的数组
+	private String[] rowContent;
+	// 定义文本框的数组
+	private JTextField[] settleJtf;
+	// 定义日期选择器
+	private DateChooser datechooser;
+	// 定义错误提示信息
+	private JLabel tip;
+
+	class addSettlePanel extends JPanel {
 
 		addSettlePanel() {
 			this.setLayout(null);
@@ -102,6 +112,7 @@ public class addSettleDialog extends JDialog {
 			jtf_amount = new JTextField();
 			jtf_amount.setFont(font);
 			jtf_amount.setBounds(x + addx, y + 3 * addy, jtf_width, height);
+			jtf_amount.addFocusListener(new TextFocus());
 
 			place = new JLabel("收款地点", JLabel.CENTER);
 			place.setFont(font);
@@ -118,18 +129,42 @@ public class addSettleDialog extends JDialog {
 				public void actionPerformed(ActionEvent arg0) {
 					settleJtf = new JTextField[] { jtf_org, jtf_payee,
 							jtf_amount, jtf_place };
-					if (isAllEntered.isEntered(settleJtf)) {
+					boolean isOk = NumExceptioin.isDouble(jtf_amount);
+					if (isOk && isAllEntered.isEntered(settleJtf)) {
+						GatheringVO vo = new GatheringVO(jtf_date.getText()
+								.trim(), jtf_org.getText().trim(), jtf_payee
+								.getText().trim(), jtf_amount.getText().trim(),
+								jtf_place.getText().trim(), false);
+						FinanceblService bl;
+						try {
+							bl = new FinanceController();
+							bl.gathering(vo);
+						} catch (RemoteException e) {
+							JLabel tip = new JLabel("提示：网络异常");
+							tip.setFont(font2);
+							JOptionPane.showMessageDialog(null, tip);
+							return;
+						}
+						
 						rowContent = new String[] { jtf_date.getText(),
 								jtf_org.getText(), jtf_payee.getText(),
 								jtf_amount.getText(), jtf_place.getText() };
 						parent.addAfterConfirm(rowContent);
-						
+
 						dispose();
 						JLabel tip = new JLabel("提示：添加成功");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else{
+					} else if ((!isOk) && isAllEntered.isEntered(settleJtf)) {
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (isOk && !isAllEntered.isEntered(settleJtf)) {
 						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (!isOk && !isAllEntered.isEntered(settleJtf)) {
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
 					}
@@ -161,5 +196,68 @@ public class addSettleDialog extends JDialog {
 			this.add(sure);
 			this.add(cancel);
 		}
+	}
+
+	// 错误提示信息是否已经被添加
+	boolean isMoneyAdd = false;
+
+	/**
+	 * 焦点监听
+	 * 
+	 * @author Administrator
+	 *
+	 */
+	class TextFocus implements FocusListener {
+
+		public void focusGained(FocusEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		public void focusLost(FocusEvent e) {
+			// TODO Auto-generated method stub
+			JTextField temp = (JTextField) e.getSource();
+			if (temp == jtf_amount) {
+				if (!NumExceptioin.isDouble(jtf_amount)) {
+					isMoneyAdd = true;
+					if (tip == null) {
+						tip = new JLabel("请输入数据", JLabel.CENTER);
+						tip.setBounds(x + addx, y + 3 * addy + height,
+								jtf_width, height);
+						tip.setFont(font2);
+						tip.setForeground(Color.RED);
+						addTip(tip);
+					}
+				} else {
+					if (isMoneyAdd
+							&& !"".equalsIgnoreCase(jtf_amount.getText().trim())) {
+						isMoneyAdd = false;
+						removeTip(tip);
+						tip = null;
+					}
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * 添加错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void addTip(JLabel tip) {
+		this.add(tip);
+		this.repaint();
+	}
+
+	/**
+	 * 移除错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void removeTip(JLabel tip) {
+		this.remove(tip);
+		this.repaint();
 	}
 }

@@ -106,11 +106,15 @@ public class ListController implements ListblService {
      * @throws RemoteException
      */
     public boolean save(ListVO vo) throws ExistException, RemoteException {
-        list.save(vo);
-        return true;
+
+        return list.save(vo);
     }
 
     public Iterator<ListVO> getRecent(String date) throws RemoteException {
         return list.getRecent(date);
+    }
+
+    public boolean save2File(ListVO vo) throws RemoteException {
+        return false;
     }
 }

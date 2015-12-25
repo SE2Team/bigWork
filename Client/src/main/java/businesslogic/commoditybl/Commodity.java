@@ -112,7 +112,7 @@ public class Commodity {
      * @return stock vo
      */
     public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
-        Iterator<Integer> itr = commodity.check(startDate, endDate);
+        Iterator<Integer> itr = commodity.check(startDate, endDate).iterator();
 
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"查看库存"));
 

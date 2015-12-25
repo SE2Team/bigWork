@@ -1,6 +1,8 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
 import po.AddresseeInformationPO;
+import po.OperationLogPO;
 import vo.AddresseeInformationVO;
 import vo.ListVO;
 import vo.VO2PO;
@@ -35,6 +37,9 @@ public class AddresseeInfomation extends List {
         }
 
         AddresseeInformationPO po = VO2PO.convert(vo);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存接收单"));
 
         return listDataService.save(po);
     }

@@ -1,5 +1,7 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
+import po.OperationLogPO;
 import po.TransferPO;
 import vo.ListVO;
 import vo.TransferVO;
@@ -26,7 +28,8 @@ public class TransInfo extends List {
         TransferVO vo = null;
         vo = (TransferVO) listVO;
         TransferPO po = VO2PO.convert(vo);
-
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存中转信息单"));
         return listDataService.save(po);
     }
 }

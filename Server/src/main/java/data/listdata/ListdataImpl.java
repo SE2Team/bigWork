@@ -163,7 +163,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	        return true;
 	    }
 
-	public Iterator<ListPO> checkList() throws RemoteException {
+	public ArrayList<ListPO> checkList() throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("list");
 		ArrayList<String> list=common.readData();
@@ -206,7 +206,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 							list3.add(str[j]);
 						}
 
-            			listPO=new ReceiptPO(str[2], str[3],str[4],list3.iterator() ,isCheck);
+            			listPO=new ReceiptPO(str[2], str[3],str[4],list3 ,isCheck);
             			break;
             case "RECEIVEINFO":
                 		listPO=new ReceivePO(str[2], str[3], str[4], str[5], isCheck);
@@ -235,8 +235,9 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 			
 			list2.add(listPO);
 		}
-		
-		return list2.iterator();
+
+		System.out.println(list2==null);
+		return list2;
 	}
 
 	/**
@@ -339,9 +340,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	
 	private String receiptPOToString(ReceiptPO po){
 		String s=po.getType()+";"+po.getIsCheck()+";"+po.getReceiptDate()+";"+po.getReceiptMoney()+";"+po.getReceiptCourier()+";";
-		Iterator<String> itr=po.getOrderNum();
-		while(itr.hasNext()){
-			s=s+";"+itr.next();
+		for (String s1 : po.getOrderNum()) {
+			s = s + ";" + s1;
 		}
 		return s;
 	}
@@ -419,11 +419,11 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	}
 
 	@Override
-	public Iterator<ListPO> getRecent(String start, String end) throws RemoteException {
+	public ArrayList<ListPO> getRecent(String start, String end) throws RemoteException {
 		// TODO Auto-generated method stub
 		int startDate=this.DateToInt(start);
 		int endDate1=this.DateToInt(end);
-		Iterator<ListPO> list=this.checkList();
+		Iterator<ListPO> list=this.checkList().iterator();
 		ArrayList<ListPO> list2=new ArrayList<>();
 		while(list.hasNext()){
 			int date=0;
@@ -473,7 +473,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 				list2.add(listPO);
 			}
 		}
-		return list2.iterator();
+		return list2;
 	}
 	
 }

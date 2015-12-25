@@ -1,6 +1,5 @@
 package businesslogicservice;
 
-import po.WorkerPO;
 import util.ExistException;
 import vo.ConstantVO;
 import vo.DriverVO;
@@ -75,18 +74,18 @@ public interface ManageblService {
     /**
      * 增加人员
      *
-     * @param workerPO 传入工作人员vo
+     * @param workerVO 传入工作人员vo
      * @return
      */
-    boolean addWorker(WorkerPO workerPO) throws RemoteException, ExistException;
+    boolean addWorker(WorkerVO workerVO) throws RemoteException, ExistException;
 
     /**
      * 删除人员
      *
-     * @param workerPO 传入工作人员vo
+     * @param workerVO 传入工作人员vo
      * @return
      */
-    boolean delWorker(WorkerPO workerPO) throws RemoteException, ExistException;
+    boolean delWorker(WorkerVO workerVO) throws RemoteException, ExistException;
 
     /**
      * @return 所有现有人员的列表
@@ -104,12 +103,13 @@ public interface ManageblService {
     /**
      * 编辑人员信息
      *
-     * @param oldWorkerPO 传入旧的工作人员vo
-     * @param newWorkerPO 传入新的工作人员vo
+     * @param oldWorkerVO 传入旧的工作人员vo
+     * @param newWorkerVO 传入新的工作人员vo
      * @return
      */
-    boolean editWorker(WorkerPO oldWorkerPO, WorkerPO newWorkerPO) throws RemoteException, ExistException;
+    boolean editWorker(WorkerVO oldWorkerVO, WorkerVO newWorkerVO) throws RemoteException, ExistException;
 
     Iterator<DriverVO> checkDriver() throws RemoteException;
     Iterator<VehicleVO> checkVehicle() throws RemoteException;
+
 }

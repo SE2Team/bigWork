@@ -1,5 +1,7 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
+import po.OperationLogPO;
 import po.ReceiptPO;
 import vo.ListVO;
 import vo.ReceiptVO;
@@ -27,6 +29,9 @@ public class Receipt extends List {
         ReceiptVO vo = null;
         vo = (ReceiptVO) listVO;
         ReceiptPO po = VO2PO.convert(vo);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存收款单（快递员）"));
         return listDataService.save(po);
 
     }

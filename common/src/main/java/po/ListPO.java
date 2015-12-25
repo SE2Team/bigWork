@@ -30,11 +30,13 @@ public class ListPO implements Serializable {
      * id是自动根据日期生成的
      */
     public ListPO() {
+        super();
         SimpleDateFormat df = new SimpleDateFormat("MMddHHmmss");//设置日期格式
         this.id = df.format(new Date());
     }
 
     public ListPO(boolean isCheck) {
+        super();
         this.isCheck = isCheck;
         this.type = type;
     }

@@ -1,14 +1,8 @@
 package businesslogic.financebl;
 
 import businesslogicservice.FinanceblService;
-import po.AccountPO;
-import po.StockPO;
-import po.VehiclePO;
-import po.WorkerPO;
 import util.ExistException;
-import vo.AccountVO;
-import vo.GatheringVO;
-import vo.PaymentVO;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -23,6 +17,7 @@ public class FinanceController implements FinanceblService {
      * The Finance.
      */
     private Finance finance;
+
 
     /**
      * Instantiates a new Finance controller.
@@ -50,22 +45,22 @@ public class FinanceController implements FinanceblService {
         return finance.generateForm(startDate, endDate);
     }
 
-    public boolean initial(WorkerPO po) throws RemoteException {
-        return finance.initial(po);
+    public boolean initial(WorkerVO vo) throws RemoteException {
+        return finance.initial(vo);
     }
 
-    public boolean initial(VehiclePO po) throws RemoteException {
-        return finance.initial(po);
-
-    }
-
-    public boolean initial(StockPO po) throws RemoteException {
-        return finance.initial(po);
+    public boolean initial(VehicleVO vo) throws RemoteException {
+        return finance.initial(vo);
 
     }
 
-    public boolean initial(AccountPO po) throws RemoteException {
-        return finance.initial(po);
+    public boolean initial(StockVO vo) throws RemoteException {
+        return finance.initial(vo);
+
+    }
+
+    public boolean initial(AccountVO vo) throws RemoteException {
+        return finance.initial(vo);
 
     }
 

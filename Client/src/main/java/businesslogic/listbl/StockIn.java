@@ -1,6 +1,8 @@
 package businesslogic.listbl;
 
 import businesslogic.commoditybl.CommodityController;
+import businesslogic.utilitybl.Helper;
+import po.OperationLogPO;
 import po.StockInPO;
 import vo.ListVO;
 import vo.StockInVO;
@@ -28,6 +30,9 @@ public class StockIn extends List {
         vo = (StockInVO) listVO;
         new CommodityController().stockIn(vo);
         StockInPO po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存入库单"));
+
         return listDataService.save(po);
     }
 }

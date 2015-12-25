@@ -4,7 +4,7 @@ import po.StockPO;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Iterator;
+import java.util.ArrayList;
 
 public interface CommodityDataService extends Remote {
     void update(StockPO PO) throws RemoteException;
@@ -26,6 +26,6 @@ public interface CommodityDataService extends Remote {
      * @return 出库数量/入库数量      库存数量
      * @throws RemoteException
      */
-    Iterator<Integer> check(String start, String end) throws RemoteException;
+    ArrayList<Integer> check(String start, String end) throws RemoteException;
 
 }

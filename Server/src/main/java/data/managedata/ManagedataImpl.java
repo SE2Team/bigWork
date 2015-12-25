@@ -11,7 +11,6 @@ import util.ExistException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -173,7 +172,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	}
 
 	@Override
-	public Iterator<WorkerPO> checkWorker() throws RemoteException{
+	public ArrayList<WorkerPO> checkWorker() throws RemoteException{
 		Common common=new Common("worker");
 		ArrayList<String> list=common.readData();
 		ArrayList<WorkerPO> list2=new ArrayList<WorkerPO>();
@@ -181,11 +180,11 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			String[] str=list.get(j).split(";");
 			list2.add(this.stringToWorkerPO(str));
 		}
-		return list2.iterator();
+		return list2;
 	}
 
 	@Override
-	public Iterator<WorkerPO> checkWorker(String name) throws RemoteException{
+	public ArrayList<WorkerPO> checkWorker(String name) throws RemoteException{
 		// TODO Auto-generated method stub
 		Common common=new Common("worker");
 		ArrayList<String> list=common.readData();
@@ -197,7 +196,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			}
 		}
 		
-		return list2.iterator();
+		return list2;
 	}
 
 	@Override
@@ -250,7 +249,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return new ConstantPO(str[0], str[1], str[2], str[3]);
 	}
 
-	public Iterator<DriverPO> checkDriver() throws RemoteException {
+	public ArrayList<DriverPO> checkDriver() throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("driver");
 		ArrayList<String> list=common.readData();
@@ -259,11 +258,11 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			String[] str=list.get(j).split(";");
 			list2.add(this.stringToDriverPO(str));
 		}
-		return list2.iterator();
+		return list2;
 	}
 
 	@Override
-	public Iterator<VehiclePO> checkVehicle() throws RemoteException {
+	public ArrayList<VehiclePO> checkVehicle() throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("vehicle");
 		ArrayList<String> list=common.readData();
@@ -272,7 +271,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 			String[] str=list.get(j).split(";");
 			list2.add(this.stringToVehiclePO(str));
 		}
-		return list2.iterator();
+		return list2;
 
 	}
 

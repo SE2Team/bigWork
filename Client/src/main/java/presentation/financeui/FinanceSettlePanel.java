@@ -95,8 +95,7 @@ public class FinanceSettlePanel extends JPanel {
 		add(noButton);
 
 		String[] column = { "收款日期", "收款单位", "收款人", "收款金额", "收款地点" };
-		String[] s1 = { "2015-11-11", "-", "-", "-", "-" };
-		String row[][] = { s1 };
+		String row[][] = {};
 		tableModel = new DefaultTableModel(row,column);
 		settleTable = new JTable(tableModel);
 		settleTable.setFont(font2);

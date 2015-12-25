@@ -135,7 +135,7 @@ public class AddresseeInfoPanel extends JPanel {
 				tip.setFont(font2);
 				JOptionPane.showMessageDialog(null, tip);
 			} catch (ExistException e) {
-				e.printStackTrace();
+				
 			}
 
 			JLabel tip = new JLabel("提示：保存成功");
@@ -177,7 +177,7 @@ public class AddresseeInfoPanel extends JPanel {
 				if (!NumExceptioin.isOrderValid(jtf_receiveNum)) {
 					isReceiveNumAdd = true;
 					if (tip1 == null) {
-						tip1 = new JLabel("收件单号位数应为10位");
+						tip1 = new JLabel("收件单号为10位0~9整数");
 						tip1.setBounds(x + addx, y + 30, width, height);
 						tip1.setFont(font2);
 						tip1.setForeground(Color.RED);

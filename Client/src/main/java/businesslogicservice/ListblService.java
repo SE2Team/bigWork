@@ -131,4 +131,9 @@ public interface ListblService {
      * @throws RemoteException
      */
     Iterator<ListVO> getRecent(String date) throws RemoteException;
+
+    boolean save2File(ListVO vo)throws RemoteException;
+
+    boolean save2File(AddresseeInformationVO vo) throws RemoteException;
+
 }

@@ -14,21 +14,34 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import presentation.financeui.FinanceInitialPanel;
 
 public class addEmployeeInfoDialog extends JDialog {
 
 	private EmpAndInsPanel parent;
+	private FinanceInitialPanel parent2;
 	String saveValue = null;// 选中按钮的String值
 
 	public addEmployeeInfoDialog(EmpAndInsPanel parent) {
 
 		this.parent = parent;
-		this.setContentPane(new addUserInfoPanel());
+		this.setContentPane(new addUserInfoPanel(parent));
+		this.setSize(400, 400);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+	}
+
+	public addEmployeeInfoDialog(FinanceInitialPanel parent) {
+
+		this.parent2 = parent;
+		this.setContentPane(new addUserInfoPanel(parent));
 		this.setSize(400, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -55,11 +68,13 @@ public class addEmployeeInfoDialog extends JDialog {
 	JLabel tip1, tip2, tip3;
 	// 定义用来存放用户输入信息的数组
 	String[] rowContent;
+	// 定义文本框的数组
+	JTextField[] EmpJtf;
 
 	class addUserInfoPanel extends JPanel {
 		RadioButtonListener radioButtonListener = new RadioButtonListener();
 
-		addUserInfoPanel() {
+		addUserInfoPanel(final JPanel jp) {
 			this.setLayout(null);
 
 			addInfo = new JLabel("添加人员信息", JLabel.CENTER);
@@ -144,12 +159,44 @@ public class addEmployeeInfoDialog extends JDialog {
 			sure.setBounds(80, y + 5 * addy, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					rowContent = new String[] { jtf_name.getText(), saveValue,
-							jtf_age.getText(), jtf_idNum.getText(),
-							jtf_position.getText(), jtf_institution.getText(),
-							jtf_accountNum.getText() };
-					parent.addEmpInfo(rowContent);
-					dispose();
+					EmpJtf = new JTextField[] { jtf_name, jtf_age, jtf_idNum,
+							jtf_position, jtf_institution, jtf_accountNum };
+					boolean isOk = NumExceptioin
+							.isAccountNumValid(jtf_accountNum)
+							&& NumExceptioin.isIdValid(jtf_idNum);
+					boolean isenter = isAllEntered.isEntered(EmpJtf)
+							&& (jrb_male.isSelected() || jrb_female
+									.isSelected());
+					if (isOk && isenter) {
+						rowContent = new String[] { jtf_name.getText(),
+								saveValue, jtf_age.getText(),
+								jtf_idNum.getText(), jtf_position.getText(),
+								jtf_institution.getText(),
+								jtf_accountNum.getText() };
+						if (jp == parent) {
+							parent.addEmpInfo(rowContent);
+						}
+						if (jp == parent2) {
+							parent2.addEmpInfo(rowContent);
+						}
+						dispose();
+						JLabel tip = new JLabel("提示：保存成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if((!isOk)&&isenter){
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if(isOk&&!isenter){
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}else if(!isOk&&!isenter){
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}
+
 				}
 			});
 

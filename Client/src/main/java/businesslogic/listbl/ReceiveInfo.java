@@ -1,5 +1,7 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
+import po.OperationLogPO;
 import po.ReceivePO;
 import vo.ListVO;
 import vo.ReceiveVO;
@@ -26,7 +28,8 @@ public class ReceiveInfo extends List {
         ReceiveVO vo = null;
         vo = (ReceiveVO) listVO;
         ReceivePO po = VO2PO.convert(vo);
-
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存接收单"));
 
         return listDataService.save(po);
     }

@@ -10,14 +10,24 @@ public class WorkerVO {
 	private String position;
 	private String organization;
 	private String userId;
-	
-	public WorkerVO(String name, String idNum, String position,
-			String organization, String userId){
+	private String sex;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public WorkerVO(String name, String idNum, String position,
+                    String organization, String userId,String sex){
 		this.name=name;
 		this.idNum=idNum;
 		this.position=position;
 		this.organization=organization;
 		this.userId=userId;
+        this.sex=sex;
 	}
 	
 	public WorkerVO(){}

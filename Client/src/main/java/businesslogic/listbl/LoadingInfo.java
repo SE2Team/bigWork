@@ -1,6 +1,8 @@
 package businesslogic.listbl;
 
+import businesslogic.utilitybl.Helper;
 import po.LoadingPO;
+import po.OperationLogPO;
 import vo.ListVO;
 import vo.LoadingVO;
 import vo.VO2PO;
@@ -29,6 +31,9 @@ public class LoadingInfo extends List {
         vo = (LoadingVO) listVO;
 
         LoadingPO po = VO2PO.convert(vo);
+
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+                "保存装车单"));
 
         return listDataService.save(po);
     }

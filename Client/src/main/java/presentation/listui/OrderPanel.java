@@ -59,7 +59,7 @@ public class OrderPanel extends JPanel {
 	protected DeliveryType deliveryType;
 
 	// 定义错误提示的文字
-	protected JLabel tip1, tip2, tip3, tip4, tip5;
+	protected JLabel tip1, tip2, tip3, tip4, tip5, tip6, tip7, tip8;
 
 	// 定义文本框的数组
 	protected JTextField[] OrderJtf, OrderJtf2;
@@ -217,6 +217,7 @@ public class OrderPanel extends JPanel {
 		g_num = new JTextField();
 		g_num.setBounds(x + addx + addx1 + 70, y, go_width, height);
 		g_num.setFont(font3);
+		g_num.addFocusListener(new TextFocus());
 
 		goods_weight = new JLabel("实际重量", JLabel.CENTER);
 		goods_weight.setFont(font2);
@@ -225,6 +226,7 @@ public class OrderPanel extends JPanel {
 		g_weight = new JTextField();
 		g_weight.setBounds(x + addx + 2 * addx1 + 100, y, go_width, height);
 		g_weight.setFont(font3);
+		g_weight.addFocusListener(new TextFocus());
 
 		goods_volume = new JLabel("体积", JLabel.CENTER);
 		goods_volume.setFont(font2);
@@ -233,6 +235,7 @@ public class OrderPanel extends JPanel {
 		g_volume = new JTextField();
 		g_volume.setBounds(x + addx + 3 * addx1 + 100, y, go_width, height);
 		g_volume.setFont(font3);
+		g_volume.addFocusListener(new TextFocus());
 
 		goods.add(goodsInfo);
 		goods.add(goods_name);
@@ -360,7 +363,7 @@ public class OrderPanel extends JPanel {
 		OrderJtf2 = new JTextField[] { s_name, s_address, s_workplace, s_tele,
 				s_phone, r_name, r_address, r_workplace, r_tele, r_phone,
 				g_name, g_num, g_weight, g_volume, o_ordernum };
-		
+
 		button_2 = new JButton("取消");
 		button_2.setFont(font2);
 		button_2.setBounds(x + 2 * addx1 + addx, 0, 70, 25);
@@ -381,13 +384,6 @@ public class OrderPanel extends JPanel {
 		this.add(button);
 	}
 
-	// 错误提示信息是否已经被添加
-	protected boolean isSenderTeleAdd = false;
-	protected boolean isSenderPhoneAdd = false;
-	protected boolean isReceiverTeleAdd = false;
-	protected boolean isReceiverPhoneAdd = false;
-	protected boolean isOrdernumAdd = false;
-
 	protected void performButton1() {
 
 		if (o_type.getSelectedItem().toString().equals("经济快递")) {
@@ -402,7 +398,10 @@ public class OrderPanel extends JPanel {
 				&& NumExceptioin.isPhoneValid(s_phone)
 				&& NumExceptioin.isTeleValid(r_tele)
 				&& NumExceptioin.isPhoneValid(r_phone)
-				&& NumExceptioin.isOrderValid(o_ordernum);
+				&& NumExceptioin.isOrderValid(o_ordernum)
+				&& NumExceptioin.isInt(g_num)
+				&& NumExceptioin.isDouble(g_weight)
+				&& NumExceptioin.isDouble(g_volume);
 		if (isOk && isAllEntered.isEntered(OrderJtf2)) {
 			OrderVO order_vo = new OrderVO(s_name.getText(),
 					s_address.getText(), s_workplace.getText(),
@@ -450,6 +449,16 @@ public class OrderPanel extends JPanel {
 		}
 	}
 
+	// 错误提示信息是否已经被添加
+	protected boolean isSenderTeleAdd = false;
+	protected boolean isSenderPhoneAdd = false;
+	protected boolean isReceiverTeleAdd = false;
+	protected boolean isReceiverPhoneAdd = false;
+	protected boolean isgoodsNumAdd = false;
+	protected boolean isgoodsWeightAdd = false;
+	protected boolean isgoodsVolumeAdd = false;
+	protected boolean isOrdernumAdd = false;
+
 	/**
 	 * 监听焦点
 	 * 
@@ -487,10 +496,11 @@ public class OrderPanel extends JPanel {
 			}
 
 			if (temp == s_phone) {// 判断寄件人手机号输入是否符合规范
-				if (!NumExceptioin.isPhoneValid(s_phone)) {
+				if ((!NumExceptioin.isPhoneValid(s_phone))
+						|| (!NumExceptioin.isInt(s_phone))) {
 					isSenderPhoneAdd = true;
 					if (tip2 == null) {
-						tip2 = new JLabel("手机号位数应为11位");
+						tip2 = new JLabel("手机号应为11位0~9整数");
 						tip2.setBounds(x + addx, y + 4 * addy + height,
 								jtf_width1, height);
 						tip2.setFont(font3);
@@ -533,10 +543,11 @@ public class OrderPanel extends JPanel {
 			}
 
 			if (temp == r_phone) {// 判断收件人手机号输入是否符合规范
-				if (!NumExceptioin.isPhoneValid(r_phone)) {
+				if ((!NumExceptioin.isPhoneValid(r_phone))
+						|| (!NumExceptioin.isInt(r_phone))) {
 					isReceiverPhoneAdd = true;
 					if (tip4 == null) {
-						tip4 = new JLabel("手机号位数应为11位");
+						tip4 = new JLabel("手机号应为11位0~9整数");
 						tip4.setBounds(x + addx, y + 4 * addy + height,
 								jtf_width1, height);
 						tip4.setFont(font3);
@@ -547,28 +558,99 @@ public class OrderPanel extends JPanel {
 				} else {
 					if (isReceiverPhoneAdd
 							&& !"".equalsIgnoreCase(r_phone.getText().trim())) {
+						isReceiverPhoneAdd = false;
 						receiver.remove(tip4);
 						receiver.repaint();
+						tip4 = null;
+					}
+				}
+			}
+			if (temp == g_num) {// 判断货物原件数是否为整数
+				if (!NumExceptioin.isInt(g_num)) {
+					isgoodsNumAdd = true;
+					if (tip5 == null) {
+						tip5 = new JLabel("请输入整数");
+						tip5.setFont(font3);
+						tip5.setBounds(x + addx + addx1 + 60, y + height,
+								jtf_width1, height);
+						tip5.setForeground(Color.RED);
+						goods.add(tip5);
+						goods.repaint();
+					}
+				} else {
+					if (isgoodsNumAdd
+							&& !"".equalsIgnoreCase(g_num.getText().trim())) {
+						isgoodsNumAdd = false;
+						goods.remove(tip5);
+						goods.repaint();
+						tip5 = null;
+					}
+				}
+			}
+			if (temp == g_weight) {// 判断实际重量是否为小数或整数
+				if (!NumExceptioin.isDouble(g_weight)) {
+					isgoodsWeightAdd = true;
+					if (tip6 == null) {
+						tip6 = new JLabel("请输入数据");
+						tip6.setFont(font3);
+						tip6.setBounds(x + addx + 2 * addx1 + 90, y + height,
+								jtf_width1, height);
+						tip6.setForeground(Color.RED);
+						goods.add(tip6);
+						goods.repaint();
+					}
+				} else {
+					if (isgoodsWeightAdd
+							&& !"".equalsIgnoreCase(g_weight.getText().trim())) {
+						isgoodsWeightAdd = false;
+						goods.remove(tip6);
+						goods.repaint();
+						tip6 = null;
+					}
+				}
+			}
+			if (temp == g_volume) {// 判断实际重量是否为小数或整数
+				if (!NumExceptioin.isDouble(g_volume)) {
+					isgoodsVolumeAdd = true;
+					if (tip7 == null) {
+						tip7 = new JLabel("请输入数据");
+						tip7.setFont(font3);
+						tip7.setBounds(x + addx + 3 * addx1 + 90, y + height,
+								jtf_width1, height);
+						tip7.setForeground(Color.RED);
+						goods.add(tip7);
+						goods.repaint();
+					}
+				} else {
+					if (isgoodsVolumeAdd
+							&& !"".equalsIgnoreCase(g_volume.getText().trim())) {
+						isgoodsVolumeAdd = false;
+						goods.remove(tip7);
+						goods.repaint();
+						tip7 = null;
 					}
 				}
 			}
 			if (temp == o_ordernum) {// 判断订单条形码号输入是否符合规范
-				if (!NumExceptioin.isOrderValid(o_ordernum)) {
+				if ((!NumExceptioin.isOrderValid(o_ordernum))
+						) {
 					isOrdernumAdd = true;
-					if (tip5 == null) {
-						tip5 = new JLabel("订单条形码号应为10位");
-						tip5.setBounds(x + 2 * addx + 2 * addx1 + jl_width,
+					if (tip8 == null) {
+						tip8 = new JLabel("订单号为10位0~9整数");
+						tip8.setBounds(x + 2 * addx + 2 * addx1 + jl_width,
 								height, jtf_width1, height);
-						tip5.setFont(font3);
-						tip5.setForeground(Color.red);
-						other.add(tip5);
+						tip8.setFont(font3);
+						tip8.setForeground(Color.red);
+						other.add(tip8);
 						other.repaint();
 					}
 				} else {
 					if (isOrdernumAdd
 							&& !"".equalsIgnoreCase(o_ordernum.getText().trim())) {
-						other.remove(tip5);
+						isOrdernumAdd = false;
+						other.remove(tip8);
 						other.repaint();
+						tip8 = null;
 					}
 				}
 			}

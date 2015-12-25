@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * 
@@ -19,6 +20,7 @@ public class CityStrategyPanel extends JPanel {
 	private JButton addButton;
 	private JScrollPane jsp;
 	private JTable cityTable;
+	private DefaultTableModel tableModel;
 
 	Font font1 = new Font("楷体", Font.PLAIN, 15);
 	Font font2 = new Font("宋体", Font.PLAIN, 15);
@@ -44,11 +46,20 @@ public class CityStrategyPanel extends JPanel {
 		String[] column = { "城市1", "城市2", "距离", "价格（元/公里）" };
 		String[] s1 = { "北京", "上海", "1064.7", "" };
 		String row[][] = { s1 };
-		cityTable = new JTable(row, column);
+		tableModel = new DefaultTableModel(row,column);
+		cityTable = new JTable(tableModel);
 		cityTable.setFont(font1);
 		cityTable.setRowHeight(20);
 		jsp = new JScrollPane(cityTable);
 		jsp.setBounds(0, 0, 650, 400);
 		add(jsp);
+	}
+	
+	/**
+	 * 添加用户输入的城市信息
+	 * @param row
+	 */
+	public void addCityInfo(String[] row){
+		tableModel.addRow(row);
 	}
 }

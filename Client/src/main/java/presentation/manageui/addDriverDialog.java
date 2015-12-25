@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import presentation.listui.AddresseeInfoPanel;
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import util.ExistException;
@@ -64,7 +65,7 @@ public class addDriverDialog extends JDialog {
 	// 定义确定，取消按钮
 	private JButton sure, cancel;
 	// 定义错误提示的label
-	private JLabel tip1, tip2, tip3;
+	private JLabel tip1, tip2, tip3,tip4;
 	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
 	// 定义文本框的数组
@@ -174,7 +175,8 @@ public class addDriverDialog extends JDialog {
 			jtf_licenseTime.setFont(font);
 			jtf_licenseTime
 					.setBounds(x + addx, y + 6 * addy, jtf_width, height);
-
+			jtf_licenseTime.addFocusListener(new TextFocus());
+			
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 7 * addy, 80, height);

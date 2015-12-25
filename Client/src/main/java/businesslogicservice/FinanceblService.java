@@ -1,13 +1,7 @@
 package businesslogicservice;
 
-import po.AccountPO;
-import po.StockPO;
-import po.VehiclePO;
-import po.WorkerPO;
 import util.ExistException;
-import vo.AccountVO;
-import vo.GatheringVO;
-import vo.PaymentVO;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -49,33 +43,33 @@ public interface FinanceblService {
      * @return
      */
     /**
-     * @param po
+     * @param vo
      * @return
      * @throws RemoteException
      */
-    boolean initial(WorkerPO po) throws RemoteException;
+    boolean initial(WorkerVO vo) throws RemoteException;
 
     /**
-     * @param po
+     * @param vo
      * @return
      * @throws RemoteException
      */
-    boolean initial(VehiclePO po) throws RemoteException;
+    boolean initial(VehicleVO vo) throws RemoteException;
 
     /**
      * 设置库存的报警值和上限
      *
-     * @param po
+     * @param vo
      * @return
      */
-    boolean initial(StockPO po) throws RemoteException;
+    boolean initial(StockVO vo) throws RemoteException;
 
     /**
-     * @param po
+     * @param vo
      * @return
      * @throws RemoteException
      */
-    boolean initial(AccountPO po) throws RemoteException;
+    boolean initial(AccountVO vo) throws RemoteException;
 
     /**
      * @param accountVO 传入账单vo

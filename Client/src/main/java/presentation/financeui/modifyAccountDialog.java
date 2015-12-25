@@ -1,16 +1,27 @@
 package presentation.financeui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
+import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
 import presentation.financeui.addAccountDialog.addAccountPanel;
+import util.ExistException;
+import vo.AccountVO;
 
 public class modifyAccountDialog extends JDialog {
 
@@ -29,6 +40,7 @@ public class modifyAccountDialog extends JDialog {
 
 	// 设置所有文字的字体
 	Font font = new Font("宋体", Font.PLAIN, 20);
+	Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义添加账户信息，账户名称，余额的label
 	JLabel addInfo, accountName, balance;
 	// 定义对应的文本框
@@ -37,13 +49,17 @@ public class modifyAccountDialog extends JDialog {
 	JButton sure, cancel;
 	// 定义用来存放用户输入信息的数组
 	String[] rowContent;
+	//错误提示信息
+	JLabel tip1;
+	// 定义文本框的数组
+	JTextField[] accJtf;
 	
 	class modAccountPanel extends JPanel {
 
 		modAccountPanel() {
 			this.setLayout(null);
 
-			addInfo = new JLabel("添加账户信息", JLabel.CENTER);
+			addInfo = new JLabel("修改账户信息", JLabel.CENTER);
 			addInfo.setFont(new Font("楷体", Font.PLAIN, 25));
 			addInfo.setBounds(100, 5, jtf_width, height);
 
@@ -52,7 +68,7 @@ public class modifyAccountDialog extends JDialog {
 			accountName.setBounds(x, y, jl_width, height);
 
 			jtf_accountName = new JTextField();
-			jtf_accountName.setFont(font);
+			jtf_accountName.setFont(font2);
 			jtf_accountName.setBounds(x + addx, y, jtf_width, height);
 
 			balance = new JLabel("余额", JLabel.CENTER);
@@ -60,18 +76,62 @@ public class modifyAccountDialog extends JDialog {
 			balance.setBounds(x, y + addy, jl_width, height);
 
 			jtf_balance = new JTextField();
-			jtf_balance.setFont(font);
+			jtf_balance.setFont(font2);
 			jtf_balance.setBounds(x + addx, y + addy, jtf_width, height);
-
+			jtf_balance.addFocusListener(new TextFocus());
+			
+			final AccountVO oaccount_vo = parent.getVo();
+			
+			
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 2 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {			
 				public void actionPerformed(ActionEvent e) {
-					rowContent = new String[]{jtf_accountName
-							.getText(), jtf_balance.getText()};
-					parent.updateAfterConfirm(rowContent);
-					dispose();
+					accJtf = new JTextField[] { jtf_accountName, jtf_balance };
+					boolean isOk = NumExceptioin.isDouble(jtf_balance);
+					if (isOk && isAllEntered.isEntered(accJtf)){
+						AccountVO naccount_vo = new AccountVO(jtf_accountName
+								.getText(), jtf_balance.getText());
+						FinanceblService bl;
+//						try {
+//							bl = new FinanceController();
+//							try {
+//								bl.EditAccount(oaccount_vo, naccount_vo);
+//							} catch (ExistException e1) {
+//								JLabel tip = new JLabel("提示：该账户信息已存在");
+//								tip.setFont(font2);
+//								JOptionPane.showMessageDialog(null, tip);
+//								return;
+//							}
+//						} catch (RemoteException e1) {
+//							JLabel tip = new JLabel("提示：网络异常");
+//							tip.setFont(font2);
+//							JOptionPane.showMessageDialog(null, tip);
+//							return;
+//						}
+			
+						rowContent = new String[]{jtf_accountName
+								.getText(), jtf_balance.getText()};
+						parent.updateAfterConfirm(rowContent);
+						dispose();
+						JLabel tip = new JLabel("提示：添加成功");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if ((!isOk) && isAllEntered.isEntered(accJtf)) {
+						JLabel tip = new JLabel("提示：请输入正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (isOk && !isAllEntered.isEntered(accJtf)) {
+						JLabel tip = new JLabel("提示：仍有信息未输入");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					} else if (!isOk && !isAllEntered.isEntered(accJtf)) {
+						JLabel tip = new JLabel("请输入所有正确格式的信息");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+					}
+				
 				}
 			});
 
@@ -109,5 +169,64 @@ public class modifyAccountDialog extends JDialog {
 	 */
 	public JTextField getAccountBalance(){
 		return jtf_balance;
+	}
+	
+	// 错误提示信息是否已经被添加
+	protected boolean isBalanceAdd = false;
+	/**
+	 * 监听焦点
+	 * 
+	 * @author Administrator
+	 *
+	 */
+	class TextFocus implements FocusListener{
+
+		public void focusGained(FocusEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void focusLost(FocusEvent e) {
+			JTextField temp = (JTextField) e.getSource();
+			if(temp==jtf_balance){
+				if (!NumExceptioin.isDouble(jtf_balance)) {
+					isBalanceAdd = true;
+					if (tip1 == null) {
+						tip1 = new JLabel("请输入数据", JLabel.CENTER);
+						tip1.setBounds(x + addx, y + addy+height, jtf_width, height);
+						tip1.setFont(font2);
+						tip1.setForeground(Color.RED);
+						addTip(tip1);
+					}
+				} else {
+					if (isBalanceAdd
+							&& !"".equalsIgnoreCase(jtf_balance.getText()
+									.trim())) {
+						isBalanceAdd = false;
+						removeTip(tip1);
+						tip1 = null;
+					}
+				}
+			}
+		}	
+	}
+	/**
+	 * 添加错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void addTip(JLabel tip) {
+		this.add(tip);
+		this.repaint();
+	}
+
+	/**
+	 * 移除错误提示信息
+	 * 
+	 * @param tip
+	 */
+	public void removeTip(JLabel tip) {
+		this.remove(tip);
+		this.repaint();
 	}
 }

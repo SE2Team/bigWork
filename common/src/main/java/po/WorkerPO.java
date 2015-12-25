@@ -25,6 +25,7 @@ public class WorkerPO implements Serializable{
 		this.position=position;
 		this.organization=organization;
 		this.userId=userId;
+		this.sex=sex;
 	}
 	
 	public void setName(String name){

@@ -1,8 +1,5 @@
 package data;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-
 import data.commoditydata.CommoditydataImpl;
 import data.financedata.FinancedataImpl;
 import data.inquirydata.InquirydataImpl;
@@ -12,60 +9,61 @@ import data.userdata.UserdataImpl;
 import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
-import dataservice.impl.ListDataServiceImpl;
 import dataservice.inquirydataservice.InquiryDataService;
 import dataservice.listdataservice.ListDataService;
 import dataservice.managedataservice.ManageDataService;
 import dataservice.userdataservice.UserDataService;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
-public class DataFactory extends UnicastRemoteObject implements DataFactoryService{
+public class DataFactory extends UnicastRemoteObject implements DataFactoryService {
 
-	
-		private static DataFactory FACTORY=null;
 
-		protected DataFactory() throws RemoteException {
-			super();
-		}
+    private static DataFactory FACTORY = null;
 
-		public static DataFactory getInstance() throws RemoteException {
-			if(DataFactory.FACTORY==null)
-				FACTORY=new DataFactory();
-			return FACTORY;
-		}
+    protected DataFactory() throws RemoteException {
+        super();
+    }
 
-		public CommodityDataService getCommodityData() throws RemoteException {
-			// TODO Auto-generated method stub
-			return new CommoditydataImpl();
-		}
+    public static DataFactory getInstance() throws RemoteException {
+        if (DataFactory.FACTORY == null)
+            FACTORY = new DataFactory();
+        return FACTORY;
+    }
 
-		public FinanceDataService getFinanceData() throws RemoteException {
-			// TODO Auto-generated method stub
-			return new FinancedataImpl();
-		}
+    public CommodityDataService getCommodityData() throws RemoteException {
+        // TODO Auto-generated method stub
+        return new CommoditydataImpl();
+    }
 
-		public InquiryDataService getInquiryData() throws RemoteException {
-			// TODO Auto-generated method stub
-			return new InquirydataImpl();
-		}
+    public FinanceDataService getFinanceData() throws RemoteException {
+        // TODO Auto-generated method stub
+        return new FinancedataImpl();
+    }
 
-		public ListDataService getListData() throws RemoteException {
-			// TODO Auto-generated method stub
+    public InquiryDataService getInquiryData() throws RemoteException {
+        // TODO Auto-generated method stub
+        return new InquirydataImpl();
+    }
+
+    public ListDataService getListData() throws RemoteException {
+        // TODO Auto-generated method stub
 			return new ListdataImpl();
-		}
+//        return new ListdataImplTest();
+    }
 
-		public ManageDataService getManageData() throws RemoteException {
-			// TODO Auto-generated method stub
-			return new ManagedataImpl();
-		}
+    public ManageDataService getManageData() throws RemoteException {
+        // TODO Auto-generated method stub
+        return new ManagedataImpl();
+    }
 
-		public UserDataService getUserData() throws RemoteException {
-			// TODO Auto-generated method stub
-			return  new UserdataImpl();
-		}
+    public UserDataService getUserData() throws RemoteException {
+        // TODO Auto-generated method stub
+        return new UserdataImpl();
+    }
 
-
-    
 }
