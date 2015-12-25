@@ -40,7 +40,8 @@ public class ListApprovalPanel extends JPanel{
 		this.setLayout(null);
 		waitButton=new JButton("否决");
 		doneButton=new JButton("已审批单据");
-		checkButton=new JButton("通过");
+		checkButton=new JButton("查看");
+        //todo 增加一个按钮
 		
 		//界面
 		waitButton.setFont(font2);
@@ -126,7 +127,18 @@ public class ListApprovalPanel extends JPanel{
 
     private void pass(){
         int i=listTable.getSelectedRow();
+        arrayList.get(i).setIsCheck(true);
         ListVO tempVO=arrayList.get(i);
 
+        try {
+            bl.save2File(tempVO);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            JLabel tip = new JLabel("提示：网络异常");
+            tip.setFont(font2);
+            JOptionPane.showMessageDialog(null, tip);
+        }
     }
+
+
 }
