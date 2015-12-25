@@ -142,73 +142,8 @@ public class List {
 
         return arrayList.iterator();
     }
-    public boolean save2File(ListVO vo) throws RemoteException{
-        ListPO po=null;
-        switch (vo.getType()){
-            case LOADINGINFO:
-                po=VO2PO.convert((LoadingVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存装车单"));
-
-                break;
-            case ADDRESSEEINFOMATION:
-                po=VO2PO.convert((AddresseeInformationVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存收件单"));
-                break;
-            case DISTRIBUTEINFO:
-                po=VO2PO.convert((DistributeVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存派件单"));
-                break;
-            case GATHERING:
-                po=VO2PO.convert((GatheringVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存收款单（财务）"));
-                break;
-            case ORDER:
-                po=VO2PO.convert((OrderVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存快递单"));
-                break;
-            case PAYMENT:
-                po=VO2PO.convert((PaymentVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存付款单"));
-                break;
-            case RECEIPT:
-                po=VO2PO.convert((ReceiptVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存收款单（快递员）"));
-                System.out.println(po.getType());
-                break;
-            case RECEIVEINFO:
-                po=VO2PO.convert((ReceiveVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存接收单"));
-                break;
-            case STOCKIN:
-                po=VO2PO.convert((StockInVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存入库单"));
-                break;
-            case STOCKOUT:
-                po=VO2PO.convert((StockOutVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存出库单"));
-                break;
-            case TRANSARRIVE:
-                po=VO2PO.convert((TransferReceiveVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存中转到达单"));
-                break;
-            case TRANSINFO:
-                po=VO2PO.convert((TransferVO) vo);
-                inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
-                        "保存中转信息单"));
-                break;
-        }
-
+    public boolean save2File(ListVO vo) throws RemoteException {
+        return true;
     }
 
 }

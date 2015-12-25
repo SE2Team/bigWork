@@ -136,4 +136,25 @@ public interface ListblService {
 
     boolean save2File(AddresseeInformationVO vo) throws RemoteException;
 
+    boolean save2File(DistributeVO vo)throws RemoteException;
+
+    boolean save2File(GatheringVO vo)throws RemoteException;
+
+    boolean save2File(LoadingVO vo)throws RemoteException;
+
+    boolean save2File(OrderVO vo)throws RemoteException;
+
+    boolean save2File(PaymentVO vo)throws RemoteException;
+
+    boolean save2File(ReceiptVO vo)throws RemoteException;
+
+    boolean save2File(ReceiveVO vo)throws RemoteException;
+
+    boolean save2File(StockInVO vo)throws RemoteException;
+
+    boolean save2File(StockOutVO vo)throws RemoteException;
+
+    boolean save2File(TransferReceiveVO vo)throws RemoteException;
+
+    boolean save2File(TransferVO vo)throws RemoteException;
 }

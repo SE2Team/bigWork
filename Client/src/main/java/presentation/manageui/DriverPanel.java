@@ -5,17 +5,20 @@ package presentation.manageui;
 
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
+import vo.DriverVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 
 public class DriverPanel extends JPanel {
 
 	int x = 60, y = 60, width = 70, height = 30, addx = 100, addy = 70;
-
+	
+	ManageblService managebl;
 	// 定义司机信息的label
 	JLabel DriverInfo;
 	// 定义添加，删除，修改，查询按钮
@@ -37,7 +40,23 @@ public class DriverPanel extends JPanel {
 	int modRowNum;
 
 	public DriverPanel() {
-
+		
+		//获得driverVO
+		
+		Iterator<DriverVO> ite = null;
+		ManageblService bl;
+		
+		try {
+			bl= new ManageController();
+			ite=bl.checkDriver();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		
+		DriverVO driver;
+		
 		this.setLayout(null);
 
 		DriverInfo = new JLabel("司机信息", JLabel.CENTER);
@@ -93,18 +112,30 @@ public class DriverPanel extends JPanel {
 		search.setFont(font2);
 		search.setBounds(x + 4 * addx + 50, y, width, height);
 		
-		try {
-			ManageblService bl = new ManageController();
-		} catch (RemoteException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+	
 		
-
+		String[] s1 =new String[8]; 
+		
+		//将s1赋值为司机信息
+		if(ite!=null){
+			System.out.println("xxxxx");
+		while(ite.hasNext()){
+			driver=ite.next();
+			s1[0]=driver.getDriverNum();
+			s1[1]=driver.getDriverName();
+			s1[2]=driver.getSex();
+			s1[3]=driver.getBirthDate();
+			s1[4]=driver.getIdNum();
+			s1[5]=driver.getPhone();
+			s1[6]=driver.getVehicleInstitution();
+			s1[7]=driver.getLicenseTime();		
+		}
+	}		
 		String[] column = { "司机编号", "姓名", "性别", "出生日期", "身份证号", "手机", "车辆单位",
 				"行驶证期限" };
-		
-		String row[][] = {};
+	
+			
+		String row[][] = { s1 };
 		tableModel = new DefaultTableModel(row, column);
 		driverTable = new JTable(tableModel);
 		driverTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选

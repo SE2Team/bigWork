@@ -3,10 +3,16 @@
  */
 package presentation.manageui;
 
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
+import vo.VehicleVO;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
+import java.util.Iterator;
 
 public class VehiclePanel extends JPanel {
 
@@ -35,6 +41,16 @@ public class VehiclePanel extends JPanel {
 	public VehiclePanel() {
 
 		this.setLayout(null);
+		Iterator<VehicleVO> ite=null;
+		ManageblService bl;
+		
+		try {
+			bl= new ManageController();
+			ite=bl.checkVehicle();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		vehicleInfo = new JLabel("车辆信息", JLabel.CENTER);
 		vehicleInfo.setFont(font1);
@@ -94,7 +110,19 @@ public class VehiclePanel extends JPanel {
 		search.setBounds(x + 4 * addx + 50, y, width, height);
 
 		String[] column = { "车辆代号", "车牌号", "购买时间", "服役时间" };
-		String row[][] = {};
+		String[] s1 = new String[4];
+		VehicleVO vehicle;
+		if(ite!=null){
+		while(ite.hasNext()){
+			vehicle=ite.next();
+			s1[0]=vehicle.getVehicleNum();
+			s1[1]=vehicle.getLicensePlate();
+			s1[2]=vehicle.getBuyDate();
+			s1[3]=vehicle.getUseTime();
+			
+		}
+	}		
+		String row[][] = { s1 };
 		tableModel = new DefaultTableModel(row, column);
 		vehicleTable = new JTable(tableModel);
 		vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选

@@ -117,4 +117,74 @@ public class ListController implements ListblService {
     public boolean save2File(ListVO vo) throws RemoteException {
         return false;
     }
+
+    public boolean save2File(AddresseeInformationVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new AddresseeInfomation().save(vo);
+    }
+
+    public boolean save2File(DistributeVO vo) throws RemoteException {
+        return new DistributeInfo().save(vo);
+    }
+
+    public boolean save2File(GatheringVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new Gathering().save(vo);
+    }
+
+    public boolean save2File(LoadingVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new LoadingInfo().save(vo);
+    }
+
+    public boolean save2File(OrderVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new Order().save(vo);
+    }
+
+    public boolean save2File(PaymentVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new Payment().save(vo);
+    }
+
+    public boolean save2File(ReceiptVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new Receipt().save(vo);
+    }
+
+    public boolean save2File(ReceiveVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new ReceiveInfo().save(vo);
+    }
+
+    public boolean save2File(StockInVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new StockIn().save(vo);
+    }
+
+    public boolean save2File(StockOutVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new StockOut().save(vo);
+    }
+
+    public boolean save2File(TransferReceiveVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new TransArrive().save(vo);
+    }
+
+    public boolean save2File(TransferVO vo) throws RemoteException {
+        if(!vo.getIsCheck())
+            return false;
+        return new TransInfo().save(vo);
+    }
 }
