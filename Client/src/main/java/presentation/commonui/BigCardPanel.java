@@ -22,6 +22,7 @@ public class BigCardPanel extends JPanel implements ActionListener {
 
         bigCard = new CardLayout();
         this.setLayout(bigCard);
+        this.setBounds(0, 0, 900, 600);
         this.add("登录", lg);
 
         bigCard.show(this, "登录");
@@ -30,6 +31,20 @@ public class BigCardPanel extends JPanel implements ActionListener {
 
 
     }
+
+    /**
+     * 待完成
+     */
+    private void intiHint() {
+        JPanel h = new JPanel();
+        h.setBounds(this.getX(), this.getY(), 50, 50);
+        JTextArea _message = new JTextArea();
+        _message.setBackground(new Color(255, 255, 225));
+        _message.setMargin(new Insets(4, 4, 4, 4));
+        _message.setLineWrap(true);
+        _message.setWrapStyleWord(true);
+    }
+
 
     private void initLoginPanel() {
 

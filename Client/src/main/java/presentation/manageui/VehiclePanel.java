@@ -100,7 +100,9 @@ public class VehiclePanel extends JPanel {
 				modRowNum = vehicleTable.getSelectedRow();
 				if (modRowNum != -1) {
 					modifyVehicle.setVisible(true);
-				}
+                    modifyVehicle.setAlwaysOnTop(true);
+                }
+
 			}
 
 		});
@@ -194,4 +196,8 @@ public class VehiclePanel extends JPanel {
 		}
 
 	}
+
+    private VehiclePanel getVehiclePanel() {
+        return this;
+    }
 }

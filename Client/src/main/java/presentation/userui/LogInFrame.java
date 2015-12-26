@@ -1,6 +1,7 @@
 package presentation.userui;
 
 import presentation.commonui.BigCardPanel;
+import presentation.commonui.ButtomBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +11,15 @@ public class LogInFrame extends JFrame{
     static Point origin = new Point();
     private JFrame jf;
     private JButton closeB;
+    private ButtomBar buttom;
+
 
     public LogInFrame() {
         jf = this;
 //		this.setTitle("快递物流管理系统");//设置窗体名称
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置默认关闭属性
         this.setSize(900, 630);//设置窗体大小
+        this.setLayout(null);
 
 
         jf.addMouseListener(new MouseAdapter() {
@@ -51,16 +55,20 @@ public class LogInFrame extends JFrame{
 		int y=(screen.height-this.getHeight())/2;
 		this.setLocation(x, y-20);
 
+        buttom = new ButtomBar();
+        buttom.setBounds(0, 600, 900, 30);
+
         closeB = new JButton("退出系统");
         closeB.setSize(10, 10);
-        closeB.setBounds(750, 600, 150, 30);
+        closeB.setBounds(750, 0, 150, 30);
         closeB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jf.dispose();
             }
         });
+        buttom.add(closeB);
 
-        this.add(closeB);
+        this.add(buttom);
     }
 }
 
