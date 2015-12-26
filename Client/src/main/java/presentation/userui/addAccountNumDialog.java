@@ -3,30 +3,21 @@
  */
 package presentation.userui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.rmi.RemoteException;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import businesslogic.managebl.ManageController;
 import businesslogic.userbl.UserController;
-import businesslogicservice.ManageblService;
 import businesslogicservice.UserblService;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import util.UserType;
 import vo.UserVO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.rmi.RemoteException;
 
 public class addAccountNumDialog extends JDialog {
 
@@ -50,7 +41,11 @@ public class addAccountNumDialog extends JDialog {
 	// 定义添加账号信息，用户名，密码，姓名，权限的label
 	JLabel addInfo, userName, password, name, limit;
 	// 定义对应的文本框
-	JTextField jtf_userName, jtf_password, jtf_name, jtf_limit;
+	JTextField jtf_userName, jtf_password, jtf_name;
+	// 定义下拉框
+	JComboBox jcb_limit;
+	//定义人员类型
+	UserType userType;
 	// 定义确定，取消按钮
 	JButton sure, cancel;
 	// 定义错误提示的label
@@ -98,9 +93,18 @@ public class addAccountNumDialog extends JDialog {
 			limit.setFont(font);
 			limit.setBounds(x, y + 3 * addy, jl_width, height);
 
-			jtf_limit = new JTextField();
-			jtf_limit.setFont(font2);
-			jtf_limit.setBounds(x + addx, y + 3 * addy, jtf_width, height);
+
+			jcb_limit = new JComboBox();
+			jcb_limit.addItem("快递员");
+			jcb_limit.addItem("营业厅业务员");
+			jcb_limit.addItem("中转中心业务员");
+			jcb_limit.addItem("中转中心库存管理人员");
+			jcb_limit.addItem("财务人员");
+			jcb_limit.addItem("总经理");
+			jcb_limit.addItem("管理员");
+			jcb_limit.setFont(font2);
+			jcb_limit.setBounds(x + addx, y + 3 * addy, jtf_width, height);
+
 
 			sure = new JButton("确定");
 			sure.setFont(font);
@@ -108,14 +112,35 @@ public class addAccountNumDialog extends JDialog {
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					userJtf = new JTextField[] { jtf_userName, jtf_password,
-							jtf_name, jtf_limit };
+							jtf_name};
 					boolean isOk = NumExceptioin
 							.isAccountNumValid(jtf_userName);
 					if (isOk && isAllEntered.isEntered(userJtf)) {
 						//TODO 权限、
+						if ("快递员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.COURIER;
+						}
+						if ("营业厅业务员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.SALESMAN;
+						}
+						if ("中转中心业务员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.TRANSFERMAN;
+						}
+						if ("中转中心库存管理人员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.STOCKMANAGER;
+						}
+						if ("财务人员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.FINANCIAL;
+						}
+						if ("总经理".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.MANAGER;
+						}
+						if ("管理员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.ADMIN;
+						}
 						UserVO vo = new UserVO(jtf_userName.getText(),
 								jtf_password.getText(), jtf_name.getText(),
-								UserType.ADMIN);
+								userType);
 						UserblService bl;
 						
 						try {
@@ -137,7 +162,7 @@ public class addAccountNumDialog extends JDialog {
 
 						rowContent = new String[] { jtf_userName.getText(),
 								jtf_password.getText(), jtf_name.getText(),
-								jtf_limit.getText() };
+								jcb_limit.getSelectedItem().toString()};
 						parent.addAfterConfirm(rowContent);
 						dispose();
 						JLabel tip = new JLabel("提示：添加成功");
@@ -177,7 +202,7 @@ public class addAccountNumDialog extends JDialog {
 			this.add(name);
 			this.add(jtf_name);
 			this.add(limit);
-			this.add(jtf_limit);
+			this.add(jcb_limit);
 			this.add(sure);
 			this.add(cancel);
 		}

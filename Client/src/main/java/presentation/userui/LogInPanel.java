@@ -3,7 +3,6 @@ package presentation.userui;
 import vo.UserVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,13 +12,14 @@ import java.awt.event.FocusListener;
 public class LogInPanel extends JPanel{
 	
 	private JButton jb1,jb2;//登录、查询按钮
-	private TextField username,ordernum,password;//输入用户名、订单号、密码文本框
-	private JTextArea orderinfo;//显示物流信息的文本域
+    public TextField username, ordernum, password;//输入用户名、订单号、密码文本框
+    private JTextArea orderinfo;//显示物流信息的文本域
 	private JScrollPane jsp;//放文本域的scrollPane
 	private Font font = new Font("宋体", Font.PLAIN, 16);//定义字体
 	private Font font2 = new Font("宋体", Font.PLAIN, 20);//定义字体
-	
-	public void paintComponent(Graphics g){
+
+
+    public void paintComponent(Graphics g){
 		Image bg = new ImageIcon("images/背景.jpg").getImage();
 		Image user = new ImageIcon("images/用户头像.jpg").getImage();
 		Image pw = new ImageIcon("images/密码.jpg").getImage();
@@ -197,4 +197,6 @@ public class LogInPanel extends JPanel{
 	public UserVO getVO(){
 		return new UserVO(username.getText(),password.getText());
 	}
+
+
 }

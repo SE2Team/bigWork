@@ -122,7 +122,32 @@ public interface ListblService {
      * @throws ExistException  重复的编号错误
      * @throws RemoteException 网络异常
      */
-    boolean save(ListVO vo) throws ExistException, RemoteException;
+//    boolean save(ListVO vo) throws ExistException, RemoteException;
+    public boolean save(AddresseeInformationVO vo) throws ExistException, RemoteException;
+
+    public boolean save(DistributeVO vo) throws ExistException, RemoteException;
+
+    public boolean save(LoadingVO vo) throws ExistException, RemoteException;
+
+    public boolean save(OrderVO vo) throws ExistException, RemoteException;
+
+    public boolean save(StockInVO vo) throws ExistException, RemoteException;
+
+    public boolean save(StockOutVO vo) throws ExistException, RemoteException;
+
+    public boolean save(PaymentVO vo) throws ExistException, RemoteException;
+
+    public boolean save(GatheringVO vo) throws ExistException, RemoteException;
+
+    public boolean save(TransferVO vo) throws ExistException, RemoteException;
+
+
+    public boolean save(TransferReceiveVO vo) throws ExistException, RemoteException;
+
+    public boolean save(ReceiveVO vo) throws ExistException, RemoteException;
+
+    public boolean save(ReceiptVO vo) throws ExistException, RemoteException;
+
 
     /**
      * 获取到目前最近订单的审批状态，传入一个起始日期

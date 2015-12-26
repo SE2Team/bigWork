@@ -1,14 +1,13 @@
 package presentation.manageui;
 
-import java.awt.Font;
-import java.awt.GridLayout;
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 /**
  * 完成
  * @author WANXING
@@ -26,6 +25,7 @@ public class SalaryStrategyPanel extends JPanel{
 	private JRadioButton jrdMonth,jrdTimes,jrdCount;
 	private ButtonGroup group;
 	private JButton sure ,cancel;
+	private String type;
 	
 	//定义所有字体
 	Font font1=new Font("楷体", Font.PLAIN, 25);
@@ -33,6 +33,7 @@ public class SalaryStrategyPanel extends JPanel{
 	Font font3 = new Font("宋体", Font.PLAIN, 18);
 
 	public SalaryStrategyPanel(){
+		RadioButtonListener radioButtonListener = new RadioButtonListener();
 		
 		this.setLayout(null);
 		
@@ -52,8 +53,11 @@ public class SalaryStrategyPanel extends JPanel{
 		etBox.setFont(font3);
 		etBox.setBounds(x+addx, y, width2, height);
 		jrdMonth=new JRadioButton("按月");
+		jrdMonth.addActionListener(radioButtonListener);
 		jrdTimes=new JRadioButton("计次");
+		jrdTimes.addActionListener(radioButtonListener);
 		jrdCount=new JRadioButton("提成");
+		jrdCount.addActionListener(radioButtonListener);
 		jrdMonth.setFont(font3);
 		jrdTimes.setFont(font3);
 		jrdCount.setFont(font3);
@@ -68,6 +72,23 @@ public class SalaryStrategyPanel extends JPanel{
 		sure = new JButton("确定");
 		sure.setFont(font2);
 		sure.setBounds(x+80,y+2*addy,width,height);
+		sure.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				ManageblService bl;
+				try {
+					bl = new ManageController();
+					bl.updateSalary(etBox.getSelectedItem().toString(), type);
+				} catch (RemoteException e1) {
+					JLabel tip = new JLabel("提示：网络异常");
+					tip.setFont(font3);
+					JOptionPane.showMessageDialog(null, tip);
+					return;
+				}
+
+
+			}
+		});
 		cancel = new JButton("取消");
 		cancel.setFont(font2);
 		cancel.setBounds(x+80+addx,y+2*addy,width,height);
@@ -83,5 +104,19 @@ public class SalaryStrategyPanel extends JPanel{
 		add(typeLabel);
 		add(sure);
 		add(cancel);
+	}
+
+	class RadioButtonListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+			JRadioButton temp = (JRadioButton) e.getSource();
+
+			if (temp.isSelected()) {
+				type = temp.getText();
+			}
+		}
+
 	}
 }

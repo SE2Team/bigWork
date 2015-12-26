@@ -1,5 +1,7 @@
 package presentation.manageui;
 
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
@@ -8,6 +10,7 @@ import vo.DriverVO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class modifyDriverDialog extends JDialog {
 
@@ -40,7 +43,7 @@ public class modifyDriverDialog extends JDialog {
 	// 定义确定，取消按钮
 	private JButton sure, cancel;
 	// 定义错误提示的label
-	private JLabel tip1, tip2, tip3;
+	private JLabel tip1, tip2, tip3, tip4;
 	// 定义文本框的数组
 	private JTextField[] driverJtf;
 	// 定义用来存放用户输入信息的数组
@@ -156,7 +159,10 @@ public class modifyDriverDialog extends JDialog {
 			jtf_licenseTime.setFont(font);
 			jtf_licenseTime
 					.setBounds(x + addx, y + 6 * addy, jtf_width, height);
+			jtf_licenseTime.addFocusListener(new TextFocus());
 
+			final DriverVO oDrivervo = parent.getVo();
+			
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 7 * addy, 80, height);
@@ -167,7 +173,8 @@ public class modifyDriverDialog extends JDialog {
 							jtf_Institution, jtf_licenseTime };
 					boolean isOk = NumExceptioin.isDriverValid(jtf_driverNum)
 							&& NumExceptioin.isIdValid(jtf_idNum)
-							&& NumExceptioin.isPhoneValid(jtf_phone);
+							&& NumExceptioin.isPhoneValid(jtf_phone)
+							&& NumExceptioin.isInt(jtf_licenseTime);
 					boolean isenter = isAllEntered.isEntered(driverJtf)
 							&& (jrb_male.isSelected() || jrb_female
 									.isSelected());
@@ -178,25 +185,24 @@ public class modifyDriverDialog extends JDialog {
 								jtf_phone.getText(), jtf_Institution.getText(),
 								saveValue, jtf_licenseTime.getText());
 						// TODO
-						// ManageblService bl;
-						// try {
-						// bl = new ManageController();
-						// try {
-						// bl.addDriver(driver_vo);
-						// } catch (ExistException e) {
-						// // TODO Auto-generated catch block
-						// JLabel tip = new JLabel("提示：该司机信息已存在");
-						// tip.setFont(font2);
-						// JOptionPane.showMessageDialog(null, tip);
-						// return;
-						// }
-						// } catch (RemoteException e) {
-						// // TODO Auto-generated catch block
-						// JLabel tip = new JLabel("提示：网络异常");
-						// tip.setFont(font2);
-						// JOptionPane.showMessageDialog(null, tip);
-						// return;
-						// }
+						ManageblService bl;
+						try {
+							bl = new ManageController();
+//							try {
+//								bl.
+//							} catch (ExistException e) {
+//								JLabel tip = new JLabel("提示：该司机信息已存在");
+//								tip.setFont(font2);
+//								JOptionPane.showMessageDialog(null, tip);
+//								return;
+//							}
+						} catch (RemoteException e) {
+							// TODO Auto-generated catch block
+							JLabel tip = new JLabel("提示：网络异常");
+							tip.setFont(font2);
+							JOptionPane.showMessageDialog(null, tip);
+							return;
+						}
 
 						rowContent = new String[] { jtf_driverNum.getText(),
 								jtf_driverName.getText(), saveValue,
@@ -363,6 +369,7 @@ public class modifyDriverDialog extends JDialog {
 	boolean isDriverNumAdd = false;
 	boolean isIdNumAdd = false;
 	boolean isPhoneAdd = false;
+	boolean isLimitAdd = false;
 
 	/**
 	 * 监听焦点
@@ -441,6 +448,28 @@ public class modifyDriverDialog extends JDialog {
 						isPhoneAdd = false;
 						removeTip(tip3);
 						tip3 = null;
+					}
+				}
+			}
+			if (temp == jtf_licenseTime) {
+				if (!NumExceptioin.isInt(jtf_licenseTime)) {
+					isLimitAdd = true;
+					if (tip4 == null) {
+						tip4 = new JLabel("请输入整数", JLabel.CENTER);
+						tip4.setBounds(x + addx, y + 6 * addy + height,
+								jtf_width, height);
+						tip4.setFont(font2);
+						tip4.setForeground(Color.RED);
+						addTip(tip4);
+					}
+
+				} else {
+					if (isLimitAdd
+							&& !"".equalsIgnoreCase(jtf_licenseTime.getText()
+							.trim())) {
+						isLimitAdd = false;
+						removeTip(tip4);
+						tip4 = null;
 					}
 				}
 			}

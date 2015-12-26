@@ -14,7 +14,6 @@ public class ListPO implements Serializable {
 
 
     protected String id;
-    protected String content;
     protected boolean isCheck=false;
     public ListType getType() {
         return type;
@@ -46,13 +45,6 @@ public class ListPO implements Serializable {
     }
 
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public void setIsCheck(boolean isCheck){
         this.isCheck=isCheck;

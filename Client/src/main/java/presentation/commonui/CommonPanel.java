@@ -1,18 +1,15 @@
 package presentation.commonui;
 
 import presentation.listui.ReceiveAndDistribute;
-import presentation.userui.LogInPanel;
 import util.UserType;
 import vo.UserVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Calendar;
 
 public class CommonPanel extends JPanel implements ActionListener {
 
@@ -111,7 +108,7 @@ public class CommonPanel extends JPanel implements ActionListener {
 		upper_pos.setBounds(x+addx2+2*addx1, y, width2, height);
 		upper.add(upper_pos);
 		//构建退出的label
-		upper_exit = new JLabel("退出",JLabel.LEFT);
+		upper_exit = new JLabel("登出", JLabel.LEFT);
 		upper_exit.setFont(font1);
 		upper_exit.setBounds(x+2*addx2+2*addx1+50, y, width, height);
 		final BigCardPanel bigPanel = new BigCardPanel();

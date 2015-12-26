@@ -1,24 +1,15 @@
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
+import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
+import presentation.financeui.FinanceInitialPanel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
-import presentation.financeui.FinanceInitialPanel;
-import sun.net.www.content.image.jpeg;
 
 public class addInstituInfoDialog extends JDialog {
 
@@ -91,6 +82,10 @@ public class addInstituInfoDialog extends JDialog {
 			sure.setBounds(80, y + 2 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+
+//					ManageblService bl;
+//					bl = new ManageController();
+//					
 					insJtf = new JTextField[] { jtf_institution,
 							jtf_institutionNum };
 					boolean isOk = NumExceptioin

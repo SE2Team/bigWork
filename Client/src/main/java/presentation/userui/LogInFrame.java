@@ -1,34 +1,66 @@
 package presentation.userui;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-
 import presentation.commonui.BigCardPanel;
-import presentation.commonui.CommonPanel;
-import presentation.listui.OrderPanel;
-import presentation.listui.check.StockInChecking;
-import vo.StockInVO;
-import vo.StockVO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class LogInFrame extends JFrame{
-	
-	public LogInFrame(){
-		this.setTitle("快递物流管理系统");//设置窗体名称
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置默认关闭属性
-		this.setSize(900,600);//设置窗体大小
-		this.setResizable(false);//不允许用户改变窗体大小
-		this.add(new BigCardPanel());
-//		StockInVO vo = new StockInVO("1", "1", "1", "1", "1", "1", "1", false);
-//		this.add(new StockInChecking(vo));
-		this.setVisible(true);
+    static Point origin = new Point();
+    private JFrame jf;
+    private JButton closeB;
+
+    public LogInFrame() {
+        jf = this;
+//		this.setTitle("快递物流管理系统");//设置窗体名称
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置默认关闭属性
+        this.setSize(900, 630);//设置窗体大小
+
+
+        jf.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                origin.x = e.getX();
+                origin.y = e.getY();
+                repaint();
+            }
+
+        });
+        jf.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                // 当鼠标拖动时获取窗口当前位置
+                Point p = jf.getLocation();
+                // 设置窗口的位置
+                // 窗口当前的位置 + 鼠标当前在窗口的位置 - 鼠标按下的时候在窗口的位置
+                jf.setLocation(p.x + e.getX() - origin.x, p.y + e.getY() - origin.y);
+            }
+        });
+
+
+        this.add(new BigCardPanel());
+
+        this.setResizable(false);//不允许用户改变窗体大小
+        this.setUndecorated(true);
+        this.setVisible(true);
 		//居中
 		Toolkit toolkit=Toolkit.getDefaultToolkit();
 		Dimension screen=toolkit.getScreenSize();
 		int x=(screen.width-this.getWidth())/2;
 		int y=(screen.height-this.getHeight())/2;
 		this.setLocation(x, y-20);
-	}
+
+        closeB = new JButton("退出系统");
+        closeB.setSize(10, 10);
+        closeB.setBounds(750, 600, 150, 30);
+        closeB.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                jf.dispose();
+            }
+        });
+
+        this.add(closeB);
+    }
 }
 

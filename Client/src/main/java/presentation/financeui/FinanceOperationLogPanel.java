@@ -47,7 +47,6 @@ public class FinanceOperationLogPanel extends JPanel {
             cout++;
         }
 
-//        String[] s1 = { "1", "期初建账", "总经理", "2015-11-2 8:30:30" };
 		operationTable = new JTable(row, column);
 		operationTable.setFont(font);
 		operationTable.setRowHeight(20);

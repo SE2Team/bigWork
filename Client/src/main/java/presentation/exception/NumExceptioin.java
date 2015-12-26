@@ -5,7 +5,7 @@
 
 package presentation.exception;
 
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class NumExceptioin {
 
@@ -23,7 +23,7 @@ public class NumExceptioin {
 						&& text.getText().length() != 10) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
 		}
@@ -39,16 +39,16 @@ public class NumExceptioin {
 	 */
 	public static boolean isHallValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 6) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
+		}
 		return true;
 	}
 
@@ -60,16 +60,16 @@ public class NumExceptioin {
 	 */
 	public static boolean isCarValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 19) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}			
+		}
 		return true;
 	}
 
@@ -81,16 +81,16 @@ public class NumExceptioin {
 	 */
 	public static boolean isVehicleValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 9) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}			
+		}
 		return true;
 	}
 
@@ -102,16 +102,16 @@ public class NumExceptioin {
 	 */
 	public static boolean isDriverValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 9) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}			
+		}
 		return true;
 	}
 
@@ -123,16 +123,16 @@ public class NumExceptioin {
 	 */
 	public static boolean isIdValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 18) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}		
+		}
 		return true;
 	}
 
@@ -144,17 +144,17 @@ public class NumExceptioin {
 	 */
 	public static boolean isPhoneValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 11) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 
@@ -167,17 +167,17 @@ public class NumExceptioin {
 	// TODO 有问题···
 	public static boolean isTeleValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 6) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 
@@ -189,17 +189,17 @@ public class NumExceptioin {
 	 */
 	public static boolean isTransCenterValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 4) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 
@@ -211,17 +211,17 @@ public class NumExceptioin {
 	 */
 	public static boolean isTransListValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 19) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 
@@ -232,18 +232,10 @@ public class NumExceptioin {
 	 * @return
 	 */
 	public static boolean islicensePlateValid(JTextField text) {
-		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
-			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().replaceAll(" ", "").length() != 7) {
-					return false;
-				}
-			}else {
-				return false;
-			}
-		}	
-		
+		if (!"".equalsIgnoreCase(text.getText().trim())
+				&& text.getText().replaceAll(" ", "").length() != 7) {
+			return false;
+		}
 		return true;
 	}
 
@@ -255,17 +247,18 @@ public class NumExceptioin {
 	 */
 	public static boolean isAccountNumValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& !(text.getText().length() >= 6 && text.getText().length() <= 10)) {
+						&& !(text.getText().length() >= 6 && text.getText()
+						.length() <= 10)) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 
@@ -277,17 +270,17 @@ public class NumExceptioin {
 	 */
 	public static boolean isInstitutionValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 6) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 
@@ -299,17 +292,18 @@ public class NumExceptioin {
 	 */
 	public static boolean isBankNumValid(JTextField text) {
 		String s = text.getText().trim();
-		for(int i=0;i<s.length();i++){
+		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& (text.getText().length() != 16 && text.getText().length() != 19)) {
+						&& (text.getText().length() != 16 && text.getText()
+						.length() != 19)) {
 					return false;
 				}
-			}else {
+			} else {
 				return false;
 			}
-		}	
-		
+		}
+
 		return true;
 	}
 

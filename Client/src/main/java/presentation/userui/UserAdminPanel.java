@@ -3,10 +3,16 @@
  */
 package presentation.userui;
 
+import businesslogic.userbl.UserController;
+import businesslogicservice.UserblService;
+import util.UserType;
+import vo.UserVO;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
 
 /**
  * 管理员用户管理界面
@@ -34,12 +40,18 @@ public class UserAdminPanel extends JPanel{
 	
 	//定义用户列表的表格
 	private JTable userTable;
+
+	//定义原来的vo
+	UserVO oUservo = null;
 	
 	// 定义表格模型对象
 	private DefaultTableModel tableModel;
 	
 	// 定义表格各列的对象
 	Object c0, c1, c2,c3;
+
+	//定义人员类型
+	UserType userType;
 	
 	//被选中的要修改的行号
 	int modRowNum;
@@ -75,7 +87,45 @@ public class UserAdminPanel extends JPanel{
 			
 			public void actionPerformed(ActionEvent arg0) {
 				int rowNum = userTable.getSelectedRow();
+				Object t0 = tableModel.getValueAt(rowNum, 0);
+				Object t1 = tableModel.getValueAt(rowNum, 1);
+				Object t2 = tableModel.getValueAt(rowNum, 2);
+				Object t3 = tableModel.getValueAt(rowNum, 3);
+				String type = t3.toString();
+				if ("快递员".equalsIgnoreCase(type)) {
+					userType = UserType.COURIER;
+				}
+				if ("营业厅业务员".equalsIgnoreCase(type)) {
+					userType = UserType.SALESMAN;
+				}
+				if ("中转中心业务员".equalsIgnoreCase(type)) {
+					userType = UserType.TRANSFERMAN;
+				}
+				if ("中转中心库存管理人员".equalsIgnoreCase(type)) {
+					userType = UserType.STOCKMANAGER;
+				}
+				if ("财务人员".equalsIgnoreCase(type)) {
+					userType = UserType.FINANCIAL;
+				}
+				if ("总经理".equalsIgnoreCase(type)) {
+					userType = UserType.MANAGER;
+				}
+				if ("管理员".equalsIgnoreCase(type)) {
+					userType = UserType.ADMIN;
+				}
 				if(rowNum!=-1){
+					UserVO vo = new UserVO(t0.toString(), t1.toString(), t2.toString(), userType);
+					UserblService bl;
+					try {
+						bl = new UserController();
+						bl.delete(vo);
+					} catch (RemoteException e) {
+						JLabel tip = new JLabel("提示：网络异常");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+						return;
+					}
+					
 					tableModel.removeRow(rowNum);
 				}
 			}
@@ -111,8 +161,7 @@ public class UserAdminPanel extends JPanel{
 		this.add(checkButton);
 		
 		String[] column = { "用户名","密码","姓名","权限"};
-		String[] s1 = {"admin","12345","艾丝凡","高"};
-		String row[][] = { s1 };
+		String row[][] = {};
 		tableModel = new DefaultTableModel(row, column);
 		userTable = new JTable(tableModel);
 		userTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单选
@@ -126,7 +175,8 @@ public class UserAdminPanel extends JPanel{
 				modAccount.getUserName().setText(c0.toString());
 				modAccount.getPassword().setText(c1.toString());
 				modAccount.getname().setText(c2.toString());
-				modAccount.getLimit().setText(c3.toString());
+				modAccount.getLimit().setSelectedItem(c3.toString());
+				oUservo = new UserVO(c0.toString(), c1.toString(), c2.toString(), userType);
 			}
 		});
 		userTable.setFont(font2);
@@ -136,7 +186,16 @@ public class UserAdminPanel extends JPanel{
 		add(jsp);
 		
 	}
-	
+
+	/**
+	 * 获取原来的账户信息的vo
+	 *
+	 * @return
+	 */
+	public UserVO getVo() {
+		return oUservo;
+	}
+	 
 	/**
 	 * 添加输入的用户信息
 	 * @param row

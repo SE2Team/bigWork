@@ -1,27 +1,19 @@
 package presentation.financeui;
 
-import java.awt.Color;
-import java.awt.Font;
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
+import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
+import util.ExistException;
+import vo.AccountVO;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import businesslogic.financebl.FinanceController;
-import businesslogicservice.FinanceblService;
-import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
-import presentation.financeui.addAccountDialog.addAccountPanel;
-import util.ExistException;
-import vo.AccountVO;
 
 public class modifyAccountDialog extends JDialog {
 
@@ -81,8 +73,7 @@ public class modifyAccountDialog extends JDialog {
 			jtf_balance.addFocusListener(new TextFocus());
 			
 			final AccountVO oaccount_vo = parent.getVo();
-			
-			
+
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 2 * addy + 10, 80, height);
@@ -94,28 +85,28 @@ public class modifyAccountDialog extends JDialog {
 						AccountVO naccount_vo = new AccountVO(jtf_accountName
 								.getText(), jtf_balance.getText());
 						FinanceblService bl;
-//						try {
-//							bl = new FinanceController();
-//							try {
-//								bl.EditAccount(oaccount_vo, naccount_vo);
-//							} catch (ExistException e1) {
-//								JLabel tip = new JLabel("提示：该账户信息已存在");
-//								tip.setFont(font2);
-//								JOptionPane.showMessageDialog(null, tip);
-//								return;
-//							}
-//						} catch (RemoteException e1) {
-//							JLabel tip = new JLabel("提示：网络异常");
-//							tip.setFont(font2);
-//							JOptionPane.showMessageDialog(null, tip);
-//							return;
-//						}
+						try {
+							bl = new FinanceController();
+							try {
+								bl.EditAccount(oaccount_vo, naccount_vo);
+							} catch (ExistException e1) {
+								JLabel tip = new JLabel("提示：该账户信息已存在");
+								tip.setFont(font2);
+								JOptionPane.showMessageDialog(null, tip);
+								return;
+							}
+						} catch (RemoteException e1) {
+							JLabel tip = new JLabel("提示：网络异常");
+							tip.setFont(font2);
+							JOptionPane.showMessageDialog(null, tip);
+							return;
+						}
 			
 						rowContent = new String[]{jtf_accountName
 								.getText(), jtf_balance.getText()};
 						parent.updateAfterConfirm(rowContent);
 						dispose();
-						JLabel tip = new JLabel("提示：添加成功");
+						JLabel tip = new JLabel("提示：修改成功");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
 					} else if ((!isOk) && isAllEntered.isEntered(accJtf)) {

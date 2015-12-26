@@ -4,34 +4,18 @@
 
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import presentation.listui.AddresseeInfoPanel;
-import businesslogic.managebl.ManageController;
-import businesslogicservice.ManageblService;
 import util.ExistException;
 import vo.DriverVO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class addDriverDialog extends JDialog {
 
@@ -65,7 +49,7 @@ public class addDriverDialog extends JDialog {
 	// 定义确定，取消按钮
 	private JButton sure, cancel;
 	// 定义错误提示的label
-	private JLabel tip1, tip2, tip3,tip4;
+	private JLabel tip1, tip2, tip3, tip4;
 	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
 	// 定义文本框的数组
@@ -176,73 +160,13 @@ public class addDriverDialog extends JDialog {
 			jtf_licenseTime
 					.setBounds(x + addx, y + 6 * addy, jtf_width, height);
 			jtf_licenseTime.addFocusListener(new TextFocus());
-			
+
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 7 * addy, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					driverJtf = new JTextField[] { jtf_driverNum,
-							jtf_driverName, jtf_idNum, jtf_phone,
-							jtf_Institution, jtf_licenseTime };
-					boolean isOk = NumExceptioin.isDriverValid(jtf_driverNum)
-							&& NumExceptioin.isIdValid(jtf_idNum)
-							&& NumExceptioin.isPhoneValid(jtf_phone);
-					boolean isenter = isAllEntered.isEntered(driverJtf)
-							&& (jrb_male.isSelected() || jrb_female
-									.isSelected());
-					if (isOk && isenter) {
-						DriverVO driver_vo = new DriverVO(jtf_driverNum
-								.getText(), jtf_driverName.getText(),
-								jtf_birthDate.getText(), jtf_idNum.getText(),
-								jtf_phone.getText(), jtf_Institution.getText(),
-								saveValue, jtf_licenseTime.getText());
-
-						ManageblService bl;
-						try {
-							bl = new ManageController();
-							try {
-								bl.addDriver(driver_vo);
-							} catch (ExistException e) {
-								// TODO Auto-generated catch block
-								JLabel tip = new JLabel("提示：该司机信息已存在");
-								tip.setFont(font2);
-								JOptionPane.showMessageDialog(null, tip);
-								return;
-							}
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							JLabel tip = new JLabel("提示：网络异常");
-							tip.setFont(font2);
-							JOptionPane.showMessageDialog(null, tip);
-							return;
-						}
-
-						rowContent = new String[] { jtf_driverNum.getText(),
-								jtf_driverName.getText(), saveValue,
-								jtf_birthDate.getText(), jtf_idNum.getText(),
-								jtf_phone.getText(), jtf_Institution.getText(),
-								jtf_licenseTime.getText() };
-
-						parent.addAfterConfirm(rowContent);dispose();
-
-						JLabel tip = new JLabel("提示：添加成功");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-						
-					} else if ((!isOk) && isenter) {
-						JLabel tip = new JLabel("提示：请输入正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					} else if (isOk && !isenter) {
-						JLabel tip = new JLabel("提示：仍有信息未输入");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					} else if (!isOk && !isenter) {
-						JLabel tip = new JLabel("请输入所有正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					}
+					performSure();
 				}
 			});
 
@@ -279,6 +203,71 @@ public class addDriverDialog extends JDialog {
 		}
 	}
 
+	protected void performSure() {
+		driverJtf = new JTextField[]{jtf_driverNum,
+				jtf_driverName, jtf_idNum, jtf_phone,
+				jtf_Institution, jtf_licenseTime};
+		boolean isOk = NumExceptioin.isDriverValid(jtf_driverNum)
+				&& NumExceptioin.isIdValid(jtf_idNum)
+				&& NumExceptioin.isPhoneValid(jtf_phone)
+				&& NumExceptioin.isInt(jtf_licenseTime);
+		boolean isenter = isAllEntered.isEntered(driverJtf)
+				&& (jrb_male.isSelected() || jrb_female
+				.isSelected());
+		if (isOk && isenter) {
+			DriverVO driver_vo = new DriverVO(jtf_driverNum
+					.getText(), jtf_driverName.getText(),
+					jtf_birthDate.getText(), jtf_idNum.getText(),
+					jtf_phone.getText(), jtf_Institution.getText(),
+					saveValue, jtf_licenseTime.getText());
+
+			ManageblService bl;
+			try {
+				bl = new ManageController();
+				try {
+					bl.addDriver(driver_vo);
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					JLabel tip = new JLabel("提示：该司机信息已存在");
+					tip.setFont(font2);
+					JOptionPane.showMessageDialog(null, tip);
+					return;
+				}
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
+				return;
+			}
+
+			rowContent = new String[]{jtf_driverNum.getText(),
+					jtf_driverName.getText(), saveValue,
+					jtf_birthDate.getText(), jtf_idNum.getText(),
+					jtf_phone.getText(), jtf_Institution.getText(),
+					jtf_licenseTime.getText()};
+
+			parent.addAfterConfirm(rowContent);
+			dispose();
+
+			JLabel tip = new JLabel("提示：添加成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+
+		} else if ((!isOk) && isenter) {
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (isOk && !isenter) {
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (!isOk && !isenter) {
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+	}
 	class RadioButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
@@ -297,6 +286,7 @@ public class addDriverDialog extends JDialog {
 	boolean isDriverNumAdd = false;
 	boolean isIdNumAdd = false;
 	boolean isPhoneAdd = false;
+	boolean isLimitAdd = false;
 
 	/**
 	 * 监听焦点
@@ -316,7 +306,7 @@ public class addDriverDialog extends JDialog {
 				if (!NumExceptioin.isDriverValid(jtf_driverNum)) {
 					isDriverNumAdd = true;
 					if (tip1 == null) {
-						tip1 = new JLabel("司机编号位数应为9位", JLabel.CENTER);
+						tip1 = new JLabel("司机编号为9位0~9整数", JLabel.CENTER);
 						tip1.setBounds(x + addx, y + addy + 25, jtf_width,
 								height);
 						tip1.setFont(font2);
@@ -339,7 +329,7 @@ public class addDriverDialog extends JDialog {
 				if (!NumExceptioin.isIdValid(jtf_idNum)) {
 					isIdNumAdd = true;
 					if (tip2 == null) {
-						tip2 = new JLabel("身份证号位数应为18位", JLabel.CENTER);
+						tip2 = new JLabel("身份证号为18位0~9整数", JLabel.CENTER);
 						tip2.setBounds(x + addx, y + 3 * addy + 25, jtf_width,
 								height);
 						tip2.setFont(font2);
@@ -361,7 +351,7 @@ public class addDriverDialog extends JDialog {
 				if (!NumExceptioin.isPhoneValid(jtf_phone)) {
 					isPhoneAdd = true;
 					if (tip3 == null) {
-						tip3 = new JLabel("手机号位数应为11位", JLabel.CENTER);
+						tip3 = new JLabel("手机号为11位0~9整数", JLabel.CENTER);
 						tip3.setBounds(x + addx, y + 4 * addy + 25, jtf_width,
 								height);
 						tip3.setFont(font2);
@@ -375,6 +365,28 @@ public class addDriverDialog extends JDialog {
 						isPhoneAdd = false;
 						removeTip(tip3);
 						tip3 = null;
+					}
+				}
+			}
+			if (temp == jtf_licenseTime) {
+				if (!NumExceptioin.isInt(jtf_licenseTime)) {
+					isLimitAdd = true;
+					if (tip4 == null) {
+						tip4 = new JLabel("请输入整数", JLabel.CENTER);
+						tip4.setBounds(x + addx, y + 6 * addy + height,
+								jtf_width, height);
+						tip4.setFont(font2);
+						tip4.setForeground(Color.RED);
+						addTip(tip4);
+					}
+
+				} else {
+					if (isLimitAdd
+							&& !"".equalsIgnoreCase(jtf_licenseTime.getText()
+							.trim())) {
+						isLimitAdd = false;
+						removeTip(tip4);
+						tip4 = null;
 					}
 				}
 			}

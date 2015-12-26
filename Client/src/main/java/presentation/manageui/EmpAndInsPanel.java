@@ -1,26 +1,15 @@
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
+import util.ExistException;
+import vo.WorkerVO;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.rmi.RemoteException;
 
 /**
  * 
@@ -40,11 +29,11 @@ public class EmpAndInsPanel extends JPanel {
 	private JButton check1Button;
 	private JTextField c1Field;
 	private JScrollPane jsp1;
-	private JTable employTable;	
+	private JTable employTable;
 	private DefaultTableModel tableModel1;// 定义人员表格模型对象
-	private Object emp0, emp1, emp2, emp3,emp4, emp5, emp6;// 定义人员表格各列的对象
-	private int e_modRowNum;//被选中的要修改的人员行号
-	
+	private Object emp0, emp1, emp2, emp3, emp4, emp5, emp6;// 定义人员表格各列的对象
+	private int e_modRowNum;// 被选中的要修改的人员行号
+
 	// 成本收益表
 	private JLabel t2Label;
 	private JButton add2Button;
@@ -56,7 +45,7 @@ public class EmpAndInsPanel extends JPanel {
 	private JTable instituteTable;
 	private DefaultTableModel tableModel2;// 定义机构表格模型对象
 	private Object ins0, ins1;// 定义机构表格各列的对象
-	private int i_modRowNum;//被选中的要修改的机构行号
+	private int i_modRowNum;// 被选中的要修改的机构行号
 
 	Font font1 = new Font("楷体", Font.PLAIN, 25);
 	Font font2 = new Font("宋体", Font.PLAIN, 15);
@@ -91,25 +80,51 @@ public class EmpAndInsPanel extends JPanel {
 
 		del1Button.setFont(font2);
 		del1Button.setBounds(260, 10, width, height);
-		del1Button.addActionListener(new ActionListener() {		
+		del1Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int rowNum = employTable.getSelectedRow();
-				if(rowNum!=-1){
+				Object c0 = tableModel1.getValueAt(rowNum, 0);
+				Object c1 = tableModel1.getValueAt(rowNum, 1);
+				Object c2 = tableModel1.getValueAt(rowNum, 2);
+				Object c3 = tableModel1.getValueAt(rowNum, 3);
+				Object c4 = tableModel1.getValueAt(rowNum, 4);
+				Object c5 = tableModel1.getValueAt(rowNum, 5);
+				Object c6 = tableModel1.getValueAt(rowNum, 6);
+				WorkerVO vo = new WorkerVO(c0.toString(), c3.toString(), c4
+						.toString(), c5.toString(), c6.toString(), c1
+						.toString());
+				if (rowNum != -1) {
+					ManageblService bl;
+					try {
+						bl = new ManageController();
+						try {
+							bl.delWorker(vo);
+						} catch (ExistException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (RemoteException e) {
+						JLabel tip = new JLabel("提示：网络异常");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+						return;
+					}
 					tableModel1.removeRow(rowNum);
-				}				
+				}
 			}
 		});
 
 		mod1Button.setFont(font2);
 		mod1Button.setBounds(350, 10, width, height);
-		final modifyEmployeeDialog modEmployee = new modifyEmployeeDialog(EmpAndInsPanel.this);
+		final modifyEmployeeDialog modEmployee = new modifyEmployeeDialog(
+				EmpAndInsPanel.this);
 		mod1Button.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				e_modRowNum = employTable.getSelectedRow();
-				if(e_modRowNum!=-1){
+				if (e_modRowNum != -1) {
 					modEmployee.setVisible(true);
-				}				
+				}
 			}
 		});
 
@@ -129,12 +144,12 @@ public class EmpAndInsPanel extends JPanel {
 		employPanel.add(mod1Button);
 		employPanel.add(check1Button);
 
-		String[] column1 = { "姓名", "性别" ,"年龄","身份证号","职位","所属机构","系统用户名"};
-		String[] s1 = {"张三", "男","33","211222311412134121","快递员","","kdy001" };
-		String row1[][] = { s1 };
+		String[] column1 = {"姓名", "性别", "年龄", "身份证号", "职位", "所属机构", "系统用户名"};
+
+		String row1[][] = {};
 		tableModel1 = new DefaultTableModel(row1, column1);
 		employTable = new JTable(tableModel1);
-		employTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单选
+		employTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选
 		employTable.addMouseListener(new MouseAdapter() {// 鼠标事件
 			public void mouseClicked(MouseEvent e) {
 				int selectedRow = employTable.getSelectedRow(); // 获得选中行索引
@@ -146,9 +161,9 @@ public class EmpAndInsPanel extends JPanel {
 				emp5 = tableModel1.getValueAt(selectedRow, 5);
 				emp6 = tableModel1.getValueAt(selectedRow, 6);
 				modEmployee.getEmployeeName().setText(emp0.toString());
-				if(emp1.toString().equals("男")){
+				if (emp1.toString().equals("男")) {
 					modEmployee.getMale().setSelected(true);
-				}else{
+				} else {
 					modEmployee.getFemale().setSelected(true);
 				}
 				modEmployee.getAge().setText(emp2.toString());
@@ -188,28 +203,29 @@ public class EmpAndInsPanel extends JPanel {
 
 		del2Button.setFont(font2);
 		del2Button.setBounds(260, 10, width, height);
-		del2Button.addActionListener(new ActionListener() {		
+		del2Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int rowNum = instituteTable.getSelectedRow();
-				if(rowNum!=-1){
+				if (rowNum != -1) {
 					tableModel2.removeRow(rowNum);
-				}				
+				}
 			}
 		});
 
 		mod2Button.setFont(font2);
 		mod2Button.setBounds(350, 10, width, height);
-		final modifyInstitutionDialog modInstition = new modifyInstitutionDialog(EmpAndInsPanel.this);
+		final modifyInstitutionDialog modInstition = new modifyInstitutionDialog(
+				EmpAndInsPanel.this);
 		mod2Button.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				i_modRowNum = instituteTable.getSelectedRow();
-				if(i_modRowNum!=-1){
+				if (i_modRowNum != -1) {
 					modInstition.setVisible(true);
 				}
 			}
 		});
-		
+
 		c2Field.setFont(font2);
 		c2Field.setText("请输入机构编号");
 		c2Field.setForeground(Color.GRAY);
@@ -226,19 +242,19 @@ public class EmpAndInsPanel extends JPanel {
 		institutionPanel.add(mod2Button);
 		institutionPanel.add(check2Button);
 
-		String[] column2 = {"机构名称", "机构编号" };
-		String[] s2 = { "营业厅", "0251" };
-		String row2[][] = { s2 };
+		String[] column2 = {"机构名称", "机构编号"};
+		String row2[][] = {};
 		tableModel2 = new DefaultTableModel(row2, column2);
 		instituteTable = new JTable(tableModel2);
-		instituteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单击
-		instituteTable.addMouseListener(new MouseAdapter() {//鼠标事件
-			public void mouseClicked(MouseEvent e){
+		instituteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单击
+		instituteTable.addMouseListener(new MouseAdapter() {// 鼠标事件
+			public void mouseClicked(MouseEvent e) {
 				int selectedRow = instituteTable.getSelectedRow(); // 获得选中行索引
 				ins0 = tableModel2.getValueAt(selectedRow, 0);
 				ins1 = tableModel2.getValueAt(selectedRow, 1);
 				modInstition.getInstitution().setText(ins0.toString());
-				modInstition.getInstitutionNum().setText(ins1.toString());
+				modInstition.getInstitutionNum().setText(
+						ins1.toString());
 			}
 		});
 		instituteTable.setFont(font2);
@@ -256,17 +272,19 @@ public class EmpAndInsPanel extends JPanel {
 
 	/**
 	 * 添加用户输入的人员信息
+	 * 
 	 * @param row
 	 */
-	public void addEmpInfo(String[] row){
+	public void addEmpInfo(String[] row) {
 		tableModel1.addRow(row);
 	}
-	
+
 	/**
 	 * 修改人员信息
+	 * 
 	 * @param row
 	 */
-	public void updateEmpInfo(String[] row){
+	public void updateEmpInfo(String[] row) {
 		tableModel1.setValueAt(row[0], e_modRowNum, 0);
 		tableModel1.setValueAt(row[1], e_modRowNum, 1);
 		tableModel1.setValueAt(row[2], e_modRowNum, 2);
@@ -275,25 +293,29 @@ public class EmpAndInsPanel extends JPanel {
 		tableModel1.setValueAt(row[5], e_modRowNum, 5);
 		tableModel1.setValueAt(row[6], e_modRowNum, 6);
 	}
-	
+
 	/**
 	 * 添加用户输入的机构信息
+	 * 
 	 * @param row
 	 */
-	public void addInsInfo(String[] row){
+	public void addInsInfo(String[] row) {
 		tableModel2.addRow(row);
 	}
-	
+
 	/**
 	 * 修改机构信息
+	 * 
 	 * @param row
 	 */
-	public void updateInsInfo(String[] row){
+	public void updateInsInfo(String[] row) {
 		tableModel2.setValueAt(row[0], i_modRowNum, 0);
 		tableModel2.setValueAt(row[1], i_modRowNum, 1);
 	}
+
 	/**
 	 * 焦点监听
+	 * 
 	 * @author Administrator
 	 *
 	 */
@@ -302,7 +324,8 @@ public class EmpAndInsPanel extends JPanel {
 		public void focusGained(FocusEvent e) {
 			JTextField text = (JTextField) e.getSource();
 			if (text == c1Field) {
-				if ("请输入用户名".equalsIgnoreCase(c1Field.getText())||"请输入机构信息".equalsIgnoreCase(c2Field.getText())) {
+				if ("请输入用户名".equalsIgnoreCase(c1Field.getText())
+						|| "请输入机构信息".equalsIgnoreCase(c2Field.getText())) {
 					c1Field.setText("");
 					c1Field.setForeground(Color.BLACK);
 				}

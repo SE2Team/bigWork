@@ -1,4 +1,6 @@
-import presentation.userui.LogInFrame;
+import presentation.commonui.DateChooser;
+
+import javax.swing.*;
 
 /**
  * Created by MYK on 2015/12/5 0005.
@@ -12,6 +14,18 @@ public class TestClient {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        new LogInFrame();
+        JFrame frame2 = new JFrame();
+        frame2.getContentPane().setLayout(null);
+
+        JTextField jt = new JTextField("date");
+        DateChooser dateChooser = new DateChooser("yyyy-MM-dd", jt);
+        dateChooser.setBounds(30, 30, 30, 30);
+
+
+        frame2.getContentPane().add(dateChooser);
+        frame2.getContentPane().add(jt);
+
+        frame2.setSize(500, 400);
+        frame2.setVisible(true);
     }
 }

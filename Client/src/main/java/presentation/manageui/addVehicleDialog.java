@@ -3,29 +3,21 @@
  */
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
-
-import javax.swing.*;
-
+import businesslogic.financebl.FinanceController;
+import businesslogic.managebl.ManageController;
+import businesslogicservice.FinanceblService;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
-import businesslogic.listbl.ListController;
-import businesslogic.managebl.ManageController;
-import businesslogicservice.ListblService;
-import businesslogicservice.ManageblService;
 import util.ExistException;
 import vo.VehicleVO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.rmi.RemoteException;
 
 public class addVehicleDialog extends JDialog {
 	private VehiclePanel parent;
@@ -65,7 +57,7 @@ public class addVehicleDialog extends JDialog {
 	private JButton sure, cancel;
 
 	// 定义错误提示信息的label
-	private JLabel tip1, tip2,tip3;
+	private JLabel tip1, tip2, tip3;
 
 	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
@@ -131,7 +123,7 @@ public class addVehicleDialog extends JDialog {
 			jtf_useTime.setFont(font2);
 			jtf_useTime.setBounds(x + addx, y + 3 * addy, jtf_width, height);
 			jtf_useTime.addFocusListener(new TextFocus());
-			
+
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 4 * addy + 10, 80, height);
@@ -139,32 +131,46 @@ public class addVehicleDialog extends JDialog {
 				public void actionPerformed(ActionEvent arg0) {
 					boolean isOk = NumExceptioin.isVehicleValid(jtf_vehicleNum)
 							&& NumExceptioin
-									.islicensePlateValid(jtf_licensePlate);
+							.islicensePlateValid(jtf_licensePlate)
+							&& NumExceptioin.isInt(jtf_useTime);
 					vehicleJtf = new JTextField[] { jtf_vehicleNum,
 							jtf_licensePlate, jtf_useTime };
 					if (isOk && isAllEntered.isEntered(vehicleJtf)) {
 						VehicleVO vehicle_vo = new VehicleVO(jtf_vehicleNum
 								.getText(), jtf_licensePlate.getText(),
 								jtf_buyDate.getText(), jtf_useTime.getText());
-
-						ManageblService bl;
-						try {
-							bl = new ManageController();
+						if (jp == parent) {
+							ManageblService bl;
 							try {
-								bl.addVehicle(vehicle_vo);
-							} catch (ExistException e) {
+								bl = new ManageController();
+								try {
+									bl.addVehicle(vehicle_vo);
+								} catch (ExistException e) {
+									// TODO Auto-generated catch block
+									JLabel tip = new JLabel("提示：该车辆信息已存在");
+									tip.setFont(font2);
+									JOptionPane.showMessageDialog(null, tip);
+									return;
+								}
+							} catch (RemoteException e1) {
 								// TODO Auto-generated catch block
-								JLabel tip = new JLabel("提示：该车辆信息已存在");
+								JLabel tip = new JLabel("提示：网络异常");
 								tip.setFont(font2);
 								JOptionPane.showMessageDialog(null, tip);
 								return;
 							}
-						} catch (RemoteException e1) {
-							// TODO Auto-generated catch block
-							JLabel tip = new JLabel("提示：网络异常");
-							tip.setFont(font2);
-							JOptionPane.showMessageDialog(null, tip);
-							return;
+						}
+						if (jp == parent2) {
+							FinanceblService bl;
+							try {
+								bl = new FinanceController();
+								bl.initial(vehicle_vo);
+							} catch (RemoteException e1) {
+								JLabel tip = new JLabel("提示：网络异常");
+								tip.setFont(font2);
+								JOptionPane.showMessageDialog(null, tip);
+								return;
+							}
 						}
 
 						rowContent = new String[] { jtf_vehicleNum.getText(),
@@ -227,7 +233,7 @@ public class addVehicleDialog extends JDialog {
 	boolean isVehicleNumAdd = false;
 	boolean isLicenseAdd = false;
 	boolean isUsetimeAdd = false;
-	
+
 	/**
 	 * 监听焦点
 	 * 
@@ -246,8 +252,7 @@ public class addVehicleDialog extends JDialog {
 			JTextField temp = (JTextField) e.getSource();
 
 			if (temp == jtf_vehicleNum) {
-				if ((!NumExceptioin.isVehicleValid(jtf_vehicleNum))
-						|| (!NumExceptioin.isInt(jtf_vehicleNum))) {
+				if (!NumExceptioin.isVehicleValid(jtf_vehicleNum)) {
 					isVehicleNumAdd = true;
 					if (tip1 == null) {
 						tip1 = new JLabel("车辆代号为9位0~9整数", JLabel.CENTER);
@@ -291,12 +296,13 @@ public class addVehicleDialog extends JDialog {
 					}
 				}
 			}
-			if(temp==jtf_useTime){
+			if (temp == jtf_useTime) {
 				if (!NumExceptioin.isInt(jtf_useTime)) {
 					isUsetimeAdd = true;
 					if (tip3 == null) {
 						tip3 = new JLabel("请输入整数", JLabel.CENTER);
-						tip3.setBounds(x + addx, y + 3 * addy+height, jtf_width, height);
+						tip3.setBounds(x + addx, y + 3 * addy + height,
+								jtf_width, height);
 						tip3.setFont(font2);
 						tip3.setForeground(Color.RED);
 						addTip(tip3);

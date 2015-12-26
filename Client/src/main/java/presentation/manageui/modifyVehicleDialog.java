@@ -1,26 +1,13 @@
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import vo.VehicleVO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class modifyVehicleDialog extends JDialog {
 
@@ -52,7 +39,7 @@ public class modifyVehicleDialog extends JDialog {
 	private JButton sure, cancel;
 
 	// 定义错误提示信息的label
-	private JLabel tip1, tip2;
+	private JLabel tip1, tip2, tip3;
 
 	// 定义用来存放用户输入信息的数组
 	private String[] rowContent;
@@ -117,6 +104,7 @@ public class modifyVehicleDialog extends JDialog {
 			jtf_useTime = new JTextField();
 			jtf_useTime.setFont(font);
 			jtf_useTime.setBounds(x + addx, y + 3 * addy, jtf_width, height);
+			jtf_useTime.addFocusListener(new TextFocus());
 
 			sure = new JButton("确定");
 			sure.setFont(font);
@@ -125,36 +113,37 @@ public class modifyVehicleDialog extends JDialog {
 				public void actionPerformed(ActionEvent arg0) {
 					boolean isOk = NumExceptioin.isVehicleValid(jtf_vehicleNum)
 							&& NumExceptioin
-									.islicensePlateValid(jtf_licensePlate);
+							.islicensePlateValid(jtf_licensePlate)
+							&& NumExceptioin.isInt(jtf_useTime);
 					vehicleJtf = new JTextField[] { jtf_vehicleNum,
 							jtf_licensePlate, jtf_useTime };
 					if (isOk && isAllEntered.isEntered(vehicleJtf)) {
 						VehicleVO vehicle_vo = new VehicleVO(jtf_vehicleNum
-								.getText(), jtf_licensePlate.getText(), jtf_buyDate
-								.getText(), jtf_useTime.getText());
-						
+								.getText(), jtf_licensePlate.getText(),
+								jtf_buyDate.getText(), jtf_useTime.getText());
+
 						rowContent = new String[] { jtf_vehicleNum.getText(),
 								jtf_licensePlate.getText(),
 								jtf_buyDate.getText(), jtf_useTime.getText() };
 						parent.updateAfterConfirm(rowContent);
-						
+
 						dispose();
 						JLabel tip = new JLabel("提示：修改成功");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if((!isOk)&&isAllEntered.isEntered(vehicleJtf)){
+					} else if ((!isOk) && isAllEntered.isEntered(vehicleJtf)) {
 						JLabel tip = new JLabel("提示：请输入正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if(isOk&&!isAllEntered.isEntered(vehicleJtf)){
+					} else if (isOk && !isAllEntered.isEntered(vehicleJtf)) {
 						JLabel tip = new JLabel("提示：仍有信息未输入");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if(!isOk&&!isAllEntered.isEntered(vehicleJtf)){
+					} else if (!isOk && !isAllEntered.isEntered(vehicleJtf)) {
 						JLabel tip = new JLabel("请输入所有正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}	
+					}
 				}
 			});
 
@@ -223,6 +212,7 @@ public class modifyVehicleDialog extends JDialog {
 	// 错误提示信息是否已经被添加
 	boolean isVehicleNumAdd = false;
 	boolean isLicenseAdd = false;
+	boolean isUsetimeAdd = false;
 
 	/**
 	 * 监听焦点
@@ -287,7 +277,28 @@ public class modifyVehicleDialog extends JDialog {
 					}
 				}
 			}
+			if (temp == jtf_useTime) {
+				if (!NumExceptioin.isInt(jtf_useTime)) {
+					isUsetimeAdd = true;
+					if (tip3 == null) {
+						tip3 = new JLabel("请输入整数", JLabel.CENTER);
+						tip3.setBounds(x + addx, y + 3 * addy + height,
+								jtf_width, height);
+						tip3.setFont(font2);
+						tip3.setForeground(Color.RED);
+						addTip(tip3);
+					}
 
+				} else {
+					if (isUsetimeAdd
+							&& !"".equalsIgnoreCase(jtf_useTime.getText()
+							.trim())) {
+						isUsetimeAdd = false;
+						removeTip(tip3);
+						tip3 = null;
+					}
+				}
+			}
 		}
 	}
 

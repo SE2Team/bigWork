@@ -1,7 +1,12 @@
 package presentation.userui;
 
+import businesslogic.userbl.UserController;
+import businesslogicservice.UserblService;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
+import util.UserType;
+import vo.UserVO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.rmi.RemoteException;
 
 public class modifyAccountNumDialog extends JDialog {
 
@@ -31,7 +37,11 @@ public class modifyAccountNumDialog extends JDialog {
 	// 定义修改账号信息，用户名，密码，权限的label
 	JLabel modInfo, userName, password, name, limit;
 	// 定义对应的文本框
-	JTextField jtf_userName, jtf_password, jtf_name, jtf_limit;
+	JTextField jtf_userName, jtf_password, jtf_name;
+	// 定义下拉框
+	JComboBox jcb_limit;
+	//定义人员类型
+	UserType userType;
 	// 定义确定，取消按钮
 	JButton sure, cancel;
 	// 定义错误提示的label
@@ -79,22 +89,69 @@ public class modifyAccountNumDialog extends JDialog {
 			limit.setFont(font);
 			limit.setBounds(x, y + 3 * addy, jl_width, height);
 
-			jtf_limit = new JTextField();
-			jtf_limit.setFont(font2);
-			jtf_limit.setBounds(x + addx, y + 3 * addy, jtf_width, height);
+			jcb_limit = new JComboBox();
+			jcb_limit.setFont(font2);
+			jcb_limit.addItem("快递员");
+			jcb_limit.addItem("营业厅业务员");
+			jcb_limit.addItem("中转中心业务员");
+			jcb_limit.addItem("中转中心库存管理人员");
+			jcb_limit.addItem("财务人员");
+			jcb_limit.addItem("总经理");
+			jcb_limit.addItem("管理员");
+			jcb_limit.setBounds(x + addx, y + 3 * addy, jtf_width, height);
 
+			final UserVO oUser = parent.getVo();
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 4 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					userJtf = new JTextField[] { jtf_userName, jtf_password,
-							jtf_name, jtf_limit };
+							jtf_name};
 					boolean isOk = NumExceptioin.isAccountNumValid(jtf_userName);
 					if(isOk&&isAllEntered.isEntered(userJtf)){
+						if ("快递员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.COURIER;
+						}
+						if ("营业厅业务员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.SALESMAN;
+						}
+						if ("中转中心业务员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.TRANSFERMAN;
+						}
+						if ("中转中心库存管理人员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.STOCKMANAGER;
+						}
+						if ("财务人员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.FINANCIAL;
+						}
+						if ("总经理".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.MANAGER;
+						}
+						if ("管理员".equalsIgnoreCase(jcb_limit.getSelectedItem().toString())) {
+							userType = UserType.ADMIN;
+						}
+						UserVO vo = new UserVO(jtf_userName.getText(),
+								jtf_password.getText(), jtf_name.getText(),
+								userType);
+						UserblService bl;
+						try {
+							bl = new UserController();
+							try {
+								bl.modify(oUser, vo);
+							} catch (ExistException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} catch (RemoteException e) {
+							JLabel tip = new JLabel("提示：网络异常");
+							tip.setFont(font2);
+							JOptionPane.showMessageDialog(null, tip);
+							return;
+						}
 						rowContent = new String[] { jtf_userName.getText(),
 								jtf_password.getText(), jtf_name.getText(),
-								jtf_limit.getText() };
+								jcb_limit.getSelectedItem().toString()};
 						parent.updateAfterConfirm(rowContent);
 						dispose();
 						JLabel tip = new JLabel("提示：修改成功");
@@ -133,7 +190,7 @@ public class modifyAccountNumDialog extends JDialog {
 			this.add(name);
 			this.add(jtf_name);
 			this.add(limit);
-			this.add(jtf_limit);
+			this.add(jcb_limit);
 			this.add(sure);
 			this.add(cancel);
 		}
@@ -171,8 +228,8 @@ public class modifyAccountNumDialog extends JDialog {
 	 * 
 	 * @return
 	 */
-	public JTextField getLimit() {
-		return jtf_limit;
+	public JComboBox getLimit() {
+		return jcb_limit;
 	}
 
 	// 错误提示信息是否已经被添加

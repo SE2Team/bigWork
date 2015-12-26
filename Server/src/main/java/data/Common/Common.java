@@ -1,14 +1,6 @@
 package data.Common;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Common {
@@ -25,7 +17,7 @@ public class Common {
 
 	/**
 	 * 将数据写入文件（覆盖）
-	 * @param lists
+	 * @param s
 	 */
 	public void writeData(ArrayList<String> s) {
 		try {

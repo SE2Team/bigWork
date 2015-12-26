@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
-import java.util.Iterator;
 
 public class VehiclePanel extends JPanel {
 
@@ -35,22 +34,12 @@ public class VehiclePanel extends JPanel {
 	Font font2 = new Font("宋体", Font.PLAIN, 15);
 	// 定义表格各列的对象
 	Object c0, c1, c2, c3;
-	//被选中的要修改的行号
+	// 被选中的要修改的行号
 	int modRowNum;
 
 	public VehiclePanel() {
 
 		this.setLayout(null);
-		Iterator<VehicleVO> ite=null;
-		ManageblService bl;
-		
-		try {
-			bl= new ManageController();
-			ite=bl.checkVehicle();
-		} catch (RemoteException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 
 		vehicleInfo = new JLabel("车辆信息", JLabel.CENTER);
 		vehicleInfo.setFont(font1);
@@ -77,25 +66,43 @@ public class VehiclePanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				int rowNum = vehicleTable.getSelectedRow();
-				if(rowNum!=-1){
+				Object v0 = tableModel.getValueAt(rowNum, 0);
+				Object v1 = tableModel.getValueAt(rowNum, 1);
+				Object v2 = tableModel.getValueAt(rowNum, 2);
+				Object v3 = tableModel.getValueAt(rowNum, 3);
+				if (rowNum != -1) {
+					VehicleVO vo = new VehicleVO(v0.toString(), v1.toString(),
+							v2.toString(), v3.toString());
+					ManageblService bl;
+					try {
+						bl = new ManageController();
+						bl.delVehicle(vo);
+					} catch (RemoteException e1) {
+						JLabel tip = new JLabel("提示：网络异常");
+						tip.setFont(font2);
+						JOptionPane.showMessageDialog(null, tip);
+						return;
+					}
+					
 					tableModel.removeRow(rowNum);
-				}				
+				}
 			}
 		});
 
 		modify = new JButton("修改");
 		modify.setFont(font2);
 		modify.setBounds(x + 2 * addx, y, width, height);
-		final modifyVehicleDialog modifyVehicle = new modifyVehicleDialog(VehiclePanel.this);	    
+		final modifyVehicleDialog modifyVehicle = new modifyVehicleDialog(
+				VehiclePanel.this);
 		modify.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				modRowNum = vehicleTable.getSelectedRow();
-				if (modRowNum != -1) {				
+				if (modRowNum != -1) {
 					modifyVehicle.setVisible(true);
 				}
 			}
-			
+
 		});
 
 		inputInfo = new JTextField();
@@ -110,19 +117,7 @@ public class VehiclePanel extends JPanel {
 		search.setBounds(x + 4 * addx + 50, y, width, height);
 
 		String[] column = { "车辆代号", "车牌号", "购买时间", "服役时间" };
-		String[] s1 = new String[4];
-		VehicleVO vehicle;
-		if(ite!=null){
-		while(ite.hasNext()){
-			vehicle=ite.next();
-			s1[0]=vehicle.getVehicleNum();
-			s1[1]=vehicle.getLicensePlate();
-			s1[2]=vehicle.getBuyDate();
-			s1[3]=vehicle.getUseTime();
-			
-		}
-	}		
-		String row[][] = { s1 };
+		String row[][] = {};
 		tableModel = new DefaultTableModel(row, column);
 		vehicleTable = new JTable(tableModel);
 		vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选
@@ -153,8 +148,6 @@ public class VehiclePanel extends JPanel {
 		this.add(vehiclepane);
 	}
 
-	
-
 	/**
 	 * 添加用户输入的车辆信息
 	 * 
@@ -166,6 +159,7 @@ public class VehiclePanel extends JPanel {
 
 	/**
 	 * 修改司机信息
+	 * 
 	 * @param row
 	 */
 	public void updateAfterConfirm(String[] row) {

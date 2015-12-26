@@ -3,25 +3,23 @@
  */
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Font;
+import businesslogic.financebl.FinanceController;
+import businesslogic.managebl.ManageController;
+import businesslogicservice.FinanceblService;
+import businesslogicservice.ManageblService;
+import presentation.commonui.isAllEntered;
+import presentation.exception.NumExceptioin;
+import presentation.financeui.FinanceInitialPanel;
+import util.ExistException;
+import vo.WorkerVO;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
-import presentation.financeui.FinanceInitialPanel;
+import java.rmi.RemoteException;
 
 public class addEmployeeInfoDialog extends JDialog {
 
@@ -115,6 +113,7 @@ public class addEmployeeInfoDialog extends JDialog {
 			jtf_age = new JTextField();
 			jtf_age.setFont(font2);
 			jtf_age.setBounds(x + addx1, y + addy, jtf_width, height);
+			jtf_age.addFocusListener(new TextFocus());
 
 			idNum = new JLabel("身份证号", JLabel.CENTER);
 			idNum.setFont(font);
@@ -163,11 +162,48 @@ public class addEmployeeInfoDialog extends JDialog {
 							jtf_position, jtf_institution, jtf_accountNum };
 					boolean isOk = NumExceptioin
 							.isAccountNumValid(jtf_accountNum)
-							&& NumExceptioin.isIdValid(jtf_idNum);
+							&& NumExceptioin.isIdValid(jtf_idNum)
+							&& NumExceptioin.isInt(jtf_age);
 					boolean isenter = isAllEntered.isEntered(EmpJtf)
 							&& (jrb_male.isSelected() || jrb_female
 									.isSelected());
 					if (isOk && isenter) {
+						WorkerVO vo = new WorkerVO(jtf_name.getText(),
+								jtf_idNum.getText(), jtf_position.getText(),
+								jtf_institution.getText(), jtf_accountNum
+								.getText(), saveValue);
+						if (jp == parent) {
+							ManageblService bl;
+							try {
+								bl = new ManageController();
+								try {
+									bl.addWorker(vo);
+								} catch (ExistException e) {
+									JLabel tip = new JLabel("提示：该员工信息已存在");
+									tip.setFont(font2);
+									JOptionPane.showMessageDialog(null, tip);
+									return;
+								}
+							} catch (RemoteException e) {
+								JLabel tip = new JLabel("提示：网络异常");
+								tip.setFont(font2);
+								JOptionPane.showMessageDialog(null, tip);
+								return;
+							}
+
+						}
+						if (jp == parent2) {
+							FinanceblService bl;
+							try {
+								bl = new FinanceController();
+								bl.initial(vo);
+							} catch (RemoteException e) {
+								JLabel tip = new JLabel("提示：网络异常");
+								tip.setFont(font2);
+								JOptionPane.showMessageDialog(null, tip);
+								return;
+							}
+						}
 						rowContent = new String[] { jtf_name.getText(),
 								saveValue, jtf_age.getText(),
 								jtf_idNum.getText(), jtf_position.getText(),
@@ -183,15 +219,15 @@ public class addEmployeeInfoDialog extends JDialog {
 						JLabel tip = new JLabel("提示：保存成功");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if((!isOk)&&isenter){
+					} else if ((!isOk) && isenter) {
 						JLabel tip = new JLabel("提示：请输入正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if(isOk&&!isenter){
+					} else if (isOk && !isenter) {
 						JLabel tip = new JLabel("提示：仍有信息未输入");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
-					}else if(!isOk&&!isenter){
+					} else if (!isOk && !isenter) {
 						JLabel tip = new JLabel("请输入所有正确格式的信息");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
@@ -247,6 +283,7 @@ public class addEmployeeInfoDialog extends JDialog {
 	// 错误提示信息是否已经被添加
 	boolean isAccountNumAdd = false;
 	boolean isIdNumAdd = false;
+	boolean isAgeAdd = false;
 
 	/**
 	 * 监听焦点
@@ -303,6 +340,27 @@ public class addEmployeeInfoDialog extends JDialog {
 						isIdNumAdd = false;
 						removeTip(tip2);
 						tip2 = null;
+					}
+				}
+			}
+			if (temp == jtf_age) {
+				if (!NumExceptioin.isInt(jtf_age)) {
+					isAgeAdd = true;
+					if (tip3 == null) {
+						tip3 = new JLabel("请输入整数", JLabel.CENTER);
+						tip3.setBounds(x + addx1, y + addy + height, jtf_width,
+								height);
+						tip3.setFont(font2);
+						tip3.setForeground(Color.RED);
+						addTip(tip3);
+					}
+
+				} else {
+					if (isAgeAdd
+							&& !"".equalsIgnoreCase(jtf_age.getText().trim())) {
+						isAgeAdd = false;
+						removeTip(tip3);
+						tip3 = null;
 					}
 				}
 			}
