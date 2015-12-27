@@ -1,6 +1,7 @@
 package presentation.manageui;
 
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
 
@@ -11,12 +12,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class addInstituInfoDialog extends JDialog {
+public class addInstituInfoDialog extends MyDialog {
 
 	private EmpAndInsPanel parent;
 	private FinanceInitialPanel parent2;
 
 	public addInstituInfoDialog(EmpAndInsPanel parent) {
+		super();
+
 		this.parent = parent;
 		this.setContentPane(new addInstituInfoPanel(parent));
 		this.setSize(400, 380);
@@ -25,6 +28,8 @@ public class addInstituInfoDialog extends JDialog {
 	}
 
 	public addInstituInfoDialog(FinanceInitialPanel parent) {
+		super();
+
 		this.parent2 = parent;
 		this.setContentPane(new addInstituInfoPanel(parent2));
 		this.setSize(400, 380);

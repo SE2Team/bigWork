@@ -8,6 +8,7 @@ import businesslogic.managebl.ManageController;
 import businesslogicservice.FinanceblService;
 import businesslogicservice.ManageblService;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
 import util.ExistException;
@@ -21,14 +22,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
 
-public class addEmployeeInfoDialog extends JDialog {
+public class addEmployeeInfoDialog extends MyDialog {
 
 	private EmpAndInsPanel parent;
 	private FinanceInitialPanel parent2;
 	String saveValue = null;// 选中按钮的String值
 
 	public addEmployeeInfoDialog(EmpAndInsPanel parent) {
-
+		super();
 		this.parent = parent;
 		this.setContentPane(new addUserInfoPanel(parent));
 		this.setSize(400, 400);

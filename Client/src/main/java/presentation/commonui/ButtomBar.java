@@ -38,7 +38,6 @@ public class ButtomBar extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
         g.drawImage(new ImageIcon("images/buttom.jpg").getImage(), 0, 0, this);
         repaint();
     }

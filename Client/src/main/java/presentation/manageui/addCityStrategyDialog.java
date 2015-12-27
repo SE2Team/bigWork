@@ -3,6 +3,7 @@ package presentation.manageui;
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.ConstantVO;
@@ -22,11 +23,12 @@ import java.rmi.RemoteException;
  *
  */
 
-public class addCityStrategyDialog extends JDialog {
+public class addCityStrategyDialog extends MyDialog {
 
 	private CityStrategyPanel parent;
 
 	public addCityStrategyDialog(CityStrategyPanel parent) {
+		super();
 		this.parent = parent;
 		this.setContentPane(new addCityStrategyPanel());
 		this.setSize(400, 380);

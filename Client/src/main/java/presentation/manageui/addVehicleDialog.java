@@ -9,6 +9,7 @@ import businesslogicservice.FinanceblService;
 import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
 import util.ExistException;
@@ -19,11 +20,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 
-public class addVehicleDialog extends JDialog {
+public class addVehicleDialog extends MyDialog {
 	private VehiclePanel parent;
 	private FinanceInitialPanel parent2;
 
 	public addVehicleDialog(VehiclePanel parent) {
+		super();
+
 		this.parent = parent;
 		this.setContentPane(new addVehiclePanel(parent));
 		this.setSize(400, 400);
@@ -32,6 +35,8 @@ public class addVehicleDialog extends JDialog {
 	}
 
 	public addVehicleDialog(FinanceInitialPanel parent) {
+		super();
+
 		this.parent2 = parent;
 		this.setContentPane(new addVehiclePanel(parent2));
 		this.setSize(400, 400);

@@ -3,37 +3,25 @@
  */
 package presentation.financeui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import vo.GatheringVO;
 
-public class addSettleDialog extends JDialog {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.rmi.RemoteException;
+
+public class addSettleDialog extends MyDialog {
 
 	private FinanceSettlePanel parent;
 
 	public addSettleDialog(FinanceSettlePanel parent) {
-
+		super();
 		this.parent = parent;
 		this.setContentPane(new addSettlePanel());
 		this.setSize(400, 380);

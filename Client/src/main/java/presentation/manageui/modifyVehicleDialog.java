@@ -2,6 +2,7 @@ package presentation.manageui;
 
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import vo.VehicleVO;
 
@@ -9,11 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class modifyVehicleDialog extends JDialog {
+public class modifyVehicleDialog extends MyDialog {
 
 	private VehiclePanel parent;
 
 	public modifyVehicleDialog(VehiclePanel parent) {
+		super();
+
 		this.parent = parent;
 		this.setContentPane(new modifyVehiclePanel());
 		this.setSize(400, 400);

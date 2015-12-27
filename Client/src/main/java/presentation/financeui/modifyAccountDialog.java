@@ -3,6 +3,7 @@ package presentation.financeui;
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.AccountVO;
@@ -15,11 +16,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
 
-public class modifyAccountDialog extends JDialog {
+public class modifyAccountDialog extends MyDialog {
 
 	private FinanceAccountPanel parent;
 
 	public modifyAccountDialog(FinanceAccountPanel parent) {
+		super();
 		this.parent = parent;
 		this.setContentPane(new modAccountPanel());
 		this.setSize(400, 380);

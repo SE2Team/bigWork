@@ -1,29 +1,24 @@
 package presentation.manageui;
 
-import java.awt.Color;
-import java.awt.Font;
+import presentation.commonui.swing.MyDialog;
+import presentation.exception.NumExceptioin;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
-import presentation.exception.NumExceptioin;
-
-
-public class modifyEmployeeDialog extends JDialog{
+public class modifyEmployeeDialog extends MyDialog {
 
 	private EmpAndInsPanel parent;
 	String saveValue = null;//选中按钮的String值
 	
 	public modifyEmployeeDialog(EmpAndInsPanel parent) {
+		super();
+
 		this.parent = parent;
 		this.setContentPane(new modUserInfoPanel());
 		this.setSize(400, 400);

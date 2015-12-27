@@ -3,24 +3,20 @@
  */
 package presentation.manageui;
 
-import java.awt.Font;
+import presentation.commonui.swing.MyDialog;
+import presentation.userui.UserAdminPanel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import presentation.userui.UserAdminPanel;
-
-public class addAccountNumDialog extends JDialog {
+public class addAccountNumDialog extends MyDialog {
 
 	private UserAdminPanel parent;
 
 	public addAccountNumDialog(UserAdminPanel parent) {
-
+		super();
 		this.parent = parent;
 		this.setContentPane(new adduserPanel());
 		this.setSize(400, 380);

@@ -8,6 +8,7 @@ import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import vo.DriverVO;
@@ -17,12 +18,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 
-public class addDriverDialog extends JDialog {
+public class addDriverDialog extends MyDialog {
 
 	private DriverPanel parent;
 	private String saveValue = null;
 
 	public addDriverDialog(DriverPanel parent) {
+		super();
 
 		this.parent = parent;
 		this.setContentPane(new addDriverPanel());
