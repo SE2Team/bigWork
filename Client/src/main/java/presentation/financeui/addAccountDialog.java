@@ -3,16 +3,14 @@
  */
 package presentation.financeui;
 
-import util.ExistException;
-import vo.AccountVO;
-
-import javax.swing.*;
-
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
+import vo.AccountVO;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,7 +50,9 @@ public class addAccountDialog extends JDialog {
 	// 定义添加账户信息，账户名称，余额的label
 	JLabel addInfo, accountName, balance;
 	// 定义对应的文本框
-	JTextField jtf_accountName, jtf_balance;
+	JTextField jtf_accountName;
+	JTextField jtf_balance;
+
 	// 定义确定，取消按钮
 	JButton sure, cancel;
 	// 定义用来存放用户输入信息的数组

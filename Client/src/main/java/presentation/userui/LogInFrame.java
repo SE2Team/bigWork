@@ -7,11 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class LogInFrame extends JFrame{
+public class LogInFrame extends JFrame {
     static Point origin = new Point();
-    private JFrame jf;
+    private static JFrame jf;
     private JButton closeB;
     private ButtomBar buttom;
+    private BigCardPanel bigCardPanel;
 
 
     public LogInFrame() {
@@ -42,33 +43,44 @@ public class LogInFrame extends JFrame{
             }
         });
 
-
-        this.add(new BigCardPanel());
+        bigCardPanel = new BigCardPanel();
+        this.add(bigCardPanel);
 
         this.setResizable(false);//不允许用户改变窗体大小
         this.setUndecorated(true);
         this.setVisible(true);
-		//居中
-		Toolkit toolkit=Toolkit.getDefaultToolkit();
-		Dimension screen=toolkit.getScreenSize();
-		int x=(screen.width-this.getWidth())/2;
-		int y=(screen.height-this.getHeight())/2;
-		this.setLocation(x, y-20);
+        //居中
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screen = toolkit.getScreenSize();
+        int x = (screen.width - this.getWidth()) / 2;
+        int y = (screen.height - this.getHeight()) / 2;
+        this.setLocation(x, y - 20);
 
-        buttom = new ButtomBar();
-        buttom.setBounds(0, 600, 900, 30);
-
-        closeB = new JButton("退出系统");
-        closeB.setSize(10, 10);
-        closeB.setBounds(750, 0, 150, 30);
-        closeB.addActionListener(new ActionListener() {
+        buttom = ButtomBar.getInstance();
+        buttom.getCloseB().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jf.dispose();
             }
         });
-        buttom.add(closeB);
 
         this.add(buttom);
+
+
+        //拟定的遮挡panel
+        JPanel co = new JPanel();
+        co.setBounds(0, 0, 900, 630);
+
+//        this.add(co);
+    }
+
+    public static JFrame getInstance() {
+        return jf;
+    }
+
+    @Override
+    public void setEnabled(boolean b) {
+        super.setEnabled(b);
+        bigCardPanel.setEnabled(b);
     }
 }
 

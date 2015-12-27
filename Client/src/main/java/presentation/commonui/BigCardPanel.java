@@ -155,4 +155,11 @@ public class BigCardPanel extends JPanel implements ActionListener {
         }
 
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        lg.setEnabled(enabled);
+
+    }
 }
