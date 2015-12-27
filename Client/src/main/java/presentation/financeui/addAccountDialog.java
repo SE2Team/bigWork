@@ -7,6 +7,7 @@ import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import presentation.userui.LogInFrame;
 import util.ExistException;
 import vo.AccountVO;
 
@@ -65,7 +66,8 @@ public class addAccountDialog extends JDialog {
 	class addAccountPanel extends JPanel {
 
 		addAccountPanel(final JPanel jp) {
-			this.setLayout(null);
+            LogInFrame.getInstance().setEnabled(false);
+            this.setLayout(null);
 
 			addInfo = new JLabel("添加账户信息", JLabel.CENTER);
 			addInfo.setFont(new Font("楷体", Font.PLAIN, 25));
@@ -142,8 +144,11 @@ public class addAccountDialog extends JDialog {
 						if (jp == parent2) {
 							parent2.addAccInfo(rowContent);
 						}
-						dispose();
-						JLabel tip = new JLabel("提示：添加成功");
+
+                        LogInFrame.getInstance().setEnabled(true);
+
+                        dispose();
+                        JLabel tip = new JLabel("提示：添加成功");
 						tip.setFont(font2);
 						JOptionPane.showMessageDialog(null, tip);
 					} else if ((!isOk) && isAllEntered.isEntered(accJtf)) {
@@ -167,8 +172,10 @@ public class addAccountDialog extends JDialog {
 			cancel.setBounds(120 + addx, y + 2 * addy + 10, 80, height);
 			cancel.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					dispose();
-				}
+                    LogInFrame.getInstance().setEnabled(true);
+
+                    dispose();
+                }
 			});
 
 			this.add(addInfo);

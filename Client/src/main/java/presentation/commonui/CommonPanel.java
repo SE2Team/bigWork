@@ -275,5 +275,13 @@ public class CommonPanel extends JPanel implements ActionListener {
 	public JLabel getExit(){
 		return upper_exit;
 	}
-	
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        upper.setEnabled(enabled);
+        left.setEnabled(enabled);
+        cardPanel.setEnabled(enabled);
+        right.setEnabled(enabled);
+    }
 }
