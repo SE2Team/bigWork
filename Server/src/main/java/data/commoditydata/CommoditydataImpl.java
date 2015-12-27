@@ -5,6 +5,7 @@ import dataservice.commoditydataservice.CommodityDataService;
 import po.StockInPO;
 import po.StockOutPO;
 import po.StockPO;
+import util.ListState;
 import util.TransportType;
 
 import java.rmi.RemoteException;
@@ -66,10 +67,12 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 	}
 	
 	private StockInPO stringToPO(String[] str){
-		boolean isCheck=false;
-		if(str[0].equals("true")){
-			isCheck=true;
-		}
+        ListState isCheck = ListState.UNCHECK;
+        if (str[1].equals("PASSED")) {
+            isCheck = ListState.PASSED;
+        } else if (str[1].equals("REJECTED")) {
+            isCheck = ListState.REJECTED;
+        }
 		return new StockInPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8],isCheck);
 	}
 	
@@ -89,12 +92,13 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 	}
 	
 	private StockOutPO stringToStockOutPO(String[] str){
-		boolean isCheck=false;
 		TransportType transportType=TransportType.AIRPLANE;
-		
-		if(str[0].equals("true")){
-			isCheck=true;
-		}
+        ListState isCheck = ListState.UNCHECK;
+        if (str[1].equals("PASSED")) {
+            isCheck = ListState.PASSED;
+        } else if (str[1].equals("REJECTED")) {
+            isCheck = ListState.REJECTED;
+        }
 		
 		if(str[5].equals("CAR")){
 			transportType=TransportType.CAR;

@@ -24,7 +24,7 @@ public class TransArrive extends List {
     }
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         TransferReceiveVO vo = (TransferReceiveVO) listVO;
         TransferReceivePO po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),

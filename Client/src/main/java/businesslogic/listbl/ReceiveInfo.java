@@ -24,7 +24,7 @@ public class ReceiveInfo extends List {
     }
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         ReceiveVO vo = null;
         vo = (ReceiveVO) listVO;
         ReceivePO po = VO2PO.convert(vo);

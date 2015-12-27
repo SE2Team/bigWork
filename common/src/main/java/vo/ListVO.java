@@ -1,5 +1,6 @@
 package vo;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -9,19 +10,11 @@ import java.util.Date;
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class ListVO implements Serializable{
+public class ListVO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
     protected String id;
     protected String content;
-    protected boolean isCheck=false;
-    public ListType getType() {
-        return type;
-    }
-
-    public void setType(ListType type) {
-        this.type = type;
-    }
-
+    protected ListState isCheck = ListState.UNCHECK;
     protected ListType type;
 
     /**
@@ -30,11 +23,19 @@ public class ListVO implements Serializable{
     public ListVO() {
         SimpleDateFormat df = new SimpleDateFormat("MMddHHmmss");//设置日期格式
         this.id = df.format(new Date());
-        type=ListType.ADDRESSEEINFOMATION;
+        type = ListType.ADDRESSEEINFOMATION;
     }
 
-    public ListVO(boolean isCheck) {
+    public ListVO(ListState isCheck) {
         this.isCheck = isCheck;
+    }
+
+    public ListType getType() {
+        return type;
+    }
+
+    public void setType(ListType type) {
+        this.type = type;
     }
 
     public String getId() {
@@ -50,11 +51,11 @@ public class ListVO implements Serializable{
         this.content = content;
     }
 
-    public void setIsCheck(boolean isCheck){
-        this.isCheck=isCheck;
+    public ListState getIsCheck() {
+        return isCheck;
     }
 
-    public boolean getIsCheck(){
-        return isCheck;
+    public void setIsCheck(ListState isCheck) {
+        this.isCheck = isCheck;
     }
 }

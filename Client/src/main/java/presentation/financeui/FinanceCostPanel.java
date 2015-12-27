@@ -1,35 +1,18 @@
 package presentation.financeui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.rmi.RemoteException;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import util.ListState;
 import vo.PaymentVO;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.rmi.RemoteException;
 
 /**
  * 财务人员成本管理界面
@@ -201,7 +184,7 @@ public class FinanceCostPanel extends JPanel {
 					sumTextField.getText().trim(), nameTextField.getText()
 							.trim(), numTextField.getText().trim(),
 					reasonTextArea.getText().trim(), otherTextArea.getText()
-							.trim(), false);
+					.trim(), ListState.UNCHECK);
 			FinanceblService bl;
 			try {
 				bl = new FinanceController();

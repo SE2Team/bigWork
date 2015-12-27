@@ -4,6 +4,7 @@ import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.listdataservice.ListDataService;
 import po.ReceiptPO;
 import util.ExistException;
+import util.ListState;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Test {
 			ArrayList<String> list=new ArrayList<>();
 			list.add("123456");
 			list.add("1234560");
-			listData.save(new ReceiptPO("333","4444","5555",list,true));
+			listData.save(new ReceiptPO("333", "4444", "5555", list, ListState.PASSED));
 
  			//
 //			Iterator<Integer> list=commodityData.check("2015-10-01", "2015-10-30");

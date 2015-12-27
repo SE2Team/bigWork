@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class ReceivePO extends ListPO implements Serializable{
 
 
 	public ReceivePO(String arriveDate, String transferNum, String start, String arriveState,
-					 boolean isCheck) {
+					 ListState isCheck) {
 		super(isCheck);
 		this.arriveDate = arriveDate;
 		this.transferNum = transferNum;

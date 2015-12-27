@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.TransferReceivePanel;
+import util.ListState;
 import vo.TransferReceiveVO;
 
 import javax.swing.*;
@@ -33,11 +34,11 @@ public class TransferReceiveChecking extends TransferReceivePanel{
     protected void performSure() {
         TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate.getText(),
                 jtf_departure.getText(), state.getSelectedItem().toString(),
-                jtf_CenterNum.getText(), jtf_transferNum.getText(), false);
+                jtf_CenterNum.getText(), jtf_transferNum.getText(), ListState.PASSED);
 
         try {
             ListblService bl = new ListController();
-            bl.transArrive(vo);
+            bl.save2File(vo);
         } catch (RemoteException e) {
             JLabel tip = new JLabel("提示：网络异常");
             tip.setFont(font2);

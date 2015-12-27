@@ -3,6 +3,7 @@ package data.commoditydata;
 import org.junit.Test;
 import po.StockInPO;
 import po.StockPO;
+import util.ListState;
 
 import java.util.ArrayList;
 
@@ -15,8 +16,8 @@ public class CommoditydataImplTest {
     public void testUpdate() throws Exception {
 
         ArrayList<StockInPO> arrayList=new ArrayList<>();
-        arrayList.add(new StockInPO("0","0","0","0","0","0","0",false));
-        arrayList.add(new StockInPO("0","0","0","0","0","0","1",false));
+        arrayList.add(new StockInPO("0", "0", "0", "0", "0", "0", "0", ListState.UNCHECK));
+        arrayList.add(new StockInPO("0", "0", "0", "0", "0", "0", "1", ListState.UNCHECK));
         StockPO po=new StockPO(false,arrayList);
 
         new CommoditydataImpl().update(po);

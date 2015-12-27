@@ -1,5 +1,6 @@
 package vo;
 
+import util.ListState;
 import util.ListType;
 
 /**
@@ -16,7 +17,7 @@ public class GatheringVO extends ListVO {
     String money;
     String place;
 
-    public GatheringVO(String date, String workplace, String man, String money, String place, boolean isCheck) {
+    public GatheringVO(String date, String workplace, String man, String money, String place, ListState isCheck) {
         super(isCheck);
         this.date = date;
         this.workplace = workplace;

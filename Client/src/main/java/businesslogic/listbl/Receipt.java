@@ -25,7 +25,7 @@ public class Receipt extends List {
     }
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         ReceiptVO vo = null;
         vo = (ReceiptVO) listVO;
         ReceiptPO po = VO2PO.convert(vo);

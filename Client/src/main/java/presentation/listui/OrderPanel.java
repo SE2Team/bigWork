@@ -9,11 +9,10 @@ import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.DeliveryType;
-import util.ExistException;
+import util.ListState;
 import vo.OrderVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -412,18 +411,13 @@ public class OrderPanel extends JPanel {
 					deliveryType, o_wrapper.getSelectedItem().toString(),
 					o_transExpense.getText(), o_wrapperExpense.getText(),
 					o_expense.getText(), o_dueDate.getText(),
-					o_ordernum.getText(), false);
+					o_ordernum.getText(), ListState.UNCHECK);
 
 			ListblService bl;
 
 			try {
 				bl = new ListController();
-				try {
-					bl.save(order_vo);
-				} catch (ExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				bl.save(order_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				JLabel tip = new JLabel("提示：网络异常");

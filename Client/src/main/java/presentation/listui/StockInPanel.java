@@ -9,17 +9,12 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
+import util.ListState;
 import vo.StockInVO;
 
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.rmi.RemoteException;
 
 public class StockInPanel extends JPanel {
@@ -182,11 +177,11 @@ public class StockInPanel extends JPanel {
 			StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
 					jtf_inDate.getText(), jtf_destination.getText(),
 					jtf_zoneNum.getText(), jtf_rowNum.getText(),
-					jtf_shelfNum.getText(), jtf_positionNum.getText(), false);
+					jtf_shelfNum.getText(), jtf_positionNum.getText(), ListState.UNCHECK);
 			ListblService bl;
 			try {
 				bl = new ListController();
-				bl.stockIn(in_vo);
+				bl.save(in_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				JLabel tip = new JLabel("提示：网络异常");

@@ -6,17 +6,17 @@ import java.awt.*;
 /**
  * Created by MYK on 2015/12/27 0027.
  */
-public class ButtomBar extends JPanel {
+public class BottomBar extends JPanel {
 
-    private static ButtomBar ME = null;
+    private static BottomBar ME = null;
     private JButton closeB;
 
-    private ButtomBar() {
+    private BottomBar() {
         this.setLayout(null);
         this.setBounds(0, 600, 900, 30);
 
         initCloseButton();
-        ButtomBar.ME = this;
+        BottomBar.ME = this;
     }
 
     private void initCloseButton() {
@@ -28,9 +28,9 @@ public class ButtomBar extends JPanel {
         this.add(closeB);
     }
 
-    public static ButtomBar getInstance() {
-        if (ButtomBar.ME == null) {
-            return new ButtomBar();
+    public static BottomBar getInstance() {
+        if (BottomBar.ME == null) {
+            return new BottomBar();
         } else {
             return ME;
         }

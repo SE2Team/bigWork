@@ -9,11 +9,10 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import util.ExistException;
+import util.ListState;
 import vo.ReceiveVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -183,16 +182,11 @@ public class ReceivePanel extends JPanel {
 		if (isOk && isAllEntered.isEntered(receiveJtf)) {
 			ReceiveVO receive_vo = new ReceiveVO(jtf_arriveDate.getText(),
 					jtf_transferNum.getText(), jtf_departure.getText(),
-					jcb_arrivestate.getSelectedItem().toString(), false);
+					jcb_arrivestate.getSelectedItem().toString(), ListState.UNCHECK);
 			ListblService bl;
 			try {
 				bl = new ListController();
-				try {
-					bl.save(receive_vo);
-				} catch (ExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				bl.save(receive_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				JLabel tip = new JLabel("提示：网络异常");

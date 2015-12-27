@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.StockOutPanel;
+import util.ListState;
 import util.TransportType;
 import vo.StockOutVO;
 
@@ -33,11 +34,11 @@ public class StockOutChecking extends StockOutPanel{
         // jcb_loadingWay.getSelectedItem().toString()
         StockOutVO out_vo = new StockOutVO(jtf_deliveryNum.getText(),
                 jtf_outDate.getText(), jtf_destination.getText(),
-                TransportType.TRAIN, jtf_transferNum.getText(),false);
+                TransportType.TRAIN, jtf_transferNum.getText(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();
-            bl.stockOut(out_vo);
+            bl.save2File(out_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");

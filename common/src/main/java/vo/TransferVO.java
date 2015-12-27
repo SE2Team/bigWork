@@ -1,5 +1,6 @@
 package vo;
 
+import util.ListState;
 import util.ListType;
 
 /**
@@ -29,7 +30,7 @@ public class TransferVO extends ListVO {
 
     public TransferVO(String loadingWay, String loadingDate, String transportNum,
                       String vehicleNum, String start, String end, String containerNum, String monitor,
-                      String supercargo, String orderNum, String money, boolean isCheck) {
+                      String supercargo, String orderNum, String money, ListState isCheck) {
         super(isCheck);
         this.loadingWay = loadingWay;
         this.loadingDate = loadingDate;
@@ -45,12 +46,12 @@ public class TransferVO extends ListVO {
         setType(ListType.TRANSINFO);
     }
 
-    public void setLoadingWay(String loadingWay) {
-        this.loadingWay = loadingWay;
-    }
-
     public String getLoadingWay() {
         return loadingWay;
+    }
+
+    public void setLoadingWay(String loadingWay) {
+        this.loadingWay = loadingWay;
     }
 
     public void setloadingDate(String loadingDate) {
@@ -61,76 +62,76 @@ public class TransferVO extends ListVO {
         return loadingDate;
     }
 
-    public void setTransportNum(String transportNum) {
-        this.transportNum = transportNum;
-    }
-
     public String getTransportNum() {
         return transportNum;
     }
 
-    public void setVehicleNum(String vehicleNum) {
-        this.vehicleNum = vehicleNum;
+    public void setTransportNum(String transportNum) {
+        this.transportNum = transportNum;
     }
 
     public String getVehicleNum() {
         return vehicleNum;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setVehicleNum(String vehicleNum) {
+        this.vehicleNum = vehicleNum;
     }
 
     public String getStart() {
         return start;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setStart(String start) {
+        this.start = start;
     }
 
     public String getEnd() {
         return end;
     }
 
-    public void setContainerNum(String containerNum) {
-        this.containerNum = containerNum;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public String getContainerNum() {
         return containerNum;
     }
 
-    public void setMonitor(String monitor) {
-        this.monitor = monitor;
+    public void setContainerNum(String containerNum) {
+        this.containerNum = containerNum;
     }
 
     public String getMonitor() {
         return monitor;
     }
 
-    public void setSupercargo(String supercargo) {
-        this.supercargo = supercargo;
+    public void setMonitor(String monitor) {
+        this.monitor = monitor;
     }
 
     public String getSupercargo() {
         return supercargo;
     }
 
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
+    public void setSupercargo(String supercargo) {
+        this.supercargo = supercargo;
     }
 
     public String getOrderNum() {
         return orderNum;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
     }
 
     public String getMoney() {
         return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
     }
 
 

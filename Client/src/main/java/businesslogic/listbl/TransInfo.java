@@ -24,7 +24,7 @@ public class TransInfo extends List {
     }
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         TransferVO vo = null;
         vo = (TransferVO) listVO;
         TransferPO po = VO2PO.convert(vo);

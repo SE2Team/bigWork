@@ -10,11 +10,10 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import util.ExistException;
+import util.ListState;
 import vo.LoadingVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -216,16 +215,11 @@ public class LoadingPanel extends JPanel {
 					jtf_start.getText(), jtf_end.getText(),
 					jtf_monitor.getText(), jtf_supercargo.getText(),
 					jtf_vehicleNum.getText(), jta_consignList.getText(),
-					jtf_Money.getText(), false);
+					jtf_Money.getText(), ListState.UNCHECK);
 			ListblService bl;
 			try {
 				bl = new ListController();
-				try {
-					bl.save(loading_vo);
-				} catch (ExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				bl.save(loading_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 

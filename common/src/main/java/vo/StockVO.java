@@ -15,24 +15,24 @@ public class StockVO {
 
     private ArrayList<StockInPO> stockList;//TODO 后期加入排序处理
 
-    public StockVO(Boolean stockState,ArrayList<StockInPO> stockList){
-        this.stockState=stockState;
-        this.stockList=stockList;
+    public StockVO(Boolean stockState, ArrayList<StockInPO> stockList) {
+        this.stockState = stockState;
+        this.stockList = stockList;
     }
 
-    public boolean getStockState(){
+    public boolean getStockState() {
         return stockState;
     }
 
-    public void add(StockInPO stockInPO){
+    public void add(StockInPO stockInPO) {
         stockList.add(stockInPO);
     }
 
-    public void remove(String num){
-        for(int i=0;i<stockList.size();i++){
-            StockInPO temp=stockList.get(i);
+    public void remove(String num) {
+        for (int i = 0; i < stockList.size(); i++) {
+            StockInPO temp = stockList.get(i);
 
-            if(temp.getDeliveryNum()==num)
+            if (temp.getDeliveryNum() == num)
                 stockList.remove(i);
         }
     }

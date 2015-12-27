@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ public class GatheringPO extends ListPO implements Serializable {
     String money;
     String place;
 
-    public GatheringPO(String date, String workplace, String man, String money, String place, boolean isCheck) {
+    public GatheringPO(String date, String workplace, String man, String money, String place, ListState isCheck) {
         super(isCheck);
         this.date = date;
         this.workplace = workplace;

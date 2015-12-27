@@ -3,7 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.StockInPanel;
-import util.ExistException;
+import util.ListState;
 import vo.StockInVO;
 
 import javax.swing.*;
@@ -35,18 +35,14 @@ public class StockInChecking extends StockInPanel {
         StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
                 jtf_inDate.getText(), jtf_destination.getText(),
                 jtf_zoneNum.getText(), jtf_rowNum.getText(),
-                jtf_shelfNum.getText(), jtf_positionNum.getText(),false);
+                jtf_shelfNum.getText(), jtf_positionNum.getText(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();
-            bl.save(in_vo);
+            bl.save2File(in_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
-        } catch (ExistException e) {
-            JLabel tip = new JLabel("提示：错误");
             tip.setFont(font2);
             JOptionPane.showMessageDialog(null, tip);
         }

@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.LoadingPanel;
+import util.ListState;
 import vo.LoadingVO;
 
 import javax.swing.*;
@@ -39,11 +40,11 @@ public class LoadingChecking extends LoadingPanel{
                 jtf_start.getText(), jtf_end.getText(), jtf_monitor
                 .getText(), jtf_supercargo.getText(),
                 jtf_vehicleNum.getText(), jta_consignList.getText(),
-                jtf_Money.getText(),false);
+                jtf_Money.getText(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();
-            bl.loadingInfo(loading_vo);
+            bl.save2File(loading_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
 

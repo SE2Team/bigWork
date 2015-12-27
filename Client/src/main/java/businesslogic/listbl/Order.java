@@ -28,7 +28,7 @@ public class Order extends List {
     }
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         OrderVO vo = null;
         vo = (OrderVO) listVO;
 

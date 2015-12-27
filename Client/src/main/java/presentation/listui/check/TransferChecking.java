@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.TransferPanel;
+import util.ListState;
 import vo.TransferVO;
 
 import javax.swing.*;
@@ -42,11 +43,11 @@ public class TransferChecking extends TransferPanel{
                 .getText(), jtf_start.getText(), jtf_end.getText(),
                 jtf_containerNum.getText(), jtf_monitor.getText(),
                 jtf_supercargo.getText(), jta_orderNums.getText(),
-                jtf_money.getText(),false);
+                jtf_money.getText(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();
-            bl.transInfo(transfervo);
+            bl.save2File(transfervo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");

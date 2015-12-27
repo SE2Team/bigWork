@@ -36,6 +36,7 @@ public class VehiclePanel extends JPanel {
 	Object c0, c1, c2, c3;
 	// 被选中的要修改的行号
 	int modRowNum;
+    modifyVehicleDialog modifyVehicle;
 
 	public VehiclePanel() {
 
@@ -92,14 +93,14 @@ public class VehiclePanel extends JPanel {
 		modify = new JButton("修改");
 		modify.setFont(font2);
 		modify.setBounds(x + 2 * addx, y, width, height);
-		final modifyVehicleDialog modifyVehicle = new modifyVehicleDialog(
-				VehiclePanel.this);
+
 		modify.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				modRowNum = vehicleTable.getSelectedRow();
 				if (modRowNum != -1) {
-					modifyVehicle.setVisible(true);
+                    modifyVehicle = new modifyVehicleDialog(VehiclePanel.this);
+                    modifyVehicle.setVisible(true);
                     modifyVehicle.setAlwaysOnTop(true);
                 }
 

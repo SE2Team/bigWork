@@ -1,6 +1,7 @@
 package po;
 
 import util.DeliveryType;
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -69,7 +70,7 @@ public class OrderPO extends ListPO implements Serializable {
                  String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                  String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                  String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
-                 String expenseOfWrapper, String expense, String date, String deliveryNum, boolean isCheck) {
+                 String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck) {
         super(isCheck);
         this.senderName = senderName;
         this.senderAddress = senderAddress;

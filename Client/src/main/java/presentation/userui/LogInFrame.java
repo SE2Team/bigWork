@@ -1,7 +1,7 @@
 package presentation.userui;
 
 import presentation.commonui.BigCardPanel;
-import presentation.commonui.ButtomBar;
+import presentation.commonui.BottomBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ public class LogInFrame extends JFrame {
     static Point origin = new Point();
     private static JFrame jf;
     private JButton closeB;
-    private ButtomBar buttom;
+    private BottomBar buttom;
     private BigCardPanel bigCardPanel;
 
 
@@ -56,7 +56,7 @@ public class LogInFrame extends JFrame {
         int y = (screen.height - this.getHeight()) / 2;
         this.setLocation(x, y - 20);
 
-        buttom = ButtomBar.getInstance();
+        buttom = BottomBar.getInstance();
         buttom.getCloseB().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jf.dispose();
@@ -65,12 +65,8 @@ public class LogInFrame extends JFrame {
 
         this.add(buttom);
 
+        repaint();
 
-        //拟定的遮挡panel
-        JPanel co = new JPanel();
-        co.setBounds(0, 0, 900, 630);
-
-//        this.add(co);
     }
 
     public static JFrame getInstance() {

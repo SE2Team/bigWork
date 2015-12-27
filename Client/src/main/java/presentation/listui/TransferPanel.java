@@ -9,11 +9,10 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import util.ExistException;
+import util.ListState;
 import vo.TransferVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -278,16 +277,11 @@ public class TransferPanel extends JPanel {
 					jtf_start.getText(), jtf_end.getText(),
 					jtf_containerNum.getText(), jtf_monitor.getText(),
 					jtf_supercargo.getText(), jta_orderNums.getText(),
-					jtf_money.getText(), false);
+					jtf_money.getText(), ListState.UNCHECK);
 			ListblService bl;
 			try {
 				bl = new ListController();
-				try {
-					bl.save(transfervo);
-				} catch (ExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				bl.save(transfervo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				JLabel tip = new JLabel("提示：网络异常");

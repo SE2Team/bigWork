@@ -32,18 +32,6 @@ public class BigCardPanel extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * 待完成
-     */
-    private void intiHint() {
-        JPanel h = new JPanel();
-        h.setBounds(this.getX(), this.getY(), 50, 50);
-        JTextArea _message = new JTextArea();
-        _message.setBackground(new Color(255, 255, 225));
-        _message.setMargin(new Insets(4, 4, 4, 4));
-        _message.setLineWrap(true);
-        _message.setWrapStyleWord(true);
-    }
 
 
     private void initLoginPanel() {
@@ -91,9 +79,11 @@ public class BigCardPanel extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, tip);
         } else if ("请输入密码".equalsIgnoreCase(password)) {
             isNull = true;
-            JLabel tip = new JLabel("请输入密码");
-            tip.setFont(font);
-            JOptionPane.showMessageDialog(null, tip);
+//            JLabel tip = new JLabel("请输入密码");
+//            tip.setFont(font);
+//            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip();
+
         } else {
             isNull = false;
         }

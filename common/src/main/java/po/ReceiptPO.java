@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ public class ReceiptPO extends ListPO{
 	private String receiptCourier;
 	private ArrayList<String> orderNum;
 
-	public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier,ArrayList<String> orderNum,
-					 boolean isCheck) {
+	public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier, ArrayList<String> orderNum,
+					 ListState isCheck) {
 		super(isCheck);
 		this.receiptDate = receiptDate;
 		this.receiptMoney = receiptMoney;

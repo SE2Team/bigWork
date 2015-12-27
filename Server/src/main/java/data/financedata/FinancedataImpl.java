@@ -4,6 +4,7 @@ import data.Common.Common;
 import dataservice.financedataservice.FinanceDataService;
 import po.*;
 import util.ExistException;
+import util.ListState;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -85,8 +86,13 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 		// TODO Auto-generated method stub
 		Common common = new Common("account");
 		ArrayList<String> list=common.readData();
-		if(list.contains(this.poToString(accountPO))){
-			throw new ExistException();
+		AccountPO po;
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			po = this.stringToAccountPO(str);
+			if (po.getAccountName().equals(accountPO.getAccountName())) {
+				throw new ExistException();
+			}
 		}
 		common.writeDataAdd(this.poToString(accountPO));
 		return true;
@@ -162,17 +168,21 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	}
 	
 	private PaymentPO stringToPaymentPO(String[] str){
-		boolean isCheck=false;
-		if(str[6].equals("true")){
-			isCheck=true;
+		ListState isCheck = ListState.UNCHECK;
+		if (str[1].equals("PASSED")) {
+			isCheck = ListState.PASSED;
+		} else if (str[1].equals("REJECTED")) {
+			isCheck = ListState.REJECTED;
 		}
 		return new PaymentPO(str[0], str[1], str[2], str[3], str[4], str[5],isCheck);
 	}
 	
 	private GatheringPO stringToGatheringPO(String[] str){
-		boolean isCheck=false;
-		if(str[6].equals("true")){
-			isCheck=true;
+		ListState isCheck = ListState.UNCHECK;
+		if (str[1].equals("PASSED")) {
+			isCheck = ListState.PASSED;
+		} else if (str[1].equals("REJECTED")) {
+			isCheck = ListState.REJECTED;
 		}
 		return new GatheringPO(str[0], str[1], str[2], str[3], str[4],isCheck);
 	}
@@ -303,9 +313,11 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	}
 	
 	private StockInPO stringToPO(String[] str){
-		boolean isCheck=false;
-		if(str[0].equals("true")){
-			isCheck=true;
+		ListState isCheck = ListState.UNCHECK;
+		if (str[1].equals("PASSED")) {
+			isCheck = ListState.PASSED;
+		} else if (str[1].equals("REJECTED")) {
+			isCheck = ListState.REJECTED;
 		}
 		return new StockInPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8],isCheck);
 	}

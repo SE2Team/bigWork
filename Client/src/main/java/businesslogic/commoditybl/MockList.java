@@ -3,6 +3,7 @@ package businesslogic.commoditybl;
 import businesslogic.listbl.List;
 import businesslogic.managebl.Manage;
 import businesslogicservice.CommodityblService;
+import util.ListState;
 import vo.StockInVO;
 
 import java.rmi.RemoteException;
@@ -32,7 +33,7 @@ public class MockList extends List {
     public static void main(String[] args) throws RemoteException {
         CommodityblService commodity = new CommodityController();
 
-        StockInVO vo = new StockInVO("121", "121", "121", "121", "121", "121", "121",true);
+        StockInVO vo = new StockInVO("121", "121", "121", "121", "121", "121", "121", ListState.PASSED);
         commodity.stockIn(vo);
         Manage manage=new Manage();
         List list=new List();

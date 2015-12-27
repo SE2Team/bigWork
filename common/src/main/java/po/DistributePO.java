@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class DistributePO extends ListPO implements Serializable {
 	 * @param orderNum
 	 * @param distributeHuman
 	 */
-	public DistributePO( String arriveDate, String orderNum, String distributeHuman,boolean isCheck) {
+	public DistributePO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck) {
 		super(isCheck);
 		this.arriveDate = arriveDate;
 		this.orderNum = orderNum;

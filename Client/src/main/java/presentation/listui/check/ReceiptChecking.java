@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.ReceiptPanel;
+import util.ListState;
 import vo.ReceiptVO;
 
 import javax.swing.*;
@@ -34,10 +35,10 @@ public class ReceiptChecking extends ReceiptPanel{
     @Override
     protected void performSure() {
         ReceiptVO receipt_vo = new ReceiptVO(jtf_date.getText(), jtf_money.getText(), jtf_courier.getText(),
-                ordernumList,false);
+                ordernumList, ListState.PASSED);
         try {
             ListblService bl = new ListController();
-            bl.receipt(receipt_vo);
+            bl.save2File(receipt_vo);
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");

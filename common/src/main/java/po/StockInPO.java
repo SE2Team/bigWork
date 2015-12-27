@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class StockInPO extends ListPO implements Serializable {
     private String positionNum;
 
     public StockInPO(String deliveryNum, String inDate, String end, String zoneNum,
-                     String rowNum, String shelfNum, String positionNum, boolean isCheck) {
+                     String rowNum, String shelfNum, String positionNum, ListState isCheck) {
         super(isCheck);
         this.deliveryNum = deliveryNum;
         this.inDate = inDate;

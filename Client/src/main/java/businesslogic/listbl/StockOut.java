@@ -25,7 +25,7 @@ public class StockOut extends List {
     }
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         StockOutVO vo = (StockOutVO) listVO;
         new CommodityController().stockOut(vo);
         StockOutPO po = VO2PO.convert(vo);

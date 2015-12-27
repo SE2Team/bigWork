@@ -39,6 +39,8 @@ public class DriverPanel extends JPanel {
     // 修改前的vo
     DriverVO preVo = null;
 
+    modifyDriverDialog modDriver;
+
 	public DriverPanel() {
 
 		this.setLayout(null);
@@ -96,13 +98,14 @@ public class DriverPanel extends JPanel {
 		modify = new JButton("修改");
 		modify.setFont(font2);
 		modify.setBounds(x + 2 * addx, y, width, height);
-        final modifyDriverDialog modDriver = new modifyDriverDialog(
-                DriverPanel.this);
+//        final modifyDriverDialog modDriver = new modifyDriverDialog(
+//                DriverPanel.this);
         modify.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 				modRowNum = driverTable.getSelectedRow();
                 if (modRowNum != -1) {
+                    DriverPanel.this.modDriver = new modifyDriverDialog(DriverPanel.this);
                     modDriver.setVisible(true);
                 }
             }

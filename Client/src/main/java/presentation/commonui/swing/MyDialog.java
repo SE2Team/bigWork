@@ -37,8 +37,14 @@ public class MyDialog extends JDialog {
 
     private void init() {
         this.setAlwaysOnTop(true);
-        LogInFrame.getInstance().setEnabled(false);
     }
 
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        if (b) {
+            LogInFrame.getInstance().setEnabled(false);
+        }
 
+    }
 }

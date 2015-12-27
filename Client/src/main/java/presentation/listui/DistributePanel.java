@@ -9,11 +9,10 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import util.ExistException;
+import util.ListState;
 import vo.DistributeVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -124,16 +123,11 @@ public class DistributePanel extends JPanel {
 		if(isOk&&isAllEntered.isEntered(distributeJtf)){
 			DistributeVO dis_vo = new DistributeVO(
 					jtf_arriveDate.getText(), jtf_orderNum.getText(),
-					jtf_distributeHuman.getText(),false);
+					jtf_distributeHuman.getText(), ListState.UNCHECK);
 			ListblService bl;
 			try {
 				bl = new ListController();
-				try {
-					bl.save(dis_vo);
-				} catch (ExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				bl.save(dis_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				JLabel tip = new JLabel("提示：网络异常");

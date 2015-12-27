@@ -24,7 +24,7 @@ public class Payment extends List {
         super();
     }
 
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         PaymentVO vo = null;
         vo = (PaymentVO) listVO;
 

@@ -62,7 +62,7 @@ public class Finance {
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"新建收款单"));
 
-        return list.gathering(gatheringVO);
+        return list.save(gatheringVO);
     }
 
     /**
@@ -82,7 +82,7 @@ public class Finance {
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"新建付款单"));
 
-        return list.payment(paymentVO);
+        return list.save(paymentVO);
     }
 
     /**

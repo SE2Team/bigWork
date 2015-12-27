@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class AddresseeInformationPO extends ListPO implements Serializable {
 	 * @param addresseeName
 	 * @param addresseeDate
 	 */
-	public AddresseeInformationPO(String addresseeNum, String addresseeName, String addresseeDate,boolean isCheck) {
+	public AddresseeInformationPO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck) {
 		super(isCheck);
 		this.addresseeNum = addresseeNum;
 		this.addresseeName = addresseeName;

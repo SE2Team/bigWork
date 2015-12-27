@@ -9,6 +9,7 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
+import util.ListState;
 import vo.GatheringVO;
 
 import javax.swing.*;
@@ -122,7 +123,7 @@ public class addSettleDialog extends MyDialog {
 						GatheringVO vo = new GatheringVO(jtf_date.getText()
 								.trim(), jtf_org.getText().trim(), jtf_payee
 								.getText().trim(), jtf_amount.getText().trim(),
-								jtf_place.getText().trim(), false);
+								jtf_place.getText().trim(), ListState.UNCHECK);
 						FinanceblService bl;
 						try {
 							bl = new FinanceController();

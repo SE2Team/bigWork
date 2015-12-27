@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.ReceivePanel;
+import util.ListState;
 import vo.ReceiveVO;
 
 import javax.swing.*;
@@ -29,11 +30,11 @@ public class ReceiveChecking extends ReceivePanel{
     protected void performSure() {
         ReceiveVO receive_vo = new ReceiveVO(jtf_arriveDate.getText(),
                 jtf_transferNum.getText(), jtf_departure.getText(),
-                jcb_arrivestate.getSelectedItem().toString(),false);
+                jcb_arrivestate.getSelectedItem().toString(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();
-            bl.receiveInfo(receive_vo);
+            bl.save2File(receive_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");

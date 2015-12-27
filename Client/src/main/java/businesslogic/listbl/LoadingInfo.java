@@ -26,7 +26,7 @@ public class LoadingInfo extends List {
 
 
     @Override
-    public boolean save(ListVO listVO) throws RemoteException {
+    public boolean save2File(ListVO listVO) throws RemoteException {
         LoadingVO vo = null;
         vo = (LoadingVO) listVO;
 

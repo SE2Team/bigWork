@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ public class TransferPO extends ListPO implements Serializable {
 
     public TransferPO(String loadingWay, String loadingDate, String transportNum,
                       String vehicleNum, String start, String end, String containerNum, String monitor,
-                      String supercargo, String orderNum, String money, boolean isCheck) {
+                      String supercargo, String orderNum, String money, ListState isCheck) {
         super(isCheck);
         this.loadingWay = loadingWay;
         this.loadingDate = loadingDate;

@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 import util.TransportType;
 
@@ -24,7 +25,7 @@ public class StockOutPO extends ListPO implements Serializable {
 
 
     public StockOutPO(String deliveryNum, String outDate, String end,
-                      TransportType transportType, String transferNum, boolean isCheck) {
+                      TransportType transportType, String transferNum, ListState isCheck) {
         super(isCheck);
         this.deliveryNum = deliveryNum;
         this.outDate = outDate;

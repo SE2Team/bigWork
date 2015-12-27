@@ -47,7 +47,8 @@ public class List {
      * @return
      * @throws RemoteException
      */
-    public boolean save(ListVO vo) throws RemoteException {
+    @Deprecated
+    public boolean save2File(ListVO vo) throws RemoteException {
 //        ListPO po = null;
 //        switch (vo.getType()) {
 //            case LOADINGINFO:
@@ -117,7 +118,7 @@ public class List {
         return false;
     }
 
-    public boolean save(AddresseeInformationVO vo) throws RemoteException {
+    public final boolean save(AddresseeInformationVO vo) throws RemoteException {
         AddresseeInformationPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -125,7 +126,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(LoadingVO vo) throws RemoteException {
+    public final boolean save(LoadingVO vo) throws RemoteException {
         LoadingPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -133,7 +134,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(DistributeVO vo) throws RemoteException {
+    public final boolean save(DistributeVO vo) throws RemoteException {
         DistributePO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -141,7 +142,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(GatheringVO vo) throws RemoteException {
+    public final boolean save(GatheringVO vo) throws RemoteException {
         GatheringPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -149,7 +150,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(OrderVO vo) throws RemoteException {
+    public final boolean save(OrderVO vo) throws RemoteException {
         OrderPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -157,7 +158,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(PaymentVO vo) throws RemoteException {
+    public final boolean save(PaymentVO vo) throws RemoteException {
         PaymentPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -165,7 +166,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(ReceiptVO vo) throws RemoteException {
+    public final boolean save(ReceiptVO vo) throws RemoteException {
         ReceiptPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -173,7 +174,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(ReceiveVO vo) throws RemoteException {
+    public final boolean save(ReceiveVO vo) throws RemoteException {
         ReceivePO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -181,7 +182,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(StockInVO vo) throws RemoteException {
+    public final boolean save(StockInVO vo) throws RemoteException {
         StockInPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -189,7 +190,7 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(StockOutVO vo) throws RemoteException {
+    public final boolean save(StockOutVO vo) throws RemoteException {
         StockOutPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -198,7 +199,7 @@ public class List {
     }
 
 
-    public boolean save(TransferReceiveVO vo) throws RemoteException {
+    public final boolean save(TransferReceiveVO vo) throws RemoteException {
         TransferReceivePO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
@@ -206,35 +207,13 @@ public class List {
         return listDataService.saveAsList(po);//保存为待审批
     }
 
-    public boolean save(TransferVO vo) throws RemoteException {
+    public final boolean save(TransferVO vo) throws RemoteException {
         TransferPO po = null;
         po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
                 "新建中转单"));
         return listDataService.saveAsList(po);//保存为待审批
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -263,8 +242,5 @@ public class List {
         return arrayList.iterator();
     }
 
-    public boolean save2File(ListVO vo) throws RemoteException {
-        return true;
-    }
 
 }

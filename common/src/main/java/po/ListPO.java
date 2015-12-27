@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public class ListPO implements Serializable {
 
 
     protected String id;
-    protected boolean isCheck=false;
+    protected ListState state = ListState.UNCHECK;
     public ListType getType() {
         return type;
     }
@@ -34,9 +35,9 @@ public class ListPO implements Serializable {
         this.id = df.format(new Date());
     }
 
-    public ListPO(boolean isCheck) {
+    public ListPO(ListState state) {
         super();
-        this.isCheck = isCheck;
+        this.state = state;
         this.type = type;
     }
 
@@ -45,12 +46,11 @@ public class ListPO implements Serializable {
     }
 
 
-
-    public void setIsCheck(boolean isCheck){
-        this.isCheck=isCheck;
+    public ListState getIsCheck() {
+        return state;
     }
 
-    public boolean getIsCheck(){
-        return isCheck;
+    public void setIsCheck(ListState state) {
+        this.state = state;
     }
 }

@@ -26,7 +26,7 @@ public class AddresseeInfomation extends List {
         super();
     }
 
-    public boolean save(ListVO listvo) throws RemoteException {
+    public boolean save2File(ListVO listvo) throws RemoteException {
 
         AddresseeInformationVO vo = null;
         try {

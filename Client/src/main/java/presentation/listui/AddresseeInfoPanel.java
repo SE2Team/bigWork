@@ -9,11 +9,10 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import util.ExistException;
+import util.ListState;
 import vo.AddresseeInformationVO;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
@@ -123,8 +122,8 @@ public class AddresseeInfoPanel extends JPanel {
 		if (isOk && isAllEntered.isEntered(addresseeJtf)) {
 			AddresseeInformationVO addressInfo_vo = new AddresseeInformationVO(
 					jtf_receiveNum.getText(), jtf_receiver.getText(),
-					jtf_receiveDate.getText(), false);
-			ListblService bl;
+                    jtf_receiveDate.getText(), ListState.UNCHECK);
+            ListblService bl;
 			try {
 				bl = new ListController();
 				bl.save(addressInfo_vo);
@@ -134,8 +133,6 @@ public class AddresseeInfoPanel extends JPanel {
 				JLabel tip = new JLabel("提示：网络异常");
 				tip.setFont(font2);
 				JOptionPane.showMessageDialog(null, tip);
-			} catch (ExistException e) {
-				
 			}
 
 			JLabel tip = new JLabel("提示：保存成功");

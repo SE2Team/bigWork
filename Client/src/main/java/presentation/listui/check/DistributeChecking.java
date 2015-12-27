@@ -3,6 +3,7 @@ package presentation.listui.check;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.DistributePanel;
+import util.ListState;
 import vo.DistributeVO;
 
 import javax.swing.*;
@@ -29,11 +30,11 @@ public class DistributeChecking extends DistributePanel{
     protected void performSure() {
         DistributeVO dis_vo = new DistributeVO(
                 jtf_arriveDate.getText(), jtf_orderNum.getText(),
-                jtf_distributeHuman.getText(),false);
+                jtf_distributeHuman.getText(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();
-            bl.distributeInfo(dis_vo);
+            bl.save(dis_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");

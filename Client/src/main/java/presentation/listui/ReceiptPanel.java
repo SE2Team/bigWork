@@ -9,18 +9,12 @@ import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
-import util.ExistException;
+import util.ListState;
 import vo.ReceiptVO;
 
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -206,14 +200,10 @@ public class ReceiptPanel extends JPanel {
 		if (isOk && isAllEntered.isEntered(receiptJtf)) {
 			ReceiptVO receipt_vo = new ReceiptVO(jtf_date.getText(),
 					jtf_money.getText(), jtf_courier.getText(),
-					ordernumList, false);
+					ordernumList, ListState.UNCHECK);
 			try {
 				ListblService bl = new ListController();
-				try {
-					bl.save(receipt_vo);
-				} catch (ExistException e) {
-					e.printStackTrace();
-				}
+				bl.save(receipt_vo);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 				JLabel tip = new JLabel("提示：网络异常");

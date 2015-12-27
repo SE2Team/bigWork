@@ -1,5 +1,6 @@
 package po;
 
+import util.ListState;
 import util.ListType;
 
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class PaymentPO extends ListPO implements Serializable{
 
 
 	public PaymentPO(String payDate, String payMoney, String payHuman,
-					 String payAccount, String payReason, String payComment,boolean isCheck) {
+					 String payAccount, String payReason, String payComment, ListState isCheck) {
 		super(isCheck);
 		this.payDate = payDate;
 		this.payMoney = payMoney;

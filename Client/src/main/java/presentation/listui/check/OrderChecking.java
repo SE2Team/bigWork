@@ -4,6 +4,7 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.listui.OrderPanel;
 import util.DeliveryType;
+import util.ListState;
 import vo.OrderVO;
 
 import javax.swing.*;
@@ -68,13 +69,13 @@ public class OrderChecking extends OrderPanel{
                 .getText(), deliveryType, o_wrapper
                 .getSelectedItem().toString(),
                 o_transExpense.getText(), o_wrapperExpense.getText(), o_expense
-                .getText(), o_dueDate.getText(), o_ordernum.getText(), false);
+                .getText(), o_dueDate.getText(), o_ordernum.getText(), ListState.PASSED);
 
         ListblService bl;
 
         try {
             bl = new ListController();
-            bl.order(order_vo);
+            bl.save2File(order_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block
             JLabel tip = new JLabel("提示：网络异常");
