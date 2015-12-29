@@ -267,8 +267,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
         ArrayList<ListPO> list2 = new ArrayList<ListPO>();
         ListPO listPO = null;
         for (int i = 0; i < list.size(); i++) {
-            ListState isCheck = ListState.UNCHECK;
             String[] str = list.get(i).split(";");
+            ListState isCheck = ListState.UNCHECK;
             if (str[1].equals("PASSED")) {
                 isCheck = ListState.PASSED;
             } else if (str[1].equals("REJECTED")) {
@@ -294,9 +294,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
                     } else if (str[16].equals("STANDARD")) {
                         deliveryType = DeliveryType.STANDARD;
                     }
-                    listPO = new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
-                            str[11], str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19],
-                            str[20], str[21], str[22], isCheck);
+                    listPO = new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11], str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19], str[20], str[21], str[22], isCheck);
                     break;
                 case "PAYMENT":
                     listPO = new PaymentPO(str[2], str[3], str[4], str[5], str[6], str[7], isCheck);
@@ -565,6 +563,199 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
             }
         }
         return list2;
+    }
+
+    @Override
+    public boolean deleteList(AddresseeInformationPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean deleteList(DistributePO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(GatheringPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(OrderPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(PaymentPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(ReceiptPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(StockInPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(StockOutPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(TransferReceivePO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(ReceivePO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(LoadingPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteList(TransferPO po) throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("list");
+        String str = "";
+        str = POToString(po);
+        ArrayList<String> list = common.readData();
+        if (list.contains(str)) {
+            list.remove(str);
+            common.clearData("list");
+            common.writeData(list);
+            return true;
+        }
+        return false;
     }
 
 }

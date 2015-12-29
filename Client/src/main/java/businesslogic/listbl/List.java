@@ -243,4 +243,51 @@ public class List {
     }
 
 
+    public boolean afterCheck(AddresseeInformationVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(DistributeVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(LoadingVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(OrderVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(StockInVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(StockOutVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(PaymentVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(GatheringVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(TransferVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(TransferReceiveVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(ReceiptVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean afterCheck(ReceiveVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
 }

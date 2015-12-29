@@ -14,59 +14,54 @@ import java.util.Iterator;
 public class ListController implements ListblService {
     private List list;
 
-    public ListController() throws RemoteException {
-        list = new List();
+
+    public boolean afterCheck(AddresseeInformationVO vo) throws RemoteException {
+        return list.afterCheck(vo);
     }
 
+    public boolean afterCheck(DistributeVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
 
-//    public boolean order(OrderVO orderVO) throws RemoteException {
-//        return new Order().save(orderVO);
-//    }
-//
-//    public boolean addresseeInfomation(AddresseeInformationVO addresseeInformationVO) throws RemoteException {
-//        return new AddresseeInfomation().save(addresseeInformationVO);
-//    }
-//
-//    public boolean loadingInfo(LoadingVO loadingVO) throws RemoteException {
-//        return new LoadingInfo().save(loadingVO);
-//    }
-//
-//    public boolean receiveInfo(ReceiveVO receiveVO) throws RemoteException {
-//        return new ReceiveInfo().save(receiveVO);
-//    }
-//
-//    public boolean distributeInfo(DistributeVO distributeVO) throws RemoteException {
-//        return new DistributeInfo().save(distributeVO);
-//    }
-//
-//    public boolean receipt(ReceiptVO receiptVO) throws RemoteException {
-//        return new Receipt().save(receiptVO);
-//    }
-//
-//    public boolean transInfo(TransferVO transferVO) throws RemoteException {
-//        return new TransInfo().save(transferVO);
-//    }
-//
-//    public boolean transArrive(TransferReceiveVO transferReceiveVO) throws RemoteException {
-//        return new TransArrive().save(transferReceiveVO);
-//    }
-//
-//    public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {
-//        return new StockOut().save(stockOutVO);
-//    }
-//
-//    public boolean stockIn(StockInVO stockInVO) throws RemoteException {
-//        return new StockIn().save(stockInVO);
-//    }
-//
-//    public boolean gathering(GatheringVO gatheringVO) throws RemoteException {
-//        return new Gathering().save(gatheringVO);
-//    }
-//
-//    public boolean payment(PaymentVO paymentVO) throws RemoteException {
-//        return new Payment().save(paymentVO);
-//    }
+    public boolean afterCheck(LoadingVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
 
+    public boolean afterCheck(OrderVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(StockInVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(StockOutVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(PaymentVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(GatheringVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(TransferVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(TransferReceiveVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(ReceiptVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
+
+    public boolean afterCheck(ReceiveVO vo) throws RemoteException {
+        return list.afterCheck(vo);
+    }
 
     public Iterator<ListVO> push() throws RemoteException {
 

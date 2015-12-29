@@ -19,7 +19,7 @@ import java.rmi.RemoteException;
 
 public class addSettleDialog extends MyDialog {
 
-	private FinanceSettlePanel parent;
+	protected FinanceSettlePanel parent;
 
 	public addSettleDialog(FinanceSettlePanel parent) {
 		super();
@@ -30,26 +30,26 @@ public class addSettleDialog extends MyDialog {
 		this.setResizable(false);
 	}
 
-	private int x = 20, y = 50, addx = 120, addy = 50, jl_width = 100,
+	protected int x = 20, y = 50, addx = 120, addy = 50, jl_width = 100,
 			jtf_width = 200, height = 25;
 
 	// 设置所有文字的字体
-	private Font font = new Font("宋体", Font.PLAIN, 20);
-	private Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected Font font = new Font("宋体", Font.PLAIN, 20);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义添加收款信息，收款日期，收款单位，收款人，收款金额，收款地点的label
-	private JLabel addInfo, gatheringDate, gatheringOrg, payee, amount, place;
+	protected JLabel addInfo, gatheringDate, gatheringOrg, payee, amount, place;
 	// 定义对应的文本框
-	private JTextField jtf_date, jtf_org, jtf_payee, jtf_amount, jtf_place;
+	protected JTextField jtf_date, jtf_org, jtf_payee, jtf_amount, jtf_place;
 	// 定义确定，取消按钮
-	private JButton sure, cancel;
+	protected JButton sure, cancel;
 	// 定义用来存放用户输入信息的数组
-	private String[] rowContent;
+	protected String[] rowContent;
 	// 定义文本框的数组
-	private JTextField[] settleJtf;
+	protected JTextField[] settleJtf;
 	// 定义日期选择器
-	private DateChooser datechooser;
+	protected DateChooser datechooser;
 	// 定义错误提示信息
-	private JLabel tip;
+	protected JLabel tip;
 
 	class addSettlePanel extends JPanel {
 
@@ -116,47 +116,7 @@ public class addSettleDialog extends MyDialog {
 			sure.setBounds(80, y + 5 * addy + 10, 80, height);
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					settleJtf = new JTextField[] { jtf_org, jtf_payee,
-							jtf_amount, jtf_place };
-					boolean isOk = NumExceptioin.isDouble(jtf_amount);
-					if (isOk && isAllEntered.isEntered(settleJtf)) {
-						GatheringVO vo = new GatheringVO(jtf_date.getText()
-								.trim(), jtf_org.getText().trim(), jtf_payee
-								.getText().trim(), jtf_amount.getText().trim(),
-								jtf_place.getText().trim(), ListState.UNCHECK);
-						FinanceblService bl;
-						try {
-							bl = new FinanceController();
-							bl.gathering(vo);
-						} catch (RemoteException e) {
-							JLabel tip = new JLabel("提示：网络异常");
-							tip.setFont(font2);
-							JOptionPane.showMessageDialog(null, tip);
-							return;
-						}
-						
-						rowContent = new String[] { jtf_date.getText(),
-								jtf_org.getText(), jtf_payee.getText(),
-								jtf_amount.getText(), jtf_place.getText() };
-						parent.addAfterConfirm(rowContent);
-
-						dispose();
-						JLabel tip = new JLabel("提示：添加成功");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					} else if ((!isOk) && isAllEntered.isEntered(settleJtf)) {
-						JLabel tip = new JLabel("提示：请输入正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					} else if (isOk && !isAllEntered.isEntered(settleJtf)) {
-						JLabel tip = new JLabel("提示：仍有信息未输入");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					} else if (!isOk && !isAllEntered.isEntered(settleJtf)) {
-						JLabel tip = new JLabel("请输入所有正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
-					}
+					performSure();
 
 				}
 			});
@@ -188,7 +148,51 @@ public class addSettleDialog extends MyDialog {
 	}
 
 	// 错误提示信息是否已经被添加
-	boolean isMoneyAdd = false;
+	protected boolean isMoneyAdd = false;
+
+	protected void performSure() {
+		settleJtf = new JTextField[]{jtf_org, jtf_payee,
+				jtf_amount, jtf_place};
+		boolean isOk = NumExceptioin.isDouble(jtf_amount);
+		if (isOk && isAllEntered.isEntered(settleJtf)) {
+			GatheringVO vo = new GatheringVO(jtf_date.getText()
+					.trim(), jtf_org.getText().trim(), jtf_payee
+					.getText().trim(), jtf_amount.getText().trim(),
+					jtf_place.getText().trim(), ListState.UNCHECK);
+			FinanceblService bl;
+			try {
+				bl = new FinanceController();
+				bl.gathering(vo);
+			} catch (RemoteException e) {
+				JLabel tip = new JLabel("提示：网络异常");
+				tip.setFont(font2);
+				JOptionPane.showMessageDialog(null, tip);
+				return;
+			}
+
+			rowContent = new String[]{jtf_date.getText(),
+					jtf_org.getText(), jtf_payee.getText(),
+					jtf_amount.getText(), jtf_place.getText()};
+			parent.addAfterConfirm(rowContent);
+
+			dispose();
+			JLabel tip = new JLabel("提示：添加成功");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if ((!isOk) && isAllEntered.isEntered(settleJtf)) {
+			JLabel tip = new JLabel("提示：请输入正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (isOk && !isAllEntered.isEntered(settleJtf)) {
+			JLabel tip = new JLabel("提示：仍有信息未输入");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		} else if (!isOk && !isAllEntered.isEntered(settleJtf)) {
+			JLabel tip = new JLabel("请输入所有正确格式的信息");
+			tip.setFont(font2);
+			JOptionPane.showMessageDialog(null, tip);
+		}
+	}
 
 	/**
 	 * 焦点监听

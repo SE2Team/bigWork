@@ -1,14 +1,14 @@
 package data.userdata;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-
 import data.Common.Common;
 import dataservice.userdataservice.UserDataService;
 import po.UserPO;
 import util.ExistException;
 import util.UserType;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -130,5 +130,18 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 		}
 		return new UserPO(s[0], s[1], s[2], userType);
 
+	}
+
+
+	@Override
+	public ArrayList<UserPO> getUser() throws RemoteException {
+		// TODO Auto-generated method stub
+		ArrayList<String> list = common.readData();
+		ArrayList<UserPO> list1 = new ArrayList<>();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			list1.add(this.stringToPO(str));
+		}
+		return list1;
 	}
 }

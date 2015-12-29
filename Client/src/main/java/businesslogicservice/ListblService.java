@@ -107,6 +107,31 @@ public interface ListblService {
 //     */
 //    boolean payment(PaymentVO paymentVO) throws RemoteException;
 
+    boolean afterCheck(AddresseeInformationVO vo) throws RemoteException;
+
+    boolean afterCheck(DistributeVO vo) throws RemoteException;
+
+    boolean afterCheck(LoadingVO vo) throws RemoteException;
+
+    boolean afterCheck(OrderVO vo) throws RemoteException;
+
+    boolean afterCheck(StockInVO vo) throws RemoteException;
+
+    boolean afterCheck(StockOutVO vo) throws RemoteException;
+
+    boolean afterCheck(PaymentVO vo) throws RemoteException;
+
+    boolean afterCheck(GatheringVO vo) throws RemoteException;
+
+    boolean afterCheck(TransferVO vo) throws RemoteException;
+
+    boolean afterCheck(TransferReceiveVO vo) throws RemoteException;
+
+    boolean afterCheck(ReceiptVO vo) throws RemoteException;
+
+    boolean afterCheck(ReceiveVO vo) throws RemoteException;
+
+
     /**
      * 推送一个包含所有待审批单据的列表
      *
@@ -151,35 +176,36 @@ public interface ListblService {
 
     /**
      * 获取到目前最近订单的审批状态，传入一个起始日期
+     *
      * @param date
      * @return
      * @throws RemoteException
      */
     Iterator<ListVO> getRecent(String date) throws RemoteException;
 
-    boolean save2File(ListVO vo)throws RemoteException;
+    boolean save2File(ListVO vo) throws RemoteException;
 
     boolean save2File(AddresseeInformationVO vo) throws RemoteException;
 
-    boolean save2File(DistributeVO vo)throws RemoteException;
+    boolean save2File(DistributeVO vo) throws RemoteException;
 
-    boolean save2File(GatheringVO vo)throws RemoteException;
+    boolean save2File(GatheringVO vo) throws RemoteException;
 
-    boolean save2File(LoadingVO vo)throws RemoteException;
+    boolean save2File(LoadingVO vo) throws RemoteException;
 
-    boolean save2File(OrderVO vo)throws RemoteException;
+    boolean save2File(OrderVO vo) throws RemoteException;
 
-    boolean save2File(PaymentVO vo)throws RemoteException;
+    boolean save2File(PaymentVO vo) throws RemoteException;
 
-    boolean save2File(ReceiptVO vo)throws RemoteException;
+    boolean save2File(ReceiptVO vo) throws RemoteException;
 
-    boolean save2File(ReceiveVO vo)throws RemoteException;
+    boolean save2File(ReceiveVO vo) throws RemoteException;
 
-    boolean save2File(StockInVO vo)throws RemoteException;
+    boolean save2File(StockInVO vo) throws RemoteException;
 
-    boolean save2File(StockOutVO vo)throws RemoteException;
+    boolean save2File(StockOutVO vo) throws RemoteException;
 
-    boolean save2File(TransferReceiveVO vo)throws RemoteException;
+    boolean save2File(TransferReceiveVO vo) throws RemoteException;
 
-    boolean save2File(TransferVO vo)throws RemoteException;
+    boolean save2File(TransferVO vo) throws RemoteException;
 }

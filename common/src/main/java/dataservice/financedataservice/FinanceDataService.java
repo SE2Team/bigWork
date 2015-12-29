@@ -1,9 +1,6 @@
 package dataservice.financedataservice;
 
-import po.AccountPO;
-import po.StockPO;
-import po.VehiclePO;
-import po.WorkerPO;
+import po.*;
 import util.ExistException;
 
 import java.rmi.Remote;
@@ -60,6 +57,14 @@ public interface FinanceDataService extends Remote {
      */
     Boolean EditAccount(String name, AccountPO newAccountPO) throws RemoteException, ExistException;
 
+    /**
+     * 获得所有收款单数据
+     *
+     * @return
+     */
+
+    ArrayList<GatheringPO> getGathering() throws RemoteException;
+    
     /**
      * @param po
      * @return

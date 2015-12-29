@@ -6,9 +6,16 @@ import java.awt.*;
 public class TipPanel extends JPanel implements Runnable {
     protected int width = 900, height = 30;
     protected int x = 0, y = height;
+    String str = "";
 
     public TipPanel() {
         this.setSize(width, height);
+    }
+
+    public TipPanel(String str) {
+        this();
+        this.str = str;
+        this.add(new TextArea(str));
     }
 
     public void paintComponent(Graphics g) {

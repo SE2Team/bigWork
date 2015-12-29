@@ -5,6 +5,7 @@ import util.ExistException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 
 public interface UserDataService extends Remote{
@@ -53,4 +54,9 @@ public interface UserDataService extends Remote{
       * @throws RemoteException
       */
      UserPO find(String id, String password) throws RemoteException;
+
+    /**
+     * @return
+     */
+    ArrayList<UserPO> getUser() throws RemoteException;
 }

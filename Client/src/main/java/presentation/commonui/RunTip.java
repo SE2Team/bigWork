@@ -8,5 +8,9 @@ public class RunTip {
         thread.start();
     }
 
+    public static void makeTip(String str) {
+
+    }
+
 
 }

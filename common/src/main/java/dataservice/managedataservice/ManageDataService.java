@@ -106,7 +106,7 @@ public interface ManageDataService extends Remote{
       * @return
       * @throws RemoteException
       */
-     ConstantPO getConstant() throws RemoteException;
+     ArrayList<ConstantPO> getConstant() throws RemoteException;
   
 
     /**

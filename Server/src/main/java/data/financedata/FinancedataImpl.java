@@ -87,11 +87,11 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 		Common common = new Common("account");
 		ArrayList<String> list=common.readData();
 		AccountPO po;
-		for (int j = 0; j < list.size(); j++) {
-			String[] str = list.get(j).split(";");
-			po = this.stringToAccountPO(str);
-			if (po.getAccountName().equals(accountPO.getAccountName())) {
-				throw new ExistException();
+        for (int j = 0; j < list.size(); j++) {
+            String[] str = list.get(j).split(";");
+            po = this.stringToAccountPO(str);
+            if (po.getAccountName().equals(accountPO.getAccountName())) {
+                throw new ExistException();
 			}
 		}
 		common.writeDataAdd(this.poToString(accountPO));
@@ -142,7 +142,9 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			if(this.stringToAccountPO(str).getAccountName().equals(name)){
 				s.remove(i);
 				s.add(this.poToString(newAccountPO));
-				return true;
+                common.clearData("account");
+                common.writeData(s);
+                return true;
 			}else{
 				throw new ExistException();
 			}
@@ -169,20 +171,20 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	
 	private PaymentPO stringToPaymentPO(String[] str){
 		ListState isCheck = ListState.UNCHECK;
-		if (str[1].equals("PASSED")) {
-			isCheck = ListState.PASSED;
-		} else if (str[1].equals("REJECTED")) {
-			isCheck = ListState.REJECTED;
+        if (str[6].equals("PASSED")) {
+            isCheck = ListState.PASSED;
+        } else if (str[6].equals("REJECTED")) {
+            isCheck = ListState.REJECTED;
 		}
 		return new PaymentPO(str[0], str[1], str[2], str[3], str[4], str[5],isCheck);
 	}
 	
 	private GatheringPO stringToGatheringPO(String[] str){
 		ListState isCheck = ListState.UNCHECK;
-		if (str[1].equals("PASSED")) {
-			isCheck = ListState.PASSED;
-		} else if (str[1].equals("REJECTED")) {
-			isCheck = ListState.REJECTED;
+        if (str[6].equals("PASSED")) {
+            isCheck = ListState.PASSED;
+        } else if (str[6].equals("REJECTED")) {
+            isCheck = ListState.REJECTED;
 		}
 		return new GatheringPO(str[0], str[1], str[2], str[3], str[4],isCheck);
 	}
@@ -313,13 +315,32 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 	}
 	
 	private StockInPO stringToPO(String[] str){
-		ListState isCheck = ListState.UNCHECK;
-		if (str[1].equals("PASSED")) {
-			isCheck = ListState.PASSED;
-		} else if (str[1].equals("REJECTED")) {
-			isCheck = ListState.REJECTED;
-		}
-		return new StockInPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8],isCheck);
-	}
+        ListState isCheck = ListState.UNCHECK;
+        if (str[0].equals("PASSED")) {
+            isCheck = ListState.PASSED;
+        } else if (str[0].equals("REJECTED")) {
+            isCheck = ListState.REJECTED;
+        }
+        return new StockInPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8],isCheck);
+    }
+
+    @Override
+    public ArrayList<GatheringPO> getGathering() throws RemoteException {
+        // TODO Auto-generated method stub
+        Common common = new Common("gathering");
+        ArrayList<String> list = common.readData();
+        ArrayList<GatheringPO> list1 = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String[] str = list.get(i).split(";");
+            ListState isCheck = ListState.UNCHECK;
+            if (str[5].equals("PASSED")) {
+                isCheck = ListState.PASSED;
+            } else if (str[5].equals("REJECTED")) {
+                isCheck = ListState.REJECTED;
+            }
+            list1.add(new GatheringPO(str[0], str[1], str[2], str[3], str[4], isCheck));
+        }
+        return list1;
+    }
 	
 }

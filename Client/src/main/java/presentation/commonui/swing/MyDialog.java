@@ -31,8 +31,8 @@ public class MyDialog extends JDialog {
 
     @Override
     public void dispose() {
-        super.dispose();
         LogInFrame.getInstance().setEnabled(true);
+        super.dispose();
     }
 
     private void init() {

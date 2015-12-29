@@ -127,6 +127,30 @@ public interface ListDataService extends Remote {
 
     boolean saveAsList(TransferPO po) throws RemoteException;
 
+    boolean deleteList(AddresseeInformationPO po) throws RemoteException;
+
+    boolean deleteList(DistributePO po) throws RemoteException;
+
+    boolean deleteList(GatheringPO po) throws RemoteException;
+
+    boolean deleteList(OrderPO po) throws RemoteException;
+
+    boolean deleteList(PaymentPO po) throws RemoteException;
+
+    boolean deleteList(ReceiptPO po) throws RemoteException;
+
+    boolean deleteList(StockInPO po) throws RemoteException;
+
+    boolean deleteList(StockOutPO po) throws RemoteException;
+
+    boolean deleteList(TransferReceivePO po) throws RemoteException;
+
+    boolean deleteList(ReceivePO po) throws RemoteException;
+
+    boolean deleteList(LoadingPO po) throws RemoteException;
+
+    boolean deleteList(TransferPO po) throws RemoteException;
+
 
     /**
      * @return

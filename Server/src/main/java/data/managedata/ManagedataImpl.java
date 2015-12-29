@@ -133,12 +133,16 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return str;
 	}
 
-	public ConstantPO getConstant() throws RemoteException {
+	public ArrayList<ConstantPO> getConstant() throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("constant");
 		ArrayList<String> list= common.readData();
-		String[] str=list.get(0).split(";");
-		return this.StringToConstantPO(str);
+		ArrayList<ConstantPO> list1 = new ArrayList<>();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			list1.add(this.StringToConstantPO(str));
+		}
+		return list1;
 	}
 	
 	@Override

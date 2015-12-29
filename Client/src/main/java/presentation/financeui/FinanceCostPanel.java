@@ -23,19 +23,19 @@ public class FinanceCostPanel extends JPanel {
 	int x = 40, y = 70, addx1 = 120, addx2 = 160, addy = 100, width = 160,
 			height = 30;
 	// 定义确定取消按钮
-	private JButton sure, cancel;
+	protected JButton sure, cancel;
 	// 定义付款单，付款日期，付款人，付款金额，付款账号，条目，备注的label
-	private JLabel titleLabel, dateLabel, payer, amount, num, clause, remark;
+	protected JLabel titleLabel, dateLabel, payer, amount, num, clause, remark;
 	// 定义付款日期，付款人，付款金额，付款账号对应的文本框
-	private JTextField dateTextField, nameTextField, sumTextField,
+	protected JTextField dateTextField, nameTextField, sumTextField,
 			numTextField;
 	// 定义条目，备注对应的文本域
-	private JTextArea reasonTextArea, otherTextArea;
+	protected JTextArea reasonTextArea, otherTextArea;
 	// 定义scrollPane
-	private JScrollPane jsp1, jsp2;
+	protected JScrollPane jsp1, jsp2;
 	// 定义字体
-	Font font1 = new Font("楷体", Font.PLAIN, 25);
-	Font font2 = new Font("宋体", Font.PLAIN, 16);
+	protected Font font1 = new Font("楷体", Font.PLAIN, 25);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义错误提示的文字
 	protected JLabel tip1, tip2;
 	// 定义文本框的数组
@@ -126,7 +126,6 @@ public class FinanceCostPanel extends JPanel {
 		sure.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				performSure();
 			}
 		});

@@ -82,7 +82,7 @@ public class BigCardPanel extends JPanel implements ActionListener {
 //            JLabel tip = new JLabel("请输入密码");
 //            tip.setFont(font);
 //            JOptionPane.showMessageDialog(null, tip);
-            RunTip.makeTip();
+            RunTip.makeTip("请输入密码");
 
         } else {
             isNull = false;
