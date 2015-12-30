@@ -108,4 +108,6 @@ public interface FinanceblService {
      */
     boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException;
 
+    Iterator<GatheringVO> checkGathering() throws RemoteException;
+
 }

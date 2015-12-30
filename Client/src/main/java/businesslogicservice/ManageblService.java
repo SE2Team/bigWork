@@ -64,12 +64,15 @@ public interface ManageblService {
      */
     void updateSalary(String position, String Type) throws RemoteException;
 
+
     /**
      * @param constantVO 传入城市vo
      * @throws RemoteException 网络异常
      * @throws ExistException  异常，城市不存在，无法更新
      */
     void updateConstant(ConstantVO constantVO) throws RemoteException, ExistException;
+
+    Iterator<ConstantVO> checkConstant() throws RemoteException;
 
     /**
      * 增加人员
@@ -109,7 +112,12 @@ public interface ManageblService {
      */
     boolean editWorker(WorkerVO oldWorkerVO, WorkerVO newWorkerVO) throws RemoteException, ExistException;
 
+    boolean editDriver(DriverVO ovo, DriverVO nvo) throws RemoteException, ExistException;
+
+    boolean editVehicle(VehicleVO ovo, VehicleVO nvo) throws RemoteException, ExistException;
+
     Iterator<DriverVO> checkDriver() throws RemoteException;
     Iterator<VehicleVO> checkVehicle() throws RemoteException;
+
 
 }

@@ -27,7 +27,6 @@ public class Order extends List {
         super();
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         OrderVO vo = null;
         vo = (OrderVO) listVO;
@@ -35,7 +34,7 @@ public class Order extends List {
 
         OrderPO po = VO2PO.convert(vo);
 
-        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
                 "保存快递单"));
 
 
@@ -43,11 +42,25 @@ public class Order extends List {
     }
 
     public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException, ExistException {
-        ExpenseAndDatePO npo=listDataService.getExpenseOfTransport(new ExpenseAndDatePO(vo.getCity1(),vo.getCity2(),
-                vo.getWrapper(),vo.getVolume(),vo.getDays(),vo.getDeliveryType(),
-                vo.getExpenseOfWrap(),vo.getExpenseOfTransport(),vo.getExpense()));
-        return new ExpenseAndDateVO(npo.getCity1(),npo.getCity2(),npo.getWrapper(),npo.getVolume(),npo.getDays(),
+        ExpenseAndDatePO npo = listDataService.getExpenseOfTransport(new ExpenseAndDatePO(vo.getCity1(), vo.getCity2(),
+                vo.getWrapper(), vo.getVolume(), vo.getDays(), vo.getDeliveryType(),
+                vo.getExpenseOfWrap(), vo.getExpenseOfTransport(), vo.getExpense()));
+        return new ExpenseAndDateVO(npo.getCity1(), npo.getCity2(), npo.getWrapper(), npo.getVolume(), npo.getDays(),
                 npo.getDeliveryType(),
-                npo.getExpenseOfWrap(),npo.getExpenseOfTransport(),npo.getExpense());
+                npo.getExpenseOfWrap(), npo.getExpenseOfTransport(), npo.getExpense());
     }
+
+    public boolean save(OrderVO vo) throws RemoteException {
+        OrderPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建快递单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(OrderVO vo) throws RemoteException {
+        System.out.println("to data");
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
 }

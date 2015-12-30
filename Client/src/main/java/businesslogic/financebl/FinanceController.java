@@ -84,4 +84,8 @@ public class FinanceController implements FinanceblService {
     public boolean EditAccount(AccountVO accountVOOld, AccountVO accountVONew) throws RemoteException, ExistException {
         return finance.EditAccount(accountVOOld, accountVONew);
     }
+
+    public Iterator<GatheringVO> checkGathering() throws RemoteException {
+        return finance.checkGathering();
+    }
 }

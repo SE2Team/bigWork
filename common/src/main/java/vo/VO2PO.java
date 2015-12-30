@@ -90,4 +90,9 @@ public class VO2PO {
     public static VehiclePO convert(VehicleVO vo) {
         return new VehiclePO(vo.getVehicleNum(), vo.getLicensePlate(), vo.getBuyDate(), vo.getUseTime());
     }
+
+    public static DriverPO convert(DriverVO driverVO) {
+        return new DriverPO(driverVO.getDriverNum(), driverVO.getDriverName(), driverVO.getBirthDate(), driverVO.getIdNum(),
+                driverVO.getPhone(), driverVO.getVehicleInstitution(), driverVO.getSex(), driverVO.getLicenseTime());
+    }
 }

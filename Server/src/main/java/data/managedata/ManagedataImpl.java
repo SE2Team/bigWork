@@ -210,7 +210,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		ArrayList<String> list=common.readData();
 		if(list.contains(this.workerPOToString(oldWorkerPO))){
 			list.remove(this.workerPOToString(oldWorkerPO));
-			list.add(this.workerPOToString(oldWorkerPO));
+			list.add(this.workerPOToString(newWorkerPO));
 			common.clearData("worker");
 			common.writeData(list);
 			return true;
@@ -223,10 +223,10 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	private String workerPOToString(WorkerPO po){
 		return po.getName()+";"+po.getIdNum()+";"+po.getPosition()+";"+po.getPosition()+";"+po.getUserId();
 	}
-	
-	private String driverPOToString(DriverPO po){
-		return po.getDriverNum()+";"+po.getDriverName()+";"+po.getBirthDate()+";"+po.getIdNum()+";"+po.getPhone()
-		+";"+po.getVehicleInstitution()+";"+po.getSex()+";"+po.getLicenseTime();
+
+	private String driverPOToString(DriverPO oldDriverPO) {
+		return oldDriverPO.getDriverNum() + ";" + oldDriverPO.getDriverName() + ";" + oldDriverPO.getBirthDate() + ";" + oldDriverPO.getIdNum() + ";" + oldDriverPO.getPhone()
+				+ ";" + oldDriverPO.getVehicleInstitution() + ";" + oldDriverPO.getSex() + ";" + oldDriverPO.getLicenseTime();
 	}
    
 	private WorkerPO stringToWorkerPO(String[] str){
@@ -277,6 +277,39 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		}
 		return list2;
 
+	}
+
+
+	@Override
+	public boolean editVehicle(VehiclePO oldVehiclePO, VehiclePO newVehiclePO) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common = new Common("vehicle");
+		ArrayList<String> list = common.readData();
+		if (list.contains(this.vehiclePOToString(oldVehiclePO))) {
+			list.remove(this.vehiclePOToString(oldVehiclePO));
+			list.add(this.vehiclePOToString(newVehiclePO));
+			common.clearData("vehicle");
+			common.writeData(list);
+			return true;
+		} else {
+			throw new ExistException();
+		}
+	}
+
+	@Override
+	public boolean editDriver(DriverPO oldDriverPO, DriverPO newDriverPO) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common = new Common("driver");
+		ArrayList<String> list = common.readData();
+		if (list.contains(this.driverPOToString(oldDriverPO))) {
+			list.remove(this.driverPOToString(oldDriverPO));
+			list.add(this.driverPOToString(newDriverPO));
+			common.clearData("vehicle");
+			common.writeData(list);
+			return true;
+		} else {
+			throw new ExistException();
+		}
 	}
 
 }

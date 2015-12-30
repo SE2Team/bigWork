@@ -2,6 +2,7 @@ package presentation.manageui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.listui.check.*;
 import util.ListState;
 import vo.*;
 
@@ -31,6 +32,7 @@ public class ListApprovalPanel extends JPanel {
     private JScrollPane jsp;
     private JTable listTable;
     private DefaultTableModel model;
+    private String listType = null;
     String[] column = {"序号", "审批状态", "单据类型"};
     String row[][] = new String[50][3];
 
@@ -84,7 +86,7 @@ public class ListApprovalPanel extends JPanel {
         while (itr.hasNext()) {
             ListVO vo = itr.next();
             arrayList.add(vo);
-            String[] temp = {String.valueOf(cout), String.valueOf(vo.getIsCheck()), vo.getType().toString()};
+            String[] temp = {String.valueOf(cout), cCheck(String.valueOf(vo.getIsCheck())), cType(vo.getType().toString())};
             row[cout - 1] = temp;
             cout++;
         }
@@ -140,6 +142,7 @@ public class ListApprovalPanel extends JPanel {
         });
     }
 
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawLine(0, 50, 650, 50);
@@ -158,38 +161,56 @@ public class ListApprovalPanel extends JPanel {
         } else {
             arrayList.get(i).setIsCheck(ListState.PASSED);
             ListVO tempVO = arrayList.get(i);
-
             try {
                 switch (tempVO.getType()) {
                     case ADDRESSEEINFOMATION:
                         bl.save2File((AddresseeInformationVO) tempVO);
+                        bl.afterCheck((AddresseeInformationVO) tempVO);
                         break;
                     case DISTRIBUTEINFO:
                         bl.save2File((DistributeVO) tempVO);
+                        bl.afterCheck((DistributeVO) tempVO);
                         break;
                     case LOADINGINFO:
                         bl.save2File((LoadingVO) tempVO);
+                        bl.afterCheck((OrderVO) tempVO);
                         break;
                     case ORDER:
+//                        System.out.println("submit"+tempVO.getType().toString());
                         bl.save2File((OrderVO) tempVO);
+                        bl.afterCheck((OrderVO) tempVO);
                         break;
                     case RECEIPT:
                         bl.save2File((ReceiptVO) tempVO);
+                        bl.afterCheck((ReceiptVO) tempVO);
                         break;
                     case RECEIVEINFO:
                         bl.save2File((ReceiveVO) tempVO);
+                        bl.afterCheck((ReceiveVO) tempVO);
                         break;
                     case STOCKIN:
                         bl.save2File((StockInVO) tempVO);
+                        bl.afterCheck((StockInVO) tempVO);
                         break;
                     case STOCKOUT:
                         bl.save2File((StockOutVO) tempVO);
+                        bl.afterCheck((StockOutVO) tempVO);
                         break;
                     case TRANSINFO:
                         bl.save2File((TransferVO) tempVO);
+                        bl.afterCheck((TransferVO) tempVO);
                         break;
                     case TRANSARRIVE:
                         bl.save2File((TransferReceiveVO) tempVO);
+                        bl.afterCheck((TransferReceiveVO) tempVO);
+                        break;
+                    case PAYMENT:
+                        bl.save2File((PaymentVO) tempVO);
+                        bl.afterCheck((PaymentVO) tempVO);
+                        break;
+                    case GATHERING:
+                        bl.save2File((GatheringVO) tempVO);
+                        bl.afterCheck((GatheringVO) tempVO);
                         break;
 
                 }
@@ -200,7 +221,7 @@ public class ListApprovalPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, tip);
             }
 
-            model.setValueAt(String.valueOf(tempVO.getIsCheck()), i, 1);
+            model.setValueAt(cCheck(String.valueOf(tempVO.getIsCheck())), i, 1);
         }
 
     }
@@ -223,13 +244,130 @@ public class ListApprovalPanel extends JPanel {
 //                tip.setFont(font2);
 //                JOptionPane.showMessageDialog(null, tip);
 //            }
+            try {
+                switch (tempVO.getType()) {
+                    case ADDRESSEEINFOMATION:
+                        bl.afterCheck((AddresseeInformationVO) tempVO);
+                        break;
+                    case DISTRIBUTEINFO:
+                        bl.afterCheck((DistributeVO) tempVO);
+                        break;
+                    case LOADINGINFO:
+                        bl.afterCheck((OrderVO) tempVO);
+                        break;
+                    case ORDER:
+                        bl.afterCheck((OrderVO) tempVO);
+                        break;
+                    case RECEIPT:
+                        bl.afterCheck((ReceiptVO) tempVO);
+                        break;
+                    case RECEIVEINFO:
+                        bl.afterCheck((ReceiveVO) tempVO);
+                        break;
+                    case STOCKIN:
+                        bl.afterCheck((StockInVO) tempVO);
+                        break;
+                    case STOCKOUT:
+                        bl.afterCheck((StockOutVO) tempVO);
+                        break;
+                    case TRANSINFO:
+                        bl.afterCheck((TransferVO) tempVO);
+                        break;
+                    case TRANSARRIVE:
+                        bl.afterCheck((TransferReceiveVO) tempVO);
+                        break;
+                    case PAYMENT:
+                        bl.afterCheck((PaymentVO) tempVO);
+                        break;
+                    case GATHERING:
+                        bl.afterCheck((GatheringVO) tempVO);
+                        break;
 
-            model.setValueAt(String.valueOf(tempVO.getIsCheck()), i, 1);
+                }
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                JLabel tip = new JLabel("提示：网络异常");
+                tip.setFont(font2);
+                JOptionPane.showMessageDialog(null, tip);
+            }
+            model.setValueAt(cCheck(String.valueOf(tempVO.getIsCheck())), i, 1);
         }
     }
 
-    private void check() {
+    OrderVO ordervo = null;
+    AddresseeInformationVO addresseevo = null;
+    LoadingVO loadingvo = null;
+    ReceiveVO recvo = null;
+    DistributeVO disvo = null;
+    ReceiptVO receiptvo = null;
+    StockInVO invo = null;
+    StockOutVO outvo = null;
+    TransferVO transferVo = null;
+    TransferReceiveVO transRecVo = null;
+    GatheringVO gatheringVo = null;
+    PaymentVO paymentVo = null;
 
+    //5
+    public void check() {
+        int i = listTable.getSelectedRow();
+        if (i == -1) {
+            JLabel tip = new JLabel("提示：请选中要查看的单据");
+            tip.setFont(font2);
+            JOptionPane.showMessageDialog(null, tip);
+        } else {
+            Object type = model.getValueAt(i, 2);
+            ListVO tempVO = arrayList.get(i);
+            switch (tempVO.getType()) {
+                case ADDRESSEEINFOMATION:
+                    addresseevo = (AddresseeInformationVO) tempVO;
+                    break;
+                case DISTRIBUTEINFO:
+                    disvo = (DistributeVO) tempVO;
+                    break;
+                case LOADINGINFO:
+                    loadingvo = (LoadingVO) tempVO;
+                    break;
+                case ORDER:
+                    ordervo = (OrderVO) tempVO;
+                    break;
+                case RECEIPT:
+                    receiptvo = (ReceiptVO) tempVO;
+                    break;
+                case RECEIVEINFO:
+                    recvo = (ReceiveVO) tempVO;
+                    break;
+                case STOCKIN:
+                    invo = (StockInVO) tempVO;
+                    break;
+                case STOCKOUT:
+                    outvo = (StockOutVO) tempVO;
+                    break;
+                case TRANSINFO:
+                    transferVo = (TransferVO) tempVO;
+                    break;
+                case TRANSARRIVE:
+                    transRecVo = (TransferReceiveVO) tempVO;
+                    break;
+                case PAYMENT:
+                    paymentVo = (PaymentVO) tempVO;
+                    break;
+                case GATHERING:
+                    gatheringVo = (GatheringVO) tempVO;
+                    break;
+            }
+            listType = type.toString();
+//            System.out.println("type is" +type);
+            if ("订单".equals(listType)) addPanel(new OrderChecking(ordervo));
+            if ("收件单".equals(listType)) addPanel(new AddresseeInfoChecking(addresseevo));
+            if ("装车单".equals(listType)) addPanel(new LoadingChecking(loadingvo));
+            if ("接收单".equals(listType)) addPanel(new ReceiveChecking(recvo));
+            if ("派件单".equals(listType)) addPanel(new DistributeChecking(disvo));
+            if ("快递员收款单".equals(listType)) addPanel(new ReceiptChecking(receiptvo));
+            if ("中转单".equals(listType)) addPanel(new TransferChecking(transferVo));
+            if ("中转中心到达单".equals(listType)) addPanel(new TransferReceiveChecking(transRecVo));
+            if ("库存入库单".equals(listType)) addPanel(new StockInChecking(invo));
+            if ("库存出库单".equals(listType)) addPanel(new StockOutChecking(outvo));
+        }
     }
 
     private void update() {
@@ -246,13 +384,95 @@ public class ListApprovalPanel extends JPanel {
         int cout = 1;
         while (itr1.hasNext()) {
             ListVO vo = itr1.next();
-            String[] temp = {String.valueOf(cout), String.valueOf(vo.getIsCheck()), vo.getType().toString()};
+            String[] temp = row[cout - 1];
             model.setValueAt(temp[0], cout - 1, 0);
             model.setValueAt(temp[1], cout - 1, 1);
             model.setValueAt(temp[2], cout - 1, 2);
             cout++;
         }
-
+        for (int i = 0; i < arrayList.size(); i++) {
+            ListVO tempvo = arrayList.get(i);
+            String[] temp = {String.valueOf(i + 1), cCheck(String.valueOf(tempvo.getIsCheck())), cType(tempvo.getType().toString())};
+            model.setValueAt(temp[0], i, 0);
+            model.setValueAt(temp[1], i, 1);
+            model.setValueAt(temp[2], i, 2);
+        }
+        listTable.updateUI();
         //没有更新JTable啊啊
     }
+
+    private String cCheck(String str) {
+        if (str.equals("UNCHECK")) {
+            return "未审批";
+        } else if (str.equals("REJECTED")) {
+            return "已否决";
+        } else {
+            return "已通过";
+        }
+    }
+
+    private String cType(String str) {
+        if (str.equals("ADDRESSEEINFOMATION")) {
+            return "收件单";
+        } else if (str.equals("DISTRIBUTEINFO")) {
+            return "派件单";
+        } else if (str.equals("LOADINGINFO")) {
+            return "装车单";
+        } else if (str.equals("ORDER")) {
+            return "订单";
+        } else if (str.equals("RECEIPT")) {
+            return "营业厅收款单";
+        } else if (str.endsWith("RECEIVEINFO")) {
+            return "接收单";
+        } else if (str.equals("STOCKIN")) {
+            return "库存入库单";
+        } else if (str.endsWith("STOCKOUT")) {
+            return "库存出库单";
+        } else if (str.equals("TRANSINFO")) {
+            return "中转中心中转单";
+        } else if (str.endsWith("TRANSARRIVE")) {
+            return "中转中心到达单";
+        } else if (str.equals("PAYMENT")) {
+            return "付款单";
+        } else if (str.endsWith("GATHERING")) {
+            return "财务收款单";
+        } else {
+            return "";
+        }
+    }
+
+    private void addPanel(JPanel panel) {
+        this.setUnvisible();
+        panel.setBounds(0, 0, 650, 530);
+        this.add(panel);
+        repaint();
+    }
+
+    private void removePanel(JPanel panel) {
+        this.remove(panel);
+        this.setvisible();
+        repaint();
+    }
+
+    private void setUnvisible() {
+        waitButton.setVisible(false);
+        checkButton.setVisible(false);
+        passButton.setVisible(false);
+        updateButton.setVisible(false);
+        jsp.setVisible(false);
+    }
+
+    private void setvisible() {
+        waitButton.setVisible(true);
+        checkButton.setVisible(true);
+        passButton.setVisible(true);
+        updateButton.setVisible(true);
+        jsp.setVisible(true);
+    }
+
+
+    public String getType() {
+        return listType;
+    }
+
 }

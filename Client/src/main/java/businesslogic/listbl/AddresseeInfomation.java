@@ -44,6 +44,15 @@ public class AddresseeInfomation extends List {
         return listDataService.save(po);
     }
 
+    public boolean afterCheck(AddresseeInformationVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
 
-
+    public boolean save(AddresseeInformationVO vo) throws RemoteException {
+        AddresseeInformationPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建收件单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
 }

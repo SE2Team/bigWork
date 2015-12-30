@@ -23,7 +23,6 @@ public class ReceiveInfo extends List {
     public ReceiveInfo() throws RemoteException {
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         ReceiveVO vo = null;
         vo = (ReceiveVO) listVO;
@@ -32,5 +31,17 @@ public class ReceiveInfo extends List {
                 "保存接收单"));
 
         return listDataService.save(po);
+    }
+
+    public boolean save(ReceiveVO vo) throws RemoteException {
+        ReceivePO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建接收单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(ReceiveVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
     }
 }

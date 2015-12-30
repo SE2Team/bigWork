@@ -25,7 +25,6 @@ public class LoadingInfo extends List {
     }
 
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         LoadingVO vo = null;
         vo = (LoadingVO) listVO;
@@ -36,6 +35,18 @@ public class LoadingInfo extends List {
                 "保存装车单"));
 
         return listDataService.save(po);
+    }
+
+    public boolean afterCheck(LoadingVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public boolean save(LoadingVO vo) throws RemoteException {
+        LoadingPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建装车单"));
+        return listDataService.saveAsList(po);//保存为待审批
     }
 
 }

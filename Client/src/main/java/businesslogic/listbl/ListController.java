@@ -14,53 +14,57 @@ import java.util.Iterator;
 public class ListController implements ListblService {
     private List list;
 
+    public ListController() throws RemoteException {
+        list = new List();
+    }
+
 
     public boolean afterCheck(AddresseeInformationVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new AddresseeInfomation().afterCheck(vo);
     }
 
     public boolean afterCheck(DistributeVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new DistributeInfo().afterCheck(vo);
     }
 
     public boolean afterCheck(LoadingVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new LoadingInfo().afterCheck(vo);
     }
 
     public boolean afterCheck(OrderVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new Order().afterCheck(vo);
     }
 
     public boolean afterCheck(StockInVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new StockIn().afterCheck(vo);
     }
 
     public boolean afterCheck(StockOutVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new StockOut().afterCheck(vo);
     }
 
     public boolean afterCheck(PaymentVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new Payment().afterCheck(vo);
     }
 
     public boolean afterCheck(GatheringVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new Gathering().afterCheck(vo);
     }
 
     public boolean afterCheck(TransferVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new TransInfo().afterCheck(vo);
     }
 
     public boolean afterCheck(TransferReceiveVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new TransArrive().afterCheck(vo);
     }
 
     public boolean afterCheck(ReceiptVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new Receipt().afterCheck(vo);
     }
 
     public boolean afterCheck(ReceiveVO vo) throws RemoteException {
-        return list.afterCheck(vo);
+        return new ReceiveInfo().afterCheck(vo);
     }
 
     public Iterator<ListVO> push() throws RemoteException {
@@ -71,63 +75,63 @@ public class ListController implements ListblService {
 
     public boolean save(AddresseeInformationVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new AddresseeInfomation().save(vo);
     }
 
     public boolean save(DistributeVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new DistributeInfo().save(vo);
     }
 
     public boolean save(LoadingVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new LoadingInfo().save(vo);
     }
 
     public boolean save(OrderVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new Order().save(vo);
     }
 
     public boolean save(StockInVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new StockIn().save(vo);
     }
 
     public boolean save(StockOutVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new StockOut().save(vo);
     }
 
     public boolean save(PaymentVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new Payment().save(vo);
     }
 
     public boolean save(GatheringVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new Gathering().save(vo);
     }
 
     public boolean save(TransferVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new TransInfo().save(vo);
     }
 
 
     public boolean save(TransferReceiveVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new TransArrive().save(vo);
     }
 
     public boolean save(ReceiveVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new ReceiveInfo().save(vo);
     }
 
     public boolean save(ReceiptVO vo) throws RemoteException {
 
-        return list.save(vo);
+        return new Receipt().save(vo);
     }
 
 

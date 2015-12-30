@@ -23,6 +23,7 @@ public class LogInPanel extends JPanel{
 		Image bg = new ImageIcon("images/背景.jpg").getImage();
 		Image user = new ImageIcon("images/用户头像.jpg").getImage();
 		Image pw = new ImageIcon("images/密码.jpg").getImage();
+
 		g.drawImage(bg, 0, 0, this);
 		g.drawImage(user, 573, 210, 40, 40,this);
 		g.drawImage(pw, 573, 300, 40, 40,this);

@@ -128,4 +128,8 @@ public class PO2VO {
         return new DriverVO(po.getDriverNum(),po.getDriverName(),po.getBirthDate(),po.getIdNum(),po.getPhone(),
                 po.getVehicleInstitution(),po.getSex(),po.getLicenseTime());
     }
+
+    public static ConstantVO convert(ConstantPO po) {
+        return new ConstantVO(po.getCity1(), po.getCity2(), po.getPrice(), po.getDistance());
+    }
 }

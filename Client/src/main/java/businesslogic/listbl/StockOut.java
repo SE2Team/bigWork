@@ -24,13 +24,25 @@ public class StockOut extends List {
     public StockOut() throws RemoteException {
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         StockOutVO vo = (StockOutVO) listVO;
         new CommodityController().stockOut(vo);
         StockOutPO po = VO2PO.convert(vo);
-        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
                 "保存出库单"));
         return listDataService.save(po);
     }
+
+    public boolean save(StockOutVO vo) throws RemoteException {
+        StockOutPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建出库单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(StockOutVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
 }

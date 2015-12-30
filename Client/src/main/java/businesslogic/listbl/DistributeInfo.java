@@ -24,7 +24,6 @@ public class DistributeInfo extends List {
         super();
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         DistributeVO vo = null;
         vo = (DistributeVO) listVO;
@@ -34,4 +33,17 @@ public class DistributeInfo extends List {
                 "保存派件单"));
         return listDataService.save(po);
     }
+
+    public boolean save(DistributeVO vo) throws RemoteException {
+        DistributePO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建派件单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(DistributeVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
 }

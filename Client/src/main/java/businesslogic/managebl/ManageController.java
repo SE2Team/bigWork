@@ -106,5 +106,15 @@ public class ManageController implements ManageblService {
         return manage.editWorker(oldWorkerVO,newWorkerVO);
     }
 
+    public Iterator<ConstantVO> checkConstant() throws RemoteException {
+        return manage.checkConstant();
+    }
 
+    public boolean editDriver(DriverVO ovo, DriverVO nvo) throws RemoteException, ExistException {
+        return manage.editDriver(ovo, nvo);
+    }
+
+    public boolean editVehicle(VehicleVO ovo, VehicleVO nvo) throws RemoteException, ExistException {
+        return manage.editVehicle(ovo, nvo);
+    }
 }

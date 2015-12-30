@@ -25,7 +25,6 @@ public class Gathering extends List {
         super();
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         GatheringVO gatheringVO = (GatheringVO) listVO;
 
@@ -35,6 +34,18 @@ public class Gathering extends List {
                 "保存收款单（财务）"));
         return listDataService.save(po);
 
+    }
+
+    public boolean save(GatheringVO vo) throws RemoteException {
+        GatheringPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建收款单（财务）"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(GatheringVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
     }
 
 

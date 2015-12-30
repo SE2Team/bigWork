@@ -24,7 +24,6 @@ public class Receipt extends List {
         super();
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         ReceiptVO vo = null;
         vo = (ReceiptVO) listVO;
@@ -34,5 +33,17 @@ public class Receipt extends List {
                 "保存收款单（快递员）"));
         return listDataService.save(po);
 
+    }
+
+    public boolean save(ReceiptVO vo) throws RemoteException {
+        ReceiptPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建收款单（快递员）"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(ReceiptVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
     }
 }

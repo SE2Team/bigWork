@@ -24,7 +24,6 @@ public class StockIn extends List {
     public StockIn() throws RemoteException {
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         StockInVO vo = null;
         vo = (StockInVO) listVO;
@@ -35,4 +34,17 @@ public class StockIn extends List {
 
         return listDataService.save(po);
     }
+
+    public boolean save(StockInVO vo) throws RemoteException {
+        StockInPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建入库单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(StockInVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
 }

@@ -8,12 +8,15 @@ import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
 import dataservice.inquirydataservice.InquiryDataService;
 import po.AccountPO;
+import po.GatheringPO;
 import po.OperationLogPO;
+import po.PO2VO;
 import util.ExistException;
 import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/10/25 0025.
@@ -244,5 +247,15 @@ public class Finance {
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"期初建账：账户信息"));
         return finance.initial(VO2PO.convert(vo));
 
+    }
+
+
+    public Iterator<GatheringVO> checkGathering() throws RemoteException {
+        ArrayList<GatheringVO> arrayList = new ArrayList<GatheringVO>();
+        for (GatheringPO po : finance.getGathering()) {
+            arrayList.add(PO2VO.convert(po));
+
+        }
+        return arrayList.iterator();
     }
 }

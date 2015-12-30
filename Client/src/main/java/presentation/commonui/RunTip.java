@@ -9,7 +9,9 @@ public class RunTip {
     }
 
     public static void makeTip(String str) {
-
+        TipPanel t = new TipPanel(str);
+        Thread thread = new Thread(t);
+        thread.start();
     }
 
 

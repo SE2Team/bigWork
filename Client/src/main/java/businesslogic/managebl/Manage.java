@@ -208,6 +208,22 @@ public class Manage {
         return manage.editWorker(VO2PO.convert(opo),VO2PO.convert(npo));
     }
 
+    public Iterator<ConstantVO> checkConstant() throws RemoteException {
+        ArrayList<ConstantVO> arrayList = new ArrayList<ConstantVO>();
+        for (ConstantPO po : manage.getConstant()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return arrayList.iterator();
+    }
+
+    public boolean editDriver(DriverVO ovo, DriverVO nvo) throws RemoteException, ExistException {
+        return manage.editDriver(VO2PO.convert(ovo), VO2PO.convert(nvo));
+    }
+
+    public boolean editVehicle(VehicleVO ovo, VehicleVO nvo) throws RemoteException, ExistException {
+        return manage.editVehicle(VO2PO.convert(ovo), VO2PO.convert(nvo));
+    }
+
     /**
      * 私有vo和po之间转换的方法
      *

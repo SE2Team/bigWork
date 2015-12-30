@@ -23,7 +23,6 @@ public class TransInfo extends List {
     public TransInfo() throws RemoteException {
     }
 
-    @Override
     public boolean save2File(ListVO listVO) throws RemoteException {
         TransferVO vo = null;
         vo = (TransferVO) listVO;
@@ -31,5 +30,17 @@ public class TransInfo extends List {
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
                 "保存中转信息单"));
         return listDataService.save(po);
+    }
+
+    public boolean save(TransferVO vo) throws RemoteException {
+        TransferPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建中转单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(TransferVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
     }
 }

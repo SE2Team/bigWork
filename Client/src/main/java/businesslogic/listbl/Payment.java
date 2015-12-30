@@ -36,5 +36,17 @@ public class Payment extends List {
 
     }
 
+    public boolean save(PaymentVO vo) throws RemoteException {
+        PaymentPO po = null;
+        po = VO2PO.convert(vo);
+        inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
+                "新建付款单"));
+        return listDataService.saveAsList(po);//保存为待审批
+    }
+
+    public boolean afterCheck(PaymentVO vo) throws RemoteException {
+        return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
 
 }

@@ -27,7 +27,7 @@ public class FinanceOperationLogPanel extends JPanel {
 		this.setSize(650, 530);
 		this.setLayout(null);
 		String[] column = { "序号", "操作类型", "操作人员", "操作时间" };
-        String row[][] = new String[50][4];
+        String row[][] = new String[5000][4];
 
 
         ArrayList<OperationLogVO> arrayList=new ArrayList<OperationLogVO>();

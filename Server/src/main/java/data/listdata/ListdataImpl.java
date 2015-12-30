@@ -294,7 +294,9 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
                     } else if (str[16].equals("STANDARD")) {
                         deliveryType = DeliveryType.STANDARD;
                     }
-                    listPO = new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11], str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19], str[20], str[21], str[22], isCheck);
+                    listPO = new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
+                            str[11], str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19],
+                            str[20], str[21], str[22], isCheck);
                     break;
                 case "PAYMENT":
                     listPO = new PaymentPO(str[2], str[3], str[4], str[5], str[6], str[7], isCheck);
@@ -335,7 +337,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
             list2.add(listPO);
         }
 
-        System.out.println(list2 == null);
+//        System.out.println(list2 == null);
         return list2;
     }
 
@@ -346,7 +348,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
     private String POToString(OrderPO po) {
         return po.getType() + ";" + po.getIsCheck() + ";" + po.getSenderName() + ";" + po.getSenderAddress() + ";" + po.getSenderWorkplace() + ";"
                 + po.getSenderTelephone() + ";" + po.getSenderPhone() + ";" + po.getReceiverName() + ";"
-                + po.getReceiverAddress() + po.getReceiverWorkplace() + ";" + po.getReceiverTelephone() + ";"
+                + po.getReceiverAddress() + ";" + po.getReceiverWorkplace() + ";" + po.getReceiverTelephone() + ";"
                 + po.getReceiverPhone() + ";" + po.getOriginalNum() + ";" + po.getWeight() + ";" + po.getVolume() + ";"
                 + po.getGoods_Name() + ";" + po.getDeliveryType() + ";" + po.getWrapper() + ";"
                 + po.getExpenseOfTransport() + ";" + po.getExpenseOfWrapper() + ";" + po.getExpense() + ";"
@@ -493,7 +495,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
         ArrayList<String> list2 = common2.readData();
         for (int i = 0; i < list2.size(); i++) {
             String[] str2 = list2.get(i).split(";");
-            System.out.println(str2[0]);
+//            System.out.println(str2[0]);
             if (str2[0].equals(expenseAndDate.getWrapper())) {
                 wrapper = Double.parseDouble(str2[1]) * Double.parseDouble(expenseAndDate.getVolume()) / 2.0;
                 expenseAndDate.setExpenseOfWrap(wrapper + "");
@@ -567,7 +569,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(AddresseeInformationPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -584,15 +586,17 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(DistributePO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
         ArrayList<String> list = common.readData();
+//        System.out.println("numdm");
         if (list.contains(str)) {
             list.remove(str);
             common.clearData("list");
             common.writeData(list);
+//            System.out.println("del");
             return true;
         }
         return false;
@@ -600,7 +604,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(GatheringPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -616,15 +621,20 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(OrderPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
         ArrayList<String> list = common.readData();
+        System.out.println(list.get(0));
+        System.out.println(str);
+        System.out.println(list.get(0) == str);
         if (list.contains(str)) {
             list.remove(str);
             common.clearData("list");
             common.writeData(list);
+            System.out.println("indata");
+
             return true;
         }
         return false;
@@ -632,7 +642,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(PaymentPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -648,7 +659,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(ReceiptPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -664,7 +676,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(StockInPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -680,7 +693,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(StockOutPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -696,7 +710,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(TransferReceivePO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -712,7 +727,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(ReceivePO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
+
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -728,7 +744,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(LoadingPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
@@ -744,7 +760,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
     @Override
     public boolean deleteList(TransferPO po) throws RemoteException {
-        // TODO Auto-generated method stub
+        po.setIsCheck(ListState.UNCHECK);
         Common common = new Common("list");
         String str = "";
         str = POToString(po);
