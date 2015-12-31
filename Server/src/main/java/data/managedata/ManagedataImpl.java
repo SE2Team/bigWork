@@ -2,10 +2,7 @@ package data.managedata;
 
 import data.Common.Common;
 import dataservice.managedataservice.ManageDataService;
-import po.ConstantPO;
-import po.DriverPO;
-import po.VehiclePO;
-import po.WorkerPO;
+import po.*;
 import util.ExistException;
 
 import java.rmi.RemoteException;
@@ -102,8 +99,16 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	public Boolean updateSalary(String position, String Type) throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common=new Common("salary");
+		ArrayList<String> list = common.readData();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			if (str[0].equals(position)) {
+				list.remove(j);
+				list.add(position + ";" + Type);
+			}
+		}
 		common.clearData("salary");
-		common.writeDataAdd(position+";"+Type);
+		common.writeData(list);
 		return true;
 	}
 
@@ -125,13 +130,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		return true;
 	}
 
-	public String[] getSalary() throws RemoteException {
-		// TODO Auto-generated method stub
-		Common common=new Common("salary");
-		ArrayList<String> list= common.readData();
-		String[] str=list.get(0).split(";");
-		return str;
-	}
 
 	public ArrayList<ConstantPO> getConstant() throws RemoteException {
 		// TODO Auto-generated method stub
@@ -312,4 +310,98 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		}
 	}
 
+	@Override
+	public String getSalary(String position) throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("salary");
+		ArrayList<String> list = common.readData();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			if (str[0].equals(position)) {
+				return str[1];
+
+			}
+		}
+		return null;
+	}
+
+	private String PoToString(OrganizationPO po) {
+		return po.getNum() + ";" + po.getCity() + ";" + po.getName();
+	}
+
+	@Override
+	public boolean addOrganization(OrganizationPO po) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common = new Common("organization");
+		ArrayList<String> list = common.readData();
+		String string = this.PoToString(po);
+		if (list.contains(string)) {
+			throw new ExistException();
+		}
+		common.writeDataAdd(string);
+		return true;
+	}
+
+	@Override
+	public boolean delOrganization(OrganizationPO po) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common = new Common("organization");
+		ArrayList<String> list = common.readData();
+		String string = this.PoToString(po);
+		if (list.contains(string)) {
+			list.remove(string);
+			common.clearData("organization");
+			common.writeData(list);
+			return true;
+		} else {
+			throw new ExistException();
+		}
+
+	}
+
+	@Override
+	public boolean editOrganization(OrganizationPO oldPO, OrganizationPO newPO) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common = new Common("organization");
+		ArrayList<String> list = common.readData();
+		String string = this.PoToString(oldPO);
+
+		if (list.contains(string)) {
+			list.remove(string);
+			list.add(this.PoToString(newPO));
+			common.clearData("organization");
+			common.writeData(list);
+			return true;
+		} else {
+			throw new ExistException();
+		}
+	}
+
+	@Override
+	public ArrayList<OrganizationPO> check() throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("organization");
+		ArrayList<String> list = common.readData();
+		ArrayList<OrganizationPO> list1 = new ArrayList<>();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			list1.add(new OrganizationPO(str[0], str[1], str[3]));
+		}
+		return list1;
+	}
+
+	@Override
+	public OrganizationPO check(String num) throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("organization");
+		ArrayList<String> list = common.readData();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			if (str[0].equals(num)) {
+				return new OrganizationPO(str[0], str[1], str[2]);
+			}
+		}
+		return null;
+	}
+		
 }

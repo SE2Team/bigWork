@@ -8,8 +8,8 @@ public class RunTip {
         thread.start();
     }
 
-    public static void makeTip(String str) {
-        TipPanel t = new TipPanel(str);
+    public static void makeTip(String str, boolean flag) {
+        TipPanel t = new TipPanel(str, flag);
         Thread thread = new Thread(t);
         thread.start();
     }

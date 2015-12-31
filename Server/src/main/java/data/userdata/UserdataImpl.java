@@ -144,4 +144,19 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 		}
 		return list1;
 	}
+
+
+	@Override
+	public UserPO check(String ID) throws RemoteException {
+		// TODO Auto-generated method stub
+		ArrayList<String> list = common.readData();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			if (str[0].equals(ID)) {
+				return this.stringToPO(str);
+			}
+		}
+
+		return null;
+	}
 }

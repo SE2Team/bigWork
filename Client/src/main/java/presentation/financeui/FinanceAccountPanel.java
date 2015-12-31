@@ -2,6 +2,8 @@ package presentation.financeui;
 
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
+import presentation.commonui.RunTip;
+import presentation.commonui.swing.Table;
 import vo.AccountVO;
 
 import javax.swing.*;
@@ -9,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 财务人员账户管理界面
@@ -85,9 +89,7 @@ public class FinanceAccountPanel extends JPanel {
 						bl = new FinanceController();
 						bl.DelAccount(vo);
 					} catch (RemoteException e) {
-						JLabel tip = new JLabel("提示：网络异常");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("网络异常", false);
 						return;
 					}
 
@@ -122,10 +124,36 @@ public class FinanceAccountPanel extends JPanel {
 		operation4.setBounds(560, 20, width, height);
 		add(operation4);
 
+		//-------------------------------------
+		Iterator<AccountVO> iterator = null;
+		ArrayList<AccountVO> list = new ArrayList<AccountVO>();
+		FinanceblService bl;
+		try {
+			bl = new FinanceController();
+			iterator = bl.searchAccount();
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		while (iterator.hasNext()) {
+			list.add(iterator.next());
+		}
+		int n = list.size();
+		String row[][] = new String[n][2];
+		for (int j = 0; j < n; j++) {
+			AccountVO vo = list.get(j);
+			String[] temp = new String[2];
+			temp[0] = vo.getAccountName();
+			temp[1] = vo.getAccountBalance();
+			row[j] = temp;
+		}
 		String[] column = {"账户名称", "余额"};
-		String row[][] = {};
-		tableModel = new DefaultTableModel(row, column);
-		accountTable = new JTable(tableModel);
+		accountTable = Table.getTable(column, row);
+		tableModel = (DefaultTableModel) accountTable.getModel();
+
+		//------------------------------------
+
+		
 		accountTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选
 		accountTable.addMouseListener(new MouseAdapter() {// 鼠标事件
 			public void mouseClicked(MouseEvent e) {

@@ -1,11 +1,18 @@
 package presentation.financeui;
 
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
+import presentation.commonui.swing.Table;
+import vo.GatheringVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 财务人员结算管理
@@ -81,10 +88,38 @@ public class FinanceSettlePanel extends JPanel {
 		add(yesButton);
 		add(noButton);
 
+		//-----------------------------------------
+		Iterator<GatheringVO> iterator = null;
+		FinanceblService financeblService;
+		ArrayList<GatheringVO> list = new ArrayList<GatheringVO>();
+		try {
+			financeblService = new FinanceController();
+			iterator = financeblService.checkGathering();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		while (iterator.hasNext()) {
+			list.add(iterator.next());
+		}
+		int n = list.size();
+		String row[][] = new String[n][5];
+		for (int j = 0; j < n; j++) {
+			String[] strings = new String[5];
+			GatheringVO vo = list.get(j);
+			strings[0] = vo.getDate();
+			strings[1] = vo.getWorkplace();
+			strings[2] = vo.getMan();
+			strings[3] = vo.getMoney();
+			strings[4] = vo.getPlace();
+			row[j] = strings;
+		}
 		String[] column = { "收款日期", "收款单位", "收款人", "收款金额", "收款地点" };
-		String row[][] = {};
-		tableModel = new DefaultTableModel(row,column);
-		settleTable = new JTable(tableModel);
+		settleTable = Table.getTable(column, row);
+		tableModel = (DefaultTableModel) settleTable.getModel();
+		//----------------------------------------
+		
 		settleTable.setFont(font2);
 		settleTable.setRowHeight(20);
 		jsp = new JScrollPane(settleTable);

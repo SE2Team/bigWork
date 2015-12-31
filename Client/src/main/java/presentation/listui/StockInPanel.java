@@ -7,6 +7,7 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ListState;
@@ -147,8 +148,8 @@ public class StockInPanel extends JPanel {
 		cancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				Empty emptyLoading = new Empty(stockInJtf);
-			}
+                performCancel();
+            }
 		});
 
 		this.add(StockInList);
@@ -171,6 +172,11 @@ public class StockInPanel extends JPanel {
 		this.add(cancel);
 	}
 
+    protected void performCancel() {
+        Empty emptyLoading = new Empty(stockInJtf);
+
+    }
+
 	protected void performSure() {
 		boolean isOk = NumExceptioin.isOrderValid(jtf_deliveryNum);
 		if(isOk&&isAllEntered.isEntered(stockInJtf)){
@@ -184,27 +190,18 @@ public class StockInPanel extends JPanel {
 				bl.save(in_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
-				JLabel tip = new JLabel("提示：网络异常");
-				tip.setFont(font2);
-				JOptionPane.showMessageDialog(null, tip);
-			}
+                RunTip.makeTip("网络异常", false);
+            }
 
-			JLabel tip = new JLabel("提示：保存成功");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}else if((!isOk)&&isAllEntered.isEntered(stockInJtf)){
-			JLabel tip = new JLabel("提示：请输入正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}else if(isOk&&!isAllEntered.isEntered(stockInJtf)){
-			JLabel tip = new JLabel("提示：仍有信息未输入");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}else if(!isOk&&!isAllEntered.isEntered(stockInJtf)){
-			JLabel tip = new JLabel("请输入所有正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}
+            RunTip.makeTip("保存成功", true);
+
+        }else if((!isOk)&&isAllEntered.isEntered(stockInJtf)){
+            RunTip.makeTip("请输入正确格式的信息", false);
+        }else if(isOk&&!isAllEntered.isEntered(stockInJtf)){
+            RunTip.makeTip("仍有信息未输入", false);
+        }else if(!isOk&&!isAllEntered.isEntered(stockInJtf)){
+            RunTip.makeTip("请输入所有正确格式的信息", false);
+        }
 		
 	}
 

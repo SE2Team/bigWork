@@ -6,6 +6,7 @@ package presentation.listui;
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.Empty;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.DeliveryType;
@@ -369,8 +370,8 @@ public class OrderPanel extends JPanel {
 		button_2.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				new Empty(OrderJtf);
-			}
+                performCancel();
+            }
 		});
 
 		button.add(button_1);
@@ -382,6 +383,11 @@ public class OrderPanel extends JPanel {
 		this.add(other);
 		this.add(button);
 	}
+
+    protected void performCancel() {
+        new Empty(OrderJtf);
+
+    }
 
 	protected void performButton1() {
 
@@ -420,27 +426,19 @@ public class OrderPanel extends JPanel {
 				bl.save(order_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
-				JLabel tip = new JLabel("提示：网络异常");
-				tip.setFont(font2);
-				JOptionPane.showMessageDialog(null, tip);
-			}
+                RunTip.makeTip("网络异常", false);
+            }
 
-			JLabel tip = new JLabel("提示：保存成功");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		} else if ((!isOk) && isAllEntered.isEntered(OrderJtf2)) {
-			JLabel tip = new JLabel("提示：请输入正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		} else if (isOk && !isAllEntered.isEntered(OrderJtf2)) {
-			JLabel tip = new JLabel("提示：仍有信息未输入");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		} else if (!isOk && !isAllEntered.isEntered(OrderJtf2)) {
-			JLabel tip = new JLabel("请输入所有正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}
+            RunTip.makeTip("保存成功", true);
+
+        } else if ((!isOk) && isAllEntered.isEntered(OrderJtf2)) {
+            RunTip.makeTip("请输入正确格式的信息", false);
+
+        } else if (isOk && !isAllEntered.isEntered(OrderJtf2)) {
+            RunTip.makeTip("仍有信息未输入", false);
+        } else if (!isOk && !isAllEntered.isEntered(OrderJtf2)) {
+            RunTip.makeTip("请输入所有正确格式的信息", false);
+        }
 	}
 
 	// 错误提示信息是否已经被添加

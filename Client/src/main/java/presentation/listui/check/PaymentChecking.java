@@ -2,21 +2,46 @@ package presentation.listui.check;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceCostPanel;
+import presentation.manageui.ListApprovalPanel;
 import util.ListState;
 import vo.PaymentVO;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 
 /**
  * Created by MYK on 2015/12/28 0028.
  */
 public class PaymentChecking extends FinanceCostPanel {
+    protected JLabel ret;
+    protected Color color = new Color(221, 242, 247);
+
     private PaymentChecking() {
         super();
+        ret = new JLabel(new ImageIcon("images/返回.png"));
+        ret.setOpaque(true);
+        ret.setBounds(5, 5, 35, 35);
+        ret.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                returnTOApproval();
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                ret.setBackground(Color.GREEN);
+            }
+
+            public void mouseExited(MouseEvent e) {
+                ret.setBackground(color);
+            }
+        });
+        this.add(ret);
     }
 
     public PaymentChecking(PaymentVO vo) {
@@ -45,27 +70,44 @@ public class PaymentChecking extends FinanceCostPanel {
             try {
                 bl = new ListController();
                 bl.save2File(vo);
+                bl.afterCheck(vo);
             } catch (RemoteException e) {
-                JLabel tip = new JLabel("提示：网络异常");
-                tip.setFont(font2);
-                JOptionPane.showMessageDialog(null, tip);
+                RunTip.makeTip("网络异常", false);
                 return;
             }
-            JLabel tip = new JLabel("提示：保存成功");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("保存成功", false);
+            returnTOApproval();
         } else if ((!isOk) && isAllEntered.isEntered(costJtf)) {
-            JLabel tip = new JLabel("提示：请输入正确格式的信息");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("请输入正确格式的信息", false);
         } else if (isOk && !isAllEntered.isEntered(costJtf)) {
-            JLabel tip = new JLabel("提示：仍有信息未输入");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("仍有信息未输入", false);
         } else if (!isOk && !isAllEntered.isEntered(costJtf)) {
-            JLabel tip = new JLabel("请输入所有正确格式的信息");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("请输入所有正确格式的信息", false);
         }
     }
+
+    @Override
+    protected void performCancel() {
+        PaymentVO vo = new PaymentVO(dateTextField.getText().trim(),
+                sumTextField.getText().trim(), nameTextField.getText()
+                .trim(), numTextField.getText().trim(),
+                reasonTextArea.getText().trim(), otherTextArea.getText()
+                .trim(), ListState.UNCHECK);
+        ListblService bl;
+        try {
+            bl = new ListController();
+//            bl.save2File(vo);
+            bl.afterCheck(vo);
+        } catch (RemoteException e) {
+            RunTip.makeTip("网络异常", false);
+            return;
+        }
+        returnTOApproval();
+    }
+
+    private void returnTOApproval() {
+        ret.setBackground(Color.YELLOW);
+        ListApprovalPanel.getInstance().removeChecking(this);
+    }
+
 }

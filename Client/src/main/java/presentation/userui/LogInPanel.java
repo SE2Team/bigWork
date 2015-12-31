@@ -1,5 +1,8 @@
 package presentation.userui;
 
+import businesslogic.inquirybl.InquiryController;
+import businesslogicservice.InquiryblService;
+import presentation.commonui.RunTip;
 import vo.UserVO;
 
 import javax.swing.*;
@@ -8,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.rmi.RemoteException;
 
 public class LogInPanel extends JPanel{
 	
@@ -98,8 +102,16 @@ public class LogInPanel extends JPanel{
 		
 		jb2.addActionListener(new ActionListener(){			
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				String str = ordernum.getText();
+				if (str.trim() == null) {
+					RunTip.makeTip();
+				}
+				try {
+					InquiryblService inquiry = new InquiryController();
+					orderinfo.setText(inquiry.checkLogistics(str));
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		

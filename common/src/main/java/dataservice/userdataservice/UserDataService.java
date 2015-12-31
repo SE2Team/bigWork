@@ -59,4 +59,6 @@ public interface UserDataService extends Remote{
      * @return
      */
     ArrayList<UserPO> getUser() throws RemoteException;
+
+    UserPO check(String ID) throws RemoteException;
 }

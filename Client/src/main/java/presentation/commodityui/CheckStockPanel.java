@@ -3,17 +3,12 @@
  */
 package presentation.commodityui;
 
-import java.awt.Cursor;
-import java.awt.Font;
+import presentation.commonui.DateChooser;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import presentation.commonui.DateChooser;
 
 public class CheckStockPanel extends JPanel {
 
@@ -85,4 +80,7 @@ public class CheckStockPanel extends JPanel {
 
 	}
 
+	public JButton getButton() {
+		return search;
+	}
 }

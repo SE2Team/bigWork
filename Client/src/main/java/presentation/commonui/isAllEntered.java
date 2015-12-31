@@ -1,6 +1,6 @@
 package presentation.commonui;
 
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class isAllEntered {
 

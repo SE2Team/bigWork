@@ -2,7 +2,9 @@ package presentation.userui;
 
 import businesslogic.userbl.UserController;
 import businesslogicservice.UserblService;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import util.ExistException;
 import util.UserType;
@@ -16,7 +18,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
 
-public class modifyAccountNumDialog extends JDialog {
+public class modifyAccountNumDialog extends MyDialog {
 
 	private UserAdminPanel parent;
 
@@ -144,31 +146,21 @@ public class modifyAccountNumDialog extends JDialog {
 								e.printStackTrace();
 							}
 						} catch (RemoteException e) {
-							JLabel tip = new JLabel("提示：网络异常");
-							tip.setFont(font2);
-							JOptionPane.showMessageDialog(null, tip);
+							RunTip.makeTip("网络异常", false);
 							return;
 						}
 						rowContent = new String[] { jtf_userName.getText(),
 								jtf_password.getText(), jtf_name.getText(),
 								jcb_limit.getSelectedItem().toString()};
 						parent.updateAfterConfirm(rowContent);
+						RunTip.makeTip("修改成功", true);
 						dispose();
-						JLabel tip = new JLabel("提示：修改成功");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
 					}else if ((!isOk) && isAllEntered.isEntered(userJtf)) {
-						JLabel tip = new JLabel("提示：请输入正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("请输入正确格式的信息", false);
 					} else if (isOk && !isAllEntered.isEntered(userJtf)) {
-						JLabel tip = new JLabel("提示：仍有信息未输入");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("仍有信息未输入", false);
 					} else if (!isOk && !isAllEntered.isEntered(userJtf)) {
-						JLabel tip = new JLabel("请输入所有正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("请输入所有正确格式的信息", false);
 					}					
 				}
 			});

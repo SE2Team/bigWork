@@ -2,6 +2,8 @@ package presentation.financeui;
 
 import businesslogic.inquirybl.InquiryController;
 import businesslogicservice.InquiryblService;
+import presentation.commonui.RunTip;
+import presentation.commonui.swing.Table;
 import vo.OperationLogVO;
 
 import javax.swing.*;
@@ -27,28 +29,31 @@ public class FinanceOperationLogPanel extends JPanel {
 		this.setSize(650, 530);
 		this.setLayout(null);
 		String[] column = { "序号", "操作类型", "操作人员", "操作时间" };
-        String row[][] = new String[5000][4];
 
 
         ArrayList<OperationLogVO> arrayList=new ArrayList<OperationLogVO>();
 
         Iterator<OperationLogVO> itr=null;
+        ArrayList<OperationLogVO> list = new ArrayList<OperationLogVO>();
         try {
             bl=new InquiryController();
             itr=bl.checkOperationLog();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            RunTip.makeTip("网络异常", false);
         }
         int cout=1;
         while (itr.hasNext()){
-            OperationLogVO vo=itr.next();
-            String[] temp={String.valueOf(cout),vo.getType().toString(),vo.getHuman(),vo.getTime()};
-            row[cout-1]=temp;
-            cout++;
+            list.add(itr.next());
+        }
+        String[][] row = new String[cout][4];
+        for (int j = 0; j < cout; j++) {
+            OperationLogVO vo = list.get(j);
+            String[] temp = {String.valueOf(cout), vo.getType().toString(), vo.getHuman(), vo.getTime()};
+            row[j] = temp;
         }
 
-		operationTable = new JTable(row, column);
-		operationTable.setFont(font);
+        operationTable = Table.getTable(column, row);
+        operationTable.setFont(font);
 		operationTable.setRowHeight(20);
 		jsp = new JScrollPane(operationTable);
 		jsp.setBounds(0, 0, 650, 530);

@@ -5,6 +5,8 @@ package presentation.userui;
 
 import businesslogic.userbl.UserController;
 import businesslogicservice.UserblService;
+import presentation.commonui.RunTip;
+import presentation.commonui.swing.Table;
 import util.UserType;
 import vo.UserVO;
 
@@ -13,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 管理员用户管理界面
@@ -120,9 +124,7 @@ public class UserAdminPanel extends JPanel{
 						bl = new UserController();
 						bl.delete(vo);
 					} catch (RemoteException e) {
-						JLabel tip = new JLabel("提示：网络异常");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("网络异常", false);
 						return;
 					}
 					
@@ -159,12 +161,40 @@ public class UserAdminPanel extends JPanel{
 		checkButton.setFont(font2);
 		checkButton.setBounds(560, 20, width, height);
 		this.add(checkButton);
-		
+		//---------------------------------
+		Iterator<UserVO> iterator = null;
+		UserblService userblService;
+		ArrayList<UserVO> list = new ArrayList<UserVO>();
+		try {
+			userblService = new UserController();
+			iterator = userblService.getUser();
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			RunTip.makeTip("网络异常", false);
+		}
+		while (iterator.hasNext()) {
+			list.add(iterator.next());
+		}
+		int n = list.size();
+		String row[][] = new String[n][4];
+		for (int j = 0; j < n; j++) {
+			String[] str = new String[4];
+			UserVO vo = list.get(j);
+			str[0] = vo.getId();
+			str[1] = vo.getPassword();
+			str[2] = vo.getName();
+			str[3] = vo.getPermission().toString();
+			row[j] = str;
+		}
 		String[] column = { "用户名","密码","姓名","权限"};
-		String row[][] = {};
-		tableModel = new DefaultTableModel(row, column);
-		userTable = new JTable(tableModel);
-		userTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单选
+		userTable = Table.getTable(column, row);
+		tableModel = (DefaultTableModel) userTable.getModel();
+
+
+		//----------------------------------------------------------------
+
+
+		//	userTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单选
 		userTable.addMouseListener(new MouseAdapter() {//鼠标事件
 			public void mouseClicked(MouseEvent e){
 				int seletedRow = userTable.getSelectedRow();// 获得选中行索引

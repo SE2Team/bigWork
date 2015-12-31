@@ -32,6 +32,18 @@ public class BigCardPanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * 待完成
+     */
+    private void intiHint() {
+        JPanel h = new JPanel();
+        h.setBounds(this.getX(), this.getY(), 50, 50);
+        JTextArea _message = new JTextArea();
+        _message.setBackground(new Color(255, 255, 225));
+        _message.setMargin(new Insets(4, 4, 4, 4));
+        _message.setLineWrap(true);
+        _message.setWrapStyleWord(true);
+    }
 
 
     private void initLoginPanel() {
@@ -69,38 +81,25 @@ public class BigCardPanel extends JPanel implements ActionListener {
         boolean isNull;
         if ("请输入用户名".equalsIgnoreCase(user) && "请输入密码".equalsIgnoreCase(password)) {
             isNull = true;
-            JLabel tip = new JLabel("请输入用户名和密码");
-            tip.setFont(font);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("请输入用户名和密码", false);
         } else if ("请输入用户名".equalsIgnoreCase(user)) {
             isNull = true;
-            JLabel tip = new JLabel("请输入用户名");
-            tip.setFont(font);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("请输入用户名", false);
         } else if ("请输入密码".equalsIgnoreCase(password)) {
             isNull = true;
-//            JLabel tip = new JLabel("请输入密码");
-//            tip.setFont(font);
-//            JOptionPane.showMessageDialog(null, tip);
-            RunTip.makeTip("请输入密码");
-
+            RunTip.makeTip("请输入密码", false);
         } else {
             isNull = false;
         }
         if (!isNull) {
             try {
                 vo = bl.login(lg.getVO());
-
             } catch (RemoteException e1) {
-                JLabel tip = new JLabel("提示：网络异常");
-                tip.setFont(font);
-                JOptionPane.showMessageDialog(null, tip);
+                RunTip.makeTip("网络异常", false);
                 return;
             }
             if (vo == null) {
-                JLabel tip = new JLabel("提示：用户名或密码错误");
-                tip.setFont(font);
-                JOptionPane.showMessageDialog(null, tip);
+                RunTip.makeTip("用户名或密码错误", false);
                 return;
             }
 

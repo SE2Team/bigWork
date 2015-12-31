@@ -33,7 +33,7 @@ public class FinanceController implements FinanceblService {
         return finance.gathering(gatheringVO);
     }
 
-    public boolean payment(PaymentVO paymentVO) throws RemoteException{
+    public boolean payment(PaymentVO paymentVO) throws RemoteException {
         return finance.payment(paymentVO);
     }
 
@@ -87,5 +87,21 @@ public class FinanceController implements FinanceblService {
 
     public Iterator<GatheringVO> checkGathering() throws RemoteException {
         return finance.checkGathering();
+    }
+
+    public Iterator<WorkerVO> checkInitWorker() throws RemoteException {
+        return finance.checkInitWorker();
+    }
+
+    public Iterator<VehicleVO> checkInitVehicle() throws RemoteException {
+        return finance.checkInitVehicle();
+    }
+
+    public Iterator<AccountVO> checkInitAccount() throws RemoteException {
+        return finance.checkInitAccount();
+    }
+
+    public StockVO checkInitStock() throws RemoteException {
+        return finance.checkInitStock();
     }
 }

@@ -72,6 +72,8 @@ public interface ManageblService {
      */
     void updateConstant(ConstantVO constantVO) throws RemoteException, ExistException;
 
+    String getSalary(String position) throws RemoteException;
+
     Iterator<ConstantVO> checkConstant() throws RemoteException;
 
     /**

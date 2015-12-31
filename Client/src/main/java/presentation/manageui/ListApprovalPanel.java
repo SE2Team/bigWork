@@ -22,6 +22,8 @@ import java.util.Iterator;
  */
 //总经理审批单据
 public class ListApprovalPanel extends JPanel {
+    private static ListApprovalPanel ME = null;
+
     int width = 100, height = 20;
     private JButton waitButton;
     private JButton checkButton;
@@ -140,6 +142,9 @@ public class ListApprovalPanel extends JPanel {
                 update();
             }
         });
+
+        ME = this;
+
     }
 
 
@@ -176,7 +181,6 @@ public class ListApprovalPanel extends JPanel {
                         bl.afterCheck((OrderVO) tempVO);
                         break;
                     case ORDER:
-//                        System.out.println("submit"+tempVO.getType().toString());
                         bl.save2File((OrderVO) tempVO);
                         bl.afterCheck((OrderVO) tempVO);
                         break;
@@ -306,7 +310,6 @@ public class ListApprovalPanel extends JPanel {
     TransferReceiveVO transRecVo = null;
     GatheringVO gatheringVo = null;
     PaymentVO paymentVo = null;
-
     //5
     public void check() {
         int i = listTable.getSelectedRow();
@@ -356,7 +359,6 @@ public class ListApprovalPanel extends JPanel {
                     break;
             }
             listType = type.toString();
-//            System.out.println("type is" +type);
             if ("订单".equals(listType)) addPanel(new OrderChecking(ordervo));
             if ("收件单".equals(listType)) addPanel(new AddresseeInfoChecking(addresseevo));
             if ("装车单".equals(listType)) addPanel(new LoadingChecking(loadingvo));
@@ -371,6 +373,9 @@ public class ListApprovalPanel extends JPanel {
     }
 
     private void update() {
+        DefaultTableModel model1;
+        String[] column1 = {"序号", "审批状态", "单据类型"};
+        String row1[][] = new String[50][3];
         ListblService bl1 = null;
         Iterator<ListVO> itr1 = null;
         try {
@@ -380,23 +385,22 @@ public class ListApprovalPanel extends JPanel {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
         int cout = 1;
         while (itr1.hasNext()) {
             ListVO vo = itr1.next();
-            String[] temp = row[cout - 1];
-            model.setValueAt(temp[0], cout - 1, 0);
-            model.setValueAt(temp[1], cout - 1, 1);
-            model.setValueAt(temp[2], cout - 1, 2);
+            String[] temp = {String.valueOf(cout), cCheck(String.valueOf(vo.getIsCheck())), cType(vo.getType().toString())};
+            row1[cout - 1] = temp;
             cout++;
         }
-        for (int i = 0; i < arrayList.size(); i++) {
-            ListVO tempvo = arrayList.get(i);
-            String[] temp = {String.valueOf(i + 1), cCheck(String.valueOf(tempvo.getIsCheck())), cType(tempvo.getType().toString())};
-            model.setValueAt(temp[0], i, 0);
-            model.setValueAt(temp[1], i, 1);
-            model.setValueAt(temp[2], i, 2);
-        }
+        model1 = new DefaultTableModel(row1, column1);
+        listTable.setModel(model1);
+//    	for(int i=0;i<arrayList.size();i++){
+//    		ListVO tempvo = arrayList.get(i);
+//    		String[] temp= {String.valueOf(i+1), cCheck(String.valueOf(tempvo.getIsCheck())), cType(tempvo.getType().toString())};
+//    		model.setValueAt(temp[0], i, 0);
+//    		model.setValueAt(temp[1], i, 1);
+//    		model.setValueAt(temp[2], i, 2);
+//    	}
         listTable.updateUI();
         //没有更新JTable啊啊
     }
@@ -474,5 +478,16 @@ public class ListApprovalPanel extends JPanel {
     public String getType() {
         return listType;
     }
+
+    public static ListApprovalPanel getInstance() {
+        return ME;
+
+    }
+
+    public void removeChecking(JPanel jp) {
+        removePanel(jp);
+        update();
+    }
+
 
 }

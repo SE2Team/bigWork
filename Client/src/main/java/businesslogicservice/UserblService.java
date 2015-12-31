@@ -4,6 +4,7 @@ import util.ExistException;
 import vo.UserVO;
 
 import java.rmi.RemoteException;
+import java.util.Iterator;
 
 /**
  * Created by Administrator on 2015/10/24 0024.
@@ -32,4 +33,7 @@ public interface UserblService {
      * @throws ExistException  异常，该用户不存在，无法删除
      */
     boolean modify(UserVO userVOOld, UserVO userVONew) throws RemoteException, ExistException;
+
+    public Iterator<UserVO> getUser() throws RemoteException;
+
 }

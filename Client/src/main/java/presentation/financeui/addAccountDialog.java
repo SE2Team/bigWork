@@ -5,9 +5,11 @@ package presentation.financeui;
 
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
+import presentation.userui.LogInFrame;
 import util.ExistException;
 import vo.AccountVO;
 
@@ -25,8 +27,8 @@ public class addAccountDialog extends MyDialog {
 	private FinanceInitialPanel parent2;
 
 	public addAccountDialog(FinanceAccountPanel parent) {
-        super();
-        this.parent = parent;
+
+		this.parent = parent;
 		this.setContentPane(new addAccountPanel(parent));
 		this.setSize(400, 380);
 		this.setLocationRelativeTo(null);
@@ -34,8 +36,8 @@ public class addAccountDialog extends MyDialog {
 	}
 
 	public addAccountDialog(FinanceInitialPanel parent) {
-        super();
-        this.parent2 = parent;
+
+		this.parent2 = parent;
 		this.setContentPane(new addAccountPanel(parent2));
 		this.setSize(400, 380);
 		this.setLocationRelativeTo(null);
@@ -66,7 +68,8 @@ public class addAccountDialog extends MyDialog {
 	class addAccountPanel extends JPanel {
 
 		addAccountPanel(final JPanel jp) {
-            this.setLayout(null);
+			LogInFrame.getInstance().setEnabled(false);
+			this.setLayout(null);
 
 			addInfo = new JLabel("添加账户信息", JLabel.CENTER);
 			addInfo.setFont(new Font("楷体", Font.PLAIN, 25));
@@ -89,90 +92,75 @@ public class addAccountDialog extends MyDialog {
 			jtf_balance.setBounds(x + addx, y + addy, jtf_width, height);
 			jtf_balance.addFocusListener(new TextFocus());
 
-            sure = new JButton("确定");
-            sure.setFont(font);
-            sure.setBounds(80, y + 2 * addy + 10, 80, height);
-
-            cancel = new JButton("取消");
-            cancel.setFont(font);
-            cancel.setBounds(120 + addx, y + 2 * addy + 10, 80, height);
-
-            sure.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    // TODO
-                    accJtf = new JTextField[]{jtf_accountName, jtf_balance};
-                    boolean isOk = NumExceptioin.isDouble(jtf_balance);
-                    if (isOk && isAllEntered.isEntered(accJtf)) {
-                        AccountVO account_vo = new AccountVO(jtf_accountName
-                                .getText(), jtf_balance.getText());
-
-                        if (jp == parent) {
-                            FinanceblService bl;
-                            try {
-                                bl = new FinanceController();
-                                try {
-                                    bl.addAccount(account_vo);
-                                } catch (ExistException e) {
-                                    // TODO Auto-generated catch block
-                                    JLabel tip = new JLabel("提示：该账户信息已存在");
-                                    tip.setFont(font2);
-                                    JOptionPane.showMessageDialog(null, tip);
-                                    return;
-                                }
-                            } catch (RemoteException e) {
-                                // TODO Auto-generated catch block
-                                JLabel tip = new JLabel("提示：网络异常");
-                                tip.setFont(font2);
-                                JOptionPane.showMessageDialog(null, tip);
-                                return;
-                            }
-                            if (jp == parent2) {
-                                FinanceblService bl2;
-                                try {
-                                    bl2 = new FinanceController();
-                                    bl2.initial(account_vo);
-                                } catch (RemoteException e) {
-                                    JLabel tip = new JLabel("提示：网络异常");
-                                    tip.setFont(font2);
-                                    JOptionPane.showMessageDialog(null, tip);
-                                    return;
-                                }
-                            }
-                        }
-
-                        rowContent = new String[]{jtf_accountName.getText(),
-                                jtf_balance.getText()};
-                        if (jp == parent) {
-                            parent.addAfterConfirm(rowContent);
-                        }
-                        if (jp == parent2) {
-                            parent2.addAccInfo(rowContent);
-                        }
-
-
-                        dispose();
-                        JLabel tip = new JLabel("提示：添加成功");
-                        tip.setFont(font2);
-                        JOptionPane.showMessageDialog(null, tip);
-                    } else if ((!isOk) && isAllEntered.isEntered(accJtf)) {
-                        JLabel tip = new JLabel("提示：请输入正确格式的信息");
-                        tip.setFont(font2);
-                        JOptionPane.showMessageDialog(null, tip);
-                    } else if (isOk && !isAllEntered.isEntered(accJtf)) {
-                        JLabel tip = new JLabel("提示：仍有信息未输入");
-                        tip.setFont(font2);
-                        JOptionPane.showMessageDialog(null, tip);
-                    } else if (!isOk && !isAllEntered.isEntered(accJtf)) {
-                        JLabel tip = new JLabel("请输入所有正确格式的信息");
-                        tip.setFont(font2);
-                        JOptionPane.showMessageDialog(null, tip);
-                    }
-                }
-            });
-
-
-            cancel.addActionListener(new ActionListener() {
+			sure = new JButton("确定");
+			sure.setFont(font);
+			sure.setBounds(80, y + 2 * addy + 10, 80, height);
+			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					accJtf = new JTextField[]{jtf_accountName, jtf_balance};
+					boolean isOk = NumExceptioin.isDouble(jtf_balance);
+					if (isOk && isAllEntered.isEntered(accJtf)) {
+						AccountVO account_vo = new AccountVO(jtf_accountName
+								.getText(), jtf_balance.getText());
+
+						if (jp == parent) {
+							FinanceblService bl;
+							try {
+								bl = new FinanceController();
+								try {
+									bl.addAccount(account_vo);
+								} catch (ExistException e) {
+									// TODO Auto-generated catch block
+									RunTip.makeTip("该账户信息已存在", false);
+									return;
+								}
+							} catch (RemoteException e) {
+								// TODO Auto-generated catch block
+								RunTip.makeTip("网络异常", false);
+								return;
+							}
+							if (jp == parent2) {
+								FinanceblService bl2;
+								try {
+									bl2 = new FinanceController();
+									bl2.initial(account_vo);
+								} catch (RemoteException e) {
+									RunTip.makeTip("网络异常", false);
+									return;
+								}
+							}
+						}
+
+						rowContent = new String[]{jtf_accountName.getText(),
+								jtf_balance.getText()};
+						if (jp == parent) {
+							parent.addAfterConfirm(rowContent);
+						}
+						if (jp == parent2) {
+							parent2.addAccInfo(rowContent);
+						}
+
+						LogInFrame.getInstance().setEnabled(true);
+
+						RunTip.makeTip("添加成功", true);
+						dispose();
+					} else if ((!isOk) && isAllEntered.isEntered(accJtf)) {
+						RunTip.makeTip("请输入正确格式的信息", false);
+					} else if (isOk && !isAllEntered.isEntered(accJtf)) {
+						RunTip.makeTip("仍有信息未输入", false);
+					} else if (!isOk && !isAllEntered.isEntered(accJtf)) {
+						RunTip.makeTip("请输入所有正确格式的信息", false);
+					}
+				}
+			});
+
+			cancel = new JButton("取消");
+			cancel.setFont(font);
+			cancel.setBounds(120 + addx, y + 2 * addy + 10, 80, height);
+			cancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					LogInFrame.getInstance().setEnabled(true);
+
                     dispose();
                 }
 			});

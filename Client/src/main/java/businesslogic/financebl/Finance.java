@@ -7,10 +7,7 @@ import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.financedataservice.FinanceDataService;
 import dataservice.inquirydataservice.InquiryDataService;
-import po.AccountPO;
-import po.GatheringPO;
-import po.OperationLogPO;
-import po.PO2VO;
+import po.*;
 import util.ExistException;
 import vo.*;
 
@@ -257,5 +254,33 @@ public class Finance {
 
         }
         return arrayList.iterator();
+    }
+
+    public Iterator<WorkerVO> checkInitWorker() throws RemoteException {
+        ArrayList<WorkerVO> arrayList = new ArrayList<WorkerVO>();
+        for (WorkerPO po : finance.checkInitWorker()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return arrayList.iterator();
+    }
+
+    public Iterator<VehicleVO> checkInitVehicle() throws RemoteException {
+        ArrayList<VehicleVO> arrayList = new ArrayList<VehicleVO>();
+        for (VehiclePO po : finance.checkInitVehicle()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return arrayList.iterator();
+    }
+
+    public Iterator<AccountVO> checkInitAccount() throws RemoteException {
+        ArrayList<AccountVO> arrayList = new ArrayList<AccountVO>();
+        for (AccountPO po : finance.checkInitAccount()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return arrayList.iterator();
+    }
+
+    public StockVO checkInitStock() throws RemoteException {
+        return PO2VO.convert(finance.checkInitStock());
     }
 }

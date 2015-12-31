@@ -2,6 +2,7 @@ package presentation.financeui;
 
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
@@ -21,7 +22,6 @@ public class modifyAccountDialog extends MyDialog {
 	private FinanceAccountPanel parent;
 
 	public modifyAccountDialog(FinanceAccountPanel parent) {
-		super();
 		this.parent = parent;
 		this.setContentPane(new modAccountPanel());
 		this.setSize(400, 380);
@@ -92,37 +92,25 @@ public class modifyAccountDialog extends MyDialog {
 							try {
 								bl.EditAccount(oaccount_vo, naccount_vo);
 							} catch (ExistException e1) {
-								JLabel tip = new JLabel("提示：该账户信息已存在");
-								tip.setFont(font2);
-								JOptionPane.showMessageDialog(null, tip);
+								RunTip.makeTip("该账户信息已存在", false);
 								return;
 							}
 						} catch (RemoteException e1) {
-							JLabel tip = new JLabel("提示：网络异常");
-							tip.setFont(font2);
-							JOptionPane.showMessageDialog(null, tip);
+							RunTip.makeTip("网络异常", false);
 							return;
 						}
 			
 						rowContent = new String[]{jtf_accountName
 								.getText(), jtf_balance.getText()};
 						parent.updateAfterConfirm(rowContent);
+						RunTip.makeTip("修改成功", true);
 						dispose();
-						JLabel tip = new JLabel("提示：修改成功");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
 					} else if ((!isOk) && isAllEntered.isEntered(accJtf)) {
-						JLabel tip = new JLabel("提示：请输入正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("请输入正确格式的信息", false);
 					} else if (isOk && !isAllEntered.isEntered(accJtf)) {
-						JLabel tip = new JLabel("提示：仍有信息未输入");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("仍有信息未输入", false);
 					} else if (!isOk && !isAllEntered.isEntered(accJtf)) {
-						JLabel tip = new JLabel("请输入所有正确格式的信息");
-						tip.setFont(font2);
-						JOptionPane.showMessageDialog(null, tip);
+						RunTip.makeTip("请输入所有正确格式的信息", false);
 					}
 				
 				}

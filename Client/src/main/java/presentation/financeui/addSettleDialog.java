@@ -6,6 +6,7 @@ package presentation.financeui;
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
@@ -164,9 +165,7 @@ public class addSettleDialog extends MyDialog {
 				bl = new FinanceController();
 				bl.gathering(vo);
 			} catch (RemoteException e) {
-				JLabel tip = new JLabel("提示：网络异常");
-				tip.setFont(font2);
-				JOptionPane.showMessageDialog(null, tip);
+				RunTip.makeTip("网络异常", false);
 				return;
 			}
 
@@ -175,22 +174,14 @@ public class addSettleDialog extends MyDialog {
 					jtf_amount.getText(), jtf_place.getText()};
 			parent.addAfterConfirm(rowContent);
 
+			RunTip.makeTip("添加成功", true);
 			dispose();
-			JLabel tip = new JLabel("提示：添加成功");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
 		} else if ((!isOk) && isAllEntered.isEntered(settleJtf)) {
-			JLabel tip = new JLabel("提示：请输入正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
+			RunTip.makeTip("请输入正确格式的信息", false);
 		} else if (isOk && !isAllEntered.isEntered(settleJtf)) {
-			JLabel tip = new JLabel("提示：仍有信息未输入");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
+			RunTip.makeTip("仍有信息未输入", false);
 		} else if (!isOk && !isAllEntered.isEntered(settleJtf)) {
-			JLabel tip = new JLabel("请输入所有正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
+			RunTip.makeTip("请输入所有正确格式的信息", false);
 		}
 	}
 

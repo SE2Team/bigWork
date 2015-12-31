@@ -86,6 +86,10 @@ public class ManageController implements ManageblService {
         manage.updateConstant(constantVO);
     }
 
+    public String getSalary(String position) throws RemoteException {
+        return manage.getSalary(position);
+    }
+
     public boolean addWorker(WorkerVO workerVO) throws RemoteException, ExistException {
         return manage.addWorker(workerVO);
     }

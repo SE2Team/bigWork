@@ -7,6 +7,7 @@ import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
+import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ListState;
@@ -102,8 +103,8 @@ public class DistributePanel extends JPanel {
 		cancel.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				Empty emptyLoading = new Empty(distributeJtf);
-			}
+                performCancel();
+            }
 		});
 
 		this.add(distributeList);
@@ -118,39 +119,34 @@ public class DistributePanel extends JPanel {
 		this.add(cancel);
 	}
 
-	protected void performSure(){
-		boolean isOk = NumExceptioin.isOrderValid(jtf_orderNum);
+    protected void performCancel() {
+        Empty emptyLoading = new Empty(distributeJtf);
+    }
+
+    protected void performSure() {
+        boolean isOk = NumExceptioin.isOrderValid(jtf_orderNum);
 		if(isOk&&isAllEntered.isEntered(distributeJtf)){
 			DistributeVO dis_vo = new DistributeVO(
 					jtf_arriveDate.getText(), jtf_orderNum.getText(),
-					jtf_distributeHuman.getText(), ListState.UNCHECK);
-			ListblService bl;
+                    jtf_distributeHuman.getText(), ListState.UNCHECK);
+            ListblService bl;
 			try {
 				bl = new ListController();
 				bl.save(dis_vo);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
-				JLabel tip = new JLabel("提示：网络异常");
-				tip.setFont(font2);
-				JOptionPane.showMessageDialog(null, tip);
-			}
+                RunTip.makeTip("网络异常", false);
+            }
 
-			JLabel tip = new JLabel("提示：保存成功");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}else if((!isOk)&&isAllEntered.isEntered(distributeJtf)){
-			JLabel tip = new JLabel("提示：请输入正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}else if(isOk&&!isAllEntered.isEntered(distributeJtf)){
-			JLabel tip = new JLabel("提示：仍有信息未输入");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}else if(!isOk&&!isAllEntered.isEntered(distributeJtf)){
-			JLabel tip = new JLabel("请输入所有正确格式的信息");
-			tip.setFont(font2);
-			JOptionPane.showMessageDialog(null, tip);
-		}
+            RunTip.makeTip("保存成功", true);
+
+        }else if((!isOk)&&isAllEntered.isEntered(distributeJtf)){
+            RunTip.makeTip("请输入正确格式的信息", false);
+        }else if(isOk&&!isAllEntered.isEntered(distributeJtf)){
+            RunTip.makeTip("仍有信息未输入", false);
+        }else if(!isOk&&!isAllEntered.isEntered(distributeJtf)){
+            RunTip.makeTip("请输入所有正确格式的信息", false);
+        }
 		
 	}
 

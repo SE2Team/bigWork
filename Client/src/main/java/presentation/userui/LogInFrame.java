@@ -65,8 +65,12 @@ public class LogInFrame extends JFrame {
 
         this.add(buttom);
 
-        repaint();
 
+        //拟定的遮挡panel
+        JPanel co = new JPanel();
+        co.setBounds(0, 0, 900, 630);
+
+//        this.add(co);
     }
 
     public static JFrame getInstance() {

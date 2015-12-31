@@ -1,26 +1,14 @@
 package presentation.financeui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-
 import presentation.manageui.addEmployeeInfoDialog;
 import presentation.manageui.addInstituInfoDialog;
 import presentation.manageui.addVehicleDialog;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FinanceInitialPanel extends JPanel {
 	int x = 5, y = 10, width = 70, height = 30;
@@ -32,7 +20,6 @@ public class FinanceInitialPanel extends JPanel {
 	private JPanel panel3;// 历史期初信息
 	private JTabbedPane tab3;
 	// 期初建账
-	private JLabel t1Label;
 	private JPanel a1;// 机构
 	private JPanel a2;// 人员
 	private JPanel a3;// 车辆
@@ -46,7 +33,6 @@ public class FinanceInitialPanel extends JPanel {
 	
 
 	// 当前期初信息
-	private JLabel t2Label;
 	private JPanel b1;// 机构
 	private JPanel b2;// 人员
 	private JPanel b3;// 车辆
@@ -737,12 +723,10 @@ public class FinanceInitialPanel extends JPanel {
 
 	// 历史期初第二个界面：输入历史年份后的界面
 	public JPanel history2() {
-		int x = 10, y = 15;
 		JPanel panel = new JPanel();
 		panel.setSize(650, 530);
 		panel.setLayout(null);
 		// 顶部
-		JLabel t3Label;
 		JPanel c1;// 机构
 		JPanel c2;// 人员
 		JPanel c3;// 车辆
@@ -757,11 +741,11 @@ public class FinanceInitialPanel extends JPanel {
 		c3 = c3();
 		c4 = c4();
 		c5 = c5();
-		tab3.add(a1, "机构");
-		tab3.add(a2, "人员");
-		tab3.add(a3, "车辆");
-		tab3.add(a4, "库存");
-		tab3.add(a5, "账户");
+		tab3.add(c1, "机构");
+		tab3.add(c2, "人员");
+		tab3.add(c3, "车辆");
+		tab3.add(c4, "库存");
+		tab3.add(c5, "账户");
 		tab3.setBounds(0, 0, 650, 525);
 		panel.add(tab3);
 

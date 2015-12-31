@@ -167,4 +167,7 @@ public interface ListDataService extends Remote {
      * @throws RemoteException
      */
     ArrayList<ListPO> getRecent(String start, String end) throws RemoteException;
+
+    OrderPO getOrder(String num) throws RemoteException;
+
 }

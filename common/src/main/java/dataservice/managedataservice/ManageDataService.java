@@ -1,9 +1,6 @@
 package dataservice.managedataservice;
 
-import po.ConstantPO;
-import po.DriverPO;
-import po.VehiclePO;
-import po.WorkerPO;
+import po.*;
 import util.ExistException;
 
 import java.rmi.Remote;
@@ -88,7 +85,7 @@ public interface ManageDataService extends Remote {
      * @return
      * @throws RemoteException
      */
-    String[] getSalary() throws RemoteException;
+    String getSalary(String position) throws RemoteException;
 
     /**
      * @return
@@ -135,4 +132,14 @@ public interface ManageDataService extends Remote {
     boolean editVehicle(VehiclePO oldVehiclePO, VehiclePO newVehiclePO) throws RemoteException, ExistException;
 
     boolean editDriver(DriverPO oldDriverPO, DriverPO newDriverPO) throws RemoteException, ExistException;
+
+    boolean addOrganization(OrganizationPO po) throws RemoteException, ExistException;
+
+    boolean delOrganization(OrganizationPO po) throws RemoteException, ExistException;
+
+    boolean editOrganization(OrganizationPO oldPO, OrganizationPO newPO) throws RemoteException, ExistException;
+
+    ArrayList<OrganizationPO> check() throws RemoteException;
+
+    OrganizationPO check(String num) throws RemoteException;
 }

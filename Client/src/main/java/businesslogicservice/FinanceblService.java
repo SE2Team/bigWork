@@ -110,4 +110,11 @@ public interface FinanceblService {
 
     Iterator<GatheringVO> checkGathering() throws RemoteException;
 
+    Iterator<WorkerVO> checkInitWorker() throws RemoteException;
+
+    Iterator<VehicleVO> checkInitVehicle() throws RemoteException;
+
+    Iterator<AccountVO> checkInitAccount() throws RemoteException;
+
+    StockVO checkInitStock() throws RemoteException;
 }

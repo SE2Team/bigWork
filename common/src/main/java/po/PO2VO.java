@@ -58,6 +58,10 @@ public class PO2VO {
                 PO.getTransferNum(), PO.getIsCheck());
     }
 
+    public static StockVO convert(StockPO po) {
+        return new StockVO(po.getStockState(), po.getStockList());
+    }
+
     public static TransferReceiveVO convert(TransferReceivePO PO) {
         return new TransferReceiveVO(PO.getArriveDate(), PO.getStart(),
                 PO.getCargoState(), PO.getTransferCenterNum(), PO.getTransferNum(), PO.getIsCheck());
@@ -131,5 +135,9 @@ public class PO2VO {
 
     public static ConstantVO convert(ConstantPO po) {
         return new ConstantVO(po.getCity1(), po.getCity2(), po.getPrice(), po.getDistance());
+    }
+
+    public static AccountVO convert(AccountPO po) {
+        return new AccountVO(po.getAccountName(), po.getAccountBalance());
     }
 }

@@ -2,19 +2,43 @@ package presentation.listui.check;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.RunTip;
 import presentation.listui.TransferReceivePanel;
+import presentation.manageui.ListApprovalPanel;
 import util.ListState;
 import vo.TransferReceiveVO;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 
 /**
  * Created by MYK on 2015/12/9 0009.
  */
 public class TransferReceiveChecking extends TransferReceivePanel{
+    protected JLabel ret;
+    protected Color color = new Color(221, 242, 247);
     public TransferReceiveChecking() {
         super();
+        ret = new JLabel(new ImageIcon("images/返回.png"));
+        ret.setOpaque(true);
+        ret.setBounds(5, 5, 35, 35);
+        ret.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                returnTOApproval();
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                ret.setBackground(Color.GREEN);
+            }
+
+            public void mouseExited(MouseEvent e) {
+                ret.setBackground(color);
+            }
+        });
+        this.add(ret);
     }
 
     public TransferReceiveChecking(TransferReceiveVO vo){
@@ -39,13 +63,34 @@ public class TransferReceiveChecking extends TransferReceivePanel{
         try {
             ListblService bl = new ListController();
             bl.save2File(vo);
+            bl.afterCheck(vo);
         } catch (RemoteException e) {
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("网络异常", false);
+            return;
         }
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font);
-        JOptionPane.showMessageDialog(null, tip);
+        RunTip.makeTip("保存成功", false);
+        returnTOApproval();
     }
+
+    @Override
+    protected void performCancel() {
+        TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate.getText(),
+                jtf_departure.getText(), state.getSelectedItem().toString(),
+                jtf_CenterNum.getText(), jtf_transferNum.getText(), ListState.PASSED);
+
+        try {
+            ListblService bl = new ListController();
+            bl.afterCheck(vo);
+        } catch (RemoteException e) {
+            RunTip.makeTip("网络异常", false);
+            return;
+        }
+        returnTOApproval();
+    }
+
+    private void returnTOApproval() {
+        ret.setBackground(Color.YELLOW);
+        ListApprovalPanel.getInstance().removeChecking(this);
+    }
+
 }

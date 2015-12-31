@@ -157,6 +157,9 @@ public class Manage {
         manage.updateSalary(position,Type);
     }
 
+    public String getSalary(String position) throws RemoteException {
+        return manage.getSalary(position);
+    }
     /**
      *
      * @param constantVO

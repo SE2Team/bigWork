@@ -4,9 +4,9 @@ import businesslogic.utilitybl.Helper;
 import dataservice.DataFactory;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.inquirydataservice.InquiryDataService;
-import po.LogisticsPO;
+import dataservice.listdataservice.ListDataService;
 import po.OperationLogPO;
-import vo.LogisticsVO;
+import po.OrderPO;
 import vo.OperationLogVO;
 
 import java.rmi.RemoteException;
@@ -22,6 +22,7 @@ public class Inquiry {
      * The Inquiry.
      */
     private InquiryDataService inquiry;
+    private ListDataService list;
 
     /**
      * Instantiates a new Inquiry.
@@ -31,6 +32,7 @@ public class Inquiry {
     public Inquiry() throws RemoteException {
         DataFactoryService dataFactory = DataFactory.getInstance();
         inquiry = dataFactory.getInquiryData();
+        list = dataFactory.getListData();
     }
 
     /**
@@ -69,9 +71,10 @@ public class Inquiry {
      * @return the logistics vo
      * @throws RemoteException     the remote exception
      */
-    public LogisticsVO checkLogistics(String num) throws RemoteException {
-        LogisticsPO po = inquiry.checkLogistics(num);
-
-        return new LogisticsVO(po.getDeliveryNum(), po.getTransportState());
+    public String checkLogistics(String num) throws RemoteException {
+        OrderPO po = list.getOrder(num);
+        if (po == null)
+            return "找不到该快递单！";
+        return po.getLogistics();
     }
 }

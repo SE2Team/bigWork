@@ -37,7 +37,7 @@ public class MockList extends List {
         commodity.stockIn(vo);
         Manage manage=new Manage();
         List list=new List();
-        list.save(vo);
+//        list.save(vo);
     }
 
 

@@ -774,4 +774,34 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
         return false;
     }
 
+    @Override
+    public OrderPO getOrder(String num) throws RemoteException {
+        Common common = new Common("order");
+        ArrayList<String> list = common.readData();
+
+        for (int j = 0; j < list.size(); j++) {
+            String[] str = list.get(j).split(";");
+            ListState isCheck = ListState.UNCHECK;
+            DeliveryType deliveryType = DeliveryType.ECONOMIC;
+            if (str[1].equals("PASSED")) {
+                isCheck = ListState.PASSED;
+            } else if (str[1].equals("REJECTED")) {
+                isCheck = ListState.REJECTED;
+            }
+
+
+            if (str[16].equals("FAST")) {
+                deliveryType = DeliveryType.FAST;
+            } else if (str[16].equals("STANDARD")) {
+                deliveryType = DeliveryType.STANDARD;
+            }
+
+            if (str[22].equals(num)) {
+                return new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
+                        str[11], str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19],
+                        str[20], str[21], str[22], isCheck);
+            }
+        }
+        return null;
+    }
 }

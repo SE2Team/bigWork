@@ -2,20 +2,44 @@ package presentation.listui.check;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.RunTip;
 import presentation.listui.OrderPanel;
+import presentation.manageui.ListApprovalPanel;
 import util.DeliveryType;
 import util.ListState;
 import vo.OrderVO;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 
 /**
  * Created by MYK on 2015/12/9 0009.
  */
 public class OrderChecking extends OrderPanel{
+    protected JLabel ret;
+    protected Color color = new Color(221, 242, 247);
     private OrderChecking() {
         super();
+        ret = new JLabel(new ImageIcon("images/返回.png"));
+        ret.setOpaque(true);
+        ret.setBounds(5, 5, 35, 35);
+        ret.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                returnTOApproval();
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                ret.setBackground(Color.GREEN);
+            }
+
+            public void mouseExited(MouseEvent e) {
+                ret.setBackground(color);
+            }
+        });
+        this.add(ret);
     }
 
     public OrderChecking(OrderVO vo){
@@ -76,16 +100,54 @@ public class OrderChecking extends OrderPanel{
         try {
             bl = new ListController();
             bl.save2File(order_vo);
+            bl.afterCheck(order_vo);
         } catch (RemoteException e1) {
-            // TODO Auto-generated catch block
-            JLabel tip = new JLabel("提示：网络异常");
-            tip.setFont(font2);
-            JOptionPane.showMessageDialog(null, tip);
+            RunTip.makeTip("网络异常", false);
+            return;
         }
 
-        JLabel tip = new JLabel("提示：保存成功");
-        tip.setFont(font2);
-        JOptionPane.showMessageDialog(null, tip);
+        RunTip.makeTip("保存成功", true);
+        returnTOApproval();
+
+    }
+
+    @Override
+    protected void performCancel() {
+        if (o_type.getSelectedItem().toString().equals("经济快递")) {
+            deliveryType = DeliveryType.ECONOMIC;
+        } else if (o_type.getSelectedItem().toString().equals("标准快递")) {
+            deliveryType = DeliveryType.STANDARD;
+        } else if (o_type.getSelectedItem().toString().equals("特快快递")) {
+            deliveryType = DeliveryType.FAST;
+        }
+        OrderVO order_vo = new OrderVO(s_name.getText(), s_address
+                .getText(), s_workplace.getText(), s_tele.getText(),
+                s_phone.getText(), r_name.getText(), r_address
+                .getText(), r_workplace.getText(), r_tele
+                .getText(), r_phone.getText(), g_num.getText(),
+                g_weight.getText(), g_volume.getText(), g_name
+                .getText(), deliveryType, o_wrapper
+                .getSelectedItem().toString(),
+                o_transExpense.getText(), o_wrapperExpense.getText(), o_expense
+                .getText(), o_dueDate.getText(), o_ordernum.getText(), ListState.PASSED);
+
+        ListblService bl;
+
+        try {
+            bl = new ListController();
+//            bl.save2File(order_vo);
+            bl.afterCheck(order_vo);
+        } catch (RemoteException e1) {
+            RunTip.makeTip("网络异常", false);
+            return;
+        }
+
+        returnTOApproval();
+    }
+
+    private void returnTOApproval() {
+        ret.setBackground(Color.YELLOW);
+        ListApprovalPanel.getInstance().removeChecking(this);
     }
 
 }

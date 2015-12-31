@@ -5,8 +5,6 @@ package presentation.listui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ReceiveAndDistribute extends JPanel{
 	//定义接受与派件按钮
@@ -22,25 +20,11 @@ public class ReceiveAndDistribute extends JPanel{
 		receive = new JButton("输入接收单信息");
 		receive.setFont(font);
 		receive.setBounds(x, y, width, height);
-		receive.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		distribute = new JButton("输入派件单信息");
 		distribute.setFont(font);
 		distribute.setBounds(x, y+addy, width, height);
-		distribute.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
+
 		this.add(receive);
 		this.add(distribute);
 	}
