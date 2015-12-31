@@ -385,8 +385,8 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		ArrayList<OrganizationPO> list1 = new ArrayList<>();
 		for (int j = 0; j < list.size(); j++) {
 			String[] str = list.get(j).split(";");
-			list1.add(new OrganizationPO(str[0], str[1], str[3]));
-		}
+            list1.add(new OrganizationPO(str[0], str[1], str[2]));
+        }
 		return list1;
 	}
 

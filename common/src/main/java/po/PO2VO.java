@@ -140,4 +140,8 @@ public class PO2VO {
     public static AccountVO convert(AccountPO po) {
         return new AccountVO(po.getAccountName(), po.getAccountBalance());
     }
+
+    public static OrganizationVO convert(OrganizationPO po) {
+        return new OrganizationVO(po.getNum(), po.getCity(), po.getName());
+    }
 }

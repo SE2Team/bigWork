@@ -2,10 +2,7 @@ package businesslogic.managebl;
 
 import businesslogicservice.ManageblService;
 import util.ExistException;
-import vo.ConstantVO;
-import vo.DriverVO;
-import vo.VehicleVO;
-import vo.WorkerVO;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -66,6 +63,18 @@ public class ManageController implements ManageblService {
      */
     public Iterator<VehicleVO> checkVehicle() throws RemoteException {
         return manage.checkVehicle();
+    }
+
+    public Iterator<OrganizationVO> checkOrganization() throws RemoteException {
+        return manage.checkOrganization();
+    }
+
+    public boolean addOrganization(OrganizationVO vo) throws RemoteException, ExistException {
+        return manage.addOrganization(vo);
+    }
+
+    public boolean delOrganization(OrganizationVO vo) throws RemoteException, ExistException {
+        return manage.delOrganization(vo);
     }
 
     /**

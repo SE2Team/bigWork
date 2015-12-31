@@ -142,4 +142,6 @@ public interface ManageDataService extends Remote {
     ArrayList<OrganizationPO> check() throws RemoteException;
 
     OrganizationPO check(String num) throws RemoteException;
+
+
 }

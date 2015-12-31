@@ -29,8 +29,12 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 	public Boolean addUser(UserPO po) throws RemoteException, ExistException {
 		// TODO Auto-generated method stub
 		ArrayList<String> list=common.readData();
-		if(list.contains(this.userPOToString(po))){
-			throw new ExistException();
+		String[] str = this.userPOToString(po).split(";");
+		for (int j = 0; j < list.size(); j++) {
+			String[] str1 = list.get(j).split(";");
+			if (str1[0].equals(str[0])) {
+				throw new ExistException();
+			}
 		}
 		common.writeDataAdd(this.userPOToString(po));
 		return true;
@@ -39,8 +43,9 @@ public class UserdataImpl extends UnicastRemoteObject implements UserDataService
 	
 	
 	/**
-	 *@param UserPo 
 	 * 如果原来账号就不存在的异常尚未实现
+	 *@param
+	 *
 	 * @throws  
 	 */
 	public Boolean deleteUser(UserPO po) throws RemoteException {

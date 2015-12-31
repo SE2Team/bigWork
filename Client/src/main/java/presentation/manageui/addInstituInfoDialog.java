@@ -1,10 +1,14 @@
 package presentation.manageui;
 
+import businesslogic.managebl.ManageController;
+import businesslogicservice.ManageblService;
 import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
+import util.ExistException;
+import vo.OrganizationVO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.rmi.RemoteException;
 
 public class addInstituInfoDialog extends MyDialog {
 
@@ -41,9 +46,9 @@ public class addInstituInfoDialog extends MyDialog {
 	Font font = new Font("宋体", Font.PLAIN, 20);
 	Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义添加人员信息，姓名，年龄，职位，账号的label
-	JLabel addInfo, institution, institutionNum;
+	JLabel addInfo, institution, city, institutionNum;
 	// 定义对应的文本框
-	JTextField jtf_institution, jtf_institutionNum;
+	JTextField jtf_institution, jtf_city, jtf_institutionNum;
 	// 定义确定，取消按钮
 	JButton sure, cancel;
 	// 定义错误提示的label
@@ -70,6 +75,15 @@ public class addInstituInfoDialog extends MyDialog {
 			jtf_institution.setFont(font2);
 			jtf_institution.setBounds(x + addx, y, jtf_width, height);
 
+			city = new JLabel("城市", JLabel.CENTER);
+			city.setFont(font);
+			city.setBounds(x, y + addy / 2, jl_width, height);
+
+			jtf_city = new JTextField();
+			jtf_city.setFont(font2);
+			jtf_city.setBounds(x + addx, y + addy / 2, jtf_width, height);
+			jtf_city.addFocusListener(new TextFocus());
+
 			institutionNum = new JLabel("机构编号", JLabel.CENTER);
 			institutionNum.setFont(font);
 			institutionNum.setBounds(x, y + addy, jl_width, height);
@@ -85,16 +99,27 @@ public class addInstituInfoDialog extends MyDialog {
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
-//					ManageblService bl;
-//					bl = new ManageController();
-//					
 					insJtf = new JTextField[]{jtf_institution,
 							jtf_institutionNum};
 					boolean isOk = NumExceptioin
 							.isInstitutionValid(jtf_institutionNum);
+					System.out.println(jtf_institutionNum.getText());
 					if (isOk && isAllEntered.isEntered(insJtf)) {
-						rowContent = new String[]{jtf_institution.getText(),
-								jtf_institutionNum.getText()};
+						rowContent = new String[]{jtf_institutionNum.getText(), jtf_city.getText()
+								, jtf_institution.getText()};
+						OrganizationVO vo = new OrganizationVO(rowContent[0], rowContent[1], rowContent[2]);
+						ManageblService bl;
+						try {
+							bl = new ManageController();
+							bl.addOrganization(vo);
+						} catch (RemoteException e) {
+							RunTip.makeTip("网络异常", false);
+							return;
+						} catch (ExistException e) {
+							RunTip.makeTip("该机构已存在", false);
+							return;
+
+						}
 						if (jp == parent) {
 							parent.addInsInfo(rowContent);
 						}
@@ -128,6 +153,8 @@ public class addInstituInfoDialog extends MyDialog {
 			this.add(jtf_institution);
 			this.add(institutionNum);
 			this.add(jtf_institutionNum);
+			this.add(city);
+			this.add(jtf_city);
 			this.add(sure);
 			this.add(cancel);
 		}

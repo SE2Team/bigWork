@@ -1,10 +1,7 @@
 package businesslogicservice;
 
 import util.ExistException;
-import vo.ConstantVO;
-import vo.DriverVO;
-import vo.VehicleVO;
-import vo.WorkerVO;
+import vo.*;
 
 import java.rmi.RemoteException;
 import java.util.Iterator;
@@ -120,6 +117,12 @@ public interface ManageblService {
 
     Iterator<DriverVO> checkDriver() throws RemoteException;
     Iterator<VehicleVO> checkVehicle() throws RemoteException;
+
+    Iterator<OrganizationVO> checkOrganization() throws RemoteException;
+
+    boolean addOrganization(OrganizationVO vo) throws RemoteException, ExistException;
+
+    boolean delOrganization(OrganizationVO vo) throws RemoteException, ExistException;
 
 
 }

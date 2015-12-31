@@ -41,6 +41,9 @@ public class OrderVO extends ListVO implements Serializable {
     private String date;
     private String deliveryNum;
 
+    private String Logistics;
+
+
     /**
      * @param senderName
      * @param senderAddress
@@ -95,6 +98,37 @@ public class OrderVO extends ListVO implements Serializable {
         setType(ListType.ORDER);
     }
 
+    public OrderVO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
+                   String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
+                   String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
+                   String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
+                   String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck,
+                   String logistics) {
+        super(isCheck);
+        this.senderName = senderName;
+        this.senderAddress = senderAddress;
+        this.senderWorkplace = senderWorkplace;
+        this.senderTelephone = senderTelephone;
+        this.senderPhone = senderPhone;
+        this.receiverName = receiverName;
+        this.receiverAddress = receiverAddress;
+        this.receiverWorkplace = receiverWorkplace;
+        this.receiverTelephone = receiverTelephone;
+        this.receiverPhone = receiverPhone;
+        this.originalNum = originalNum;
+        this.weight = weight;
+        this.volume = volume;
+        this.goods_Name = goods_Name;
+        this.DeliveryType = DeliveryType;
+        this.wrapper = wrapper;
+        this.expenseOfTransport = expenseOfTransport;
+        this.expenseOfWrapper = expenseOfWrapper;
+        this.expense = expense;
+        this.date = date;
+        this.deliveryNum = deliveryNum;
+        this.setLogistics(logistics);
+        setType(ListType.ORDER);
+    }
     /**
      * @return 寄件人姓名
      */
@@ -388,5 +422,13 @@ public class OrderVO extends ListVO implements Serializable {
      */
     public void setDeliveryNum(String deliveryNum) {
         this.deliveryNum = deliveryNum;
+    }
+
+    public String getLogistics() {
+        return Logistics;
+    }
+
+    public void setLogistics(String logistics) {
+        Logistics = logistics;
     }
 }

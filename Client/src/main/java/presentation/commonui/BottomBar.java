@@ -25,7 +25,7 @@ public class BottomBar extends JPanel {
         closeB.setSize(10, 10);
         closeB.setBounds(750, 0, 150, 30);
 
-        this.add(closeB);
+//        this.add(closeB);
     }
 
     public static BottomBar getInstance() {

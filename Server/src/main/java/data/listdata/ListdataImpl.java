@@ -433,7 +433,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
      */
 
     private String POToString(ReceiptPO po) {
-        String s = po.getType() + ";" + po.getIsCheck() + ";" + po.getReceiptDate() + ";" + po.getReceiptMoney() + ";" + po.getReceiptCourier() + ";";
+        String s = po.getType() + ";" + po.getIsCheck() + ";" + po.getReceiptDate() + ";" + po.getReceiptMoney() + ";" +
+                po.getReceiptCourier() + ";";
         for (String s1 : po.getOrderNum()) {
             s = s + ";" + s1;
         }
@@ -441,7 +442,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
     }
 
     private String POToString(PaymentPO po) {
-        return po.getType() + ";" + po.getIsCheck() + ";" + po.getPayDate() + ";" + po.getPayMoney() + ";" + po.getPayHuman() + ";" + po.getPayAccount() + ";" + po.getPayReason() + ";" + po.getPayComment();
+        return po.getType() + ";" + po.getIsCheck() + ";" + po.getPayDate() + ";" + po.getPayMoney() + ";" +
+                po.getPayHuman() + ";" + po.getPayAccount() + ";" + po.getPayReason() + ";" + po.getPayComment();
     }
 
     private int DateToInt(String date) {

@@ -173,8 +173,9 @@ public class addEmployeeInfoDialog extends MyDialog {
 						WorkerVO vo = new WorkerVO(jtf_name.getText(),
 								jtf_idNum.getText(), jtf_position.getText(),
 								jtf_institution.getText(), jtf_accountNum
-								.getText(), saveValue);
-						if (jp == parent) {
+                                .getText(), saveValue);
+                        ;
+                        if (jp == parent) {
 							ManageblService bl;
 							try {
 								bl = new ManageController();

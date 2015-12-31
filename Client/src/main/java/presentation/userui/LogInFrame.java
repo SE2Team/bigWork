@@ -19,7 +19,7 @@ public class LogInFrame extends JFrame {
         jf = this;
 //		this.setTitle("快递物流管理系统");//设置窗体名称
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置默认关闭属性
-        this.setSize(900, 630);//设置窗体大小
+        this.setSize(900, 655);//设置窗体大小
         this.setLayout(null);
 
 
@@ -47,8 +47,7 @@ public class LogInFrame extends JFrame {
         this.add(bigCardPanel);
 
         this.setResizable(false);//不允许用户改变窗体大小
-        this.setUndecorated(true);
-        this.setVisible(true);
+//        this.setUndecorated(true);
         //居中
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screen = toolkit.getScreenSize();
@@ -66,11 +65,10 @@ public class LogInFrame extends JFrame {
         this.add(buttom);
 
 
-        //拟定的遮挡panel
-        JPanel co = new JPanel();
-        co.setBounds(0, 0, 900, 630);
 
 //        this.add(co);
+        this.setVisible(true);
+
     }
 
     public static JFrame getInstance() {

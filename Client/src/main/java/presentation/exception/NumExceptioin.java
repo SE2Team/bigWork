@@ -246,18 +246,18 @@ public class NumExceptioin {
 	 * @return
 	 */
 	public static boolean isAccountNumValid(JTextField text) {
-		String s = text.getText().trim();
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& !(text.getText().length() >= 6 && text.getText()
-						.length() <= 10)) {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
+//		String s = text.getText().trim();
+//		for (int i = 0; i < s.length(); i++) {
+//			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+//				if (!"".equalsIgnoreCase(text.getText().trim())
+//						&& !(text.getText().length() >= 6 && text.getText()
+//						.length() <= 10)) {
+//					return false;
+//				}
+//			} else {
+//				return false;
+//			}
+//		}
 
 		return true;
 	}

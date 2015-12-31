@@ -13,6 +13,11 @@ public class StockVO {
 
     private boolean stockState;//库存状态
 
+    private String capacity;
+
+
+    private String warning;
+
     private ArrayList<StockInPO> stockList;//TODO 后期加入排序处理
 
     public StockVO(Boolean stockState, ArrayList<StockInPO> stockList) {
@@ -39,6 +44,34 @@ public class StockVO {
 
     public ArrayList<StockInPO> getStockList() {
         return stockList;
+    }
+
+    public String getWarning() {
+        return warning;
+    }
+
+    public void setWarning(String warning) {
+        this.warning = warning;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
+
+    public boolean isStockState() {
+        return stockState;
+    }
+
+    public void setStockState(boolean stockState) {
+        this.stockState = stockState;
+    }
+
+    public void setStockList(ArrayList<StockInPO> stockList) {
+        this.stockList = stockList;
     }
 
 

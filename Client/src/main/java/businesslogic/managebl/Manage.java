@@ -227,6 +227,22 @@ public class Manage {
         return manage.editVehicle(VO2PO.convert(ovo), VO2PO.convert(nvo));
     }
 
+    public Iterator<OrganizationVO> checkOrganization() throws RemoteException {
+        ArrayList<OrganizationVO> arrayList = new ArrayList<OrganizationVO>();
+        for (OrganizationPO po : manage.check()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return arrayList.iterator();
+    }
+
+    public boolean addOrganization(OrganizationVO vo) throws RemoteException, ExistException {
+        return manage.addOrganization(VO2PO.convert(vo));
+    }
+
+    public boolean delOrganization(OrganizationVO vo) throws RemoteException, ExistException {
+        return manage.delOrganization(VO2PO.convert(vo));
+    }
+
     /**
      * 私有vo和po之间转换的方法
      *

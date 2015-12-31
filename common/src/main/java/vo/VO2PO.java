@@ -95,4 +95,8 @@ public class VO2PO {
         return new DriverPO(driverVO.getDriverNum(), driverVO.getDriverName(), driverVO.getBirthDate(), driverVO.getIdNum(),
                 driverVO.getPhone(), driverVO.getVehicleInstitution(), driverVO.getSex(), driverVO.getLicenseTime());
     }
+
+    public static OrganizationPO convert(OrganizationVO vo) {
+        return new OrganizationPO(vo.getNum(), vo.getCity(), vo.getName());
+    }
 }

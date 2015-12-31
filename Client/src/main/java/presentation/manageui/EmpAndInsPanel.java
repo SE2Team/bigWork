@@ -6,6 +6,7 @@ import businesslogicservice.ManageblService;
 import presentation.commonui.RunTip;
 import presentation.commonui.swing.Table;
 import util.ExistException;
+import vo.OrganizationVO;
 import vo.WorkerVO;
 
 import javax.swing.*;
@@ -106,10 +107,9 @@ public class EmpAndInsPanel extends JPanel {
 						try {
 							bl.delWorker(vo);
 						} catch (ExistException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
+                            RunTip.makeTip("该机构已存在", false);
+                            return;
+                        }
 					} catch (RemoteException e) {
 						RunTip.makeTip("网络异常", false);
 						return;
@@ -291,12 +291,39 @@ public class EmpAndInsPanel extends JPanel {
 		institutionPanel.add(mod2Button);
 		institutionPanel.add(check2Button);
 
-		String[] column2 = {"机构名称", "机构编号"};
-		String[] s2 = {"营业厅", "0251"};
-		String row2[][] = {s2};
-		tableModel2 = new DefaultTableModel(row2, column2);
-		instituteTable = new JTable(tableModel2);
-		instituteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单击
+        //---------------------------------------------------------------------
+        Iterator<OrganizationVO> ite1 = null;
+        ArrayList<OrganizationVO> list1 = new ArrayList<OrganizationVO>();
+        int n1 = 0;
+        ManageblService bl1;
+        OrganizationVO vo1;
+        try {
+            bl1 = new ManageController();
+            ite1 = bl1.checkOrganization();
+        } catch (RemoteException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+        if (ite1 != null) {
+            while (ite1.hasNext()) {
+                list1.add(ite1.next());
+            }
+        }
+        n1 = list1.size();
+        String row[][] = new String[n1][3];
+        for (int j = 0; j < n1; j++) {
+            vo1 = list1.get(j);
+            String[] temp = {vo1.getNum(), vo1.getCity(), vo1.getName()};
+            row[j] = temp;
+        }
+        String[] column2 = {"机构编号", "城市", "机构名称"};
+        instituteTable = Table.getTable(column2, row);
+        tableModel2 = (DefaultTableModel) employTable.getModel();
+        //-----------------------------------------------------------------
+        //	String row2[][] = {s2};
+        //	tableModel2 = new DefaultTableModel(row2, column2);
+        //	instituteTable = new JTable(tableModel2);
+        instituteTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单击
 		instituteTable.addMouseListener(new MouseAdapter() {//鼠标事件
 			public void mouseClicked(MouseEvent e) {
 				int selectedRow = instituteTable.getSelectedRow(); // 获得选中行索引
