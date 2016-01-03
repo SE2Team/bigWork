@@ -6,10 +6,12 @@ import dataservice.commoditydataservice.CommodityDataService;
 import dataservice.datafactoryservice.DataFactoryService;
 import dataservice.inquirydataservice.InquiryDataService;
 import po.OperationLogPO;
+import po.PO2VO;
 import po.StockInPO;
 import po.StockPO;
 import vo.StockInVO;
 import vo.StockOutVO;
+import vo.VO2PO;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -87,8 +89,7 @@ public class Commodity {
     public boolean stockIn(StockInVO stockInVO) throws RemoteException {
 //        ListblService list = new ListController();
 
-        StockInPO stockInPO = new StockInPO(stockInVO.getDeliveryNum(), stockInVO.getInDate(), stockInVO.getEnd(), stockInVO.getZoneNum(),
-                stockInVO.getRowNum(), stockInVO.getShelfNum(), stockInVO.getPositionNum(), stockInVO.getIsCheck());
+        StockInPO stockInPO = VO2PO.convert(stockInVO);
 
 //        list.stockIn(stockInVO);
         //判断异常代码（数据层返回改对象是否存在等ResultMessage）
@@ -127,8 +128,7 @@ public class Commodity {
     public ArrayList<StockInVO> stockSum() throws RemoteException {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
-            arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
-                    temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+            arrayList.add(PO2VO.convert(temp));
 
         }
 
@@ -149,8 +149,7 @@ public class Commodity {
         ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
         for (StockInPO temp : stockPO.getStockList()) {
             if (Helper.isBetween(startDate, temp.getInDate(), endDate)) {
-                arrayList.add(new StockInVO(temp.getDeliveryNum(), temp.getInDate(), temp.getEnd(),
-                        temp.getZoneNum(), temp.getRowNum(), temp.getShelfNum(), temp.getPositionNum(), temp.getIsCheck()));
+                arrayList.add(PO2VO.convert(temp));
             }
         }
 

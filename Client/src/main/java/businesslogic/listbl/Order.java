@@ -4,6 +4,7 @@ import businesslogic.utilitybl.Helper;
 import po.ExpenseAndDatePO;
 import po.OperationLogPO;
 import po.OrderPO;
+import po.PO2VO;
 import util.ExistException;
 import vo.ExpenseAndDateVO;
 import vo.ListVO;
@@ -61,6 +62,10 @@ public class Order extends List {
     public boolean afterCheck(OrderVO vo) throws RemoteException {
         System.out.println("to data");
         return listDataService.deleteList(VO2PO.convert(vo));
+    }
+
+    public OrderVO getOrder(String num) throws RemoteException {
+        return PO2VO.convert(listDataService.getOrder(num));
     }
 
 }

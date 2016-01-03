@@ -195,4 +195,8 @@ public class ListController implements ListblService {
     public boolean save2File(TransferVO vo) throws RemoteException {
         return new TransInfo().save2File(vo);
     }
+
+    public OrderVO getOrder(String num) throws RemoteException {
+        return new Order().getOrder(num);
+    }
 }

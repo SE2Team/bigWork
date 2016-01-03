@@ -208,4 +208,6 @@ public interface ListblService {
     boolean save2File(TransferReceiveVO vo) throws RemoteException;
 
     boolean save2File(TransferVO vo) throws RemoteException;
+
+    OrderVO getOrder(String num) throws RemoteException;
 }
