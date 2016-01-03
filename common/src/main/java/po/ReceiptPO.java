@@ -17,8 +17,8 @@ public class ReceiptPO extends ListPO {
     private ArrayList<String> orderNum;
 
     public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier, ArrayList<String> orderNum,
-                     ListState isCheck, String organization) {
-        super(isCheck, organization);
+                     ListState isCheck) {
+        super(isCheck);
         this.receiptDate = receiptDate;
         this.receiptMoney = receiptMoney;
         this.receiptCourier = receiptCourier;

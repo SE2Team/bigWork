@@ -14,9 +14,9 @@ public class WorkerPO implements Serializable{
 	private String organization;
 	private String userId;
 	private String sex;
-	
-	public WorkerPO(String name, String idNum, String position,
-					String organization, String userId, String sex) {
+
+	public WorkerPO(String name, String idNum, String position, String organization
+			, String userId, String sex) {
 		this.name=name;
 		this.idNum=idNum;
 		this.position=position;
@@ -48,11 +48,11 @@ public class WorkerPO implements Serializable{
 	public String getPosition(){
 		return position;
 	}
-	
-	public void setOrganization(String organization ){
+
+	public void setOrganization() {
 		this.organization=organization;
 	}
-	
+
 	public String getOrganization(){
 		return organization;
 	}

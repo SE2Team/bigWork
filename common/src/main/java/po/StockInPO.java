@@ -24,8 +24,8 @@ public class StockInPO extends ListPO implements Serializable {
     private String positionNum;
 
     public StockInPO(String deliveryNum, String inDate, String end, String zoneNum,
-                     String rowNum, String shelfNum, String positionNum, ListState isCheck, String organization) {
-        super(isCheck, organization);
+                     String rowNum, String shelfNum, String positionNum, ListState isCheck) {
+        super(isCheck);
         this.deliveryNum = deliveryNum;
         this.inDate = inDate;
         this.end = end;

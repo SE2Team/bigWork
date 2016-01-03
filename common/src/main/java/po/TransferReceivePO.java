@@ -23,8 +23,8 @@ public class TransferReceivePO extends ListPO implements Serializable {
 
     public TransferReceivePO(String arriveDate, String start,
                              String cargoState, String transferCenterNum, String transferNum,
-                             ListState isCheck, String organization) {
-        super(isCheck, organization);
+                             ListState isCheck) {
+        super(isCheck);
         this.arriveDate = arriveDate;
         this.start = start;
         this.cargoState = cargoState;

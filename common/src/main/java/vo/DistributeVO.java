@@ -19,8 +19,8 @@ public class DistributeVO extends ListVO {
      * @param orderNum
      * @param distributeHuman
      */
-    public DistributeVO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck, String organization) {
-        super(isCheck, organization);
+    public DistributeVO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck) {
+        super(isCheck);
         this.arriveDate = arriveDate;
         this.orderNum = orderNum;
         this.distributeHuman = distributeHuman;

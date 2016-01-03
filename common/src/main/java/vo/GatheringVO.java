@@ -17,9 +17,8 @@ public class GatheringVO extends ListVO {
     String money;
     String place;
 
-    public GatheringVO(String date, String workplace, String man, String money, String place, ListState isCheck,
-                       String organization) {
-        super(isCheck, organization);
+    public GatheringVO(String date, String workplace, String man, String money, String place, ListState isCheck) {
+        super(isCheck);
         this.date = date;
         this.workplace = workplace;
         this.man = man;

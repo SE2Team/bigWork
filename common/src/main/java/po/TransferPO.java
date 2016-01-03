@@ -31,8 +31,8 @@ public class TransferPO extends ListPO implements Serializable {
 
     public TransferPO(String loadingWay, String loadingDate, String transportNum,
                       String vehicleNum, String start, String end, String containerNum, String monitor,
-                      String supercargo, String orderNum, String money, ListState isCheck, String organization) {
-        super(isCheck, organization);
+                      String supercargo, String orderNum, String money, ListState isCheck) {
+        super(isCheck);
         this.loadingWay = loadingWay;
         this.loadingDate = loadingDate;
         this.transportNum = transportNum;

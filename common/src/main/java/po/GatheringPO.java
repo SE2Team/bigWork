@@ -17,9 +17,9 @@ public class GatheringPO extends ListPO implements Serializable {
     String money;
     String place;
 
-    public GatheringPO(String date, String workplace, String man, String money, String place, ListState isCheck,
-                       String organization) {
-        super(isCheck, organization);
+    public GatheringPO(String date, String workplace, String man, String money, String place, ListState isCheck
+    ) {
+        super(isCheck);
         this.date = date;
         this.workplace = workplace;
         this.man = man;

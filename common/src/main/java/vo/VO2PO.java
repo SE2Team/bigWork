@@ -8,23 +8,22 @@ import po.*;
 public class VO2PO {
     public static AddresseeInformationPO convert(AddresseeInformationVO vo) {
         return new AddresseeInformationPO(vo.getAddresseeNum(), vo.getAddresseeName(), vo.getAddresseeDate(),
-                vo.getIsCheck(), vo.getOrganization());
+                vo.getIsCheck());
     }
 
     public static DistributePO convert(DistributeVO vo) {
-        return new DistributePO(vo.getArriveDate(), vo.getOrderNum(), vo.getArriveDate(), vo.getIsCheck(),
-                vo.getOrganization());
+        return new DistributePO(vo.getArriveDate(), vo.getOrderNum(), vo.getArriveDate(), vo.getIsCheck());
     }
 
     public static GatheringPO convert(GatheringVO vo) {
         return new GatheringPO(vo.getDate(), vo.getWorkplace(), vo.getMan(),
-                vo.getMoney(), vo.getPlace(), vo.getIsCheck(), vo.getOrganization());
+                vo.getMoney(), vo.getPlace(), vo.getIsCheck());
     }
 
     public static LoadingPO convert(LoadingVO vo) {
         return new LoadingPO(vo.getLoadingDate(), vo.getHallNum(), vo.getTransportNum(), vo.getStart(), vo.getEnd(),
                 vo.getMonitor(), vo.getSupercargo(),
-                vo.getVehicleNum(), vo.getConsignList(), vo.getTransportMoney(), vo.getIsCheck(), vo.getOrganization());
+                vo.getVehicleNum(), vo.getConsignList(), vo.getTransportMoney(), vo.getIsCheck());
     }
 
     public static OrderPO convert(OrderVO vo) {
@@ -32,44 +31,43 @@ public class VO2PO {
                 vo.getSenderTelephone(), vo.getSenderPhone(), vo.getReceiverName(), vo.getReceiverAddress(),
                 vo.getReceiverWorkplace(), vo.getReceiverTelephone(), vo.getReceiverPhone(),
                 vo.getOriginalNum(), vo.getWeight(), vo.getVolume(), vo.getGoods_Name(), vo.getDeliveryType(),
-                vo.getWrapper(), "1234", "1234", "1234", "1234", vo.getDeliveryNum(), vo.getIsCheck(), vo.getLogistics(),
-                vo.getOrganization());
+                vo.getWrapper(), "1234", "1234", "1234", "1234", vo.getDeliveryNum(), vo.getIsCheck(), vo.getLogistics());
     }
 
     public static PaymentPO convert(PaymentVO vo) {
         return new PaymentPO(vo.getPayDate(), vo.getPayMoney(), vo.getPayHuman(), vo.getPayAccount(),
-                vo.getPayReason(), vo.getPayComment(), vo.getIsCheck(), vo.getOrganization());
+                vo.getPayReason(), vo.getPayComment(), vo.getIsCheck());
     }
 
     public static ReceiptPO convert(ReceiptVO vo) {
         return new ReceiptPO(vo.getReceiptDate(), vo.getReceiptMoney(), vo.getReceiptCourier(), vo.getOrderNum(),
-                vo.getIsCheck(), vo.getOrganization());
+                vo.getIsCheck());
     }
 
     public static ReceivePO convert(ReceiveVO vo) {
         return new ReceivePO(vo.getArriveDate(), vo.getTransferNum(), vo.getStart(), vo.getArriveState(),
-                vo.getIsCheck(), vo.getOrganization());
+                vo.getIsCheck());
     }
 
     public static StockInPO convert(StockInVO vo) {
         return new StockInPO(vo.getDeliveryNum(), vo.getInDate(), vo.getEnd(), vo.getZoneNum(), vo.getRowNum(),
-                vo.getShelfNum(), vo.getPositionNum(), vo.getIsCheck(), vo.getOrganization());
+                vo.getShelfNum(), vo.getPositionNum(), vo.getIsCheck());
     }
 
     public static StockOutPO convert(StockOutVO vo) {
         return new StockOutPO(vo.getDeliveryNum(), vo.getOutDate(), vo.getEnd(), vo.getTransportType(),
-                vo.getTransferNum(), vo.getIsCheck(), vo.getOrganization());
+                vo.getTransferNum(), vo.getIsCheck());
     }
 
     public static TransferReceivePO convert(TransferReceiveVO vo) {
         return new TransferReceivePO(vo.getArriveDate(), vo.getStart(),
-                vo.getCargoState(), vo.getTransferCenterNum(), vo.getTransferNum(), vo.getIsCheck(), vo.getOrganization());
+                vo.getCargoState(), vo.getTransferCenterNum(), vo.getTransferNum(), vo.getIsCheck());
     }
 
     public static TransferPO convert(TransferVO vo) {
         return new TransferPO(vo.getLoadingWay(), vo.getLoadingDate(), vo.getTransportNum(), vo.getVehicleNum(),
                 vo.getStart(), vo.getEnd(), vo.getContainerNum(), vo.getMonitor(), vo.getSupercargo(), vo.getOrderNum(),
-                vo.getMoney(), vo.getIsCheck(), vo.getOrganization());
+                vo.getMoney(), vo.getIsCheck());
     }
 
 

@@ -21,8 +21,8 @@ public class DistributePO extends ListPO implements Serializable {
      * @param orderNum
      * @param distributeHuman
      */
-    public DistributePO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck, String organization) {
-        super(isCheck, organization);
+    public DistributePO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck) {
+        super(isCheck);
         this.arriveDate = arriveDate;
         this.orderNum = orderNum;
         this.distributeHuman = distributeHuman;

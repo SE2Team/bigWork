@@ -23,8 +23,8 @@ public class PaymentVO extends ListVO {
 
 
     public PaymentVO(String payDate, String payMoney, String payHuman,
-                     String payAccount, String payReason, String payComment, ListState isCheck, String organization) {
-        super(isCheck, organization);
+                     String payAccount, String payReason, String payComment, ListState isCheck) {
+        super(isCheck);
         this.payDate = payDate;
         this.payMoney = payMoney;
         this.payHuman = payHuman;

@@ -25,10 +25,9 @@ public class ListVO implements Serializable {
         this.id = df.format(new Date());
     }
 
-    public ListVO(ListState isCheck, String organization) {
+    public ListVO(ListState isCheck) {
         this();
         this.isCheck = isCheck;
-        this.organization = organization;
     }
 
     public ListType getType() {
@@ -51,11 +50,5 @@ public class ListVO implements Serializable {
         this.isCheck = isCheck;
     }
 
-    public String getOrganization() {
-        return organization;
-    }
 
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
 }

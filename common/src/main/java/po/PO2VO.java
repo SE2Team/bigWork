@@ -11,21 +11,21 @@ public class PO2VO {
         if (PO == null)
             return null;
         return new AddresseeInformationVO(PO.getAddresseeNum(), PO.getAddresseeName(), PO.getAddresseeDate(),
-                PO.getIsCheck(), PO.getOrganization());
+                PO.getIsCheck());
     }
 
     public static DistributeVO convert(DistributePO PO) {
         if (PO == null)
             return null;
-        return new DistributeVO(PO.getArriveDate(), PO.getOrderNum(), PO.getArriveDate(), PO.getIsCheck(),
-                PO.getOrganization());
+        return new DistributeVO(PO.getArriveDate(), PO.getOrderNum(), PO.getArriveDate(), PO.getIsCheck()
+        );
     }
 
     public static GatheringVO convert(GatheringPO PO) {
         if (PO == null)
             return null;
         return new GatheringVO(PO.getDate(), PO.getWorkplace(), PO.getMan(),
-                PO.getMoney(), PO.getPlace(), PO.getIsCheck(), PO.getOrganization());
+                PO.getMoney(), PO.getPlace(), PO.getIsCheck());
     }
 
     public static LoadingVO convert(LoadingPO PO) {
@@ -33,7 +33,7 @@ public class PO2VO {
             return null;
         return new LoadingVO(PO.getLoadingDate(), PO.getHallNum(), PO.getTransportNum(), PO.getStart(), PO.getEnd(),
                 PO.getMonitor(), PO.getSupercargo(),
-                PO.getVehicleNum(), PO.getConsignList(), PO.getTransportMoney(), PO.getIsCheck(), PO.getOrganization());
+                PO.getVehicleNum(), PO.getConsignList(), PO.getTransportMoney(), PO.getIsCheck());
     }
 
     public static OrderVO convert(OrderPO PO) {
@@ -43,43 +43,42 @@ public class PO2VO {
                 PO.getSenderTelephone(), PO.getSenderPhone(), PO.getReceiverName(), PO.getReceiverAddress(),
                 PO.getReceiverWorkplace(), PO.getReceiverTelephone(), PO.getReceiverPhone(),
                 PO.getOriginalNum(), PO.getWeight(), PO.getVolume(), PO.getGoods_Name(), PO.getDeliveryType(),
-                PO.getWrapper(), "1234", "1234", "1234", "1234", PO.getDeliveryNum(), PO.getIsCheck(), PO.getLogistics(),
-                PO.getOrganization());
+                PO.getWrapper(), "1234", "1234", "1234", "1234", PO.getDeliveryNum(), PO.getIsCheck(), PO.getLogistics());
     }
 
     public static PaymentVO convert(PaymentPO PO) {
         if (PO == null)
             return null;
         return new PaymentVO(PO.getPayDate(), PO.getPayMoney(), PO.getPayHuman(), PO.getPayAccount(),
-                PO.getPayReason(), PO.getPayComment(), PO.getIsCheck(), PO.getOrganization());
+                PO.getPayReason(), PO.getPayComment(), PO.getIsCheck());
     }
 
     public static ReceiptVO convert(ReceiptPO PO) {
         if (PO == null)
             return null;
         return new ReceiptVO(PO.getReceiptDate(), PO.getReceiptMoney(), PO.getReceiptCourier(), PO.getOrderNum(),
-                PO.getIsCheck(), PO.getOrganization());
+                PO.getIsCheck());
     }
 
     public static ReceiveVO convert(ReceivePO PO) {
         if (PO == null)
             return null;
         return new ReceiveVO(PO.getArriveDate(), PO.getTransferNum(), PO.getStart(), PO.getArriveState(),
-                PO.getIsCheck(), PO.getOrganization());
+                PO.getIsCheck());
     }
 
     public static StockInVO convert(StockInPO PO) {
         if (PO == null)
             return null;
         return new StockInVO(PO.getDeliveryNum(), PO.getInDate(), PO.getEnd(), PO.getZoneNum(), PO.getRowNum(),
-                PO.getShelfNum(), PO.getPositionNum(), PO.getIsCheck(), PO.getOrganization());
+                PO.getShelfNum(), PO.getPositionNum(), PO.getIsCheck());
     }
 
     public static StockOutVO convert(StockOutPO PO) {
         if (PO == null)
             return null;
         return new StockOutVO(PO.getDeliveryNum(), PO.getOutDate(), PO.getEnd(), PO.getTransportType(),
-                PO.getTransferNum(), PO.getIsCheck(), PO.getOrganization());
+                PO.getTransferNum(), PO.getIsCheck());
     }
 
     public static StockVO convert(StockPO PO) {
@@ -92,7 +91,7 @@ public class PO2VO {
         if (PO == null)
             return null;
         return new TransferReceiveVO(PO.getArriveDate(), PO.getStart(),
-                PO.getCargoState(), PO.getTransferCenterNum(), PO.getTransferNum(), PO.getIsCheck(), PO.getOrganization());
+                PO.getCargoState(), PO.getTransferCenterNum(), PO.getTransferNum(), PO.getIsCheck());
     }
 
     public static TransferVO convert(TransferPO PO) {
@@ -100,7 +99,7 @@ public class PO2VO {
             return null;
         return new TransferVO(PO.getLoadingWay(), PO.getLoadingDate(), PO.getTransportNum(), PO.getVehicleNum(),
                 PO.getStart(), PO.getEnd(), PO.getContainerNum(), PO.getMonitor(), PO.getSupercargo(), PO.getOrderNum(),
-                PO.getMoney(), PO.getIsCheck(), PO.getOrganization());
+                PO.getMoney(), PO.getIsCheck());
     }
 
 

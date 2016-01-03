@@ -24,8 +24,8 @@ public class PaymentPO extends ListPO implements Serializable {
 
 
     public PaymentPO(String payDate, String payMoney, String payHuman,
-                     String payAccount, String payReason, String payComment, ListState isCheck, String organization) {
-        super(isCheck, organization);
+                     String payAccount, String payReason, String payComment, ListState isCheck) {
+        super(isCheck);
         this.payDate = payDate;
         this.payMoney = payMoney;
         this.payHuman = payHuman;
