@@ -5,7 +5,6 @@ import po.ExpenseAndDatePO;
 import po.OperationLogPO;
 import po.OrderPO;
 import po.PO2VO;
-import util.ExistException;
 import vo.ExpenseAndDateVO;
 import vo.ListVO;
 import vo.OrderVO;
@@ -42,7 +41,7 @@ public class Order extends List {
         return listDataService.save(po);
     }
 
-    public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException, ExistException {
+    public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException {
         ExpenseAndDatePO npo = listDataService.getExpenseOfTransport(new ExpenseAndDatePO(vo.getCity1(), vo.getCity2(),
                 vo.getWrapper(), vo.getVolume(), vo.getDays(), vo.getDeliveryType(),
                 vo.getExpenseOfWrap(), vo.getExpenseOfTransport(), vo.getExpense()));

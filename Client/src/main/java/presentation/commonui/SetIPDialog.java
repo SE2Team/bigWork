@@ -30,7 +30,7 @@ public class SetIPDialog extends MyDialog {
         setIPPanel() {
             this.setLayout(null);
 
-            inputIP = new JLabel("客户端IP:");
+            inputIP = new JLabel("服务端IP:");
             inputIP.setFont(font1);
             inputIP.setBounds(x, y, jl_width, height);
 

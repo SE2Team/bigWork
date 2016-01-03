@@ -4,7 +4,6 @@ import data.Common.Common;
 import dataservice.listdataservice.ListDataService;
 import po.*;
 import util.DeliveryType;
-import util.ExistException;
 import util.ListState;
 import util.TransportType;
 
@@ -682,8 +681,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 * a
 	 */
 	public ExpenseAndDatePO getExpenseOfTransport(ExpenseAndDatePO expenseAndDate)
-			throws RemoteException, ExistException {
-		// TODO Auto-generated method stub
+			throws RemoteException {
 		double transport = 0;
 		double wrapper = 0;
 
@@ -703,8 +701,6 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 					transport = transport / 2;
 				}
 				expenseAndDate.setExpenseOfTransport(transport + "");
-			} else {
-				throw new ExistException();
 			}
 		}
 
@@ -719,8 +715,6 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 				expenseAndDate.setExpenseOfWrap(wrapper + "");
 				break;
 
-			} else {
-				throw new ExistException();
 			}
 		}
 		expenseAndDate.setExpense((wrapper + transport) + "");

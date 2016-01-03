@@ -125,7 +125,7 @@ public interface ManageDataService extends Remote {
      */
     ArrayList<WorkerPO> checkWorker(String name) throws RemoteException;
 
-    WorkerPO checkWorkerByID(String id);
+    WorkerPO checkWorkerByID(String id) throws RemoteException;
 
     boolean editWorker(WorkerPO oldWorkerPO, WorkerPO newWorkerPO) throws RemoteException, ExistException;
 
@@ -143,6 +143,14 @@ public interface ManageDataService extends Remote {
     ArrayList<OrganizationPO> check() throws RemoteException;
 
     OrganizationPO check(String num) throws RemoteException;
+
+    ArrayList<String> checkCityNum() throws RemoteException;
+
+    ArrayList<String> checkCity() throws RemoteException;
+
+    String checkCity(String num) throws RemoteException;
+
+    String checkCityNum(String city) throws RemoteException;
 
 
 }

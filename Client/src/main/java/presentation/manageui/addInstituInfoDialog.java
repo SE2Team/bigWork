@@ -48,8 +48,10 @@ public class addInstituInfoDialog extends MyDialog {
 	// 定义添加人员信息，姓名，年龄，职位，账号的label
 	JLabel addInfo, institution, city, institutionNum;
 	// 定义对应的文本框
-	JTextField jtf_institution, jtf_city, jtf_institutionNum;
-	// 定义确定，取消按钮
+    JTextField jtf_institution;
+    JComboBox cityBox;
+    JTextField jtf_institutionNum;
+    // 定义确定，取消按钮
 	JButton sure, cancel;
 	// 定义错误提示的label
 	JLabel tip1;
@@ -57,11 +59,18 @@ public class addInstituInfoDialog extends MyDialog {
 	String[] rowContent;
 	// 定义文本框的数组
 	JTextField[] insJtf;
+    ManageblService manageblService;
 
 	class addInstituInfoPanel extends JPanel {
 
 		addInstituInfoPanel(final JPanel jp) {
-			this.setLayout(null);
+            try {
+                manageblService = new ManageController();
+            } catch (RemoteException e) {
+                RunTip.makeTip("网络异常", false);
+                return;
+            }
+            this.setLayout(null);
 
 			addInfo = new JLabel("添加机构信息", JLabel.CENTER);
 			addInfo.setFont(new Font("楷体", Font.PLAIN, 25));
@@ -79,8 +88,9 @@ public class addInstituInfoDialog extends MyDialog {
 			city.setFont(font);
 			city.setBounds(x, y + addy / 2, jl_width, height);
 
-			jtf_city = new JTextField();
-			jtf_city.setFont(font2);
+
+            cityBox = new JComboBox(manageblService.);
+            jtf_city.setFont(font2);
 			jtf_city.setBounds(x + addx, y + addy / 2, jtf_width, height);
 			jtf_city.addFocusListener(new TextFocus());
 
@@ -103,7 +113,6 @@ public class addInstituInfoDialog extends MyDialog {
 							jtf_institutionNum};
 					boolean isOk = NumExceptioin
 							.isInstitutionValid(jtf_institutionNum);
-					System.out.println(jtf_institutionNum.getText());
 					if (isOk && isAllEntered.isEntered(insJtf)) {
 						rowContent = new String[]{jtf_institutionNum.getText(), jtf_city.getText()
 								, jtf_institution.getText()};

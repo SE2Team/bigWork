@@ -1,14 +1,25 @@
 package presentation.financeui;
 
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
+import presentation.commonui.RunTip;
+import presentation.commonui.swing.Table;
 import presentation.manageui.addEmployeeInfoDialog;
 import presentation.manageui.addInstituInfoDialog;
 import presentation.manageui.addVehicleDialog;
+import vo.AccountVO;
+import vo.StockVO;
+import vo.VehicleVO;
+import vo.WorkerVO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class FinanceInitialPanel extends JPanel {
 	int x = 5, y = 10, width = 70, height = 30;
@@ -20,6 +31,7 @@ public class FinanceInitialPanel extends JPanel {
 	private JPanel panel3;// 历史期初信息
 	private JTabbedPane tab3;
 	// 期初建账
+	private JLabel t1Label;
 	private JPanel a1;// 机构
 	private JPanel a2;// 人员
 	private JPanel a3;// 车辆
@@ -33,6 +45,7 @@ public class FinanceInitialPanel extends JPanel {
 	
 
 	// 当前期初信息
+	private JLabel t2Label;
 	private JPanel b1;// 机构
 	private JPanel b2;// 人员
 	private JPanel b3;// 车辆
@@ -539,6 +552,8 @@ public class FinanceInitialPanel extends JPanel {
 		panel.add(subLabel);
 
 		String[] column1 = { "机构名称", "机构编号" };
+
+		int n = 0;
 		String row1[][] = {};
 		Table = new JTable(row1, column1);
 		Table.setFont(font2);
@@ -556,8 +571,10 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable Table;
-
+		JTable WorkerTable;
+		// 定义表格模型对象
+		DefaultTableModel tableModel;
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
@@ -568,13 +585,43 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "序号", "姓名", "年龄", "职位", "账号" };
-		String[] s1 = { "", "", "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+		String[] column1 = {"姓名", "身份证号", "职位", "所属机构", "系统用户名", "性别"};
+
+		int n = 0;
+		Iterator<WorkerVO> ite1 = null;
+		ArrayList<WorkerVO> list1 = new ArrayList<WorkerVO>();
+		FinanceblService bl;
+		WorkerVO worker;
+		try {
+			bl = new FinanceController();
+			ite1 = bl.checkInitWorker();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			RunTip.makeTip("网络异常", false);
+		}
+		if (ite1 != null) {
+			while (ite1.hasNext()) {
+				list1.add(ite1.next());
+			}
+		}
+		n = list1.size();
+		String row1[][] = new String[n][6];
+		for (int j = 0; j < n; j++) {
+			String[] s1 = new String[6];
+			worker = list1.get(j);
+			s1[0] = worker.getName();
+			s1[1] = worker.getIdNum();
+			s1[2] = worker.getPosition();
+			s1[3] = worker.getOrganization();
+			s1[4] = worker.getUserId();
+			s1[5] = worker.getSex();
+			row1[j] = s1;
+		}
+
+
+		WorkerTable = Table.getTable(column1, row1);
+		tableModel = (DefaultTableModel) WorkerTable.getModel();
+		jsp = new JScrollPane(WorkerTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -587,8 +634,10 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable Table;
-
+		JTable VehicleTable;
+		// 定义表格模型对象
+		DefaultTableModel tableModel;
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
@@ -599,13 +648,37 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "序号", "车辆代号", "车牌号", "服役时间（年）" };
-		String[] s1 = { "", "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+		String[] column1 = {"车辆代号", "车牌号", "购买日期", "服役时间（年）"};
+		int n = 0;
+		Iterator<VehicleVO> ite1 = null;
+		ArrayList<VehicleVO> list1 = new ArrayList<VehicleVO>();
+		FinanceblService bl;
+		VehicleVO vehicle;
+		try {
+			bl = new FinanceController();
+			ite1 = bl.checkInitVehicle();
+		} catch (RemoteException e) {
+			RunTip.makeTip("网络异常", false);
+		}
+		if (ite1 != null) {
+			while (ite1.hasNext()) {
+				list1.add(ite1.next());
+			}
+		}
+		n = list1.size();
+		String row1[][] = new String[n][4];
+		for (int j = 0; j < n; j++) {
+			String[] s1 = new String[4];
+			vehicle = list1.get(j);
+			s1[0] = vehicle.getVehicleNum();
+			s1[1] = vehicle.getLicensePlate();
+			s1[2] = vehicle.getBuyDate();
+			s1[3] = vehicle.getUseTime();
+			row1[j] = s1;
+		}
+		VehicleTable = Table.getTable(column1, row1);
+		tableModel = (DefaultTableModel) VehicleTable.getModel();
+		jsp = new JScrollPane(VehicleTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -618,7 +691,9 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable Table;
+		JTable StockTable;
+		// 定义表格模型对象
+		DefaultTableModel tableModel;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -630,13 +705,36 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "入库数量", "出库数量", "金额", "存储位置", "合计库存" };
-		String[] s1 = { "", "", "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+		String[] column1 = {"库存容量", "警戒值", "状态"};
+
+
+		int n = 3;
+
+		FinanceblService bl;
+		StockVO stock = null;
+		try {
+			bl = new FinanceController();
+			stock = bl.checkInitStock();
+		} catch (RemoteException e) {
+			RunTip.makeTip("网络异常", false);
+		}
+
+
+		String row1[][] = new String[n][3];
+		String[] s1 = new String[3];
+		s1[0] = stock.getCapacity();
+		s1[1] = stock.getWarning();
+		if (stock.getStockState() == true) {
+			s1[2] = "报警";
+		}
+		if (stock.getStockState() == false) {
+			s1[2] = "不报警";
+		}
+
+		row1[0] = s1;
+		StockTable = Table.getTable(column1, row1);
+		tableModel = (DefaultTableModel) StockTable.getModel();
+		jsp = new JScrollPane(StockTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -649,7 +747,9 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable Table;
+		JTable AccountTable;
+		// 定义表格模型对象
+		DefaultTableModel tableModel;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -661,13 +761,36 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "序号", "账户名称", "余额" };
-		String[] s1 = { "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+		String[] column1 = {"账户名称", "余额"};
+		int n = 0;
+		Iterator<AccountVO> ite1 = null;
+		ArrayList<AccountVO> list1 = new ArrayList<AccountVO>();
+		FinanceblService bl;
+		AccountVO account;
+		try {
+			bl = new FinanceController();
+			ite1 = bl.checkInitAccount();
+		} catch (RemoteException e) {
+			RunTip.makeTip("网络异常", false);
+		}
+		if (ite1 != null) {
+			while (ite1.hasNext()) {
+				list1.add(ite1.next());
+			}
+		}
+		n = list1.size();
+		String row1[][] = new String[n][2];
+		for (int j = 0; j < n; j++) {
+			String[] s1 = new String[2];
+			account = list1.get(j);
+			s1[0] = account.getAccountName();
+			s1[1] = account.getAccountBalance();
+			row1[j] = s1;
+		}
+		AccountTable = Table.getTable(column1, row1);
+		tableModel = (DefaultTableModel) AccountTable.getModel();
+		AccountTable = new JTable(row1, column1);
+		jsp = new JScrollPane(AccountTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -723,10 +846,12 @@ public class FinanceInitialPanel extends JPanel {
 
 	// 历史期初第二个界面：输入历史年份后的界面
 	public JPanel history2() {
+		int x = 10, y = 15;
 		JPanel panel = new JPanel();
 		panel.setSize(650, 530);
 		panel.setLayout(null);
 		// 顶部
+		JLabel t3Label;
 		JPanel c1;// 机构
 		JPanel c2;// 人员
 		JPanel c3;// 车辆
@@ -741,11 +866,11 @@ public class FinanceInitialPanel extends JPanel {
 		c3 = c3();
 		c4 = c4();
 		c5 = c5();
-		tab3.add(c1, "机构");
-		tab3.add(c2, "人员");
-		tab3.add(c3, "车辆");
-		tab3.add(c4, "库存");
-		tab3.add(c5, "账户");
+		tab3.add(a1, "机构");
+		tab3.add(a2, "人员");
+		tab3.add(a3, "车辆");
+		tab3.add(a4, "库存");
+		tab3.add(a5, "账户");
 		tab3.setBounds(0, 0, 650, 525);
 		panel.add(tab3);
 
@@ -913,5 +1038,4 @@ public class FinanceInitialPanel extends JPanel {
 
 		return panel;
 	}
-
 }

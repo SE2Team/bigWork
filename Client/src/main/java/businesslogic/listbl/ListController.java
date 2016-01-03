@@ -199,4 +199,8 @@ public class ListController implements ListblService {
     public OrderVO getOrder(String num) throws RemoteException {
         return new Order().getOrder(num);
     }
+
+    public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException {
+        return new Order().getExpenseAndDate(vo);
+    }
 }

@@ -77,6 +77,22 @@ public class ManageController implements ManageblService {
         return manage.delOrganization(vo);
     }
 
+    public Iterator<String> checkCityNum() throws RemoteException {
+        return manage.checkCityNum();
+    }
+
+    public Iterator<String> checkCity() throws RemoteException {
+        return manage.checkCity();
+    }
+
+    public String checkCity(String num) throws RemoteException {
+        return manage.checkCity(num);
+    }
+
+    public String checkCityNum(String city) throws RemoteException {
+        return manage.checkCityNum(city);
+    }
+
     /**
      * 按照编号查找
      * @param vehicleNumber 传入车辆编号
@@ -115,7 +131,7 @@ public class ManageController implements ManageblService {
         return manage.checkWorker(name);
     }
 
-    public WorkerVO checkWorkerByID(String id) {
+    public WorkerVO checkWorkerByID(String id) throws RemoteException {
         return manage.checkWorkerByID(id);
     }
 

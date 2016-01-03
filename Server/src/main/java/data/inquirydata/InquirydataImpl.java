@@ -2,9 +2,7 @@ package data.inquirydata;
 
 import data.Common.Common;
 import dataservice.inquirydataservice.InquiryDataService;
-import po.LogisticsPO;
 import po.OperationLogPO;
-import util.ExistException;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -20,21 +18,8 @@ public class InquirydataImpl extends UnicastRemoteObject implements InquiryDataS
 		// TODO Auto-generated constructor stub
 	}
 
-	public LogisticsPO checkLogistics(String num) throws RemoteException {
-		// TODO Auto-generated method stub
-		Common common = new Common("logistics");
-		ArrayList<String> list = common.readData();
-		String[] str = new String[2];
-		for (int j = 0; j < list.size(); j++) {
-			str = list.get(j).split(";");
-			if (str[0].equals(num)) {
-				return this.stringToLogisticsPO(str);
-			}
-		}
-		return null;
-	}
 
-	public ArrayList<OperationLogPO> checkOperationLog() throws RemoteException {
+    public ArrayList<OperationLogPO> checkOperationLog() throws RemoteException {
 		// TODO Auto-generated method stub
 		Common common = new Common("operationLog");
 		ArrayList<String> s = common.readData();
@@ -54,25 +39,6 @@ public class InquirydataImpl extends UnicastRemoteObject implements InquiryDataS
 		return null;
 	}
 
-	public Boolean updateLogistics(LogisticsPO po) throws RemoteException, ExistException {
-		// TODO Auto-generated method stub
-		Common common = new Common("logistics");
-		ArrayList<String> list = common.readData();
-		String[] str = new String[2];
-		for (int j = 0; j < list.size(); j++) {
-			str = list.get(j).split(";");
-			if (str[0].equals(po.getDeliveryNum())) {
-				list.remove(j);
-				list.add(this.logisticsPOToString(po));
-				common.clearData("logistics");
-				common.writeData(list);
-				return true;
-			}else{
-				throw new ExistException();
-			}
-		}
-		return null;
-	}
 
     @Override
     public boolean saveOperationLog(OperationLogPO po) throws RemoteException {
@@ -81,13 +47,7 @@ public class InquirydataImpl extends UnicastRemoteObject implements InquiryDataS
         return true;
     }
 
-    private LogisticsPO stringToLogisticsPO(String[] str) {
-		return new LogisticsPO(str[0], str[1]);
-	}
 
-	private String logisticsPOToString(LogisticsPO po) {
-		return po.getDeliveryNum() + ";" + po.getTransportState();
-	}
 
 	private OperationLogPO stringToOperationLogPO(String[] str) {
 		return new OperationLogPO(str[0], str[1], str[2]);

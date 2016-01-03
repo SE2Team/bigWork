@@ -403,5 +403,75 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		}
 		return null;
 	}
+
+	@Override
+	public WorkerPO checkWorkerByID(String id) throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("worker");
+		ArrayList<String> list = common.readData();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			if (str[1].equals(id)) {
+				return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5]);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> checkCity() throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("city");
+		ArrayList<String> list = common.readData();
+		ArrayList<String> list1 = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			String[] str = list.get(i).split(";");
+			list1.add(str[1]);
+		}
+		return list1;
+	}
+
+	@Override
+	public String checkCity(String num) throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("city");
+		ArrayList<String> list = common.readData();
+		for (int i = 0; i < list.size(); i++) {
+			String[] str = list.get(i).split(";");
+			if (str[0].equals(num)) {
+				return str[1];
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public String checkCityNum(String city) throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("city");
+		ArrayList<String> list = common.readData();
+		for (int i = 0; i < list.size(); i++) {
+			String[] str = list.get(i).split(";");
+			if (str[1].equals(city)) {
+				return str[0];
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> checkCityNum() throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("city");
+		ArrayList<String> list = common.readData();
+		ArrayList<String> list1 = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			String[] str = list.get(i).split(";");
+			list1.add(str[0]);
+		}
+		return list1;
+	}
 		
 }

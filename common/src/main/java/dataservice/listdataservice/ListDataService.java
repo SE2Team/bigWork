@@ -14,7 +14,7 @@ public interface ListDataService extends Remote {
      * @throws RemoteException
      * @throws ExistException
      */
-    ExpenseAndDatePO getExpenseOfTransport(ExpenseAndDatePO expenseAndDate) throws RemoteException, ExistException;
+    ExpenseAndDatePO getExpenseOfTransport(ExpenseAndDatePO expenseAndDate) throws RemoteException;
 
     /**
      * @param orderPO

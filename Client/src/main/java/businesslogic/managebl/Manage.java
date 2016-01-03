@@ -207,7 +207,7 @@ public class Manage {
         return arrayList.iterator();
     }
 
-    public WorkerVO checkWorkerByID(String id) {
+    public WorkerVO checkWorkerByID(String id) throws RemoteException {
         return PO2VO.convert(manage.checkWorkerByID(id));
     }
 
@@ -247,6 +247,22 @@ public class Manage {
         return manage.delOrganization(VO2PO.convert(vo));
     }
 
+    public Iterator<String> checkCityNum() throws RemoteException {
+        return manage.checkCityNum().iterator();
+    }
+
+    public Iterator<String> checkCity() throws RemoteException {
+        return manage.checkCity().iterator();
+    }
+
+    public String checkCity(String num) throws RemoteException {
+        return manage.checkCity(num);
+    }
+
+    public String checkCityNum(String city) throws RemoteException {
+        return manage.checkCityNum(city);
+    }
+
     /**
      * 私有vo和po之间转换的方法
      *
@@ -270,5 +286,6 @@ public class Manage {
     private VehiclePO convert(VehicleVO vehicleVO) {
         return new VehiclePO(vehicleVO.getVehicleNum(), vehicleVO.getLicensePlate(), vehicleVO.getBuyDate(), vehicleVO.getUseTime());
     }
+
 
 }

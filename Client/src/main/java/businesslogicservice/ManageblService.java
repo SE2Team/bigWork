@@ -102,7 +102,7 @@ public interface ManageblService {
      */
     Iterator<WorkerVO> checkWorker(String name) throws RemoteException;
 
-    WorkerVO checkWorkerByID(String id);
+    WorkerVO checkWorkerByID(String id) throws RemoteException;
 
     /**
      * 编辑人员信息
@@ -126,5 +126,12 @@ public interface ManageblService {
 
     boolean delOrganization(OrganizationVO vo) throws RemoteException, ExistException;
 
+    Iterator<String> checkCityNum() throws RemoteException;
+
+    Iterator<String> checkCity() throws RemoteException;
+
+    String checkCity(String num) throws RemoteException;
+
+    String checkCityNum(String city) throws RemoteException;
 
 }
