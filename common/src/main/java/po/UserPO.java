@@ -17,8 +17,8 @@ public class UserPO implements Serializable{
 	private String password;
 	private String name;
 	private UserType permission;
-	
-	
+
+
 	/**
 	 * 
 	 * @param id
@@ -63,6 +63,5 @@ public class UserPO implements Serializable{
 	public String getId() {
 		return id;
 	}
-	
-	
+
 }

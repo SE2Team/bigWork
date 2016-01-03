@@ -7,12 +7,13 @@ import java.io.Serializable;
  */
 public class OrganizationPO implements Serializable {
     String num;
-    String city;
+    String transfer;
     String name;
+
 
     public OrganizationPO(String num, String city, String name) {
         this.num = num;
-        this.city = city;
+        this.transfer = city;
         this.name = name;
     }
 
@@ -25,11 +26,11 @@ public class OrganizationPO implements Serializable {
     }
 
     public String getCity() {
-        return city;
+        return transfer;
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.transfer = city;
     }
 
     public String getName() {

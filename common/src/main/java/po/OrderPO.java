@@ -66,13 +66,14 @@ public class OrderPO extends ListPO implements Serializable {
      * @param date
      * @param deliveryNum
      */
-
+    @Deprecated
     public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
                    String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                    String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                    String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
-                   String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck) {
-        super(isCheck);
+                   String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck
+            , String organization) {
+        super(isCheck, organization);
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;
@@ -102,8 +103,8 @@ public class OrderPO extends ListPO implements Serializable {
                    String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                    String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
                    String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck,
-                   String logistics) {
-        super(isCheck);
+                   String logistics, String organization) {
+        super(isCheck, organization);
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;

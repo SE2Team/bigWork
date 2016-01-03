@@ -30,8 +30,8 @@ public class TransferVO extends ListVO {
 
     public TransferVO(String loadingWay, String loadingDate, String transportNum,
                       String vehicleNum, String start, String end, String containerNum, String monitor,
-                      String supercargo, String orderNum, String money, ListState isCheck) {
-        super(isCheck);
+                      String supercargo, String orderNum, String money, ListState isCheck, String organization) {
+        super(isCheck, organization);
         this.loadingWay = loadingWay;
         this.loadingDate = loadingDate;
         this.transportNum = transportNum;

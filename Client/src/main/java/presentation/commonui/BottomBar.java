@@ -2,6 +2,8 @@ package presentation.commonui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by MYK on 2015/12/27 0027.
@@ -10,6 +12,7 @@ public class BottomBar extends JPanel {
 
     private static BottomBar ME = null;
     private JButton closeB;
+    private JButton jb_set;
 
     private BottomBar() {
         this.setLayout(null);
@@ -17,6 +20,8 @@ public class BottomBar extends JPanel {
 
         initCloseButton();
         BottomBar.ME = this;
+
+        initSetButton();
     }
 
     private void initCloseButton() {
@@ -28,6 +33,17 @@ public class BottomBar extends JPanel {
 //        this.add(closeB);
     }
 
+    private void initSetButton() {
+        jb_set = new JButton("设置");
+        jb_set.setBounds(500, 0, 150, 30);
+        this.add(jb_set);
+        jb_set.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                new SetIPDialog(BottomBar.this).setVisible(true);
+            }
+        });
+    }
+    
     public static BottomBar getInstance() {
         if (BottomBar.ME == null) {
             return new BottomBar();

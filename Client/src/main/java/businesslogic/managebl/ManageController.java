@@ -115,6 +115,10 @@ public class ManageController implements ManageblService {
         return manage.checkWorker(name);
     }
 
+    public WorkerVO checkWorkerByID(String id) {
+        return manage.checkWorkerByID(id);
+    }
+
     public boolean editWorker(WorkerVO oldWorkerVO,WorkerVO newWorkerVO) throws RemoteException, ExistException {
         return manage.editWorker(oldWorkerVO,newWorkerVO);
     }

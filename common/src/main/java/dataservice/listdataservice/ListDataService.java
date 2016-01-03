@@ -103,6 +103,31 @@ public interface ListDataService extends Remote {
 
 //    Boolean saveAsList(ListPO listPo) throws RemoteException;
 
+    ArrayList<AddresseeInformationPO> checkAddresseeInfo() throws RemoteException;
+
+    ArrayList<DistributePO> checkDistribute() throws RemoteException;
+
+    ArrayList<GatheringPO> checkGathering() throws RemoteException;
+
+    ArrayList<OrderPO> checkOrder() throws RemoteException;
+
+    ArrayList<PaymentPO> checkPayment() throws RemoteException;
+
+    ArrayList<ReceiptPO> checkReceipt() throws RemoteException;
+
+    ArrayList<StockInPO> checkStockIn() throws RemoteException;
+
+    ArrayList<StockOutPO> checkStockOut() throws RemoteException;
+
+    ArrayList<TransferPO> checkTransfer() throws RemoteException;
+
+    ArrayList<TransferReceivePO> checkTransferReceive() throws RemoteException;
+
+    ArrayList<LoadingPO> checkLoading() throws RemoteException;
+
+    ArrayList<ReceivePO> checkReceive() throws RemoteException;
+
+
     boolean saveAsList(AddresseeInformationPO po) throws RemoteException;
 
     boolean saveAsList(DistributePO po) throws RemoteException;

@@ -25,6 +25,7 @@ public class ListPO implements Serializable {
     }
 
     protected ListType type;
+    protected String organization;
 
     /**
      * id是自动根据日期生成的
@@ -35,10 +36,10 @@ public class ListPO implements Serializable {
         this.id = df.format(new Date());
     }
 
-    public ListPO(ListState state) {
+    public ListPO(ListState state, String organization) {
         super();
         this.state = state;
-        this.type = type;
+        this.organization = organization;
     }
 
     public String getId() {
@@ -52,5 +53,21 @@ public class ListPO implements Serializable {
 
     public void setIsCheck(ListState state) {
         this.state = state;
+    }
+
+    public ListState getState() {
+        return state;
+    }
+
+    public void setState(ListState state) {
+        this.state = state;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 }

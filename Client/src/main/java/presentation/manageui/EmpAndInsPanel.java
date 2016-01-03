@@ -313,8 +313,8 @@ public class EmpAndInsPanel extends JPanel {
         String row[][] = new String[n1][3];
         for (int j = 0; j < n1; j++) {
             vo1 = list1.get(j);
-            String[] temp = {vo1.getNum(), vo1.getCity(), vo1.getName()};
-            row[j] = temp;
+			String[] temp = {vo1.getNum(), vo1.getTransfer(), vo1.getName()};
+			row[j] = temp;
         }
         String[] column2 = {"机构编号", "城市", "机构名称"};
         instituteTable = Table.getTable(column2, row);

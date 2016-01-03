@@ -207,6 +207,10 @@ public class Manage {
         return arrayList.iterator();
     }
 
+    public WorkerVO checkWorkerByID(String id) {
+        return PO2VO.convert(manage.checkWorkerByID(id));
+    }
+
     public boolean editWorker(WorkerVO opo,WorkerVO npo) throws RemoteException, ExistException {
         return manage.editWorker(VO2PO.convert(opo),VO2PO.convert(npo));
     }

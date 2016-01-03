@@ -21,10 +21,14 @@ public class Helper {
      * @return 系统时间 time
      */
     public static String getTime() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("MM月dd日hh时mm分ss秒");//设置日期格式
         return df.format(new Date());
     }
 
+    public static String getDay() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        return df.format(new Date());
+    }
     /**
      * 比较任意日期数据和现在时间的先后
      *

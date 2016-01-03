@@ -7,12 +7,12 @@ import java.io.Serializable;
  */
 public class OrganizationVO implements Serializable {
     String num;
-    String city;
+    String transfer;
     String name;
 
-    public OrganizationVO(String num, String city, String name) {
+    public OrganizationVO(String num, String transfer, String name) {
         this.num = num;
-        this.city = city;
+        this.transfer = transfer;
         this.name = name;
     }
 
@@ -24,12 +24,12 @@ public class OrganizationVO implements Serializable {
         this.num = num;
     }
 
-    public String getCity() {
-        return city;
+    public String getTransfer() {
+        return transfer;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setTransfer(String transfer) {
+        this.transfer = transfer;
     }
 
     public String getName() {

@@ -125,6 +125,7 @@ public interface ManageDataService extends Remote {
      */
     ArrayList<WorkerPO> checkWorker(String name) throws RemoteException;
 
+    WorkerPO checkWorkerByID(String id);
 
     boolean editWorker(WorkerPO oldWorkerPO, WorkerPO newWorkerPO) throws RemoteException, ExistException;
 

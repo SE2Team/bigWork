@@ -17,8 +17,8 @@ public class ReceiveVO extends ListVO {
 
 
     public ReceiveVO(String arriveDate, String transferNum, String start, String arriveState,
-                     ListState isCheck) {
-        super(isCheck);
+                     ListState isCheck, String organization) {
+        super(isCheck, organization);
         this.arriveDate = arriveDate;
         this.transferNum = transferNum;
         this.start = start;

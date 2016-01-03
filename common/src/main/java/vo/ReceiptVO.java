@@ -18,8 +18,8 @@ public class ReceiptVO extends ListVO {
     private ArrayList<String> orderNum;
 
     public ReceiptVO(String receiptDate, String receiptMoney, String receiptCourier, ArrayList<String> orderNum,
-                     ListState isCheck) {
-        super(isCheck);
+                     ListState isCheck, String organization) {
+        super(isCheck, organization);
         this.receiptDate = receiptDate;
         this.receiptMoney = receiptMoney;
         this.receiptCourier = receiptCourier;

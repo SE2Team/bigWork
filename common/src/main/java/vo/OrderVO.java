@@ -68,12 +68,14 @@ public class OrderVO extends ListVO implements Serializable {
      * @param deliveryNum
      */
 
+    @Deprecated
     public OrderVO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
                    String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                    String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                    String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
-                   String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck) {
-        super(isCheck);
+                   String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck,
+                   String organization) {
+        super(isCheck, organization);
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;
@@ -103,8 +105,8 @@ public class OrderVO extends ListVO implements Serializable {
                    String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                    String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
                    String expenseOfWrapper, String expense, String date, String deliveryNum, ListState isCheck,
-                   String logistics) {
-        super(isCheck);
+                   String logistics, String organization) {
+        super(isCheck, organization);
         this.senderName = senderName;
         this.senderAddress = senderAddress;
         this.senderWorkplace = senderWorkplace;

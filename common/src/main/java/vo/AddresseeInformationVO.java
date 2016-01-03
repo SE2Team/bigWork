@@ -20,8 +20,9 @@ public class AddresseeInformationVO extends ListVO implements Serializable {
      * @param addresseeName
      * @param addresseeDate
      */
-    public AddresseeInformationVO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck) {
-        super(isCheck);
+    public AddresseeInformationVO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck,
+                                  String organization) {
+        super(isCheck, organization);
         this.addresseeNum = addresseeNum;
         this.addresseeName = addresseeName;
         this.addresseeDate = addresseeDate;

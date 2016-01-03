@@ -20,8 +20,8 @@ public class StockOutVO extends ListVO {
 
 
     public StockOutVO(String deliveryNum, String outDate, String end,
-                      TransportType transportType, String transferNum, ListState isCheck) {
-        super(isCheck);
+                      TransportType transportType, String transferNum, ListState isCheck, String organization) {
+        super(isCheck, organization);
         this.deliveryNum = deliveryNum;
         this.outDate = outDate;
         this.end = end;

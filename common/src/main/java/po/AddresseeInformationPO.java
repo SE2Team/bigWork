@@ -21,8 +21,9 @@ public class AddresseeInformationPO extends ListPO implements Serializable {
 	 * @param addresseeName
 	 * @param addresseeDate
 	 */
-	public AddresseeInformationPO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck) {
-		super(isCheck);
+	public AddresseeInformationPO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck
+			, String organization) {
+		super(isCheck, organization);
 		this.addresseeNum = addresseeNum;
 		this.addresseeName = addresseeName;
 		this.addresseeDate = addresseeDate;

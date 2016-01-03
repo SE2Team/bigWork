@@ -3,6 +3,7 @@ package presentation.manageui;
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UIConstant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +55,7 @@ public class SalaryStrategyPanel extends JPanel {
         wayLabel.setFont(font2);
         wayLabel.setBounds(x, y + addy, width2, height);
 
-        etBox = new JComboBox(employeeType);
+        etBox = new JComboBox(UIConstant.position);
         etBox.setFont(font3);
         etBox.setBounds(x + addx, y, width2, height);
         jrdMonth = new JRadioButton("按月");

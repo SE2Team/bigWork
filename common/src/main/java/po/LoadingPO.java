@@ -37,8 +37,8 @@ public class LoadingPO extends ListPO implements Serializable {
      */
     public LoadingPO(String loadingDate, String hallNum, String transportNum,
                      String start, String end, String monitor, String supercargo, String vehicleNum, String consignList,
-                     String transportMoney, ListState isCheck) {
-        super(isCheck);
+                     String transportMoney, ListState isCheck, String organization) {
+        super(isCheck, organization);
         this.loadingDate = loadingDate;
         this.hallNum = hallNum;
         this.transportNum = transportNum;

@@ -19,14 +19,13 @@ public class StockOutPO extends ListPO implements Serializable {
     private String end;
 
 
-
     private TransportType transportType;
     private String transferNum;
 
 
     public StockOutPO(String deliveryNum, String outDate, String end,
-                      TransportType transportType, String transferNum, ListState isCheck) {
-        super(isCheck);
+                      TransportType transportType, String transferNum, ListState isCheck, String organization) {
+        super(isCheck, organization);
         this.deliveryNum = deliveryNum;
         this.outDate = outDate;
         this.end = end;

@@ -102,6 +102,8 @@ public interface ManageblService {
      */
     Iterator<WorkerVO> checkWorker(String name) throws RemoteException;
 
+    WorkerVO checkWorkerByID(String id);
+
     /**
      * 编辑人员信息
      *
