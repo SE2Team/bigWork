@@ -3,9 +3,7 @@ package data.listdata;
 import data.Common.Common;
 import dataservice.listdataservice.ListDataService;
 import po.*;
-import util.DeliveryType;
-import util.ListState;
-import util.TransportType;
+import util.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -311,7 +309,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 					}
 					listPO = new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11],
 							str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19], str[20], str[21],
-							str[22], isCheck);
+							str[22], isCheck, str[24]);
 					break;
 				case "PAYMENT":
 					listPO = new PaymentPO(str[2], str[3], str[4], str[5], str[6], str[7], isCheck);
@@ -419,7 +417,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 
 			list1.add(new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11],
 					str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19], str[20], str[21],
-					str[22], isCheck));
+					str[22], isCheck, str[24]));
 		}
 		return list1;
 	}
@@ -681,11 +679,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 * a
 	 */
 	public ExpenseAndDatePO getExpenseOfTransport(ExpenseAndDatePO expenseAndDate)
-			throws RemoteException {
+			throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
 		double transport = 0;
 		double wrapper = 0;
 
-		// 计算运费和时间
+		// 计算运费和时间7
 		Common common = new Common("constant");
 		ArrayList<String> list = common.readData();
 		for (int i = 0; i < list.size(); i++) {
@@ -694,13 +693,15 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 			if (str[0].equals(expenseAndDate.getCity1()) && str[1].equals(expenseAndDate.getCity2())) {
 				transport = Double.parseDouble(str[2]) * Double.parseDouble(str[3]) / 1000.0;
 				Double days = Double.parseDouble(str[2]);
-				expenseAndDate.setDays(days.intValue() / 300 + "");
+				expenseAndDate.setDays(days.intValue() / 300 + 1 + "");
 				if (expenseAndDate.getDeliveryType() == DeliveryType.FAST) {
 					transport = transport * 2;
 				} else if (expenseAndDate.getDeliveryType() == DeliveryType.ECONOMIC) {
 					transport = transport / 2;
 				}
 				expenseAndDate.setExpenseOfTransport(transport + "");
+			} else {
+				throw new ExistException();
 			}
 		}
 
@@ -715,6 +716,8 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 				expenseAndDate.setExpenseOfWrap(wrapper + "");
 				break;
 
+			} else {
+				throw new ExistException();
 			}
 		}
 		expenseAndDate.setExpense((wrapper + transport) + "");
@@ -783,10 +786,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	public boolean deleteList(AddresseeInformationPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -799,15 +804,15 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	public boolean deleteList(DistributePO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
-		// System.out.println("numdm");
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
-			// System.out.println("del");
 			return true;
 		}
 		return false;
@@ -816,12 +821,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(GatheringPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -834,18 +840,15 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	public boolean deleteList(OrderPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
-		System.out.println(list.get(0));
-		System.out.println(str);
-		System.out.println(list.get(0) == str);
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
-			System.out.println("indata");
-
 			return true;
 		}
 		return false;
@@ -854,12 +857,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(PaymentPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -871,12 +875,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(ReceiptPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -888,12 +893,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(StockInPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -905,12 +911,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(StockOutPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -922,12 +929,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(TransferReceivePO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -939,12 +947,13 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(ReceivePO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
-
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -957,10 +966,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	public boolean deleteList(LoadingPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -973,10 +984,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	public boolean deleteList(TransferPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
 		Common common = new Common("list");
+		Common common2 = new Common("passedList");
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
 		if (list.contains(str)) {
+			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
 			common.writeData(list);
@@ -1015,5 +1028,90 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		}
 		return null;
 	}
+
+	@Override
+	public TransferReceivePO geTransferReceive(String num) throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("transferReceive");
+		ArrayList<String> list = common.readData();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			if (str[4].equals(num)) {
+				return new TransferReceivePO(str[0], str[1], str[2], str[3], str[4], ListState.PASSED);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<ListPO> getPassedList(UserType userType) throws RemoteException {
+		// TODO Auto-generated method stub
+		ArrayList<ListPO> list = new ArrayList<>();
+		if (userType == UserType.COURIER) {
+			ArrayList<OrderPO> order = this.checkOrder();
+			for (int j = 0; j < order.size(); j++) {
+				list.add(order.get(j));
+			}
+
+			ArrayList<AddresseeInformationPO> addresseeInfo = this.checkAddresseeInfo();
+			for (int j = 0; j < addresseeInfo.size(); j++) {
+				list.add(addresseeInfo.get(j));
+			}
+
+		} else if (userType == UserType.SALESMAN) {
+			ArrayList<ReceiptPO> receipt = this.checkReceipt();
+			for (int j = 0; j < receipt.size(); j++) {
+				list.add(receipt.get(j));
+			}
+
+			ArrayList<LoadingPO> load = this.checkLoading();
+			for (int j = 0; j < load.size(); j++) {
+				list.add(load.get(j));
+			}
+
+			ArrayList<ReceivePO> receive = this.checkReceive();
+			for (int j = 0; j < receive.size(); j++) {
+				list.add(receive.get(j));
+			}
+
+			ArrayList<DistributePO> distribute = this.checkDistribute();
+			for (int j = 0; j < distribute.size(); j++) {
+				list.add(distribute.get(j));
+			}
+		} else if (userType == UserType.FINANCIAL) {
+			ArrayList<GatheringPO> gathering = this.checkGathering();
+			for (int j = 0; j < gathering.size(); j++) {
+				list.add(gathering.get(j));
+			}
+
+			ArrayList<PaymentPO> payment = this.checkPayment();
+			for (int j = 0; j < payment.size(); j++) {
+				list.add(payment.get(j));
+			}
+
+		} else if (userType == UserType.STOCKMANAGER) {
+			ArrayList<StockInPO> In = this.checkStockIn();
+			for (int j = 0; j < In.size(); j++) {
+				list.add(In.get(j));
+			}
+
+			ArrayList<StockOutPO> out = this.checkStockOut();
+			for (int j = 0; j < out.size(); j++) {
+				list.add(out.get(j));
+			}
+		} else if (userType == UserType.TRANSFERMAN) {
+			ArrayList<TransferPO> transfer = this.checkTransfer();
+			for (int j = 0; j < transfer.size(); j++) {
+				list.add(transfer.get(j));
+			}
+
+			ArrayList<TransferReceivePO> transferReceive = this.checkTransferReceive();
+			for (int j = 0; j < transferReceive.size(); j++) {
+				list.add(transferReceive.get(j));
+			}
+		}
+		return list;
+	}
+
 
 }

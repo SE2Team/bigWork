@@ -70,7 +70,7 @@ public class StockOutChecking extends StockOutPanel{
             return;
         }
 
-        RunTip.makeTip("保存成功", false);
+        RunTip.makeTip("保存成功", true);
         returnTOApproval();
     }
 

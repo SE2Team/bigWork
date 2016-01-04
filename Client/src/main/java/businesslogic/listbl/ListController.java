@@ -1,6 +1,7 @@
 package businesslogic.listbl;
 
 import businesslogicservice.ListblService;
+import util.ExistException;
 import vo.*;
 
 import java.rmi.RemoteException;
@@ -200,7 +201,12 @@ public class ListController implements ListblService {
         return new Order().getOrder(num);
     }
 
-    public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException {
+    public ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException, ExistException {
         return new Order().getExpenseAndDate(vo);
+    }
+
+    @Override
+    public TransferReceiveVO getTransfer(String num) throws RemoteException {
+        return new TransArrive().getTransferArrive(num);
     }
 }

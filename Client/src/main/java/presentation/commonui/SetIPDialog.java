@@ -40,6 +40,7 @@ public class SetIPDialog extends MyDialog {
                 public void actionPerformed(ActionEvent e) {
                     UIConstant.address = jtf_ip.getText();
                     UIConstant.port = jtf_port.getText();
+                    dispose();
                 }
             });
 
@@ -65,14 +66,17 @@ public class SetIPDialog extends MyDialog {
             jtf_ip = new JTextField();
             jtf_ip.setFont(font2);
             jtf_ip.setBounds(x + addx, y, jtf_width, height);
+            jtf_ip.setText(UIConstant.address);
+
             port = new JLabel("端口：");
             port.setFont(font1);
             port.setBounds(x, y + addy, jl_width, height);
 
-
             jtf_port = new JTextField();
             jtf_port.setFont(font2);
             jtf_port.setBounds(x + addx, y + addy, jtf_width, height);
+            jtf_port.setText(UIConstant.port);
+
 
             this.add(inputIP);
             this.add(jtf_ip);

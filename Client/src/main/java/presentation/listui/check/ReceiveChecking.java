@@ -65,7 +65,7 @@ public class ReceiveChecking extends ReceivePanel{
             return;
         }
 
-        RunTip.makeTip("保存成功", false);
+        RunTip.makeTip("保存成功", true);
         returnTOApproval();
     }
 

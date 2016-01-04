@@ -21,6 +21,8 @@ public class LogInFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置默认关闭属性
         this.setSize(900, 655);//设置窗体大小
         this.setLayout(null);
+        this.setTitle("快递管理系统");
+        this.setIconImage(new ImageIcon("images/icon.png").getImage());
 
 
         jf.addMouseListener(new MouseAdapter() {

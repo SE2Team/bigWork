@@ -1,7 +1,9 @@
 package businesslogic.listbl;
 
 import businesslogic.commoditybl.CommodityController;
+import businesslogic.managebl.ManageController;
 import businesslogic.utilitybl.Helper;
+import businesslogicservice.ManageblService;
 import po.OperationLogPO;
 import po.StockInPO;
 import vo.ListVO;
@@ -27,8 +29,9 @@ public class StockIn extends List {
     public boolean save2File(ListVO listVO) throws RemoteException {
         StockInVO vo = null;
         vo = (StockInVO) listVO;
-        String organization =
-        new CommodityController().stockIn(vo);
+        ManageblService manageblService = new ManageController();
+        String organization = manageblService.checkOrganization(vo.getDeliveryNum().substring(0, 3) + "0").getName();
+        new CommodityController(organization).stockIn(vo);
         StockInPO po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
                 "保存入库单"));

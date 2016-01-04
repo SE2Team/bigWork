@@ -52,7 +52,6 @@ public class ListApprovalPanel extends JPanel {
         checkButton = new JButton("查看");
         passButton = new JButton("通过");
         updateButton = new JButton("更新");
-        //todo 增加一个按钮
 
         //界面
         waitButton.setFont(font2);

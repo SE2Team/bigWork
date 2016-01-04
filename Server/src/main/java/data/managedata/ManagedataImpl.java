@@ -313,7 +313,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public String getSalary(String position) throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("salary");
 		ArrayList<String> list = common.readData();
 		for (int j = 0; j < list.size(); j++) {
@@ -332,7 +331,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public boolean addOrganization(OrganizationPO po) throws RemoteException, ExistException {
-		// TODO Auto-generated method stub
 		Common common = new Common("organization");
 		ArrayList<String> list = common.readData();
 		String string = this.PoToString(po);
@@ -380,7 +378,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public ArrayList<OrganizationPO> check() throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("organization");
 		ArrayList<String> list = common.readData();
 		ArrayList<OrganizationPO> list1 = new ArrayList<>();
@@ -393,7 +390,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public OrganizationPO check(String num) throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("organization");
 		ArrayList<String> list = common.readData();
 		for (int j = 0; j < list.size(); j++) {
@@ -411,8 +407,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		Common common = new Common("worker");
 		ArrayList<String> list = common.readData();
 		for (int j = 0; j < list.size(); j++) {
-            System.out.println(list.get(j));
-            System.out.println("a");
             String[] str = list.get(j).split(";");
             if (str[4].equals(id)) {
                 return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
@@ -423,7 +417,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public ArrayList<String> checkCity() throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("city");
 		ArrayList<String> list = common.readData();
 		ArrayList<String> list1 = new ArrayList<>();
@@ -436,7 +429,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public String checkCity(String num) throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("city");
 		ArrayList<String> list = common.readData();
 		for (int i = 0; i < list.size(); i++) {
@@ -451,7 +443,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public String checkCityNum(String city) throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("city");
 		ArrayList<String> list = common.readData();
 		for (int i = 0; i < list.size(); i++) {
@@ -466,7 +457,6 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 
 	@Override
 	public ArrayList<String> checkCityNum() throws RemoteException {
-		// TODO Auto-generated method stub
 		Common common = new Common("city");
 		ArrayList<String> list = common.readData();
 		ArrayList<String> list1 = new ArrayList<>();

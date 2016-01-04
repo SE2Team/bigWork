@@ -211,5 +211,7 @@ public interface ListblService {
 
     OrderVO getOrder(String num) throws RemoteException;
 
-    ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException;
+    ExpenseAndDateVO getExpenseAndDate(ExpenseAndDateVO vo) throws RemoteException, ExistException;
+
+    TransferReceiveVO getTransfer(String num) throws RemoteException;
 }

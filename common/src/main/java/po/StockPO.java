@@ -24,6 +24,10 @@ public class StockPO implements Serializable {
         this.stockList = stockList;
     }
 
+    public StockPO(String capacity, String warning) {
+        this.capacity = capacity;
+        this.warning = warning;
+    }
 
     public boolean getStockState() {
         return stockState;

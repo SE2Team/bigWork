@@ -68,7 +68,7 @@ public class TransferReceiveChecking extends TransferReceivePanel{
             RunTip.makeTip("网络异常", false);
             return;
         }
-        RunTip.makeTip("保存成功", false);
+        RunTip.makeTip("保存成功", true);
         returnTOApproval();
     }
 

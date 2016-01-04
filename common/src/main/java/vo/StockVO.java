@@ -23,6 +23,11 @@ public class StockVO {
         this.stockList = stockList;
     }
 
+    public StockVO(String capacity, String warning) {
+        this.capacity = capacity;
+        this.warning = warning;
+    }
+
     public boolean getStockState() {
         return stockState;
     }

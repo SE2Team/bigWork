@@ -80,7 +80,7 @@ public class TransferChecking extends TransferPanel {
             return;
         }
 
-        RunTip.makeTip("保存成功", false);
+        RunTip.makeTip("保存成功", true);
         returnTOApproval();
     }
 

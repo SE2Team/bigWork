@@ -75,7 +75,7 @@ public class PaymentChecking extends FinanceCostPanel {
                 RunTip.makeTip("网络异常", false);
                 return;
             }
-            RunTip.makeTip("保存成功", false);
+            RunTip.makeTip("保存成功", true);
             returnTOApproval();
         } else if ((!isOk) && isAllEntered.isEntered(costJtf)) {
             RunTip.makeTip("请输入正确格式的信息", false);

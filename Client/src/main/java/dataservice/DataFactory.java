@@ -7,6 +7,7 @@ import dataservice.inquirydataservice.InquiryDataService;
 import dataservice.listdataservice.ListDataService;
 import dataservice.managedataservice.ManageDataService;
 import dataservice.userdataservice.UserDataService;
+import presentation.commonui.UIdata.UIConstant;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -31,7 +32,7 @@ public class DataFactory extends UnicastRemoteObject implements DataFactoryServi
             return FACTORY;
 
         try {
-            FACTORY = (DataFactoryService) Naming.lookup("rmi://" + "" + ":" + "" + "/DataFactory");
+            FACTORY = (DataFactoryService) Naming.lookup("rmi://" + UIConstant.address + ":" + UIConstant.port + "/DataFactory");
             System.out.println("连接成功！");
         } catch (MalformedURLException e) {
             e.printStackTrace();

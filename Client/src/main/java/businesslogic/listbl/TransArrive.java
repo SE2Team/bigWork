@@ -2,6 +2,7 @@ package businesslogic.listbl;
 
 import businesslogic.utilitybl.Helper;
 import po.OperationLogPO;
+import po.PO2VO;
 import po.TransferReceivePO;
 import vo.ListVO;
 import vo.TransferReceiveVO;
@@ -43,4 +44,7 @@ public class TransArrive extends List {
         return listDataService.deleteList(VO2PO.convert(vo));
     }
 
+    public TransferReceiveVO getTransferArrive(String num) throws RemoteException {
+        return PO2VO.convert(listDataService.geTransferReceive(num));
+    }
 }

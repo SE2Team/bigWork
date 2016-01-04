@@ -43,4 +43,6 @@ public class TransInfo extends List {
     public boolean afterCheck(TransferVO vo) throws RemoteException {
         return listDataService.deleteList(VO2PO.convert(vo));
     }
+
+
 }

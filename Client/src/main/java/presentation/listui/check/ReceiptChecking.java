@@ -71,7 +71,7 @@ public class ReceiptChecking extends ReceiptPanel{
             return;
         }
 
-        RunTip.makeTip("保存成功", false);
+        RunTip.makeTip("保存成功", true);
         returnTOApproval();
     }
 
