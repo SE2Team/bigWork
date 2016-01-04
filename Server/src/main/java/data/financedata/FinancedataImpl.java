@@ -21,9 +21,10 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 
 	private static final long serialVersionUID = 1L;
 
-	public String get() throws RemoteException{
+	public ArrayList<String> get() throws RemoteException {
 		// TODO Auto-generated method stub
-		double paymentMoney=0;
+		ArrayList<String> list1 = new ArrayList<>();
+		double paymentMoney = 0;
 		double gatheringMoney=0;
 		Common common=new Common("payment");
 		ArrayList<String> list=common.readData();
@@ -38,13 +39,17 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			String[] str2=list2.get(i).split(";");
 			gatheringMoney=gatheringMoney+Double.parseDouble(this.stringToGatheringPO(str2).getMoney());
 		}
-		return Double.toString(gatheringMoney-paymentMoney);
+		list1.add(gatheringMoney + "");
+		list1.add(paymentMoney + "");
+		list1.add((gatheringMoney - paymentMoney) + "");
+		return list1;
 	}
 
-	public String get(String startDate, String endDate) throws RemoteException {
+	public ArrayList<String> get(String startDate, String endDate) throws RemoteException {
 		// TODO Auto-generated method stub
 		double paymentMoney=0;
 		double gatheringMoney=0;
+		ArrayList<String> list1 = new ArrayList<>();
 		ArrayList<String> payment=new ArrayList<String>();
 		ArrayList<String> gathering=new ArrayList<String>();
 		int start=this.DateToInt(startDate);
@@ -79,7 +84,10 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
 			String[] str2=gathering.get(i).split(";");
 			gatheringMoney=gatheringMoney+Double.parseDouble(this.stringToGatheringPO(str2).getMoney());
 		}
-		return Double.toString(gatheringMoney-paymentMoney);
+		list1.add(gatheringMoney + "");
+		list1.add(paymentMoney + "");
+		list1.add((gatheringMoney - paymentMoney) + "");
+		return list1;
 	}
 
 	public Boolean addAccount(AccountPO accountPO) throws ExistException {
@@ -342,5 +350,34 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
         }
         return list1;
     }
-	
+
+	@Override
+	public boolean initial(OrganizationPO po) throws RemoteException, ExistException {
+		// TODO Auto-generated method stub
+		Common common = new Common("initialOrganization");
+		ArrayList<String> list = common.readData();
+		String string = this.PoToString(po);
+		if (list.contains(string)) {
+			throw new ExistException();
+		}
+		common.writeDataAdd(string);
+		return true;
+	}
+
+	@Override
+	public ArrayList<OrganizationPO> checkInitOrganization() throws RemoteException {
+		// TODO Auto-generated method stub
+		Common common = new Common("initialOrganization");
+		ArrayList<String> list = common.readData();
+		ArrayList<OrganizationPO> list1 = new ArrayList<>();
+		for (int j = 0; j < list.size(); j++) {
+			String[] str = list.get(j).split(";");
+			list1.add(new OrganizationPO(str[0], str[1], str[2]));
+		}
+		return list1;
+	}
+
+	private String PoToString(OrganizationPO po) {
+		return po.getNum() + ";" + po.getCity() + ";" + po.getName();
+	}
 }

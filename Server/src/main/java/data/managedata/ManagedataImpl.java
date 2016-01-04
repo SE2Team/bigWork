@@ -405,7 +405,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	}
 
 	@Override
-	public WorkerPO checkWorkerByID(String id) throws RemoteException {
+	public WorkerPO checkWorkerByID(String id) {
 		// TODO Auto-generated method stub
 		Common common = new Common("worker");
 		ArrayList<String> list = common.readData();

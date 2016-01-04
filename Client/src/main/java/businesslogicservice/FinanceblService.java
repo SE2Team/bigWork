@@ -117,4 +117,6 @@ public interface FinanceblService {
     Iterator<AccountVO> checkInitAccount() throws RemoteException;
 
     StockVO checkInitStock() throws RemoteException;
+
+    public Iterator<OrganizationVO> checkInitOrganization() throws RemoteException;
 }

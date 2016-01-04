@@ -8,11 +8,13 @@ import businesslogic.managebl.ManageController;
 import businesslogicservice.FinanceblService;
 import businesslogicservice.ManageblService;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UIConstant;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
 import presentation.financeui.FinanceInitialPanel;
 import util.ExistException;
+import vo.OrganizationVO;
 import vo.WorkerVO;
 
 import javax.swing.*;
@@ -22,6 +24,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class addEmployeeInfoDialog extends MyDialog {
 
@@ -54,11 +58,11 @@ public class addEmployeeInfoDialog extends MyDialog {
 	Font font = new Font("宋体", Font.PLAIN, 20);
 	Font font2 = new Font("宋体", Font.PLAIN, 18);
 	// 定义添加人员信息，姓名，性别，年龄，身份证号，职位，所属机构，账号的label
-	JLabel addInfo, name, gender, age, idNum, position, institution,
-			accountNum;
-	// 定义对应的文本框
-	JTextField jtf_name, jtf_age, jtf_idNum, jtf_position, jtf_institution,
-			jtf_accountNum;
+    JLabel addInfo, name, gender, age, idNum, institution,
+            accountNum, position;
+    // 定义对应的文本框
+    JTextField jtf_name, jtf_age, jtf_idNum,
+            jtf_accountNum;
 	// 定义确定，取消按钮
 	JButton sure, cancel;
 	// 定义单选按钮
@@ -71,11 +75,17 @@ public class addEmployeeInfoDialog extends MyDialog {
 	// 定义文本框的数组
 	JTextField[] EmpJtf;
 
+    JComboBox organization;
+
+    JComboBox positionBox;
+
+    ManageblService manageblService;
+
 	class addUserInfoPanel extends JPanel {
 		RadioButtonListener radioButtonListener = new RadioButtonListener();
 
 		addUserInfoPanel(final JPanel jp) {
-			this.setLayout(null);
+            this.setLayout(null);
 
 			addInfo = new JLabel("添加人员信息", JLabel.CENTER);
 			addInfo.setFont(new Font("楷体", Font.PLAIN, 25));
@@ -131,19 +141,37 @@ public class addEmployeeInfoDialog extends MyDialog {
 			institution.setFont(font);
 			institution.setBounds(x, y + 3 * addy, jl_width, height);
 
-			jtf_institution = new JTextField();
-			jtf_institution.setFont(font2);
-			jtf_institution.setBounds(x + addx1 + 30, y + 3 * addy,
-					2 * jtf_width, height);
+            ArrayList<OrganizationVO> organizationList = new ArrayList<>();
+            try {
+                manageblService = new ManageController();
+                Iterator<OrganizationVO> itr = manageblService.checkOrganization();
+                while (itr.hasNext()) {
+                    organizationList.add(itr.next());
+                }
+            } catch (RemoteException e) {
+                RunTip.makeTip("网络异常", false);
+                return;
+            }
+//            organizationList.add(new OrganizationVO("123","123","南京营业厅"));
+            ArrayList<String> organizationName = new ArrayList<>();
+            for (OrganizationVO vo : organizationList) {
+                organizationName.add(vo.getName());
+            }
+            organization = new JComboBox(organizationName.toArray());
+            organization.setFont(font2);
+//			jtf_institution = new JTextField();
+//			jtf_institution.setFont(font2);
+            organization.setBounds(x + addx1 + 30, y + 3 * addy,
+                    2 * jtf_width, height);
 
-			position = new JLabel("职位", JLabel.CENTER);
-			position.setFont(font);
+            position = new JLabel("职位");
+            position.setFont(font);
 			position.setBounds(x, y + 4 * addy, jl_width, height);
 
-			jtf_position = new JTextField();
-			jtf_position.setFont(font2);
-			jtf_position.setBounds(x + addx1 + 30, y + 4 * addy, 2 * jtf_width,
-					height);
+            positionBox = new JComboBox(UIConstant.position);
+            positionBox.setFont(font2);
+            positionBox.setBounds(x + addx1 + 30, y + 4 * addy, 2 * jtf_width,
+                    height);
 
 			accountNum = new JLabel("账号", JLabel.CENTER);
 			accountNum.setFont(font);
@@ -161,8 +189,8 @@ public class addEmployeeInfoDialog extends MyDialog {
 			sure.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					EmpJtf = new JTextField[]{jtf_name, jtf_age, jtf_idNum,
-							jtf_position, jtf_institution, jtf_accountNum};
-					boolean isOk = NumExceptioin
+                            jtf_accountNum};
+                    boolean isOk = NumExceptioin
 							.isAccountNumValid(jtf_accountNum)
 							&& NumExceptioin.isIdValid(jtf_idNum)
 							&& NumExceptioin.isInt(jtf_age);
@@ -171,8 +199,8 @@ public class addEmployeeInfoDialog extends MyDialog {
 							.isSelected());
 					if (isOk && isenter) {
 						WorkerVO vo = new WorkerVO(jtf_name.getText(),
-								jtf_idNum.getText(), jtf_position.getText(),
-								jtf_institution.getText(), jtf_accountNum
+                                jtf_idNum.getText(), positionBox.getSelectedItem().toString(),
+                                organization.getSelectedItem().toString(), jtf_accountNum
                                 .getText(), saveValue);
                         ;
                         if (jp == parent) {
@@ -203,9 +231,9 @@ public class addEmployeeInfoDialog extends MyDialog {
 						}
 						rowContent = new String[]{jtf_name.getText(),
 								saveValue, jtf_age.getText(),
-								jtf_idNum.getText(), jtf_position.getText(),
-								jtf_institution.getText(),
-								jtf_accountNum.getText()};
+                                jtf_idNum.getText(), positionBox.getSelectedItem().toString(),
+                                organization.getSelectedItem().toString(),
+                                jtf_accountNum.getText()};
 						if (jp == parent) {
 							parent.addEmpInfo(rowContent);
 						}
@@ -246,14 +274,14 @@ public class addEmployeeInfoDialog extends MyDialog {
 			this.add(idNum);
 			this.add(jtf_idNum);
 			this.add(institution);
-			this.add(jtf_institution);
 			this.add(position);
-			this.add(jtf_position);
-			this.add(accountNum);
+            this.add(positionBox);
+            this.add(accountNum);
 			this.add(jtf_accountNum);
 			this.add(sure);
 			this.add(cancel);
-		}
+            this.add(organization);
+        }
 	}
 
 	class RadioButtonListener implements ActionListener {

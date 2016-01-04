@@ -283,4 +283,12 @@ public class Finance {
     public StockVO checkInitStock() throws RemoteException {
         return PO2VO.convert(finance.checkInitStock());
     }
+
+    public Iterator<OrganizationVO> checkInitOrganization() throws RemoteException {
+        ArrayList<OrganizationVO> arrayList = new ArrayList<>();
+        for (OrganizationPO po : finance.checkInitOrganization()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return arrayList.iterator();
+    }
 }

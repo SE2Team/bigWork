@@ -2,6 +2,8 @@ package po;
 
 import vo.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by MYK on 2015/12/7 0007.
  */
@@ -84,7 +86,11 @@ public class PO2VO {
     public static StockVO convert(StockPO PO) {
         if (PO == null)
             return null;
-        return new StockVO(PO.getStockState(), PO.getStockList());
+        ArrayList<StockInVO> arrayList = new ArrayList<StockInVO>();
+        for (StockInPO po : PO.getStockList()) {
+            arrayList.add(PO2VO.convert(po));
+        }
+        return new StockVO(PO.getStockState(), arrayList);
     }
 
     public static TransferReceiveVO convert(TransferReceivePO PO) {

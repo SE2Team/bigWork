@@ -8,6 +8,9 @@ import java.awt.*;
 public class UIConstant {
     public static String[] position = {"快递员", "营业厅业务员", "中转中心业务员", "中转中心仓库管理人员", "财务人员", "高级财务人员", "总经理", "管理员"};
 
+    public static String address = "127.0.0.1";
+    public static String port = "8888";
+
     private Font kai = new Font("楷体", Font.PLAIN, 25);
     private Font song20 = new Font("宋体", Font.PLAIN, 20);
     private Font song18 = new Font("宋体", Font.PLAIN, 18);
@@ -38,4 +41,6 @@ public class UIConstant {
     public static void setSong18(Font song18) {
         ME.song18 = song18;
     }
+
+
 }

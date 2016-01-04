@@ -104,4 +104,8 @@ public class FinanceController implements FinanceblService {
     public StockVO checkInitStock() throws RemoteException {
         return finance.checkInitStock();
     }
+
+    public Iterator<OrganizationVO> checkInitOrganization() throws RemoteException {
+        return finance.checkInitOrganization();
+    }
 }

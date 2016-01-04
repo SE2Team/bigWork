@@ -11,14 +11,14 @@ public interface FinanceDataService extends Remote {
     /**
      * @return
      */
-    String get() throws RemoteException;
+    ArrayList<String> get() throws RemoteException;
 
     /**
      * @param startDate
      * @param endDate
      * @return
      */
-    String get(String startDate, String endDate) throws RemoteException;
+    ArrayList<String> get(String startDate, String endDate) throws RemoteException;
 
     /**
      * @param accountPO
@@ -97,7 +97,11 @@ public interface FinanceDataService extends Remote {
     /**
      * @return
      * @throws RemoteException
+     * @throws ExistException 
      */
+
+    boolean initial(OrganizationPO po) throws RemoteException, ExistException;
+    
     ArrayList<WorkerPO> checkInitWorker() throws RemoteException;
 
     /**
@@ -117,5 +121,7 @@ public interface FinanceDataService extends Remote {
      * @throws RemoteException
      */
     StockPO checkInitStock() throws RemoteException;
+
+ ArrayList<OrganizationPO> checkInitOrganization() throws RemoteException;
 
 }

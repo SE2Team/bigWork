@@ -1,7 +1,5 @@
 package vo;
 
-import po.StockInPO;
-
 import java.util.ArrayList;
 
 /**
@@ -18,9 +16,9 @@ public class StockVO {
 
     private String warning;
 
-    private ArrayList<StockInPO> stockList;//TODO 后期加入排序处理
+    private ArrayList<StockInVO> stockList;//TODO 后期加入排序处理
 
-    public StockVO(Boolean stockState, ArrayList<StockInPO> stockList) {
+    public StockVO(Boolean stockState, ArrayList<StockInVO> stockList) {
         this.stockState = stockState;
         this.stockList = stockList;
     }
@@ -29,20 +27,20 @@ public class StockVO {
         return stockState;
     }
 
-    public void add(StockInPO stockInPO) {
-        stockList.add(stockInPO);
+    public void add(StockInVO stockInVO) {
+        stockList.add(stockInVO);
     }
 
     public void remove(String num) {
         for (int i = 0; i < stockList.size(); i++) {
-            StockInPO temp = stockList.get(i);
+            StockInVO temp = stockList.get(i);
 
             if (temp.getDeliveryNum() == num)
                 stockList.remove(i);
         }
     }
 
-    public ArrayList<StockInPO> getStockList() {
+    public ArrayList<StockInVO> getStockList() {
         return stockList;
     }
 
@@ -70,7 +68,7 @@ public class StockVO {
         this.stockState = stockState;
     }
 
-    public void setStockList(ArrayList<StockInPO> stockList) {
+    public void setStockList(ArrayList<StockInVO> stockList) {
         this.stockList = stockList;
     }
 
