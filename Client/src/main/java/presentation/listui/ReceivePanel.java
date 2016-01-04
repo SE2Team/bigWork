@@ -4,19 +4,23 @@
 package presentation.listui;
 
 import businesslogic.listbl.ListController;
+import businesslogic.managebl.ManageController;
 import businesslogicservice.ListblService;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
 import util.ListState;
 import vo.ReceiveVO;
+import vo.TransferReceiveVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ReceivePanel extends JPanel {
 
@@ -28,14 +32,14 @@ public class ReceivePanel extends JPanel {
 			arriveState;
 	// 定义对应的文本框
 	protected JTextField jtf_arriveDate, jtf_transferNum, jtf_departure;
-	// 定义货物状态的下拉框
+	// 定义货物状态,城市编号的下拉框
 	protected JComboBox jcb_arrivestate;
 	// 定义确定，取消按钮
 	protected JButton sure, cancel;
 	// 定义接收单的字体
 	protected Font font1 = new Font("楷体", Font.PLAIN, 30);
 	// 定义文本框下拉框的字体
-	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义其他Label的字体
 	protected Font font3 = new Font("宋体", Font.PLAIN, 20);
 	// 定义错误提示的label
@@ -75,6 +79,28 @@ public class ReceivePanel extends JPanel {
 		transferNum.setFont(font3);
 		transferNum.setBounds(x, y + addy, width, height);
 
+		Iterator<String> ite = null;
+		ArrayList<String> list1 = new ArrayList<String>();
+		ManageblService bl;
+		try {
+			bl = new ManageController();
+			ite = bl.checkCityNum();
+		} catch (RemoteException e1) {
+			RunTip.makeTip("网络异常", false);
+		}
+
+		if (ite != null) {
+			while (ite.hasNext()) {
+				list1.add(ite.next());
+			}
+		}
+
+		int n = list1.size();
+		String[] s = new String[n];
+		for (int i = 0; i < n; i++) {
+			s[i] = list1.get(i);
+		}
+		
 		jtf_transferNum = new JTextField();
 		jtf_transferNum.setFont(font2);
 		jtf_transferNum.setBounds(x + addx, y + addy, width, height);
@@ -143,7 +169,7 @@ public class ReceivePanel extends JPanel {
 
 	// 错误提示信息是否已经被添加
 	boolean isTransferNumAdd = false;
-
+	boolean isExist = false;
 	/**
 	 * 监听焦点
 	 * 
@@ -159,32 +185,45 @@ public class ReceivePanel extends JPanel {
 
 		public void focusLost(FocusEvent e) {
 			// TODO Auto-generated method stub
-
-			if (!NumExceptioin.isTransListValid(jtf_transferNum)) {
-				isTransferNumAdd = true;
-				if (tip == null) {
-					tip = new JLabel("中转单编号位数应为19位");
-					tip.setBounds(x + addx, y + addy + 30, width, height);
-					tip.setFont(font2);
-					tip.setForeground(Color.red);
-					addTip(tip);
+			ListblService bl;
+			TransferReceiveVO vo = null;
+			try {
+				bl = new ListController();
+				vo = bl.getTransfer(jtf_transferNum.getText().trim());
+				if (vo == null) {
+					RunTip.makeTip("该中转单号不存在", false);
+					return;
+				} else {
+					isExist = true;
 				}
-
-			} else {
-				if (isTransferNumAdd
-						&& !"".equalsIgnoreCase(jtf_transferNum.getText()
-								.trim())) {
-					isTransferNumAdd = false;
-					removeTip(tip);
-					tip = null;
-				}
+			} catch (RemoteException e1) {
+				RunTip.makeTip("网络异常", false);
 			}
+//			if (!NumExceptioin.isTransListValid(jtf_transferNum,jtf_arriveDate.getText())) {
+//				isTransferNumAdd = true;
+//				if (tip == null) {
+//					tip = new JLabel("中转单编号位数应为19位");
+//					tip.setBounds(x + addx, y + addy + 30, width, height);
+//					tip.setFont(font2);
+//					tip.setForeground(Color.red);
+//					addTip(tip);
+//				}
+//
+//			} else {
+//				if (isTransferNumAdd
+//						&& !"".equalsIgnoreCase(jtf_transferNum.getText()
+//								.trim())) {
+//					isTransferNumAdd = false;
+//					removeTip(tip);
+//					tip = null;
+//				}
+//			}
 		}
 
 	}
 
 	protected void performSure() {
-		boolean isOk = NumExceptioin.isTransListValid(jtf_transferNum);
+		boolean isOk = isExist;
 		if (isOk && isAllEntered.isEntered(receiveJtf)) {
 			ReceiveVO receive_vo = new ReceiveVO(jtf_arriveDate.getText(),
 					jtf_transferNum.getText(), jtf_departure.getText(),
@@ -194,9 +233,9 @@ public class ReceivePanel extends JPanel {
 				bl = new ListController();
 				bl.save(receive_vo);
 			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
                 RunTip.makeTip("网络异常", false);
-            }
+				return;
+			}
 
             RunTip.makeTip("保存成功", true);
 

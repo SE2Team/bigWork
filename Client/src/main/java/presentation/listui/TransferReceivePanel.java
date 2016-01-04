@@ -4,10 +4,13 @@
 package presentation.listui;
 
 import businesslogic.listbl.ListController;
+import businesslogic.managebl.ManageController;
 import businesslogicservice.ListblService;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ListState;
@@ -17,6 +20,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TransferReceivePanel extends JPanel {
 
@@ -25,12 +30,12 @@ public class TransferReceivePanel extends JPanel {
 
     // 定义中转中心编号，到达日期，中转单编号，出发地，货物到达状态的label
     protected JLabel transferCenterNum, arriveDate, transferNum, departure,
-            arriveState;
+            arriveState, jl_num;
     // 定义对应的文本框
     protected JTextField jtf_CenterNum, jtf_arriveDate, jtf_transferNum,
             jtf_departure;
     // 定义下拉框
-    protected JComboBox state;
+    protected JComboBox state, jcb_city;
     // 定义确定 取消按钮
     protected JButton sure, cancel;
     // 定义文本框下拉框按钮的字体
@@ -42,6 +47,7 @@ public class TransferReceivePanel extends JPanel {
     protected DateChooser datechooser;
     // 定义文本框的数组
     protected JTextField[] transReceiveJtf;
+    String[] city = {"南京市", "北京市", "上海市", "广州市"};
 
     public TransferReceivePanel() {
 
@@ -54,7 +60,16 @@ public class TransferReceivePanel extends JPanel {
         jtf_CenterNum = new JTextField();
         jtf_CenterNum.setFont(font2);
         jtf_CenterNum.setBounds(x + addx1, y, width, height);
-        jtf_CenterNum.addFocusListener(new TextFocus());
+        jtf_CenterNum.setEditable(false);
+        String num = null;
+        ManageblService bl;
+        try {
+            bl = new ManageController();
+            num = bl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+            jtf_CenterNum.setText(num);
+        } catch (RemoteException e) {
+            RunTip.makeTip("网络异常", false);
+        }
 
         arriveDate = new JLabel("到达日期", JLabel.CENTER);
         arriveDate.setFont(font);
@@ -79,18 +94,57 @@ public class TransferReceivePanel extends JPanel {
         transferNum.setFont(font);
         transferNum.setBounds(x, y + addy, 2 * width, height);
 
+        Iterator<String> ite = null;
+        ArrayList<String> list1 = new ArrayList<String>();
+        ManageblService mbl;
+        try {
+            mbl = new ManageController();
+            ite = mbl.checkCityNum();
+        } catch (RemoteException e1) {
+            RunTip.makeTip("网络异常", false);
+        }
+
+        if (ite != null) {
+            while (ite.hasNext()) {
+                list1.add(ite.next());
+            }
+        }
+
+        int n = list1.size();
+        String[] s = new String[n];
+        for (int i = 0; i < n; i++) {
+            s[i] = list1.get(i);
+        }
+
+        String num1 = null;
+        ManageblService mbl1;
+        try {
+            mbl = new ManageController();
+            num = mbl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+        } catch (RemoteException e2) {
+            RunTip.makeTip("网络异常", false);
+        }
+
+        jl_num = new JLabel(num.substring(0, 3));
+        jl_num.setFont(font2);
+        jl_num.setBounds(x + 2 * addx1, y + addy, 50, height);
+
         jtf_transferNum = new JTextField();
         jtf_transferNum.setFont(font2);
-        jtf_transferNum.setBounds(x + 2 * addx1, y + addy, 2 * width, height);
+        jtf_transferNum.setBounds(x + 2 * addx1 + 50, y + addy, 2 * width - 50, height);
         jtf_transferNum.addFocusListener(new TextFocus());
 
         departure = new JLabel("出发地", JLabel.CENTER);
         departure.setFont(font);
         departure.setBounds(x, y + 2 * addy, width, height);
 
-        jtf_departure = new JTextField();
-        jtf_departure.setFont(font2);
-        jtf_departure.setBounds(x + addx1, y + 2 * addy, width, height);
+        jcb_city = new JComboBox(city);
+        jcb_city.setFont(font2);
+        jcb_city.setBounds(x + addx1, y + 2 * addy, width, height);
+
+//        jtf_departure = new JTextField();
+//        jtf_departure.setFont(font2);
+//        jtf_departure.setBounds(x + addx1, y + 2 * addy, width, height);
 
         arriveState = new JLabel("货物到达状态", JLabel.CENTER);
         arriveState.setFont(font);
@@ -135,11 +189,13 @@ public class TransferReceivePanel extends JPanel {
         this.add(transferNum);
         this.add(jtf_transferNum);
         this.add(departure);
-        this.add(jtf_departure);
+        //       this.add(jtf_departure);
         this.add(arriveState);
         this.add(state);
         this.add(sure);
         this.add(cancel);
+        this.add(jcb_city);
+        this.add(jl_num);
     }
 
     protected void performCancel() {
@@ -165,28 +221,28 @@ public class TransferReceivePanel extends JPanel {
         public void focusLost(FocusEvent e) {
             // TODO Auto-generated method stub
             JTextField temp = (JTextField) e.getSource();
-            if (temp == jtf_CenterNum) {
-                if (!NumExceptioin.isTransCenterValid(jtf_CenterNum)) {
-                    isCenterNumAdd = true;
-                    if (tip1 == null) {
-                        tip1 = new JLabel("中转中心编号位数应为4位", JLabel.CENTER);
-                        tip1.setBounds(x + 70, y + height, 2 * width, height);
-                        tip1.setFont(font2);
-                        tip1.setForeground(Color.RED);
-                        addTip(tip1);
-                    }
-                } else {
-                    if (isCenterNumAdd
-                            && !"".equalsIgnoreCase(jtf_CenterNum.getText()
-                            .trim())) {
-                        isCenterNumAdd = false;
-                        removeTip(tip1);
-                        tip1 = null;
-                    }
-                }
-            }
+//            if (temp == jtf_CenterNum) {
+//                if (!NumExceptioin.isTransCenterValid(jtf_CenterNum)) {
+//                    isCenterNumAdd = true;
+//                    if (tip1 == null) {
+//                        tip1 = new JLabel("中转中心编号位数应为4位", JLabel.CENTER);
+//                        tip1.setBounds(x + 70, y + height, 2 * width, height);
+//                        tip1.setFont(font2);
+//                        tip1.setForeground(Color.RED);
+//                        addTip(tip1);
+//                    }
+//                } else {
+//                    if (isCenterNumAdd
+//                            && !"".equalsIgnoreCase(jtf_CenterNum.getText()
+//                            .trim())) {
+//                        isCenterNumAdd = false;
+//                        removeTip(tip1);
+//                        tip1 = null;
+//                    }
+//                }
+//            }
             if (temp == jtf_transferNum) {
-                if (!NumExceptioin.isTransListValid(jtf_transferNum)) {
+                if (!NumExceptioin.isTransListValid(jtf_transferNum, jtf_arriveDate.getText())) {
                     isTransAdd = true;
                     if (tip2 == null) {
                         tip2 = new JLabel("中转单编号位数应为19位", JLabel.CENTER);
@@ -211,12 +267,11 @@ public class TransferReceivePanel extends JPanel {
     }
 
     protected void performSure() {
-        boolean isOk = NumExceptioin.isTransCenterValid(jtf_CenterNum)
-                && NumExceptioin.isTransListValid(jtf_transferNum);
+        boolean isOk = NumExceptioin.isTransListValid(jtf_transferNum, jtf_arriveDate.getText());
         if (isOk && isAllEntered.isEntered(transReceiveJtf)) {
             TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate.getText(),
-                    jtf_departure.getText(), state.getSelectedItem().toString(),
-                    jtf_CenterNum.getText(), jtf_transferNum.getText(), ListState.UNCHECK);
+                    jcb_city.getSelectedItem().toString(), state.getSelectedItem().toString(),
+                    jtf_CenterNum.getText(), jl_num.getText() + jtf_transferNum.getText(), ListState.UNCHECK);
 
             try {
                 ListblService bl = new ListController();

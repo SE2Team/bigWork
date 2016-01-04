@@ -48,7 +48,7 @@ public class StockOutChecking extends StockOutPanel{
         cancel.setText("否决");
         jtf_deliveryNum.setText(vo.getDeliveryNum());
         jtf_outDate.setText(vo.getOutDate());
-        jtf_destination.setText(vo.getEnd());
+        jcb_destination.setSelectedItem(vo.getEnd());
         jtf_transferNum.setText(vo.getTransferNum());
         jcb_loadingWay.setSelectedItem("火车");//。。。。。全是火车
     }
@@ -57,7 +57,7 @@ public class StockOutChecking extends StockOutPanel{
     protected void performSure() {
         // jcb_loadingWay.getSelectedItem().toString()
         StockOutVO out_vo = new StockOutVO(jtf_deliveryNum.getText(),
-                jtf_outDate.getText(), jtf_destination.getText(),
+                jtf_outDate.getText(), jcb_destination.getSelectedItem().toString(),
                 TransportType.TRAIN, jtf_transferNum.getText(), ListState.PASSED);
         ListblService bl;
         try {
@@ -77,7 +77,7 @@ public class StockOutChecking extends StockOutPanel{
     @Override
     protected void performCancel() {
         StockOutVO out_vo = new StockOutVO(jtf_deliveryNum.getText(),
-                jtf_outDate.getText(), jtf_destination.getText(),
+                jtf_outDate.getText(), jcb_destination.getSelectedItem().toString(),
                 TransportType.TRAIN, jtf_transferNum.getText(), ListState.PASSED);
         ListblService bl;
         try {

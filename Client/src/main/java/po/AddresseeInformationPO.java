@@ -1,4 +1,4 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2015/10/25 0025.
  */
-public class AddresseeInformationVO extends ListVO implements Serializable {
+public class AddresseeInformationPO extends ListPO implements Serializable {
     //收件单号，收件人，收件时间。
     private static final long serialVersionUID = 1L;//序列化ID
     private String addresseeNum;
@@ -20,7 +20,7 @@ public class AddresseeInformationVO extends ListVO implements Serializable {
      * @param addresseeName
      * @param addresseeDate
      */
-    public AddresseeInformationVO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck
+    public AddresseeInformationPO(String addresseeNum, String addresseeName, String addresseeDate, ListState isCheck
     ) {
         super(isCheck);
         this.addresseeNum = addresseeNum;

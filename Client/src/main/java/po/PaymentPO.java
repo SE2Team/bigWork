@@ -1,13 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
-/**
- * Created by Administrator on 2015/10/26 0026.
- */
-public class PaymentVO extends ListVO {
+import java.io.Serializable;
 
+/**
+ * Created by Administrator on 2015/10/25 0025.
+ */
+public class PaymentPO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
 
     /**
@@ -22,7 +23,7 @@ public class PaymentVO extends ListVO {
     private String payComment;
 
 
-    public PaymentVO(String payDate, String payMoney, String payHuman,
+    public PaymentPO(String payDate, String payMoney, String payHuman,
                      String payAccount, String payReason, String payComment, ListState isCheck) {
         super(isCheck);
         this.payDate = payDate;
@@ -34,52 +35,53 @@ public class PaymentVO extends ListVO {
         setType(ListType.PAYMENT);
     }
 
-    public String getPayDate() {
-        return payDate;
-    }
 
     public void setPayDate(String payDate) {
         this.payDate = payDate;
     }
 
-    public String getPayMoney() {
-        return payMoney;
+    public String getPayDate() {
+        return payDate;
     }
 
     public void setPayMoney(String payMoney) {
         this.payMoney = payMoney;
     }
 
-    public String getPayHuman() {
-        return payHuman;
+    public String getPayMoney() {
+        return payMoney;
     }
 
     public void setPayHuman(String payHuman) {
         this.payHuman = payHuman;
     }
 
-    public String getPayAccount() {
-        return payAccount;
+    public String getPayHuman() {
+        return payHuman;
     }
 
     public void setPayAccount(String payAccount) {
         this.payAccount = payAccount;
     }
 
-    public String getPayReason() {
-        return payReason;
+    public String getPayAccount() {
+        return payAccount;
     }
 
     public void setPayReason(String payReason) {
         this.payReason = payReason;
     }
 
-    public String getPayComment() {
-        return payComment;
+    public String getPayReason() {
+        return payReason;
     }
 
     public void setPayComment(String payComment) {
         this.payComment = payComment;
+    }
+
+    public String getPayComment() {
+        return payComment;
     }
 
 

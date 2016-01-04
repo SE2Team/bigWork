@@ -20,7 +20,7 @@ public class NumExceptioin {
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 10) {
+						&& (text.getText().length() != 7 && text.getText().length() != 10)) {
 					return false;
 				}
 			} else {
@@ -42,7 +42,7 @@ public class NumExceptioin {
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 6) {
+						&& text.getText().length() != 3) {
 					return false;
 				}
 			} else {
@@ -58,12 +58,23 @@ public class NumExceptioin {
 	 * @param text
 	 * @return
 	 */
-	public static boolean isCarValid(JTextField text) {
+	public static boolean isCarValid(JTextField text, String date) {
+		date = date.replace("-", "");
 		String s = text.getText().trim();
+		if ((!"".equalsIgnoreCase(s)) && s.length() != 16) {
+			return false;
+		}
+		if (s.length() < 11)
+			return false;
+		boolean isEqual = s.substring(3, 11).equals(date);
+		isEqual = true;
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 19) {
+						&& text.getText().length() != 16) {
+					return false;
+				}
+				if (!isEqual) {
 					return false;
 				}
 			} else {
@@ -81,12 +92,20 @@ public class NumExceptioin {
 	 */
 	public static boolean isVehicleValid(JTextField text) {
 		String s = text.getText().trim();
+//		if(s.length()!=6){
+//			return false;
+//		}
+//		String num = text.getText().substring(0, 3);
+//		boolean isEqual = num.equals(citynum);
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
-				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 9) {
+				if ((!"".equalsIgnoreCase(text.getText().trim())
+						&& text.getText().length() != 6)) {
 					return false;
 				}
+//				if(!isEqual){
+//					return false;
+//				}
 			} else {
 				return false;
 			}
@@ -105,7 +124,7 @@ public class NumExceptioin {
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 9) {
+						&& text.getText().length() != 3) {
 					return false;
 				}
 			} else {
@@ -123,7 +142,7 @@ public class NumExceptioin {
 	 */
 	public static boolean isIdValid(JTextField text) {
 		String s = text.getText().trim();
-		for (int i = 0; i < s.length(); i++) {
+		for (int i = 0; i < s.length() - 1; i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
 						&& text.getText().length() != 18) {
@@ -209,12 +228,19 @@ public class NumExceptioin {
 	 * @param text
 	 * @return
 	 */
-	public static boolean isTransListValid(JTextField text) {
+	public static boolean isTransListValid(JTextField text, String date) {
+		date = date.replaceAll("-", "");
 		String s = text.getText().trim();
+		if ((!"".equalsIgnoreCase(s)) && s.length() != 16) {
+			return false;
+		}
+		if (text.getText().equals(""))
+			return false;
+//		boolean isEqual=s.substring(1,9).equals(date);
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 19) {
+						&& text.getText().length() != 16) {
 					return false;
 				}
 			} else {

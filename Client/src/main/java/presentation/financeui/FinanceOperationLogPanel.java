@@ -45,12 +45,11 @@ public class FinanceOperationLogPanel extends JPanel {
         while (itr.hasNext()){
             list.add(itr.next());
         }
-        String[][] row = new String[list.size()][4];
-        for (int j = list.size() - 1; j > -1; j--) {
+        String[][] row = new String[cout][4];
+        for (int j = 0; j < cout; j++) {
             OperationLogVO vo = list.get(j);
             String[] temp = {String.valueOf(cout), vo.getType().toString(), vo.getHuman(), vo.getTime()};
-            row[list.size() - j - 1] = temp;
-            cout++;
+            row[j] = temp;
         }
 
         operationTable = Table.getTable(column, row);

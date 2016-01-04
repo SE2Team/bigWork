@@ -34,7 +34,7 @@ public class StockOut extends List {
         StockOutPO po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(), Helper.getUserType().toString(),
                 "保存出库单"));
-        return listDataService.save(po);
+        return listDataService.save(po, organization);
     }
 
     public boolean save(StockOutVO vo) throws RemoteException {

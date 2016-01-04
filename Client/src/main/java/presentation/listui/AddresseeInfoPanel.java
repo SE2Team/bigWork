@@ -4,27 +4,32 @@
 package presentation.listui;
 
 import businesslogic.listbl.ListController;
+import businesslogic.managebl.ManageController;
 import businesslogicservice.ListblService;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
+import presentation.commonui.swing.GetDate;
 import util.ListState;
 import vo.AddresseeInformationVO;
+import vo.OrderVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AddresseeInfoPanel extends JPanel {
-    public void paintComponent(Graphics g) {
-        Image right_pic = new ImageIcon("images/右.jpg").getImage();
-        g.drawImage(right_pic, 0, 0, 650, 530, this);
-    }
+	public void paintComponent(Graphics g) {
+		Image right_pic = new ImageIcon("images/右.jpg").getImage();
+		g.drawImage(right_pic, 0, 0, 650, 530, this);
+	}
 
-    protected int x = 100, y = 80, width = 200, height = 30, addx = 160,
+	protected int x = 100, y = 80, width = 200, height = 30, addx = 160,
 			addy = 90, jb_width = 80;
 
 	// 定义收件单号，收件人姓名，收件时间的label
@@ -36,18 +41,23 @@ public class AddresseeInfoPanel extends JPanel {
 	// 定义对应输入框
 	protected JTextField jtf_receiveNum, jtf_receiver, jtf_receiveDate;
 
+	// 定义对应单号下拉框
+//	protected JComboBox jcb_num;
+
 	// 定义确定，取消按钮
 	protected JButton jb1, jb2;
 
 	// 定义字体
 	protected Font font = new Font("宋体", Font.PLAIN, 20);
-	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 16);
 
 	// 定义日期选择器
 	protected DateChooser datechooser;
 
 	// 定义文本框的数组
 	protected JTextField[] addresseeJtf;
+
+	protected OrderVO orderVO;
 
 	public AddresseeInfoPanel() {
 
@@ -56,6 +66,41 @@ public class AddresseeInfoPanel extends JPanel {
 		receiveNum = new JLabel("收件单号", JLabel.CENTER);
 		receiveNum.setFont(font);
 		receiveNum.setBounds(x, y, width, height);
+
+		Iterator<String> ite = null;
+		ArrayList<String> list1 = new ArrayList<String>();
+		ManageblService bl;
+		try {
+			bl = new ManageController();
+			ite = bl.checkCityNum();
+		} catch (RemoteException e1) {
+			RunTip.makeTip("网络异常", false);
+		}
+
+		if (ite != null) {
+			while (ite.hasNext()) {
+				list1.add(ite.next());
+			}
+		}
+
+		int n = list1.size();
+		String[] s = new String[n];
+		for (int i = 0; i < n; i++) {
+			s[i] = list1.get(i);
+		}
+
+//		String num = null;
+//		ManageblService mbl;
+//		try {
+//			mbl = new ManageController();
+//			num = mbl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+//		} catch (RemoteException e2) {
+//			RunTip.makeTip("网络异常", false);
+//		}
+
+//		jl_num = new JLabel(num.substring(0, 3));
+//		jl_num.setFont(font2);
+//		jl_num.setBounds(x + addx, y, 50, height);
 
 		jtf_receiveNum = new JTextField();
 		jtf_receiveNum.setFont(font2);
@@ -107,8 +152,8 @@ public class AddresseeInfoPanel extends JPanel {
 		jb2.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-                performJb2();
-            }
+				performJb2();
+			}
 		});
 
 		this.add(receiveNum);
@@ -122,39 +167,40 @@ public class AddresseeInfoPanel extends JPanel {
 		this.add(jb2);
 	}
 
-    protected void performJb2() {
-        new Empty(addresseeJtf);
+	protected void performJb2() {
+		new Empty(addresseeJtf);
 
-    }
+	}
 
 	protected void performJb1() {
-		boolean isOk = NumExceptioin.isOrderValid(jtf_receiveNum);
+		boolean isOk = isExist;
 		if (isOk && isAllEntered.isEntered(addresseeJtf)) {
 			AddresseeInformationVO addressInfo_vo = new AddresseeInformationVO(
 					jtf_receiveNum.getText(), jtf_receiver.getText(),
-                    jtf_receiveDate.getText(), ListState.UNCHECK);
-            ListblService bl;
-            try {
+					jtf_receiveDate.getText(), ListState.UNCHECK);
+			ListblService bl;
+			try {
 				bl = new ListController();
 				bl.save(addressInfo_vo);
-
 			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-                RunTip.makeTip("网络异常", false);
-            }
+				RunTip.makeTip("网络异常", false);
+				return;
+			}
 
-            RunTip.makeTip("保存成功", true);
-        }else if((!isOk)&&isAllEntered.isEntered(addresseeJtf)){
-            RunTip.makeTip("请输入正确格式的信息", false);
-        }else if(isOk&&!isAllEntered.isEntered(addresseeJtf)){
-            RunTip.makeTip("仍有信息未输入", false);
-        }else if(!isOk&&!isAllEntered.isEntered(addresseeJtf)){
-            RunTip.makeTip("请输入所有正确格式的信息", false);
-        }
+			RunTip.makeTip("保存成功", true);
+			orderVO.addLogistics(GetDate.getTime() + " 已经被签收");
+		} else if ((!isOk) && isAllEntered.isEntered(addresseeJtf)) {
+			RunTip.makeTip("请输入正确格式的信息", false);
+		} else if (isOk && !isAllEntered.isEntered(addresseeJtf)) {
+			RunTip.makeTip("仍有信息未输入", false);
+		} else if (!isOk && !isAllEntered.isEntered(addresseeJtf)) {
+			RunTip.makeTip("请输入所有正确格式的信息", false);
+		}
 	}
 
 	// 错误提示信息是否已经被添加
 	protected boolean isReceiveNumAdd = false;
+	protected boolean isExist = false;
 
 	/**
 	 * 监听焦点
@@ -171,25 +217,39 @@ public class AddresseeInfoPanel extends JPanel {
 			// TODO Auto-generated method stub
 			JTextField temp = (JTextField) e.getSource();
 			if (temp == jtf_receiveNum) {
-				if (!NumExceptioin.isOrderValid(jtf_receiveNum)) {
-					isReceiveNumAdd = true;
-					if (tip1 == null) {
-						tip1 = new JLabel("收件单号为10位0~9整数");
-						tip1.setBounds(x + addx, y + 30, width, height);
-						tip1.setFont(font2);
-						tip1.setForeground(Color.RED);
-						addTip(tip1);
+				ListblService bl;
+				orderVO = null;
+				try {
+					bl = new ListController();
+					orderVO = bl.getOrder(jtf_receiveNum.getText());
+					if (orderVO == null) {
+						RunTip.makeTip("不存在该订单号", false);
+						return;
+					} else {
+						isExist = true;
 					}
-
-				} else {
-					if (isReceiveNumAdd
-							&& !"".equalsIgnoreCase(jtf_receiveNum.getText()
-									.trim())) {
-						isReceiveNumAdd=false;
-						removeTip(tip1);
-						tip1=null;
-					}
+				} catch (RemoteException e1) {
+					RunTip.makeTip("网络异常", false);
 				}
+//				if (!NumExceptioin.isOrderValid(jtf_receiveNum)) {
+//					isReceiveNumAdd = true;
+//					if (tip1 == null) {
+//						tip1 = new JLabel("收件单号为10位0~9整数");
+//						tip1.setBounds(x + addx, y + 30, width, height);
+//						tip1.setFont(font2);
+//						tip1.setForeground(Color.RED);
+//						addTip(tip1);
+//					}
+//
+//				} else {
+//					if (isReceiveNumAdd
+//							&& !"".equalsIgnoreCase(jtf_receiveNum.getText()
+//									.trim())) {
+//						isReceiveNumAdd = false;
+//						removeTip(tip1);
+//						tip1 = null;
+//					}
+//				}
 			}
 		}
 

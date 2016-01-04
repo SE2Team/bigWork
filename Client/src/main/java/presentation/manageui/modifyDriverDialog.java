@@ -4,6 +4,7 @@ import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
@@ -36,7 +37,7 @@ public class modifyDriverDialog extends MyDialog {
 	private Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义添加司机信息，司机姓名，性别，编号，出生日期，身份证号，手机，车辆单位，行驶证期限的label
 	private JLabel addInfo, driverName, sex, driverNum, birthDate, idNum,
-			phone, vehicleInstitution, licenseTime;
+			phone, vehicleInstitution, licenseTime, jl_num;
 	// 定义对应的文本框
 	private JTextField jtf_driverName, jtf_driverNum, jtf_birthDate, jtf_idNum,
 			jtf_phone, jtf_Institution, jtf_licenseTime;
@@ -102,9 +103,22 @@ public class modifyDriverDialog extends MyDialog {
 			driverNum.setFont(font);
 			driverNum.setBounds(x, y + addy, jl_width, height);
 
+			String num = null;
+			ManageblService mbl;
+			try {
+				mbl = new ManageController();
+				num = mbl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+			} catch (RemoteException e2) {
+				RunTip.makeTip("网络异常", false);
+			}
+
+			jl_num = new JLabel(num);
+			jl_num.setFont(font2);
+			jl_num.setBounds(x + addx, y + addy, 60, height);
+			
 			jtf_driverNum = new JTextField();
 			jtf_driverNum.setFont(font);
-			jtf_driverNum.setBounds(x + addx, y + addy, jtf_width, height);
+			jtf_driverNum.setBounds(x + addx + 60, y + addy, jtf_width - 60, height);
 			jtf_driverNum.addFocusListener(new TextFocus());
 
 			birthDate = new JLabel("出生日期", JLabel.CENTER);
@@ -182,7 +196,7 @@ public class modifyDriverDialog extends MyDialog {
 							&& (jrb_male.isSelected() || jrb_female
 							.isSelected());
 					if (isOk && isenter) {
-						DriverVO driver_vo = new DriverVO(jtf_driverNum
+						DriverVO driver_vo = new DriverVO(jl_num.getText() + jtf_driverNum
 								.getText(), jtf_driverName.getText(),
 								jtf_birthDate.getText(), jtf_idNum.getText(),
 								jtf_phone.getText(), jtf_Institution.getText(),

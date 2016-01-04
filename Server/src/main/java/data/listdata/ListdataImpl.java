@@ -1,14 +1,20 @@
 package data.listdata;
 
 import data.Common.Common;
+import data.managedata.ManagedataImpl;
 import dataservice.listdataservice.ListDataService;
+import dataservice.managedataservice.ManageDataService;
 import po.*;
-import util.*;
+import util.DeliveryType;
+import util.ListState;
+import util.TransportType;
+import util.UserType;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * Created by MYK on 2015/11/23 0023.
@@ -32,9 +38,11 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		boolean isEqual = true;
 		for (int j = 0; j < list.size(); j++) {
 			String[] strings = list.get(j).split(";");
-			for (int i = 0; i < strings.length - 1; i++) {
+			for (int i = 0; i < strings.length - 2; i++) {
 				if (str[i] != strings[i]) {
-					isEqual = false;
+					isEqual = isEqual && false;
+				} else {
+					isEqual = isEqual && true;
 				}
 			}
 			if (isEqual) {
@@ -93,14 +101,33 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		return true;
 	}
 
-	public Boolean save(StockOutPO stockOutPO) throws RemoteException {
-		Common common = new Common("stockOut");
+	public Boolean save(StockOutPO stockOutPO, String organization) throws RemoteException {
+		Common common;
+		if (organization.equals("南京中转中心")) {
+			common = new Common("nanJingStockOut");
+		} else if (organization.equals("北京中转中心")) {
+			common = new Common("beiJingStockOut");
+		} else if (organization.equals("上海中转中心")) {
+			common = new Common("shangHaiStockOut");
+		} else {
+			common = new Common("guangZhouStockOut");
+		}
+
 		common.writeDataAdd(this.POToString(stockOutPO));
 		return true;
 	}
 
-	public Boolean save(StockInPO stockInPO) throws RemoteException {
-		Common common = new Common("stockIn");
+	public Boolean save(StockInPO stockInPO, String organization) throws RemoteException {
+		Common common;
+		if (organization.equals("南京中转中心")) {
+			common = new Common("nanJingStockIn");
+		} else if (organization.equals("北京中转中心")) {
+			common = new Common("beiJingStockIn");
+		} else if (organization.equals("上海中转中心")) {
+			common = new Common("shangHaiStockIn");
+		} else {
+			common = new Common("guangZhouStockIn");
+		}
 		common.writeDataAdd(this.POToString(stockInPO));
 		return true;
 	}
@@ -309,7 +336,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 					}
 					listPO = new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11],
 							str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19], str[20], str[21],
-							str[22], isCheck, str[24]);
+							str[22], isCheck, str[23]);
 					break;
 				case "PAYMENT":
 					listPO = new PaymentPO(str[2], str[3], str[4], str[5], str[6], str[7], isCheck);
@@ -342,7 +369,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 					break;
 				case "TRANSINFO":
 					listPO = new TransferPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
-							str[10], str[11], isCheck);
+							str[11], str[12], isCheck);
 					break;
 				case "RECEIVE":
 					listPO = new ReceivePO(str[0], str[1], str[2], str[3], isCheck);
@@ -455,10 +482,20 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		return list1;
 	}
 
-	@Override
-	public ArrayList<StockInPO> checkStockIn() throws RemoteException {
+
+	public ArrayList<StockInPO> checkStockIn(String organization) throws RemoteException {
 		// TODO Auto-generated method stub
-		Common common = new Common("stockIn");
+		Common common;
+		if (organization.equals("南京中转中心")) {
+			common = new Common("nanJingStockIn");
+		} else if (organization.equals("北京中转中心")) {
+			common = new Common("beiJingStockIn");
+		} else if (organization.equals("上海中转中心")) {
+			common = new Common("shangHaiStockIn");
+		} else {
+			common = new Common("guangZhouStockIn");
+		}
+
 		ArrayList<String> list = common.readData();
 		ArrayList<StockInPO> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -469,10 +506,21 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		return list1;
 	}
 
-	@Override
-	public ArrayList<StockOutPO> checkStockOut() throws RemoteException {
+
+	public ArrayList<StockOutPO> checkStockOut(String organization) throws RemoteException {
 		// TODO Auto-generated method stub
-		Common common = new Common("stockOut");
+
+		Common common;
+		if (organization.equals("南京中转中心")) {
+			common = new Common("nanJingStockOut");
+		} else if (organization.equals("北京中转中心")) {
+			common = new Common("beiJingStockOut");
+		} else if (organization.equals("上海中转中心")) {
+			common = new Common("shangHaiStockOut");
+		} else {
+			common = new Common("guangZhouStockOut");
+		}
+
 		ArrayList<String> list = common.readData();
 		ArrayList<StockOutPO> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -603,7 +651,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 */
 	private String POToString(TransferPO po) {
 		return po.getType() + ";" + po.getIsCheck() + ";" + po.getLoadingWay() + ";" + po.getLoadingDate() + ";"
-				+ po.getTransportNum() + ";" + po.getVehicleNum() + ";" + po.getVehicleNum() + ";" + po.getStart() + ";"
+				+ po.getTransportNum() + ";" + po.getVehicleNum() + ";" + po.getStart() + ";"
 				+ po.getEnd() + ";" + po.getContainerNum() + ";" + po.getMonitor() + ";" + po.getSupercargo() + ";"
 				+ po.getOrderNum() + ";" + po.getMoney() + ";";
 	}
@@ -615,7 +663,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 * @return
 	 */
 	private String POToString(TransferReceivePO po) {
-		return po.getType() + ";" + po.getIsCheck() + ";" + po.getArriveDate() + ";" + po.getArriveDate() + ";"
+		return po.getType() + ";" + po.getIsCheck() + ";" + po.getArriveDate() + ";"
 				+ po.getStart() + ";" + po.getCargoState() + ";" + po.getTransferCenterNum() + ";"
 				+ po.getTransferNum();
 	}
@@ -679,7 +727,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	 * a
 	 */
 	public ExpenseAndDatePO getExpenseOfTransport(ExpenseAndDatePO expenseAndDate)
-			throws RemoteException, ExistException {
+			throws RemoteException {
 		// TODO Auto-generated method stub
 		double transport = 0;
 		double wrapper = 0;
@@ -700,8 +748,6 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 					transport = transport / 2;
 				}
 				expenseAndDate.setExpenseOfTransport(transport + "");
-			} else {
-				throw new ExistException();
 			}
 		}
 
@@ -716,8 +762,6 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 				expenseAndDate.setExpenseOfWrap(wrapper + "");
 				break;
 
-			} else {
-				throw new ExistException();
 			}
 		}
 		expenseAndDate.setExpense((wrapper + transport) + "");
@@ -839,6 +883,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 	@Override
 	public boolean deleteList(OrderPO po) throws RemoteException {
 		po.setIsCheck(ListState.UNCHECK);
+		po.setLogistics(null);
 		Common common = new Common("list");
 		Common common2 = new Common("passedList");
 		String str = "";
@@ -988,7 +1033,9 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		String str = "";
 		str = POToString(po);
 		ArrayList<String> list = common.readData();
+		System.out.println(str);
 		if (list.contains(str)) {
+			System.out.println("cout");
 			common2.writeDataAdd(str);
 			list.remove(str);
 			common.clearData("list");
@@ -1003,6 +1050,7 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		// TODO Auto-generated method stub
 		Common common = new Common("order");
 		ArrayList<String> list = common.readData();
+		Stack<OrderPO> stack = new Stack<>();
 
 		for (int j = 0; j < list.size(); j++) {
 			String[] str = list.get(j).split(";");
@@ -1021,12 +1069,15 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 			}
 
 			if (str[22].equals(num)) {
-				return new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11],
+				stack.push(new OrderPO(str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11],
 						str[12], str[13], str[14], str[15], deliveryType, str[17], str[18], str[19], str[20], str[21],
-						str[22], isCheck, str[24]);
+						str[22], isCheck, str[23]));
 			}
 		}
-		return null;
+		if (stack.empty())
+			return null;
+		else
+			return stack.pop();
 	}
 
 	@Override
@@ -1036,16 +1087,20 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 		ArrayList<String> list = common.readData();
 		for (int j = 0; j < list.size(); j++) {
 			String[] str = list.get(j).split(";");
-			if (str[4].equals(num)) {
-				return new TransferReceivePO(str[0], str[1], str[2], str[3], str[4], ListState.PASSED);
+			if (str[6].equals(num)) {
+				return new TransferReceivePO(str[2], str[3], str[4], str[5], str[6], ListState.PASSED);
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public ArrayList<ListPO> getPassedList(UserType userType) throws RemoteException {
+	public ArrayList<ListPO> getPassedList(UserPO userPO) throws RemoteException {
 		// TODO Auto-generated method stub
+		UserType userType = userPO.getPermission();
+		ManageDataService manageDataService = new ManagedataImpl();
+		WorkerPO po = manageDataService.checkWorkerByID(userPO.getId());
+		String organization = po.getOrganization();
 		ArrayList<ListPO> list = new ArrayList<>();
 		if (userType == UserType.COURIER) {
 			ArrayList<OrderPO> order = this.checkOrder();
@@ -1090,12 +1145,12 @@ public class ListdataImpl extends UnicastRemoteObject implements ListDataService
 			}
 
 		} else if (userType == UserType.STOCKMANAGER) {
-			ArrayList<StockInPO> In = this.checkStockIn();
+			ArrayList<StockInPO> In = this.checkStockIn(organization);
 			for (int j = 0; j < In.size(); j++) {
 				list.add(In.get(j));
 			}
 
-			ArrayList<StockOutPO> out = this.checkStockOut();
+			ArrayList<StockOutPO> out = this.checkStockOut(organization);
 			for (int j = 0; j < out.size(); j++) {
 				list.add(out.get(j));
 			}

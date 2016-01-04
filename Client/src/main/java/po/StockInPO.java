@@ -1,12 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
+import java.io.Serializable;
+
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/25 0025.
  */
-public class StockInVO extends ListVO {
+public class StockInPO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;// 序列化编号
 
     /**
@@ -21,8 +23,7 @@ public class StockInVO extends ListVO {
     private String shelfNum;
     private String positionNum;
 
-
-    public StockInVO(String deliveryNum, String inDate, String end, String zoneNum,
+    public StockInPO(String deliveryNum, String inDate, String end, String zoneNum,
                      String rowNum, String shelfNum, String positionNum, ListState isCheck) {
         super(isCheck);
         this.deliveryNum = deliveryNum;
@@ -35,60 +36,60 @@ public class StockInVO extends ListVO {
         setType(ListType.STOCKIN);
     }
 
-    public String getDeliveryNum() {
-        return deliveryNum;
-    }
-
     public void setDeliveryNum(String deliveryNum) {
         this.deliveryNum = deliveryNum;
     }
 
-    public String getInDate() {
-        return inDate;
+    public String getDeliveryNum() {
+        return deliveryNum;
     }
 
     public void setInDate(String inDate) {
         this.inDate = inDate;
     }
 
-    public String getEnd() {
-        return end;
+    public String getInDate() {
+        return inDate;
     }
 
     public void setEnd(String end) {
         this.end = end;
     }
 
-    public String getZoneNum() {
-        return zoneNum;
+    public String getEnd() {
+        return end;
     }
 
     public void setZoneNum(String zoneNum) {
         this.zoneNum = zoneNum;
     }
 
-    public String getRowNum() {
-        return rowNum;
+    public String getZoneNum() {
+        return zoneNum;
     }
 
     public void setRowNum(String rowNum) {
         this.rowNum = rowNum;
     }
 
-    public String getShelfNum() {
-        return shelfNum;
+    public String getRowNum() {
+        return rowNum;
     }
 
     public void setShelfNum(String shelfNum) {
         this.shelfNum = shelfNum;
     }
 
-    public String getPositionNum() {
-        return positionNum;
+    public String getShelfNum() {
+        return shelfNum;
     }
 
     public void setPositionNum(String positionNum) {
         this.positionNum = positionNum;
+    }
+
+    public String getPositionNum() {
+        return positionNum;
     }
 
 

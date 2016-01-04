@@ -84,16 +84,17 @@ public class OrderChecking extends OrderPanel{
         } else if (o_type.getSelectedItem().toString().equals("特快快递")) {
             deliveryType = DeliveryType.FAST;
         }
-        OrderVO order_vo = new OrderVO(s_name.getText(), s_address
-                .getText(), s_workplace.getText(), s_tele.getText(),
-                s_phone.getText(), r_name.getText(), r_address
-                .getText(), r_workplace.getText(), r_tele
-                .getText(), r_phone.getText(), g_num.getText(),
-                g_weight.getText(), g_volume.getText(), g_name
-                .getText(), deliveryType, o_wrapper
-                .getSelectedItem().toString(),
-                o_transExpense.getText(), o_wrapperExpense.getText(), o_expense
-                .getText(), o_dueDate.getText(), o_ordernum.getText(), ListState.PASSED);
+        OrderVO order_vo = new OrderVO(s_name.getText(), jcbs_address
+                .getSelectedItem().toString() + s_address.getText(),
+                s_workplace.getText(), s_tele.getText(), s_phone.getText(),
+                r_name.getText(), jcbr_address.getSelectedItem().toString()
+                + r_address.getText(), r_workplace.getText(),
+                r_tele.getText(), r_phone.getText(), g_num.getText(),
+                g_weight.getText(), g_volume.getText(), g_name.getText(),
+                deliveryType, o_wrapper.getSelectedItem().toString(),
+                o_transExpense.getText(), o_wrapperExpense.getText(),
+                o_expense.getText(), o_dueDate.getText(),
+                jlo_num.getText() + o_ordernum.getText(), ListState.PASSED);
 
         ListblService bl;
 

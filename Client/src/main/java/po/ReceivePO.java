@@ -1,12 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2015/10/26 0026.
  */
-public class ReceiveVO extends ListVO {
+public class ReceivePO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
 
     //到达日期、中转单编号、出发地、货物到达状态
@@ -16,7 +18,7 @@ public class ReceiveVO extends ListVO {
     private String arriveState;
 
 
-    public ReceiveVO(String arriveDate, String transferNum, String start, String arriveState,
+    public ReceivePO(String arriveDate, String transferNum, String start, String arriveState,
                      ListState isCheck) {
         super(isCheck);
         this.arriveDate = arriveDate;
@@ -24,13 +26,6 @@ public class ReceiveVO extends ListVO {
         this.start = start;
         this.arriveState = arriveState;
         setType(ListType.RECEIVEINFO);
-    }
-
-    /**
-     * @return 到达日期
-     */
-    public String getArriveDate() {
-        return arriveDate;
     }
 
     /**
@@ -43,10 +38,10 @@ public class ReceiveVO extends ListVO {
     }
 
     /**
-     * @return 中转单编号
+     * @return 到达日期
      */
-    public String getTransferNum() {
-        return transferNum;
+    public String getArriveDate() {
+        return arriveDate;
     }
 
     /**
@@ -58,13 +53,12 @@ public class ReceiveVO extends ListVO {
         this.transferNum = transferNum;
     }
 
+
     /**
-     * 出发地
-     *
-     * @return
+     * @return 中转单编号
      */
-    public String getStart() {
-        return start;
+    public String getTransferNum() {
+        return transferNum;
     }
 
     /**
@@ -77,13 +71,14 @@ public class ReceiveVO extends ListVO {
     }
 
     /**
-     * 货物到达状态
+     * 出发地
      *
      * @return
      */
-    public String getArriveState() {
-        return arriveState;
+    public String getStart() {
+        return start;
     }
+
 
     /**
      * 货物到达状态
@@ -93,5 +88,15 @@ public class ReceiveVO extends ListVO {
     public void setArriveState(String arriveState) {
         this.arriveState = arriveState;
     }
+
+    /**
+     * 货物到达状态
+     *
+     * @return
+     */
+    public String getArriveState() {
+        return arriveState;
+    }
+
 
 }

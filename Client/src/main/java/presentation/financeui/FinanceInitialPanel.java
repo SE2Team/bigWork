@@ -2,21 +2,23 @@ package presentation.financeui;
 
 import businesslogic.financebl.FinanceController;
 import businesslogicservice.FinanceblService;
+import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
+import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.Table;
+import presentation.exception.NumExceptioin;
 import presentation.manageui.addEmployeeInfoDialog;
 import presentation.manageui.addInstituInfoDialog;
 import presentation.manageui.addVehicleDialog;
-import vo.AccountVO;
-import vo.StockVO;
-import vo.VehicleVO;
-import vo.WorkerVO;
+import vo.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,7 +33,6 @@ public class FinanceInitialPanel extends JPanel {
 	private JPanel panel3;// 历史期初信息
 	private JTabbedPane tab3;
 	// 期初建账
-	private JLabel t1Label;
 	private JPanel a1;// 机构
 	private JPanel a2;// 人员
 	private JPanel a3;// 车辆
@@ -42,10 +43,11 @@ public class FinanceInitialPanel extends JPanel {
 	private DefaultTableModel tableModel3;//车辆表格模型
 	private DefaultTableModel tableModel4;//库存表格模型
 	private DefaultTableModel tableModel5;//账户表格模型
-	
-
+	boolean isCapacityAdd = false;
+	boolean isWarningAdd = false;
+	JLabel tip1;
+	JLabel tip2;
 	// 当前期初信息
-	private JLabel t2Label;
 	private JPanel b1;// 机构
 	private JPanel b2;// 人员
 	private JPanel b3;// 车辆
@@ -60,6 +62,7 @@ public class FinanceInitialPanel extends JPanel {
 
 	Font font1 = new Font("楷体", Font.PLAIN, 20);
 	Font font2 = new Font("宋体", Font.PLAIN, 15);
+	Font font3 = new Font("宋体", Font.PLAIN, 20);
 
 	/**
 	 * 
@@ -168,7 +171,9 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		final JTable Table;
+		final JTable instituteTable;
+	
+		
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -190,24 +195,46 @@ public class FinanceInitialPanel extends JPanel {
 			}
 		});
 
-		yesButton = new JButton("提交");
-		yesButton.setFont(font2);
-		yesButton.setBounds(x + 90, y + 350, width, height);
+//		yesButton = new JButton("提交");
+//		yesButton.setFont(font2);
+//		yesButton.setBounds(x + 90, y + 350, width, height);
+//
+//		noButton = new JButton("取消");
+//		noButton.setFont(font2);
+//		noButton.setBounds(x + 440, y + 350, width, height);
 
-		noButton = new JButton("取消");
-		noButton.setFont(font2);
-		noButton.setBounds(x + 440, y + 350, width, height);
+		Iterator<OrganizationVO> ite1 = null;
+		ArrayList<OrganizationVO> list1 = new ArrayList<OrganizationVO>();
+		int n1 = 0;
+		FinanceblService bl1;
+		OrganizationVO vo1;
+		try {
+			bl1 = new FinanceController();
+			ite1 = bl1.checkInitOrganization();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		if (ite1 != null) {
+			while (ite1.hasNext()) {
+				list1.add(ite1.next());
+			}
+		}
+		n1 = list1.size();
+		String row[][] = new String[n1][3];
+		for (int j = 0; j < n1; j++) {
+			vo1 = list1.get(j);
+			String[] temp = {vo1.getNum(), vo1.getCity(), vo1.getName()};
+			row[j] = temp;
+		}
+		String[] column2 = {"机构编号", "城市", "机构名称"};
+		instituteTable = Table.getTable(column2, row);
+		tableModel1 = (DefaultTableModel) instituteTable.getModel();
 
-		String[] column1 = { "机构名称", "机构编号" };
-		String[] s1 = {"", "" };
-		String row1[][] = { s1 };
-		
-		tableModel1 = new DefaultTableModel(row1,column1);
-		Table = new JTable(tableModel1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
-		jsp.setBounds(x - 10, y + 50, 650, 280);
+		instituteTable.setFont(font2);
+		instituteTable.setRowHeight(20);
+		jsp = new JScrollPane(instituteTable);
+		jsp.setBounds(x - 10, y + 50, 650, 570);
 		panel.add(jsp);
 
 		deleteButton = new JButton("删除");
@@ -215,7 +242,7 @@ public class FinanceInitialPanel extends JPanel {
 		deleteButton.setBounds(x + 490, y, width, height);
 		deleteButton.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent arg0) {
-				int rowNum = Table.getSelectedRow();
+				int rowNum = instituteTable.getSelectedRow();
 				if(rowNum!=-1){
 					tableModel1.removeRow(rowNum);
 				}				
@@ -225,8 +252,8 @@ public class FinanceInitialPanel extends JPanel {
 		panel.add(subLabel);
 		panel.add(addButton);
 		panel.add(deleteButton);
-		panel.add(yesButton);
-		panel.add(noButton);
+//		panel.add(yesButton);
+//		panel.add(noButton);
 		return panel;
 	}
 
@@ -248,7 +275,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		final JTable Table;
+		final JTable employTable;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -258,24 +285,42 @@ public class FinanceInitialPanel extends JPanel {
 		subLabel.setFont(font1);
 		subLabel.setBounds(x, y, 150, 40);
 
-		yesButton = new JButton("提交");
-		yesButton.setFont(font2);
-		yesButton.setBounds(x + 90, y + 350, width, height);
 
-		noButton = new JButton("取消");
-		noButton.setFont(font2);
-		noButton.setBounds(x + 440, y + 350, width, height);
+		Iterator<WorkerVO> ite2 = null;
+		ArrayList<WorkerVO> list2 = new ArrayList<WorkerVO>();
+		int n = 0;
+		FinanceblService bl;
+		WorkerVO vo;
+		try {
+			bl = new FinanceController();
+			ite2 = bl.checkInitWorker();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
-		
+		if (ite2 != null) {
+			while (ite2.hasNext()) {
+				list2.add(ite2.next());
+			}
+		}
+		n = list2.size();
+		String row1[][] = new String[n][7];
+		for (int j = 0; j < n; j++) {
+			vo = list2.get(j);
+			String[] temp = {vo.getName(), vo.getSex(), vo.getIdNum(), vo.getPosition(),
+					vo.getOrganization(), vo.getUserId()};
+			row1[j] = temp;
+		}
+		String[] column1 = {"姓名", "性别", "身份证号", "职位", "所属机构", "系统用户名"};
+		employTable = Table.getTable(column1, row1);
+		tableModel2 = (DefaultTableModel) employTable.getModel();
 
-		String[] column1 = {"姓名","性别", "年龄","身份证号", "职位", "所属机构","系统用户名" };
-		String row1[][] = {};
-		tableModel2 = new DefaultTableModel(row1,column1);
-		Table = new JTable(tableModel2);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
-		jsp.setBounds(x - 10, y + 50, 650, 280);
+
+		employTable.setFont(font2);
+		employTable.setRowHeight(20);
+		jsp = new JScrollPane(employTable);
+		jsp.setBounds(x - 10, y + 50, 650, 570);
 		panel.add(jsp);
 
 		addButton = new JButton("添加");
@@ -293,7 +338,7 @@ public class FinanceInitialPanel extends JPanel {
 		deleteButton.setBounds(x + 490, y, width, height);
 		deleteButton.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent arg0) {
-				int rowNum = Table.getSelectedRow();
+				int rowNum = employTable.getSelectedRow();
 				if(rowNum!=-1){
 					tableModel2.removeRow(rowNum);
 				}				
@@ -303,8 +348,8 @@ public class FinanceInitialPanel extends JPanel {
 		panel.add(subLabel);
 		panel.add(addButton);
 		panel.add(deleteButton);
-		panel.add(yesButton);
-		panel.add(noButton);
+//		panel.add(yesButton);
+//		panel.add(noButton);
 		
 		return panel;
 	}
@@ -327,7 +372,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		final JTable Table;
+		final JTable vehicleTable;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -337,24 +382,54 @@ public class FinanceInitialPanel extends JPanel {
 		subLabel.setFont(font1);
 		subLabel.setBounds(x, y, 150, 40);
 
-		
 
-		yesButton = new JButton("提交");
-		yesButton.setFont(font2);
-		yesButton.setBounds(x + 90, y + 350, width, height);
+//		yesButton = new JButton("提交");
+//		yesButton.setFont(font2);
+//		yesButton.setBounds(x + 90, y + 350, width, height);
+//
+//		noButton = new JButton("取消");
+//		noButton.setFont(font2);
+//		noButton.setBounds(x + 440, y + 350, width, height);
 
-		noButton = new JButton("取消");
-		noButton.setFont(font2);
-		noButton.setBounds(x + 440, y + 350, width, height);
 
-		String[] column1 = {"车辆代号", "车牌号", "购买时间","服役时间（年）" };
-		String row1[][] = {};
-		tableModel3 = new DefaultTableModel(row1,column1);
-		Table = new JTable(tableModel3);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
-		jsp.setBounds(x - 10, y + 50, 650, 280);
+		String[] column = {"车辆代号", "车牌号", "购买时间", "服役时间"};
+		Iterator<VehicleVO> ite2 = null;
+		ArrayList<VehicleVO> list2 = new ArrayList<VehicleVO>();
+		FinanceblService bl;
+		int n = 0;
+		VehicleVO vehicle;
+		try {
+			bl = new FinanceController();
+			ite2 = bl.checkInitVehicle();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			RunTip.makeTip("网络异常", false);
+		}
+
+		if (ite2 != null) {
+			while (ite2.hasNext()) {
+				list2.add(ite2.next());
+			}
+		}
+		n = list2.size();
+		String row[][] = new String[n][4];
+		for (int j = 0; j < n; j++) {
+			vehicle = list2.get(j);
+			String[] s1 = new String[4];
+			s1[0] = vehicle.getVehicleNum();
+			s1[1] = vehicle.getLicensePlate();
+			s1[2] = vehicle.getBuyDate();
+			s1[3] = vehicle.getUseTime();
+			row[j] = s1;
+		}
+		vehicleTable = Table.getTable(column, row);
+		tableModel3 = (DefaultTableModel) vehicleTable.getModel();
+
+
+		vehicleTable.setFont(font2);
+		vehicleTable.setRowHeight(20);
+		jsp = new JScrollPane(vehicleTable);
+		jsp.setBounds(x - 10, y + 50, 650, 570);
 		panel.add(jsp);
 
 		addButton = new JButton("添加");
@@ -372,7 +447,7 @@ public class FinanceInitialPanel extends JPanel {
 		deleteButton.setBounds(x + 490, y, width, height);
 		deleteButton.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent arg0) {
-				int rowNum = Table.getSelectedRow();
+				int rowNum = vehicleTable.getSelectedRow();
 				if(rowNum!=-1){
 					tableModel3.removeRow(rowNum);
 				}				
@@ -382,8 +457,8 @@ public class FinanceInitialPanel extends JPanel {
 		panel.add(subLabel);
 		panel.add(addButton);
 		panel.add(deleteButton);
-		panel.add(yesButton);
-		panel.add(noButton);
+//		panel.add(yesButton);
+//		panel.add(noButton);
 		
 		return panel;
 	}
@@ -398,55 +473,143 @@ public class FinanceInitialPanel extends JPanel {
 	
 	// 期初建账库存界面
 	public JPanel a4() {
-		int x = 10, y = 0;
-		JLabel subLabel;
-		JButton addButton;
-		JButton deleteButton;
+		final int x = 100, y = 100, width = 100, height = 30, addy = 60;
+		final int addx = 130;
+		JLabel jl_capacity, jl_warning;
+		final JTextField jtf_capacity;
+		final JTextField jtf_warning;
 		JButton yesButton;
 		JButton noButton;
 
-		JScrollPane jsp;
-		JTable Table;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
 
-		subLabel = new JLabel("库存信息列表");
-		subLabel.setFont(font1);
-		subLabel.setBounds(x, y, 150, 40);
+		jl_capacity = new JLabel("库存容量");
+		jl_capacity.setFont(font3);
+		jl_capacity.setBounds(x, y, width, height);
 
-		addButton = new JButton("添加");
-		addButton.setFont(font2);
-		addButton.setBounds(x + 390, y, width, height);
+		jtf_capacity = new JTextField();
+		jtf_capacity.setFont(font2);
+		jtf_capacity.setBounds(x + addx, y, 2 * width, height);
 
-		deleteButton = new JButton("删除");
-		deleteButton.setFont(font2);
-		deleteButton.setBounds(x + 490, y, width, height);
+		jl_warning = new JLabel("报警警戒值");
+		jl_warning.setFont(font3);
+		jl_warning.setBounds(x, y + addy, width, height);
 
-		yesButton = new JButton("提交");
+		jtf_warning = new JTextField();
+		jtf_warning.setFont(font2);
+		jtf_warning.setBounds(x + addx, y + addy, 2 * width, height);
+
+
+		yesButton = new JButton("确定");
 		yesButton.setFont(font2);
-		yesButton.setBounds(x + 90, y + 350, width, height);
+		yesButton.setBounds(x + addx, y + 2 * addy + 30, 80, height);
+		yesButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				boolean isOK = NumExceptioin.isInt(jtf_capacity) && NumExceptioin.isInt(jtf_warning);
+				JTextField[] jtf = {jtf_capacity, jtf_warning};
+				boolean isenter = isAllEntered.isEntered(jtf);
+				if (isOK && isenter) {
+					StockVO vo = new StockVO(jtf_capacity.getText().trim(), jtf_warning.getText().trim());
+					FinanceblService bl;
+					try {
+						bl = new FinanceController();
+						bl.initial(vo);
+					} catch (RemoteException e1) {
+						RunTip.makeTip("网络异常", false);
+					}
+				} else if ((!isOK) && isenter) {
+					RunTip.makeTip("请输入正确格式的信息", false);
+				} else if (isOK && !isenter) {
+					RunTip.makeTip("仍有信息未输入", false);
+				} else if (!isOK && !isenter) {
+					RunTip.makeTip("请输入所有正确格式的信息", false);
+				}
+
+			}
+		});
 
 		noButton = new JButton("取消");
 		noButton.setFont(font2);
-		noButton.setBounds(x + 440, y + 350, width, height);
+		noButton.setBounds(x + addx + width, y + 2 * addy + 30, 80, height);
+		noButton.addActionListener(new ActionListener() {
 
-		panel.add(subLabel);
-		panel.add(addButton);
-		panel.add(deleteButton);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTextField[] jtf = {jtf_capacity, jtf_warning};
+				new Empty(jtf);
+			}
+		});
+
+		panel.add(jl_capacity);
+		panel.add(jl_warning);
+		panel.add(jtf_capacity);
+		panel.add(jtf_warning);
 		panel.add(yesButton);
 		panel.add(noButton);
 
-		String[] column1 = { "入库数量", "出库数量", "金额", "存储位置", "合计库存" };
-		String[] s1 = { "", "", "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
-		jsp.setBounds(x - 10, y + 50, 650, 280);
-		panel.add(jsp);
+
+		class TextFocus implements FocusListener {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				JTextField temp = (JTextField) e.getSource();
+				if (temp == jtf_capacity) {
+					if (!NumExceptioin.isInt(jtf_capacity)) {
+						isCapacityAdd = true;
+						if (tip1 == null) {
+							tip1 = new JLabel("请输入整数");
+							tip1.setFont(font1);
+							tip1.setBounds(x + addx, y + height, 2 * width, height);
+							tip1.setForeground(Color.RED);
+							a4.add(tip1);
+							a4.repaint();
+						}
+					} else {
+						if (isCapacityAdd
+								&& !"".equalsIgnoreCase(jtf_capacity.getText().trim())) {
+							isCapacityAdd = false;
+							a4.remove(tip1);
+							a4.repaint();
+							tip1 = null;
+						}
+					}
+				}
+				if (temp == jtf_warning) {
+					if (!NumExceptioin.isInt(jtf_warning)) {
+						isWarningAdd = true;
+						if (tip2 == null) {
+							tip2 = new JLabel("请输入整数");
+							tip2.setFont(font1);
+							tip2.setBounds(x + addx, y + addy + height, 2 * width, height);
+							tip2.setForeground(Color.RED);
+							a4.add(tip2);
+							a4.repaint();
+						}
+					} else {
+						if (isWarningAdd
+								&& !"".equalsIgnoreCase(jtf_warning.getText().trim())) {
+							isWarningAdd = false;
+							a4.remove(tip2);
+							a4.repaint();
+							tip2 = null;
+						}
+					}
+				}
+			}
+
+		}
 
 		return panel;
 	}
@@ -461,7 +624,7 @@ public class FinanceInitialPanel extends JPanel {
 		JButton noButton;
 
 		JScrollPane jsp;
-		final JTable Table;
+		final JTable accountTable;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -479,13 +642,35 @@ public class FinanceInitialPanel extends JPanel {
 		noButton.setFont(font2);
 		noButton.setBounds(x + 440, y + 350, width, height);
 
-		String[] column1 = {"账户名称", "余额" };
-		String row1[][] = {};
-		tableModel5 = new DefaultTableModel(row1,column1);
-		Table = new JTable(tableModel5);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+		Iterator<AccountVO> iterator = null;
+		ArrayList<AccountVO> list = new ArrayList<AccountVO>();
+		FinanceblService bl;
+		try {
+			bl = new FinanceController();
+			iterator = bl.checkInitAccount();
+		} catch (RemoteException e1) {
+			RunTip.makeTip("网络异常", false);
+
+		}
+		while (iterator.hasNext()) {
+			list.add(iterator.next());
+		}
+		int n = list.size();
+		String row[][] = new String[n][2];
+		for (int j = 0; j < n; j++) {
+			AccountVO vo = list.get(j);
+			String[] temp = new String[2];
+			temp[0] = vo.getAccountName();
+			temp[1] = vo.getAccountBalance();
+			row[j] = temp;
+		}
+		String[] column = {"账户名称", "余额"};
+		accountTable = Table.getTable(column, row);
+		tableModel5 = (DefaultTableModel) accountTable.getModel();
+
+		accountTable.setFont(font2);
+		accountTable.setRowHeight(20);
+		jsp = new JScrollPane(accountTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 		
@@ -504,7 +689,7 @@ public class FinanceInitialPanel extends JPanel {
 		deleteButton.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				int rowNum = Table.getSelectedRow();
+				int rowNum = accountTable.getSelectedRow();
 				if(rowNum!=-1){
 					tableModel5.removeRow(rowNum);
 				}
@@ -539,7 +724,7 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable Table;
+		JTable instituteTable;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -551,14 +736,36 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "机构名称", "机构编号" };
+		Iterator<OrganizationVO> ite1 = null;
+		ArrayList<OrganizationVO> list1 = new ArrayList<OrganizationVO>();
+		int n1 = 0;
+		FinanceblService bl1;
+		OrganizationVO vo1;
+		try {
+			bl1 = new FinanceController();
+			ite1 = bl1.checkInitOrganization();
+		} catch (RemoteException e2) {
+			RunTip.makeTip("网络异常", false);
+		}
+		if (ite1 != null) {
+			while (ite1.hasNext()) {
+				list1.add(ite1.next());
+			}
+		}
+		n1 = list1.size();
+		String row[][] = new String[n1][3];
+		for (int j = 0; j < n1; j++) {
+			vo1 = list1.get(j);
+			String[] temp = {vo1.getNum(), vo1.getCity(), vo1.getName()};
+			row[j] = temp;
+		}
+		String[] column2 = {"机构编号", "城市", "机构名称"};
+		instituteTable = Table.getTable(column2, row);
 
-		int n = 0;
-		String row1[][] = {};
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+
+		instituteTable.setFont(font2);
+		instituteTable.setRowHeight(20);
+		jsp = new JScrollPane(instituteTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -571,10 +778,8 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable WorkerTable;
-		// 定义表格模型对象
-		DefaultTableModel tableModel;
-		
+		JTable employTable;
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
@@ -585,43 +790,38 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = {"姓名", "身份证号", "职位", "所属机构", "系统用户名", "性别"};
-
+		Iterator<WorkerVO> ite2 = null;
+		ArrayList<WorkerVO> list2 = new ArrayList<WorkerVO>();
 		int n = 0;
-		Iterator<WorkerVO> ite1 = null;
-		ArrayList<WorkerVO> list1 = new ArrayList<WorkerVO>();
 		FinanceblService bl;
-		WorkerVO worker;
+		WorkerVO vo;
 		try {
 			bl = new FinanceController();
-			ite1 = bl.checkInitWorker();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+			ite2 = bl.checkInitWorker();
+		} catch (RemoteException e2) {
 			RunTip.makeTip("网络异常", false);
 		}
-		if (ite1 != null) {
-			while (ite1.hasNext()) {
-				list1.add(ite1.next());
+
+		if (ite2 != null) {
+			while (ite2.hasNext()) {
+				list2.add(ite2.next());
 			}
 		}
-		n = list1.size();
-		String row1[][] = new String[n][6];
+		n = list2.size();
+		String row1[][] = new String[n][7];
 		for (int j = 0; j < n; j++) {
-			String[] s1 = new String[6];
-			worker = list1.get(j);
-			s1[0] = worker.getName();
-			s1[1] = worker.getIdNum();
-			s1[2] = worker.getPosition();
-			s1[3] = worker.getOrganization();
-			s1[4] = worker.getUserId();
-			s1[5] = worker.getSex();
-			row1[j] = s1;
+			vo = list2.get(j);
+			String[] temp = {vo.getName(), vo.getSex(), vo.getIdNum(), vo.getPosition(),
+					vo.getOrganization(), vo.getUserId()};
+			row1[j] = temp;
 		}
+		String[] column1 = {"姓名", "性别", "身份证号", "职位", "所属机构", "系统用户名"};
+		employTable = Table.getTable(column1, row1);
 
 
-		WorkerTable = Table.getTable(column1, row1);
-		tableModel = (DefaultTableModel) WorkerTable.getModel();
-		jsp = new JScrollPane(WorkerTable);
+		employTable.setFont(font2);
+		employTable.setRowHeight(20);
+		jsp = new JScrollPane(employTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -634,10 +834,8 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable VehicleTable;
-		// 定义表格模型对象
-		DefaultTableModel tableModel;
-		
+		JTable vehicleTable;
+
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
@@ -648,37 +846,42 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = {"车辆代号", "车牌号", "购买日期", "服役时间（年）"};
-		int n = 0;
-		Iterator<VehicleVO> ite1 = null;
-		ArrayList<VehicleVO> list1 = new ArrayList<VehicleVO>();
+		String[] column = {"车辆代号", "车牌号", "购买时间", "服役时间"};
+		Iterator<VehicleVO> ite2 = null;
+		ArrayList<VehicleVO> list2 = new ArrayList<VehicleVO>();
 		FinanceblService bl;
+		int n = 0;
 		VehicleVO vehicle;
 		try {
 			bl = new FinanceController();
-			ite1 = bl.checkInitVehicle();
-		} catch (RemoteException e) {
+			ite2 = bl.checkInitVehicle();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
 			RunTip.makeTip("网络异常", false);
 		}
-		if (ite1 != null) {
-			while (ite1.hasNext()) {
-				list1.add(ite1.next());
+
+		if (ite2 != null) {
+			while (ite2.hasNext()) {
+				list2.add(ite2.next());
 			}
 		}
-		n = list1.size();
-		String row1[][] = new String[n][4];
+		n = list2.size();
+		String row[][] = new String[n][4];
 		for (int j = 0; j < n; j++) {
+			vehicle = list2.get(j);
 			String[] s1 = new String[4];
-			vehicle = list1.get(j);
 			s1[0] = vehicle.getVehicleNum();
 			s1[1] = vehicle.getLicensePlate();
 			s1[2] = vehicle.getBuyDate();
 			s1[3] = vehicle.getUseTime();
-			row1[j] = s1;
+			row[j] = s1;
 		}
-		VehicleTable = Table.getTable(column1, row1);
-		tableModel = (DefaultTableModel) VehicleTable.getModel();
-		jsp = new JScrollPane(VehicleTable);
+		vehicleTable = Table.getTable(column, row);
+
+
+		vehicleTable.setFont(font2);
+		vehicleTable.setRowHeight(20);
+		jsp = new JScrollPane(vehicleTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -687,57 +890,48 @@ public class FinanceInitialPanel extends JPanel {
 
 	// 当前期初库存界面
 	public JPanel b4() {
-		int x = 10, y = 0;
-		JLabel subLabel;
-
-		JScrollPane jsp;
-		JTable StockTable;
-		// 定义表格模型对象
-		DefaultTableModel tableModel;
-
+		final int x = 100, y = 100, width = 100, height = 30, addy = 60;
+		final int addx = 130;
+		JLabel jl_capacity, jl_warning;
+		final JTextField jtf_capacity;
+		final JTextField jtf_warning;
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
 
-		subLabel = new JLabel("库存信息列表");
-		subLabel.setFont(font1);
-		subLabel.setBounds(x, y, 150, 40);
+		jl_capacity = new JLabel("库存容量");
+		jl_capacity.setFont(font3);
+		jl_capacity.setBounds(x, y, width, height);
 
-		panel.add(subLabel);
+		jtf_capacity = new JTextField();
+		jtf_capacity.setFont(font2);
+		jtf_capacity.setBounds(x + addx, y, 2 * width, height);
+		jtf_capacity.setEditable(false);
 
-		String[] column1 = {"库存容量", "警戒值", "状态"};
+		jl_warning = new JLabel("报警警戒值");
+		jl_warning.setFont(font3);
+		jl_warning.setBounds(x, y + addy, width, height);
 
-
-		int n = 3;
-
+		jtf_warning = new JTextField();
+		jtf_warning.setFont(font2);
+		jtf_warning.setBounds(x + addx, y + addy, 2 * width, height);
+		jtf_warning.setEditable(false);
+		
 		FinanceblService bl;
-		StockVO stock = null;
+		StockVO vo;
 		try {
 			bl = new FinanceController();
-			stock = bl.checkInitStock();
+			vo = bl.checkInitStock();
+			jtf_capacity.setText(vo.getCapacity());
+			jtf_warning.setText(vo.getWarning());
 		} catch (RemoteException e) {
 			RunTip.makeTip("网络异常", false);
 		}
 
-
-		String row1[][] = new String[n][3];
-		String[] s1 = new String[3];
-		s1[0] = stock.getCapacity();
-		s1[1] = stock.getWarning();
-		if (stock.getStockState() == true) {
-			s1[2] = "报警";
-		}
-		if (stock.getStockState() == false) {
-			s1[2] = "不报警";
-		}
-
-		row1[0] = s1;
-		StockTable = Table.getTable(column1, row1);
-		tableModel = (DefaultTableModel) StockTable.getModel();
-		jsp = new JScrollPane(StockTable);
-		jsp.setBounds(x - 10, y + 50, 650, 280);
-		panel.add(jsp);
-
+		panel.add(jl_capacity);
+		panel.add(jl_warning);
+		panel.add(jtf_capacity);
+		panel.add(jtf_warning);
 		return panel;
 	}
 
@@ -747,9 +941,7 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable AccountTable;
-		// 定义表格模型对象
-		DefaultTableModel tableModel;
+		JTable accountTable;
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -761,36 +953,35 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = {"账户名称", "余额"};
-		int n = 0;
-		Iterator<AccountVO> ite1 = null;
-		ArrayList<AccountVO> list1 = new ArrayList<AccountVO>();
+		Iterator<AccountVO> iterator = null;
+		ArrayList<AccountVO> list = new ArrayList<AccountVO>();
 		FinanceblService bl;
-		AccountVO account;
 		try {
 			bl = new FinanceController();
-			ite1 = bl.checkInitAccount();
-		} catch (RemoteException e) {
-			RunTip.makeTip("网络异常", false);
+			iterator = bl.checkInitAccount();
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		if (ite1 != null) {
-			while (ite1.hasNext()) {
-				list1.add(ite1.next());
-			}
+		while (iterator.hasNext()) {
+			list.add(iterator.next());
 		}
-		n = list1.size();
-		String row1[][] = new String[n][2];
+		int n = list.size();
+		String row[][] = new String[n][2];
 		for (int j = 0; j < n; j++) {
-			String[] s1 = new String[2];
-			account = list1.get(j);
-			s1[0] = account.getAccountName();
-			s1[1] = account.getAccountBalance();
-			row1[j] = s1;
+			AccountVO vo = list.get(j);
+			String[] temp = new String[2];
+			temp[0] = vo.getAccountName();
+			temp[1] = vo.getAccountBalance();
+			row[j] = temp;
 		}
-		AccountTable = Table.getTable(column1, row1);
-		tableModel = (DefaultTableModel) AccountTable.getModel();
-		AccountTable = new JTable(row1, column1);
-		jsp = new JScrollPane(AccountTable);
+		String[] column = {"账户名称", "余额"};
+		accountTable = Table.getTable(column, row);
+
+
+		accountTable.setFont(font2);
+		accountTable.setRowHeight(20);
+		jsp = new JScrollPane(accountTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
@@ -846,12 +1037,10 @@ public class FinanceInitialPanel extends JPanel {
 
 	// 历史期初第二个界面：输入历史年份后的界面
 	public JPanel history2() {
-		int x = 10, y = 15;
 		JPanel panel = new JPanel();
 		panel.setSize(650, 530);
 		panel.setLayout(null);
 		// 顶部
-		JLabel t3Label;
 		JPanel c1;// 机构
 		JPanel c2;// 人员
 		JPanel c3;// 车辆
@@ -866,11 +1055,11 @@ public class FinanceInitialPanel extends JPanel {
 		c3 = c3();
 		c4 = c4();
 		c5 = c5();
-		tab3.add(a1, "机构");
-		tab3.add(a2, "人员");
-		tab3.add(a3, "车辆");
-		tab3.add(a4, "库存");
-		tab3.add(a5, "账户");
+		tab3.add(c1, "机构");
+		tab3.add(c2, "人员");
+		tab3.add(c3, "车辆");
+		tab3.add(c4, "库存");
+		tab3.add(c5, "账户");
 		tab3.setBounds(0, 0, 650, 525);
 		panel.add(tab3);
 
@@ -1014,8 +1203,7 @@ public class FinanceInitialPanel extends JPanel {
 		JLabel subLabel;
 
 		JScrollPane jsp;
-		JTable Table;
-
+		JTable accountTable;
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setSize(650, 440);
@@ -1026,16 +1214,18 @@ public class FinanceInitialPanel extends JPanel {
 
 		panel.add(subLabel);
 
-		String[] column1 = { "序号", "账户名称", "余额" };
-		String[] s1 = { "", "", "" };
-		String row1[][] = { s1 };
-		Table = new JTable(row1, column1);
-		Table.setFont(font2);
-		Table.setRowHeight(20);
-		jsp = new JScrollPane(Table);
+
+		String[] column = {"账户名称", "余额"};
+		String[][] row = {};
+		accountTable = new JTable(row, column);
+
+		accountTable.setFont(font2);
+		accountTable.setRowHeight(20);
+		jsp = new JScrollPane(accountTable);
 		jsp.setBounds(x - 10, y + 50, 650, 280);
 		panel.add(jsp);
 
 		return panel;
 	}
+
 }

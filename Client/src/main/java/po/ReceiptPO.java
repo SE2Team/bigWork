@@ -1,4 +1,4 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
@@ -6,10 +6,9 @@ import util.ListType;
 import java.util.ArrayList;
 
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/25 0025.
  */
-public class ReceiptVO extends ListVO {
-    private static final long serialVersionUID = 1L;//序列化编号
+public class ReceiptPO extends ListPO {
     //收款日期、收款金额、收款快递员、对应的所有快递订单条形码号
 
     private String receiptDate;
@@ -17,7 +16,7 @@ public class ReceiptVO extends ListVO {
     private String receiptCourier;
     private ArrayList<String> orderNum;
 
-    public ReceiptVO(String receiptDate, String receiptMoney, String receiptCourier, ArrayList<String> orderNum,
+    public ReceiptPO(String receiptDate, String receiptMoney, String receiptCourier, ArrayList<String> orderNum,
                      ListState isCheck) {
         super(isCheck);
         this.receiptDate = receiptDate;
@@ -25,13 +24,6 @@ public class ReceiptVO extends ListVO {
         this.receiptCourier = receiptCourier;
         this.orderNum = orderNum;
         setType(ListType.RECEIPT);
-    }
-
-    /**
-     * @return 收款日期
-     */
-    public String getReceiptDate() {
-        return receiptDate;
     }
 
     /**
@@ -44,10 +36,10 @@ public class ReceiptVO extends ListVO {
     }
 
     /**
-     * @return 收款金额
+     * @return 收款日期
      */
-    public String getReceiptMoney() {
-        return receiptMoney;
+    public String getReceiptDate() {
+        return receiptDate;
     }
 
     /**
@@ -60,12 +52,10 @@ public class ReceiptVO extends ListVO {
     }
 
     /**
-     * 收款快递员
-     *
-     * @return
+     * @return 收款金额
      */
-    public String getReceiptCourier() {
-        return receiptCourier;
+    public String getReceiptMoney() {
+        return receiptMoney;
     }
 
     /**
@@ -78,12 +68,12 @@ public class ReceiptVO extends ListVO {
     }
 
     /**
-     * 对应的所有快递订单条形码号
+     * 收款快递员
      *
      * @return
      */
-    public ArrayList<String> getOrderNum() {
-        return orderNum;
+    public String getReceiptCourier() {
+        return receiptCourier;
     }
 
     /**
@@ -93,5 +83,14 @@ public class ReceiptVO extends ListVO {
      */
     public void setOrderNum(ArrayList<String> orderNum) {
         this.orderNum = orderNum;
+    }
+
+    /**
+     * 对应的所有快递订单条形码号
+     *
+     * @return
+     */
+    public ArrayList<String> getOrderNum() {
+        return orderNum;
     }
 }

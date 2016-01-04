@@ -1,8 +1,13 @@
-package vo;
+package po;
 
 import util.UserType;
 
-public class UserVO {
+import java.io.Serializable;
+
+public class UserPO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 用户名和密码，姓名，权限
      */
@@ -19,17 +24,12 @@ public class UserVO {
      * @param name
      * @param permission
      */
-    public UserVO(String id, String password, String
+    public UserPO(String id, String password, String
             name, UserType permission) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.permission = permission;
-    }
-
-    public UserVO(String id, String password) {
-        this.id = id;
-        this.password = password;
     }
 
     public String getPassword() {
@@ -60,6 +60,5 @@ public class UserVO {
     public String getId() {
         return id;
     }
-
 
 }

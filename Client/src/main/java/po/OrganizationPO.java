@@ -1,18 +1,19 @@
-package vo;
+package po;
 
 import java.io.Serializable;
 
 /**
  * Created by MYK on 2015/12/31 0031.
  */
-public class OrganizationVO implements Serializable {
+public class OrganizationPO implements Serializable {
     String num;
-    String city;
+    String transfer;
     String name;
 
-    public OrganizationVO(String num, String city, String name) {
+
+    public OrganizationPO(String num, String city, String name) {
         this.num = num;
-        this.city = city;
+        this.transfer = city;
         this.name = name;
     }
 
@@ -25,11 +26,11 @@ public class OrganizationVO implements Serializable {
     }
 
     public String getCity() {
-        return city;
+        return transfer;
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.transfer = city;
     }
 
     public String getName() {

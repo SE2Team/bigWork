@@ -1,6 +1,10 @@
 package presentation.financeui;
 
+import businesslogic.financebl.FinanceController;
+import businesslogicservice.FinanceblService;
 import presentation.commonui.DateChooser;
+import presentation.commonui.RunTip;
+import presentation.commonui.swing.exportExcel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 财务人员查看统计分析界面
@@ -82,16 +88,46 @@ public class FinanceAnalysisPanel extends JPanel{
 		
 		datechooser2 = new DateChooser("yyyy-MM-dd",endField);
 		datechooser2.setBounds(500, 45, 30, height);
+		final ArrayList<String> list = new ArrayList<>();
+		final ArrayList<String> list1 = new ArrayList<>();
 		startField.setText(datechooser2.commit());
 		datechooser2.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent me){
 				datechooser2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				FinanceblService financeblService;
+				Iterator<String> ite = null;
+				try {
+					financeblService = new FinanceController();
+					ite = financeblService.generateForm(datechooser1.toString(), datechooser2.toString());
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+				while (ite.hasNext()) {
+					list.add(ite.next());
+				}
+
+				String[] column1 = {"总收入", "总支出", "总利润"};
+				String[] s1 = {list.get(0), list.get(1), list.get(2)};
+				String row1[][] = {s1};
+				bussingTable = new JTable(row1, column1);
+
 			}
 		});
 		
 		gotButton.setFont(font2);
 		gotButton.setBounds(550, 45, width, height);
-		
+		gotButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					exportExcel.importBussingExcel(list);
+					RunTip.makeTip("导出成功", true);
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		bussingPanel.add(t1Label);
 		bussingPanel.add(startLabel);
 		bussingPanel.add(startField);
@@ -100,12 +136,12 @@ public class FinanceAnalysisPanel extends JPanel{
 		bussingPanel.add(endField);
 		bussingPanel.add(datechooser2);
 		bussingPanel.add(gotButton);
-		
-		
-		String[] column1 = { "序号","单据类型","详细信息"};
-		String[] s1 = {"1","收款单","" };
-		String row1[][] = { s1 };
-		bussingTable = new JTable(row1, column1);
+
+		String[] column3 = {"总收入", "总支出", "总利润"};
+		String[] s3 = {"", "", ""};
+		String row3[][] = {s3};
+		bussingTable = new JTable(row3, column3);
+
 		bussingTable.setFont(font2);
 		bussingTable.setRowHeight(20);
 		jsp1 = new JScrollPane(bussingTable);
@@ -123,22 +159,35 @@ public class FinanceAnalysisPanel extends JPanel{
 		
 		getButton.setFont(font2);
 		getButton.setBounds(500, 0, width, height);
-		
-		costPanel.add(t2Label);
-		ArrayList<String> str = new ArrayList<>();
-		str.add("1");
-		str.add("3");
-		str.add("2");
 		getButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				try {
+					exportExcel.importCostExcel(list1);
+					RunTip.makeTip("导出成功", true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
+
+		costPanel.add(t2Label);
 		costPanel.add(getButton);
-		
+
+		FinanceblService bl;
+		Iterator<String> ite1 = null;
+		try {
+			bl = new FinanceController();
+			ite1 = bl.generateForm();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		while (ite1.hasNext()) {
+			list1.add(ite1.next());
+		}
 		String[] column2 = { "总收入","总支出","总利润"};
-		String[] t1 = {"10000","1000","9000" };
+		String[] t1 = {list1.get(0), list1.get(1), list1.get(2)};
 		String row2[][] = { t1 };
 		costTable = new JTable(row2, column2);
 		costTable.setFont(font2);

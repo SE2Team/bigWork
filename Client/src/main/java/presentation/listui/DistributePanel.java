@@ -4,19 +4,24 @@
 package presentation.listui;
 
 import businesslogic.listbl.ListController;
+import businesslogic.managebl.ManageController;
 import businesslogicservice.ListblService;
+import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
+import presentation.commonui.swing.GetDate;
 import util.ListState;
 import vo.DistributeVO;
+import vo.OrderVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DistributePanel extends JPanel {
 
@@ -26,12 +31,14 @@ public class DistributePanel extends JPanel {
 	protected JLabel distributeList, arriveDate, orderNum, distributeHuman;
 	// 定义对应的文本框
 	protected JTextField jtf_arriveDate, jtf_orderNum, jtf_distributeHuman;
+	//定义城市编号额下拉框
+	//protected JComboBox jcb_num;
 	// 定义确定，取消按钮
 	protected JButton sure, cancel;
 	// 定义接收单的字体
 	protected Font font1 = new Font("楷体", Font.PLAIN, 30);
 	// 定义文本框下拉框的字体
-	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义其他Label的字体
 	protected Font font3 = new Font("宋体", Font.PLAIN, 20);
 	// 定义错误提示的label
@@ -40,6 +47,8 @@ public class DistributePanel extends JPanel {
 	protected DateChooser datechooser;
 	// 定义文本框的数组
 	protected JTextField[] distributeJtf;
+
+	protected OrderVO orderVO;
 
 	public DistributePanel() {
 
@@ -71,6 +80,31 @@ public class DistributePanel extends JPanel {
 		orderNum.setFont(font3);
 		orderNum.setBounds(x, y + addy, width, height);
 
+		Iterator<String> ite = null;
+		ArrayList<String> list1 = new ArrayList<String>();
+		ManageblService bl;
+		try {
+			bl = new ManageController();
+			ite = bl.checkCityNum();
+		} catch (RemoteException e1) {
+			RunTip.makeTip("网络异常", false);
+		}
+
+		if (ite != null) {
+			while (ite.hasNext()) {
+				list1.add(ite.next());
+			}
+		}
+
+		int n = list1.size();
+		String[] s = new String[n];
+		for (int i = 0; i < n; i++) {
+			s[i] = list1.get(i);
+		}
+//		jcb_num = new JComboBox(s);
+//		jcb_num.setFont(font2);
+//		jcb_num.setBounds(x + addx, y + addy, 50, height);
+//		
 		jtf_orderNum = new JTextField();
 		jtf_orderNum.setFont(font2);
 		jtf_orderNum.setBounds(x + addx, y + addy, width, height);
@@ -124,7 +158,7 @@ public class DistributePanel extends JPanel {
     }
 
     protected void performSure() {
-        boolean isOk = NumExceptioin.isOrderValid(jtf_orderNum);
+		boolean isOk = isExist;
 		if(isOk&&isAllEntered.isEntered(distributeJtf)){
 			DistributeVO dis_vo = new DistributeVO(
 					jtf_arriveDate.getText(), jtf_orderNum.getText(),
@@ -134,13 +168,13 @@ public class DistributePanel extends JPanel {
 				bl = new ListController();
 				bl.save(dis_vo);
 			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
                 RunTip.makeTip("网络异常", false);
-            }
+				return;
+			}
 
             RunTip.makeTip("保存成功", true);
-
-        }else if((!isOk)&&isAllEntered.isEntered(distributeJtf)){
+			orderVO.addLogistics(GetDate.getTime() + " 正在派送中");
+		}else if((!isOk)&&isAllEntered.isEntered(distributeJtf)){
             RunTip.makeTip("请输入正确格式的信息", false);
         }else if(isOk&&!isAllEntered.isEntered(distributeJtf)){
             RunTip.makeTip("仍有信息未输入", false);
@@ -152,7 +186,7 @@ public class DistributePanel extends JPanel {
 
 	//错误提示信息是否已经被添加
 	protected boolean isOrderAdd=false;
-	
+	protected boolean isExist = false;
 	/**
 	 * 监听焦点
 	 * @author Administrator
@@ -166,24 +200,40 @@ public class DistributePanel extends JPanel {
 		}
 
 		public void focusLost(FocusEvent e) {
-			// TODO Auto-generated method stub
 
-			if (!NumExceptioin.isOrderValid(jtf_orderNum)) {
-				isOrderAdd=true;
-				if (tip == null) {
-					tip = new JLabel("订单条形码号应为10位");
-					tip.setBounds(x + addx, y + addy + 30, width, height);
-					tip.setFont(font2);
-					tip.setForeground(Color.red);
-					addTip(tip);
+			ListblService bl;
+			try {
+				if (!"".equalsIgnoreCase(jtf_orderNum.getText().trim())) {
+					bl = new ListController();
+					orderVO = bl.getOrder(jtf_orderNum.getText());
+					if (orderVO == null) {
+						RunTip.makeTip("不存在该订单号", false);
+						return;
+					} else {
+						isExist = true;
+					}
 				}
-			} else {
-				if (isOrderAdd&&!"".equalsIgnoreCase(jtf_orderNum.getText().trim())) {
-					isOrderAdd=false;
-					removeTip(tip);
-					tip=null;
-				}
+
+			} catch (RemoteException e1) {
+				RunTip.makeTip("网络异常", false);
+				return;
 			}
+//			if (!NumExceptioin.isOrderValid(jtf_orderNum)) {
+//				isOrderAdd=true;
+//				if (tip == null) {
+//					tip = new JLabel("订单条形码号应为10位");
+//					tip.setBounds(x + addx, y + addy + 30, width, height);
+//					tip.setFont(font2);
+//					tip.setForeground(Color.red);
+//					addTip(tip);
+//				}
+//			} else {
+//				if (isOrderAdd&&!"".equalsIgnoreCase(jtf_orderNum.getText().trim())) {
+//					isOrderAdd=false;
+//					removeTip(tip);
+//					tip=null;
+//				}
+//			}
 		}
 
 	}

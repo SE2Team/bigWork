@@ -1,29 +1,30 @@
-package vo;
+package po;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/24 0024.
  */
-public class StockVO {
 
+
+public class StockPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
 
     private boolean stockState;//库存状态
 
     private String capacity;
 
-
     private String warning;
 
-    private ArrayList<StockInVO> stockList;//TODO 后期加入排序处理
+    private ArrayList<StockInPO> stockList;//TODO 后期加入排序处理
 
-    public StockVO(Boolean stockState, ArrayList<StockInVO> stockList) {
+    public StockPO(Boolean stockState, ArrayList<StockInPO> stockList) {
         this.stockState = stockState;
         this.stockList = stockList;
     }
 
-    public StockVO(String capacity, String warning) {
+    public StockPO(String capacity, String warning) {
         this.capacity = capacity;
         this.warning = warning;
     }
@@ -32,37 +33,21 @@ public class StockVO {
         return stockState;
     }
 
-    public void add(StockInVO stockInVO) {
-        stockList.add(stockInVO);
+    public void add(StockInPO stockInPO) {
+        stockList.add(stockInPO);
     }
 
     public void remove(String num) {
         for (int i = 0; i < stockList.size(); i++) {
-            StockInVO temp = stockList.get(i);
+            StockInPO temp = stockList.get(i);
 
             if (temp.getDeliveryNum() == num)
                 stockList.remove(i);
         }
     }
 
-    public ArrayList<StockInVO> getStockList() {
+    public ArrayList<StockInPO> getStockList() {
         return stockList;
-    }
-
-    public String getWarning() {
-        return warning;
-    }
-
-    public void setWarning(String warning) {
-        this.warning = warning;
-    }
-
-    public String getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(String capacity) {
-        this.capacity = capacity;
     }
 
     public boolean isStockState() {
@@ -73,9 +58,23 @@ public class StockVO {
         this.stockState = stockState;
     }
 
-    public void setStockList(ArrayList<StockInVO> stockList) {
-        this.stockList = stockList;
+    public String getCapacity() {
+        return capacity;
     }
 
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
 
+    public String getWarning() {
+        return warning;
+    }
+
+    public void setWarning(String warning) {
+        this.warning = warning;
+    }
+
+    public void setStockList(ArrayList<StockInPO> stockList) {
+        this.stockList = stockList;
+    }
 }

@@ -21,6 +21,7 @@ public class LogInPanel extends JPanel{
 	private JScrollPane jsp;//放文本域的scrollPane
 	private Font font = new Font("宋体", Font.PLAIN, 16);//定义字体
 	private Font font2 = new Font("宋体", Font.PLAIN, 20);//定义字体
+	private Font font3 = new Font("宋体", Font.PLAIN, 15);
 
 
     public void paintComponent(Graphics g){
@@ -48,7 +49,7 @@ public class LogInPanel extends JPanel{
 		
 		//设置物流信息显示域的大小位置
 		orderinfo = new JTextArea();
-		orderinfo.setFont(font2);
+		orderinfo.setFont(font3);
 		orderinfo.setEditable(false);
 		jsp = new JScrollPane(orderinfo);
 		jsp.setBounds(110, 270, 245, 200);
@@ -108,7 +109,9 @@ public class LogInPanel extends JPanel{
 				}
 				try {
 					InquiryblService inquiry = new InquiryController();
-					orderinfo.setText(inquiry.checkLogistics(str));
+					String info = inquiry.checkLogistics(str);
+					info = info.replaceAll("nnn", "\n");
+					orderinfo.setText(info);
 				} catch (RemoteException e1) {
 					e1.printStackTrace();
 				}

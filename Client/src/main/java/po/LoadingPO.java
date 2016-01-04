@@ -1,12 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
+import java.io.Serializable;
+
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/25 0025.
  */
-public class LoadingVO extends ListVO {
+public class LoadingPO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
 
     //装车日期，本营业厅编号，汽运编号，出发地，到达地，监装员，押运员，车辆代号，托运单号列表，运费。
@@ -33,7 +35,7 @@ public class LoadingVO extends ListVO {
      * @param consignList
      * @param transportMoney
      */
-    public LoadingVO(String loadingDate, String hallNum, String transportNum,
+    public LoadingPO(String loadingDate, String hallNum, String transportNum,
                      String start, String end, String monitor, String supercargo, String vehicleNum, String consignList,
                      String transportMoney, ListState isCheck) {
         super(isCheck);
@@ -51,6 +53,13 @@ public class LoadingVO extends ListVO {
     }
 
     /**
+     * @param
+     */
+    public void setTransportMoney(String transportMoney) {
+        this.transportMoney = transportMoney;
+    }
+
+    /**
      * @return 运费
      */
     public String getTransportMoney() {
@@ -60,8 +69,8 @@ public class LoadingVO extends ListVO {
     /**
      * @param
      */
-    public void setTransportMoney(String transportMoney) {
-        this.transportMoney = transportMoney;
+    public void setConsignList(String consignList) {
+        this.consignList = consignList;
     }
 
     /**
@@ -74,8 +83,8 @@ public class LoadingVO extends ListVO {
     /**
      * @param
      */
-    public void setConsignList(String consignList) {
-        this.consignList = consignList;
+    public void setVehicleNum(String vehicleNum) {
+        this.vehicleNum = vehicleNum;
     }
 
     /**
@@ -88,8 +97,8 @@ public class LoadingVO extends ListVO {
     /**
      * @param
      */
-    public void setVehicleNum(String vehicleNum) {
-        this.vehicleNum = vehicleNum;
+    public void setSupercargo(String supercargo) {
+        this.supercargo = supercargo;
     }
 
     /**
@@ -97,13 +106,6 @@ public class LoadingVO extends ListVO {
      */
     public String getSupercargo() {
         return supercargo;
-    }
-
-    /**
-     * @param
-     */
-    public void setSupercargo(String supercargo) {
-        this.supercargo = supercargo;
     }
 
     /**
@@ -184,7 +186,7 @@ public class LoadingVO extends ListVO {
     }
 
     /**
-     * @param
+     * @param end 目的地
      */
     public void setEnd(String end) {
         this.end = end;

@@ -72,7 +72,7 @@ public class CityStrategyPanel extends JPanel {
 		String row[][] = new String[n][4];
 		for (int j = 0; j < n; j++) {
 			vo = list1.get(j);
-			String[] strings = {vo.getCity1(), vo.getCity2(), vo.getDistance(), vo.getPrice()};
+			String[] strings = {vo.getCity1(), vo.getCity2(), vo.getPrice(), vo.getDistance()};
 			row[j] = strings;
 		}
 		String[] column = {"城市1", "城市2", "距离", "价格（元/公里）"};

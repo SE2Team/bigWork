@@ -26,7 +26,6 @@ public class InquirydataImpl extends UnicastRemoteObject implements InquiryDataS
 
 		ArrayList<OperationLogPO> list = new ArrayList<OperationLogPO>();
 		for (int j = 0; j < s.size(); j++) {
-            System.out.println(s.get(j));
             String[]  str = s.get(j).split(";");
 			list.add(this.stringToOperationLogPO(str));
 		}

@@ -131,16 +131,24 @@ public class VehiclePanel extends JPanel {
 		try {
 			bl = new ManageController();
 			ite2 = bl.checkVehicle();
+			if (ite2 != null) {
+				while (ite2.hasNext()) {
+					String num = null;
+//					try {
+//					//	num = bl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+//					} catch (RemoteException e1) {
+//						RunTip.makeTip("网络异常", false);
+//					}
+					if (ite2.next().toString().substring(0, 6).equals(num)) {
+						list2.add(ite2.next());
+					}
+				}
+			}
 		} catch (RemoteException e2) {
-			// TODO Auto-generated catch block
 			RunTip.makeTip("网络异常", false);
 		}
 
-		if (ite2 != null) {
-			while (ite2.hasNext()) {
-				list2.add(ite2.next());
-			}
-		}
+
 		n = list2.size();
 		final String row[][] = new String[n][4];
 		for (int j = 0; j < n; j++) {
@@ -155,6 +163,9 @@ public class VehiclePanel extends JPanel {
 		vehicleTable = Table.getTable(column, row);
 		tableModel = (DefaultTableModel) vehicleTable.getModel();
 		//---------------------------------------------------------
+
+		//	tableModel =new DefaultTableModel(row, column);
+
 		search.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -166,9 +177,6 @@ public class VehiclePanel extends JPanel {
 				}
 			}
 		});
-		//	tableModel =new DefaultTableModel(row, column);
-
-
 		vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选
 		vehicleTable.addMouseListener(new MouseAdapter() {// 鼠标事件
 			public void mouseClicked(MouseEvent e) {
@@ -198,6 +206,15 @@ public class VehiclePanel extends JPanel {
 		this.add(search);
 		this.add(vehiclepane);
 
+	}
+
+	/**
+	 * 获取原来车辆的vo
+	 *
+	 * @return
+	 */
+	public VehicleVO getPreVO() {
+		return oVehicle;
 	}
 
 	/**

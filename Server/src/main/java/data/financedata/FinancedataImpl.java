@@ -28,16 +28,19 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
         double gatheringMoney = 0;
         Common common = new Common("payment");
         ArrayList<String> list = common.readData();
-        for (int j = 0; j < list.size(); j++) {
-            String[] str = list.get(j).split(";");
-            paymentMoney = paymentMoney + Double.parseDouble(this.stringToPaymentPO(str).getPayMoney());
+        if (list.size() != 0) {
+            for (int j = 0; j < list.size(); j++) {
+                String[] str = list.get(j).split(";");
+                paymentMoney = paymentMoney + Double.parseDouble(this.stringToPaymentPO(str).getPayMoney());
+            }
         }
-
         Common common2 = new Common("gathering");
         ArrayList<String> list2 = common2.readData();
-        for (int i = 0; i < list2.size(); i++) {
-            String[] str2 = list2.get(i).split(";");
-            gatheringMoney = gatheringMoney + Double.parseDouble(this.stringToGatheringPO(str2).getMoney());
+        if (list2.size() != 0) {
+            for (int i = 0; i < list2.size(); i++) {
+                String[] str2 = list2.get(i).split(";");
+                gatheringMoney = gatheringMoney + Double.parseDouble(this.stringToGatheringPO(str2).getMoney());
+            }
         }
         list1.add(gatheringMoney + "");
         list1.add(paymentMoney + "");
@@ -56,25 +59,27 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
         int end = this.DateToInt(endDate);
         Common common = new Common("payment");
         ArrayList<String> list = common.readData();
-        for (int j = 0; j < list.size(); j++) {
-            String[] str = list.get(j).split(";");
-            int date = this.DateToInt(this.stringToPaymentPO(str).getPayDate());
-            if (date >= start && date <= end) {
-                payment.add(list.get(j));
+        if (list.size() != 0) {
+            for (int j = 0; j < list.size(); j++) {
+                String[] str = list.get(j).split(";");
+                int date = this.DateToInt(this.stringToPaymentPO(str).getPayDate());
+                if (date >= start && date <= end) {
+                    payment.add(list.get(j));
+                }
+
             }
-
         }
-
         Common common2 = new Common("gathering");
         ArrayList<String> list2 = common2.readData();
-        for (int i = 0; i < list2.size(); i++) {
-            String[] str = list2.get(i).split(";");
-            int date = this.DateToInt(this.stringToGatheringPO(str).getDate());
-            if (date >= start && date <= end) {
-                gathering.add(list2.get(i));
+        if (list2.size() != 0) {
+            for (int i = 0; i < list2.size(); i++) {
+                String[] str = list2.get(i).split(";");
+                int date = this.DateToInt(this.stringToGatheringPO(str).getDate());
+                if (date >= start && date <= end) {
+                    gathering.add(list2.get(i));
+                }
             }
         }
-
         for (int j = 0; j < payment.size(); j++) {
             String[] str = payment.get(j).split(";");
             paymentMoney = paymentMoney + Double.parseDouble(this.stringToPaymentPO(str).getPayMoney());
@@ -201,6 +206,7 @@ public class FinancedataImpl extends UnicastRemoteObject implements FinanceDataS
         for (int i = 1; i < str.length; i++) {
             str[0] = str[0] + str[i];
         }
+        System.out.println(str[0]);
         return Integer.parseInt(str[0]);
     }
 

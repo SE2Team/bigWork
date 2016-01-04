@@ -8,9 +8,11 @@ import businesslogicservice.ListblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.commonui.isAllEntered;
-import presentation.exception.NumExceptioin;
+import presentation.commonui.swing.GetDate;
 import util.ListState;
+import vo.OrderVO;
 import vo.StockInVO;
 
 import javax.swing.*;
@@ -27,9 +29,8 @@ public class StockInPanel extends JPanel {
 	protected JLabel StockInList, deliveryNum, inDate, destination, zoneNum,
 			rowNum, shelfNum, positionNum;
 	// 定义对应的文本框
-	protected JTextField jtf_deliveryNum, jtf_inDate, jtf_destination,
-			jtf_zoneNum;
-
+	protected JTextField jtf_deliveryNum, jtf_inDate, jtf_zoneNum;
+	protected JComboBox jcb_destination;
 	protected JTextField jtf_rowNum;
 
 	protected JTextField jtf_shelfNum;
@@ -40,7 +41,7 @@ public class StockInPanel extends JPanel {
 	// 定义出库单的字体
 	protected Font font1 = new Font("楷体", Font.PLAIN, 30);
 	// 定义文本框下拉框的字体
-	protected Font font2 = new Font("宋体", Font.PLAIN, 18);
+	protected Font font2 = new Font("宋体", Font.PLAIN, 16);
 	// 定义其他字体
 	protected Font font3 = new Font("宋体", Font.PLAIN, 20);
 	// 定义错误提示信息的label
@@ -51,6 +52,9 @@ public class StockInPanel extends JPanel {
 	protected DateChooser datechooser;
 	// 定义文本框的数组
 	protected JTextField[] stockInJtf;
+
+	protected OrderVO orderVO;
+	protected String[] city = {"南京市", "北京市", "上海市", "广州市"};
 
 	public StockInPanel() {
 
@@ -91,9 +95,9 @@ public class StockInPanel extends JPanel {
 		destination.setFont(font3);
 		destination.setBounds(x, y + 2 * addy, width, height);
 
-		jtf_destination = new JTextField();
-		jtf_destination.setFont(font2);
-		jtf_destination.setBounds(x + addx, y + 2 * addy, width, height);
+		jcb_destination = new JComboBox(city);
+		jcb_destination.setFont(font2);
+		jcb_destination.setBounds(x + addx, y + 2 * addy, width, height);
 
 		zoneNum = new JLabel("区号", JLabel.CENTER);
 		zoneNum.setFont(font3);
@@ -139,8 +143,8 @@ public class StockInPanel extends JPanel {
 
 		});
 
-		stockInJtf = new JTextField[] { jtf_deliveryNum, jtf_destination,
-				jtf_zoneNum, jtf_rowNum, jtf_shelfNum, jtf_positionNum };
+		stockInJtf = new JTextField[]{jtf_deliveryNum, jtf_zoneNum,
+				jtf_rowNum, jtf_shelfNum, jtf_positionNum};
 
 		cancel = new JButton("取消");
 		cancel.setFont(font3);
@@ -148,8 +152,8 @@ public class StockInPanel extends JPanel {
 		cancel.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-                performCancel();
-            }
+				performCancel();
+			}
 		});
 
 		this.add(StockInList);
@@ -159,7 +163,7 @@ public class StockInPanel extends JPanel {
 		this.add(jtf_inDate);
 		this.add(datechooser);
 		this.add(destination);
-		this.add(jtf_destination);
+		this.add(jcb_destination);
 		this.add(zoneNum);
 		this.add(jtf_zoneNum);
 		this.add(rowNum);
@@ -172,39 +176,46 @@ public class StockInPanel extends JPanel {
 		this.add(cancel);
 	}
 
-    protected void performCancel() {
-        Empty emptyLoading = new Empty(stockInJtf);
+	protected void performCancel() {
+		new Empty(stockInJtf);
 
-    }
+	}
 
 	protected void performSure() {
-		boolean isOk = NumExceptioin.isOrderValid(jtf_deliveryNum);
-		if(isOk&&isAllEntered.isEntered(stockInJtf)){
+		boolean isOk = isExist;
+		if (isOk && isAllEntered.isEntered(stockInJtf)) {
 			StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
-					jtf_inDate.getText(), jtf_destination.getText(),
-					jtf_zoneNum.getText(), jtf_rowNum.getText(),
-					jtf_shelfNum.getText(), jtf_positionNum.getText(), ListState.UNCHECK);
+					jtf_inDate.getText(), jcb_destination.getSelectedItem()
+					.toString(), jtf_zoneNum.getText(),
+					jtf_rowNum.getText(), jtf_shelfNum.getText(),
+					jtf_positionNum.getText(), ListState.UNCHECK);
 			ListblService bl;
 			try {
 				bl = new ListController();
+				orderVO = bl.getOrder(jtf_deliveryNum.getText());
+				if (orderVO == null) {
+					RunTip.makeTip("不存在该订单号", false);
+					return;
+				}
 				bl.save(in_vo);
 			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-                RunTip.makeTip("网络异常", false);
-            }
+				RunTip.makeTip("网络异常", false);
+			}
 
-            RunTip.makeTip("保存成功", true);
+			RunTip.makeTip("保存成功", true);
+			orderVO.addLogistics(GetDate.getTime() + " 在" + UserInfo.WORKER.getOrganization() + "入库");
 
-        }else if((!isOk)&&isAllEntered.isEntered(stockInJtf)){
-            RunTip.makeTip("请输入正确格式的信息", false);
-        }else if(isOk&&!isAllEntered.isEntered(stockInJtf)){
-            RunTip.makeTip("仍有信息未输入", false);
-        }else if(!isOk&&!isAllEntered.isEntered(stockInJtf)){
-            RunTip.makeTip("请输入所有正确格式的信息", false);
-        }
-		
+		} else if ((!isOk) && isAllEntered.isEntered(stockInJtf)) {
+			RunTip.makeTip("请输入正确格式的信息", false);
+		} else if (isOk && !isAllEntered.isEntered(stockInJtf)) {
+			RunTip.makeTip("仍有信息未输入", false);
+		} else if (!isOk && !isAllEntered.isEntered(stockInJtf)) {
+			RunTip.makeTip("请输入所有正确格式的信息", false);
+		}
+
 	}
 
+	boolean isExist = false;
 	/**
 	 * 监听焦点
 	 * 
@@ -222,24 +233,42 @@ public class StockInPanel extends JPanel {
 			// TODO Auto-generated method stub
 			JTextField temp = (JTextField) e.getSource();
 			if (temp == jtf_deliveryNum) {
-				if (!NumExceptioin.isOrderValid(jtf_deliveryNum)) {
-					isDelivAdd = true;
-					if (tip1 == null) {
-						tip1 = new JLabel("快递编号位数应为10位", JLabel.CENTER);
-						tip1.setBounds(x + addx, y + height, width, height);
-						tip1.setFont(font2);
-						tip1.setForeground(Color.RED);
-						addTip(tip1);
+				ListblService bl;
+				try {
+					if (!"".equalsIgnoreCase(jtf_deliveryNum.getText().trim())) {
+						bl = new ListController();
+						OrderVO vo = bl.getOrder(jtf_deliveryNum.getText());
+						if (vo == null) {
+							RunTip.makeTip("不存在该订单号", false);
+							return;
+						} else {
+							isExist = true;
+						}
 					}
-				} else {
-					if (isDelivAdd
-							&& !"".equalsIgnoreCase(jtf_deliveryNum.getText()
-									.trim())) {
-						isDelivAdd = false;
-						removeTip(tip1);
-						tip1 = null;
-					}
+
+				} catch (RemoteException e1) {
+					RunTip.makeTip("网络异常", false);
+					return;
 				}
+
+//				if (!NumExceptioin.isOrderValid(jtf_deliveryNum)) {
+//					isDelivAdd = true;
+//					if (tip1 == null) {
+//						tip1 = new JLabel("快递编号位数应为10位", JLabel.CENTER);
+//						tip1.setBounds(x + addx, y + height, width, height);
+//						tip1.setFont(font2);
+//						tip1.setForeground(Color.RED);
+//						addTip(tip1);
+//					}
+//				} else {
+//					if (isDelivAdd
+//							&& !"".equalsIgnoreCase(jtf_deliveryNum.getText()
+//									.trim())) {
+//						isDelivAdd = false;
+//						removeTip(tip1);
+//						tip1 = null;
+//					}
+//				}
 			}
 		}
 

@@ -47,7 +47,8 @@ public class TransferReceiveChecking extends TransferReceivePanel{
         cancel.setText("否决");
 //        jtf_orderNum.setText(vo.getOrderNum());
         jtf_arriveDate.setText(vo.getArriveDate());
-        jtf_departure.setText(vo.getStart());
+        jcb_city.setSelectedItem(vo.getStart());
+//        jtf_departure.setText(vo.getStart());
         state.setSelectedItem(vo.getCargoState());
         jtf_CenterNum.setText(vo.getTransferCenterNum());
         jtf_transferNum.setText(vo.getTransferNum());
@@ -57,8 +58,8 @@ public class TransferReceiveChecking extends TransferReceivePanel{
     @Override
     protected void performSure() {
         TransferReceiveVO vo = new TransferReceiveVO(jtf_arriveDate.getText(),
-                jtf_departure.getText(), state.getSelectedItem().toString(),
-                jtf_CenterNum.getText(), jtf_transferNum.getText(), ListState.PASSED);
+                jcb_city.getSelectedItem().toString(), state.getSelectedItem().toString(),
+                jtf_CenterNum.getText(), jl_num.getText() + jtf_transferNum.getText(), ListState.PASSED);
 
         try {
             ListblService bl = new ListController();

@@ -1,4 +1,4 @@
-package vo;
+package po;
 
 import util.DeliveryType;
 import util.ListState;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2015/10/23 0023.
  */
-public class OrderVO extends ListVO implements Serializable {
+public class OrderPO extends ListPO implements Serializable {
     //寄件人姓名、住址、单位、电话、手机）
 
     private static final long serialVersionUID = 1L;//序列化编号
@@ -43,7 +43,6 @@ public class OrderVO extends ListVO implements Serializable {
 
     private String Logistics;
 
-
     /**
      * @param senderName
      * @param senderAddress
@@ -67,9 +66,8 @@ public class OrderVO extends ListVO implements Serializable {
      * @param date
      * @param deliveryNum
      */
-
     @Deprecated
-    public OrderVO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
+    public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
                    String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                    String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                    String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
@@ -100,7 +98,7 @@ public class OrderVO extends ListVO implements Serializable {
         setType(ListType.ORDER);
     }
 
-    public OrderVO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
+    public OrderPO(String senderName, String senderAddress, String senderWorkplace, String senderTelephone,
                    String senderPhone, String receiverName, String receiverAddress, String receiverWorkplace,
                    String receiverTelephone, String receiverPhone, String originalNum, String weight, String volume,
                    String goods_Name, DeliveryType DeliveryType, String wrapper, String expenseOfTransport,
@@ -131,6 +129,7 @@ public class OrderVO extends ListVO implements Serializable {
         this.setLogistics(logistics);
         setType(ListType.ORDER);
     }
+
     /**
      * @return 寄件人姓名
      */

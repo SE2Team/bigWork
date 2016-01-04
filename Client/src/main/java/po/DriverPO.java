@@ -1,6 +1,13 @@
-package vo;
+package po;
 
-public class DriverVO {
+import java.io.Serializable;
+
+/**
+ * Created by Administrator on 2015/10/25 0025.
+ */
+public class DriverPO implements Serializable {
+    private static final long serialVersionUID = 1L;//序列化编号
+
     //司机编号、姓名、出生日期、身份证号、手机、车辆单位、性别、行驶证期限
     private String driverNum;
     private String driverName;
@@ -21,7 +28,7 @@ public class DriverVO {
      * @param sex
      * @param licenseTime
      */
-    public DriverVO(String driverNum, String driverName,
+    public DriverPO(String driverNum, String driverName,
                     String birthDate, String idNum, String phone,
                     String vehicleInstitution, String sex, String licenseTime) {
         this.birthDate = birthDate;
@@ -34,70 +41,69 @@ public class DriverVO {
         this.vehicleInstitution = vehicleInstitution;
     }
 
-    public DriverVO() {
+    public void setDriverNum(String driverNum) {
+        this.driverNum = driverNum;
     }
 
     public String getDriverNum() {
         return driverNum;
     }
 
-    public void setDriverNum(String driverNum) {
-        this.driverNum = driverNum;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
     public String getDriverName() {
         return driverName;
     }
 
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setIdNum(String idNum) {
+        this.idNum = idNum;
     }
 
     public String getIdNum() {
         return idNum;
     }
 
-    public void setIdNum(String idNum) {
-        this.idNum = idNum;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setVehicleInstitution(String vehicleInstitution) {
+        this.vehicleInstitution = vehicleInstitution;
     }
 
     public String getVehicleInstitution() {
         return vehicleInstitution;
     }
 
-    public void setVehicleInstitution(String vehicleInstitution) {
-        this.vehicleInstitution = vehicleInstitution;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setLicenseTime(String licenseTime) {
+        this.licenseTime = licenseTime;
     }
 
     public String getLicenseTime() {
         return licenseTime;
     }
 
-    public void setLicenseTime(String licenseTime) {
-        this.licenseTime = licenseTime;
-    }
+
 }

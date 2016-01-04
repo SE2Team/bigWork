@@ -1,12 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
+import java.io.Serializable;
+
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/25 0025.
  */
-public class TransferReceiveVO extends ListVO {
+public class TransferReceivePO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
     /**
      * 括寄件单编号，到达日期，出发地，货物状态（损坏、完整、丢失），中转中心编号，中转单编号
@@ -19,11 +21,10 @@ public class TransferReceiveVO extends ListVO {
     private String transferCenterNum;
     private String transferNum;
 
-    public TransferReceiveVO(String arriveDate, String start,
+    public TransferReceivePO(String arriveDate, String start,
                              String cargoState, String transferCenterNum, String transferNum,
                              ListState isCheck) {
         super(isCheck);
-//		this.orderNum = orderNum;
         this.arriveDate = arriveDate;
         this.start = start;
         this.cargoState = cargoState;
@@ -31,56 +32,50 @@ public class TransferReceiveVO extends ListVO {
         this.transferNum = transferNum;
         setType(ListType.TRANSARRIVE);
     }
-//
-//	public void setOrderNum(String orderNum){
-//		this.orderNum=orderNum;
-//	}
-//
-//	public String getOrderNum(){
-//		return orderNum;
-//	}
 
-    public String getArriveDate() {
-        return arriveDate;
-    }
 
     public void setArriveDate(String arriveDate) {
         this.arriveDate = arriveDate;
     }
 
-    public String getStart() {
-        return start;
+    public String getArriveDate() {
+        return arriveDate;
     }
 
     public void setStart(String start) {
         this.start = start;
     }
 
-    public String getCargoState() {
-        return cargoState;
+    public String getStart() {
+        return start;
     }
 
     public void setCargoState(String cargoState) {
         this.cargoState = cargoState;
     }
 
-    public String getTransferCenterNum() {
-        return transferCenterNum;
+    public String getCargoState() {
+        return cargoState;
     }
 
     public void setTransferCenterNum(String transferCenterNum) {
         this.transferCenterNum = transferCenterNum;
     }
 
-    public String getTransferNum() {
-        return transferNum;
+    public String getTransferCenterNum() {
+        return transferCenterNum;
     }
 
     public void setTransferNum(String transferNum) {
         this.transferNum = transferNum;
     }
 
+    public String getTransferNum() {
+        return transferNum;
+    }
+
     public String getClassName() {
         return "TransferReceive";
     }
-}
+
+}	

@@ -4,15 +4,19 @@ import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.DateChooser;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
 import vo.VehicleVO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class modifyVehicleDialog extends MyDialog {
 
@@ -31,15 +35,17 @@ public class modifyVehicleDialog extends MyDialog {
 
 	// 设置所有文字的字体
 	private Font font = new Font("宋体", Font.PLAIN, 20);
-	private Font font2 = new Font("宋体", Font.PLAIN, 18);
+	private Font font2 = new Font("宋体", Font.PLAIN, 16);
 
 	// 定义添加车辆信息，车辆代号，车牌号，购买时间，服役时间的label
-	private JLabel addInfo, vehicleNum, licensePlate, buyDate, useTime;
+	private JLabel addInfo, vehicleNum, licensePlate, buyDate, useTime, jl_num;
 
 	// 定义对应的文本框
 	private JTextField jtf_vehicleNum, jtf_licensePlate, jtf_buyDate,
 			jtf_useTime;
 
+	// 定义城市编号下拉框
+	// private JComboBox jcb_num;
 	// 定义确定，取消按钮
 	private JButton sure, cancel;
 
@@ -68,9 +74,44 @@ public class modifyVehicleDialog extends MyDialog {
 			vehicleNum.setFont(font);
 			vehicleNum.setBounds(x, y, jl_width, height);
 
+			Iterator<String> ite = null;
+			ArrayList<String> list1 = new ArrayList<String>();
+			ManageblService bl;
+			try {
+				bl = new ManageController();
+				ite = bl.checkCityNum();
+			} catch (RemoteException e1) {
+				RunTip.makeTip("网络异常", false);
+			}
+
+			if (ite != null) {
+				while (ite.hasNext()) {
+					list1.add(ite.next());
+				}
+			}
+
+			int n = list1.size();
+			String[] s = new String[n];
+			for (int i = 0; i < n; i++) {
+				s[i] = list1.get(i);
+			}
+			String num = null;
+			ManageblService mbl;
+			try {
+				mbl = new ManageController();
+				num = mbl.checkOrganization(UserInfo.WORKER.getOrganization())
+						.getNum();
+			} catch (RemoteException e2) {
+				RunTip.makeTip("网络异常", false);
+			}
+
+			jl_num = new JLabel(num);
+			jl_num.setFont(font2);
+			jl_num.setBounds(x + addx, y, 60, height);
+
 			jtf_vehicleNum = new JTextField();
 			jtf_vehicleNum.setFont(font);
-			jtf_vehicleNum.setBounds(x + addx, y, jtf_width, height);
+			jtf_vehicleNum.setBounds(x + addx + 60, y, jtf_width - 60, height);
 			jtf_vehicleNum.addFocusListener(new TextFocus());
 
 			licensePlate = new JLabel("车牌号", JLabel.CENTER);
@@ -111,6 +152,7 @@ public class modifyVehicleDialog extends MyDialog {
 			jtf_useTime.setBounds(x + addx, y + 3 * addy, jtf_width, height);
 			jtf_useTime.addFocusListener(new TextFocus());
 
+			final VehicleVO ovo = parent.getPreVO();
 			sure = new JButton("确定");
 			sure.setFont(font);
 			sure.setBounds(80, y + 4 * addy + 10, 80, height);
@@ -123,14 +165,20 @@ public class modifyVehicleDialog extends MyDialog {
 					vehicleJtf = new JTextField[]{jtf_vehicleNum,
 							jtf_licensePlate, jtf_useTime};
 					if (isOk && isAllEntered.isEntered(vehicleJtf)) {
-						VehicleVO vehicle_vo = new VehicleVO(jtf_vehicleNum
-								.getText(), jtf_licensePlate.getText(),
-								jtf_buyDate.getText(), jtf_useTime.getText());
+						VehicleVO vehicle_vo = new VehicleVO(jl_num.getText()
+								+ jtf_vehicleNum.getText(), jtf_licensePlate
+								.getText(), jtf_buyDate.getText(), jtf_useTime
+								.getText());
 
 						ManageblService bl;
 						try {
 							bl = new ManageController();
-
+							try {
+								bl.editVehicle(ovo, vehicle_vo);
+							} catch (ExistException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						} catch (RemoteException e) {
 							RunTip.makeTip("网络异常", false);
 							return;
@@ -166,6 +214,7 @@ public class modifyVehicleDialog extends MyDialog {
 			this.add(licensePlate);
 			this.add(jtf_licensePlate);
 			this.add(vehicleNum);
+			this.add(jl_num);
 			this.add(jtf_vehicleNum);
 			this.add(buyDate);
 			this.add(jtf_buyDate);

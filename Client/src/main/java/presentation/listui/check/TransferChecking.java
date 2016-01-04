@@ -50,8 +50,10 @@ public class TransferChecking extends TransferPanel {
         jtf_loadingDate.setText(vo.getLoadingDate());
         jtf_transferNum.setText(vo.getTransportNum());
         jtf_vehicleNum.setText(vo.getVehicleNum());
-        jtf_start.setText(vo.getStart());
-        jtf_end.setText(vo.getEnd());
+        jcb_city1.setSelectedItem(vo.getStart());
+        jcb_city2.setSelectedItem(vo.getEnd());
+//        jtf_start.setText(vo.getStart());
+//        jtf_end.setText(vo.getEnd());
         jtf_containerNum.setText(vo.getContainerNum());
         jtf_monitor.setText(vo.getMonitor());
         jtf_supercargo.setText(vo.getSupercargo());
@@ -62,13 +64,13 @@ public class TransferChecking extends TransferPanel {
 
     @Override
     protected void performSure() {
-        TransferVO transfervo = new TransferVO(jcb_way
-                .getSelectedItem().toString(), jtf_loadingDate
-                .getText(), jtf_transferNum.getText(), jtf_vehicleNum
-                .getText(), jtf_start.getText(), jtf_end.getText(),
-                jtf_containerNum.getText(), jtf_monitor.getText(),
-                jtf_supercargo.getText(), jta_orderNums.getText(),
-                jtf_money.getText(), ListState.PASSED);
+        TransferVO transfervo = new TransferVO(jcb_way.getSelectedItem()
+                .toString(), jtf_loadingDate.getText(), jl_num
+                .getText() + jtf_transferNum.getText(),
+                jtf_vehicleNum.getText(), jcb_city1.getSelectedItem().toString(),
+                jcb_city1.getSelectedItem().toString(), jtf_containerNum.getText(),
+                jtf_monitor.getText(), jtf_supercargo.getText(),
+                jta_orderNums.getText(), jtf_money.getText(), ListState.PASSED);
         ListblService bl;
         try {
             bl = new ListController();

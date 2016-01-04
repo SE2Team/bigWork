@@ -3,7 +3,6 @@ package presentation.manageui;
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.RunTip;
-import presentation.commonui.UIdata.UIConstant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +54,7 @@ public class SalaryStrategyPanel extends JPanel {
         wayLabel.setFont(font2);
         wayLabel.setBounds(x, y + addy, width2, height);
 
-        etBox = new JComboBox(UIConstant.position);
+        etBox = new JComboBox(employeeType);
         etBox.setFont(font3);
         etBox.setBounds(x + addx, y, width2, height);
         jrdMonth = new JRadioButton("按月");
@@ -96,6 +95,7 @@ public class SalaryStrategyPanel extends JPanel {
                 try {
                     bl = new ManageController();
                     bl.updateSalary(str, type);
+                    RunTip.makeTip("保存成功", true);
                 } catch (RemoteException e1) {
                     RunTip.makeTip("网络异常", false);
                     return;

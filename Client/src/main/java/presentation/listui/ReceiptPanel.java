@@ -11,6 +11,7 @@ import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.exception.NumExceptioin;
 import util.ListState;
+import vo.OrderVO;
 import vo.ReceiptVO;
 
 import javax.swing.*;
@@ -162,8 +163,19 @@ public class ReceiptPanel extends JPanel {
 	 * 添加订单号
 	 */
 	protected void performAdd() {
+		OrderVO vo = null;
+		ListblService bl;
+		try {
+			bl = new ListController();
+			vo = bl.getOrder(jtf_ordernum.getText());
+		} catch (RemoteException e) {
+			RunTip.makeTip("网络异常", false);
+		}
+		if (vo == null) {
+			RunTip.makeTip("不存在该订单号", false);
+			return;
+		}
 		boolean flag = NumExceptioin.isOrderValid(jtf_ordernum)
-				&& NumExceptioin.isInt(jtf_ordernum)
 				&& !"".equalsIgnoreCase(jtf_ordernum.getText().trim())
 				&& !isExist(jtf_ordernum.getText().trim());
 		if (flag) {
@@ -181,13 +193,11 @@ public class ReceiptPanel extends JPanel {
 	protected boolean isExist(String num) {
 
 		for (String list : ordernumList) {
-			System.out.println(list);
 			if (num.equals(list)) {
 				return true;
 			}
 		}
 		if (NumExceptioin.isOrderValid(jtf_ordernum)
-				&& NumExceptioin.isInt(jtf_ordernum)
 				&& !"".equalsIgnoreCase(jtf_ordernum.getText().trim())) {
 			ordernumList.add(num);
 		}
@@ -209,7 +219,8 @@ public class ReceiptPanel extends JPanel {
 				bl.save(receipt_vo);
 			} catch (RemoteException e) {
                 RunTip.makeTip("网络异常", false);
-            }
+				return;
+			}
 
             RunTip.makeTip("保存成功", true);
         } else if ((!isOk) && isAllEntered.isEntered(receiptJtf)) {

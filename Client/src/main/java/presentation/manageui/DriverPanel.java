@@ -122,7 +122,23 @@ public class DriverPanel extends JPanel {
 		search = new JButton("查询");
 		search.setFont(font2);
 		search.setBounds(x + 4 * addx + 50, y, width, height);
+		search.addActionListener(new ActionListener() {
 
+			public void actionPerformed(ActionEvent e) {
+				String num = inputInfo.getText();
+				;
+				ManageblService bl1;
+				DriverVO driver;
+
+				try {
+					bl1 = new ManageController();
+					driver = bl1.checkDriver(num);
+				} catch (RemoteException e2) {
+					RunTip.makeTip("网络异常", false);
+				}
+
+			}
+		});
 
 
 		String[] column = {"司机编号", "姓名", "性别", "出生日期", "身份证号", "手机", "车辆单位",
@@ -139,17 +155,25 @@ public class DriverPanel extends JPanel {
 		try {
 			bl = new ManageController();
 			ite1 = bl.checkDriver();
-		} catch (RemoteException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+			if (ite1 != null) {
+				while (ite1.hasNext()) {
+					String num = null;
+//				try {
+//				//	num = bl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+//				} catch (RemoteException e1) {
+//					RunTip.makeTip("网络异常", false);
+//				}
+					if (ite1.next().toString().substring(0, 6).equals(num)) {
+						list1.add(ite1.next());
+					}
+				}
 
-		if (ite1 != null) {
-			while (ite1.hasNext()) {
-				list1.add(ite1.next());
 			}
-
+		} catch (RemoteException e2) {
+			RunTip.makeTip("网络异常", false);
 		}
+
+
 		n = list1.size();
 		final String row[][] = new String[n][8];
 		// 将s1赋值为司机信息

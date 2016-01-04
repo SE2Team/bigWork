@@ -1,12 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
+import java.io.Serializable;
+
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/25 0025.
  */
-public class DistributeVO extends ListVO {
+public class DistributePO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
 
     //到达日期、托运订单条形码号、派送员
@@ -19,19 +21,12 @@ public class DistributeVO extends ListVO {
      * @param orderNum
      * @param distributeHuman
      */
-    public DistributeVO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck) {
+    public DistributePO(String arriveDate, String orderNum, String distributeHuman, ListState isCheck) {
         super(isCheck);
         this.arriveDate = arriveDate;
         this.orderNum = orderNum;
         this.distributeHuman = distributeHuman;
         setType(ListType.DISTRIBUTEINFO);
-    }
-
-    /**
-     * @return 到达日期
-     */
-    public String getArriveDate() {
-        return arriveDate;
     }
 
     /**
@@ -44,10 +39,10 @@ public class DistributeVO extends ListVO {
     }
 
     /**
-     * @return 托运订单条形码号
+     * @return 到达日期
      */
-    public String getOrderNum() {
-        return orderNum;
+    public String getArriveDate() {
+        return arriveDate;
     }
 
     /**
@@ -60,12 +55,10 @@ public class DistributeVO extends ListVO {
     }
 
     /**
-     * 派送员
-     *
-     * @return
+     * @return 托运订单条形码号
      */
-    public String getDistributeHuman() {
-        return distributeHuman;
+    public String getOrderNum() {
+        return orderNum;
     }
 
     /**
@@ -75,6 +68,15 @@ public class DistributeVO extends ListVO {
      */
     public void setDistributeHuman(String distributeHuman) {
         this.distributeHuman = distributeHuman;
+    }
+
+    /**
+     * 派送员
+     *
+     * @return
+     */
+    public String getDistributeHuman() {
+        return distributeHuman;
     }
 
 

@@ -44,7 +44,7 @@ public class StockInChecking extends StockInPanel {
         this();
         jtf_deliveryNum.setText(vo.getDeliveryNum());
         jtf_inDate.setText(vo.getInDate());
-        jtf_destination.setText(vo.getEnd());
+        jcb_destination.setSelectedItem(vo.getEnd());
         jtf_zoneNum.setText(vo.getZoneNum());
         jtf_rowNum.setText(vo.getRowNum());
         jtf_shelfNum.setText(vo.getShelfNum());
@@ -57,7 +57,7 @@ public class StockInChecking extends StockInPanel {
     @Override
     protected void performSure() {
         StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
-                jtf_inDate.getText(), jtf_destination.getText(),
+                jtf_inDate.getText(), jcb_destination.getSelectedItem().toString(),
                 jtf_zoneNum.getText(), jtf_rowNum.getText(),
                 jtf_shelfNum.getText(), jtf_positionNum.getText(), ListState.PASSED);
         ListblService bl;
@@ -78,7 +78,7 @@ public class StockInChecking extends StockInPanel {
     protected void performCancel() {
         super.performCancel();
         StockInVO in_vo = new StockInVO(jtf_deliveryNum.getText(),
-                jtf_inDate.getText(), jtf_destination.getText(),
+                jtf_inDate.getText(), jcb_destination.getSelectedItem().toString(),
                 jtf_zoneNum.getText(), jtf_rowNum.getText(),
                 jtf_shelfNum.getText(), jtf_positionNum.getText(), ListState.PASSED);
         ListblService bl;

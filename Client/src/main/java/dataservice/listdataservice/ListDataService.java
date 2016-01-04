@@ -2,7 +2,6 @@ package dataservice.listdataservice;
 
 import po.*;
 import util.ExistException;
-import util.UserType;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -78,14 +77,14 @@ public interface ListDataService extends Remote {
      * @return
      * @throws RemoteException
      */
-    Boolean save(StockOutPO stockOutPO) throws RemoteException;
+    Boolean save(StockOutPO stockOutPO, String organization) throws RemoteException;
 
     /**
      * @param stockInPO
      * @return
      * @throws RemoteException
      */
-    Boolean save(StockInPO stockInPO) throws RemoteException;
+    Boolean save(StockInPO stockInPO, String organization) throws RemoteException;
 
     /**
      * @param paymentPO
@@ -198,5 +197,5 @@ public interface ListDataService extends Remote {
 
     TransferReceivePO geTransferReceive(String num) throws RemoteException;
 
-    ArrayList<ListPO> getPassedList(UserType userType) throws RemoteException;
+    ArrayList<ListPO> getPassedList(UserPO userPO) throws RemoteException;
 }

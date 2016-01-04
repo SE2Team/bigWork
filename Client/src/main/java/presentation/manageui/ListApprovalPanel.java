@@ -2,6 +2,7 @@ package presentation.manageui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.swing.GetDate;
 import presentation.commonui.swing.Table;
 import presentation.listui.check.*;
 import util.ListState;
@@ -180,9 +181,10 @@ public class ListApprovalPanel extends JPanel {
                         break;
                     case LOADINGINFO:
                         bl.save2File((LoadingVO) tempVO);
-                        bl.afterCheck((OrderVO) tempVO);
+                        bl.afterCheck((LoadingVO) tempVO);
                         break;
                     case ORDER:
+                        ((OrderVO) tempVO).setLogistics(GetDate.getTime() + "审核已通过");
                         bl.save2File((OrderVO) tempVO);
                         bl.afterCheck((OrderVO) tempVO);
                         break;
@@ -203,6 +205,7 @@ public class ListApprovalPanel extends JPanel {
                         bl.afterCheck((StockOutVO) tempVO);
                         break;
                     case TRANSINFO:
+                        System.out.println(((TransferVO) tempVO).getOrderNum());
                         bl.save2File((TransferVO) tempVO);
                         bl.afterCheck((TransferVO) tempVO);
                         break;
@@ -367,7 +370,7 @@ public class ListApprovalPanel extends JPanel {
             if ("接收单".equals(listType)) addPanel(new ReceiveChecking(recvo));
             if ("派件单".equals(listType)) addPanel(new DistributeChecking(disvo));
             if ("快递员收款单".equals(listType)) addPanel(new ReceiptChecking(receiptvo));
-            if ("中转单".equals(listType)) addPanel(new TransferChecking(transferVo));
+            if ("中转中心中转单".equals(listType)) addPanel(new TransferChecking(transferVo));
             if ("中转中心到达单".equals(listType)) addPanel(new TransferReceiveChecking(transRecVo));
             if ("库存入库单".equals(listType)) addPanel(new StockInChecking(invo));
             if ("库存出库单".equals(listType)) addPanel(new StockOutChecking(outvo));

@@ -79,7 +79,7 @@ public class DistributeChecking extends DistributePanel{
         ListblService bl;
         try {
             bl = new ListController();
-//            bl.save2File(dis_vo);
+            bl.save2File(dis_vo);
             bl.afterCheck(dis_vo);
         } catch (RemoteException e1) {
             RunTip.makeTip("网络异常", false);

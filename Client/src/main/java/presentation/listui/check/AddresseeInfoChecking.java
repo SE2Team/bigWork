@@ -82,7 +82,7 @@ public class AddresseeInfoChecking extends AddresseeInfoPanel{
         ListblService bl;
         try {
             bl = new ListController();
-//            bl.save2File(addressInfo_vo);
+            bl.save2File(addressInfo_vo);
             bl.afterCheck(addressInfo_vo);
         } catch (RemoteException e1) {
             // TODO Auto-generated catch block

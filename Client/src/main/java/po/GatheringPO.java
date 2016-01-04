@@ -1,14 +1,14 @@
-package vo;
+package po;
 
 import util.ListState;
 import util.ListType;
 
+import java.io.Serializable;
+
 /**
- * Created by Administrator on 2015/10/26 0026.
+ * Created by Administrator on 2015/10/25 0025.
  */
-public class GatheringVO extends ListVO {
-
-
+public class GatheringPO extends ListPO implements Serializable {
     private static final long serialVersionUID = 1L;//序列化编号
 
     String date;
@@ -17,7 +17,8 @@ public class GatheringVO extends ListVO {
     String money;
     String place;
 
-    public GatheringVO(String date, String workplace, String man, String money, String place, ListState isCheck) {
+    public GatheringPO(String date, String workplace, String man, String money, String place, ListState isCheck
+    ) {
         super(isCheck);
         this.date = date;
         this.workplace = workplace;

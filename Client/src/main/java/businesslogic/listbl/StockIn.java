@@ -36,7 +36,7 @@ public class StockIn extends List {
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),
                 "保存入库单"));
 
-        return listDataService.save(po);
+        return listDataService.save(po, organization);
     }
 
     public boolean save(StockInVO vo) throws RemoteException {

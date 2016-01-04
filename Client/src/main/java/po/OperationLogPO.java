@@ -1,9 +1,12 @@
-package vo;
+package po;
+
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2015/10/24 0024.
  */
-public class OperationLogVO {
+public class OperationLogPO implements Serializable {
+    private static final long serialVersionUID = 1L;// 序列化ID
 
     private String time;// 操作时间
     private String human;// 操作人员
@@ -16,13 +19,10 @@ public class OperationLogVO {
      * @param human 操作人员
      * @param type  操作类型
      */
-    public OperationLogVO(String time, String human, String type) {
+    public OperationLogPO(String time, String human, String type) {
         this.time = time;
         this.human = human;
         this.type = type;
-    }
-
-    public OperationLogVO() {
     }
 
     /**
@@ -51,4 +51,5 @@ public class OperationLogVO {
     public String getType() {
         return type;
     }
+
 }

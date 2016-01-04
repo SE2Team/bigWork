@@ -45,7 +45,7 @@ public class PO2VO {
                 PO.getSenderTelephone(), PO.getSenderPhone(), PO.getReceiverName(), PO.getReceiverAddress(),
                 PO.getReceiverWorkplace(), PO.getReceiverTelephone(), PO.getReceiverPhone(),
                 PO.getOriginalNum(), PO.getWeight(), PO.getVolume(), PO.getGoods_Name(), PO.getDeliveryType(),
-                PO.getWrapper(), "1234", "1234", "1234", "1234", PO.getDeliveryNum(), PO.getIsCheck(), PO.getLogistics());
+                PO.getWrapper(), PO.getExpenseOfTransport(), PO.getExpenseOfWrapper(), PO.getExpense(), PO.getDate(), PO.getDeliveryNum(), PO.getIsCheck(), PO.getLogistics());
     }
 
     public static PaymentVO convert(PaymentPO PO) {

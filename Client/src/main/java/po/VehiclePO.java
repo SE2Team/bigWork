@@ -1,6 +1,14 @@
-package vo;
+package po;
 
-public class VehicleVO {
+import java.io.Serializable;
+
+/**
+ * Created by Administrator on 2015/10/25 0025.
+ */
+public class VehiclePO implements Serializable {
+    private static final long serialVersionUID = 1L;//序列化编号
+    //车辆代号、车牌号、购买时间、服役时间
+
     private String vehicleNum;
     private String licensePlate;
     private String buyDate;
@@ -12,21 +20,12 @@ public class VehicleVO {
      * @param buyDate
      * @param useTime
      */
-    public VehicleVO(String vehicleNum, String licensePlate,
+    public VehiclePO(String vehicleNum, String licensePlate,
                      String buyDate, String useTime) {
         this.vehicleNum = vehicleNum;
         this.licensePlate = licensePlate;
         this.buyDate = buyDate;
         this.useTime = useTime;
-    }
-
-    /**
-     * 车辆代号
-     *
-     * @return
-     */
-    public String getVehicleNum() {
-        return vehicleNum;
     }
 
     /**
@@ -39,12 +38,12 @@ public class VehicleVO {
     }
 
     /**
-     * 车牌号
+     * 车辆代号
      *
      * @return
      */
-    public String getLicensePlate() {
-        return licensePlate;
+    public String getVehicleNum() {
+        return vehicleNum;
     }
 
     /**
@@ -57,12 +56,12 @@ public class VehicleVO {
     }
 
     /**
-     * 购买时间
+     * 车牌号
      *
      * @return
      */
-    public String getBuyDate() {
-        return buyDate;
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
     /**
@@ -72,6 +71,15 @@ public class VehicleVO {
      */
     public void setBuyDate(String buyDate) {
         this.buyDate = buyDate;
+    }
+
+    /**
+     * 购买时间
+     *
+     * @return
+     */
+    public String getBuyDate() {
+        return buyDate;
     }
 
     /**

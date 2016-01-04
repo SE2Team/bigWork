@@ -45,6 +45,8 @@ public class TransArrive extends List {
     }
 
     public TransferReceiveVO getTransferArrive(String num) throws RemoteException {
+        System.out.println(num);
         return PO2VO.convert(listDataService.geTransferReceive(num));
+
     }
 }

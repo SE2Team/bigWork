@@ -4,13 +4,19 @@
 package presentation.listui;
 
 import businesslogic.listbl.ListController;
+import businesslogic.managebl.ManageController;
 import businesslogicservice.ListblService;
+import businesslogicservice.ManageblService;
 import presentation.commonui.Empty;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.commonui.isAllEntered;
+import presentation.commonui.swing.GetDate;
 import presentation.exception.NumExceptioin;
 import util.DeliveryType;
+import util.ExistException;
 import util.ListState;
+import vo.ExpenseAndDateVO;
 import vo.OrderVO;
 
 import javax.swing.*;
@@ -20,11 +26,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class OrderPanel extends JPanel {
 
-	protected int x = 10, y = 35, jl_width = 80, jtf_width = 100,
-			jtf_width1 = 160, go_width = 60, height = 22, addx = 70,
+	protected int x = 10, y = 35, jl_width = 80, jtf_width = 115,
+			jtf_width1 = 180, go_width = 60, height = 22, addx = 70,
 			addx1 = 130, addy = 45;
 
 	// 定义所有label
@@ -33,7 +41,7 @@ public class OrderPanel extends JPanel {
 			receiver_address, receiver_workplace, receiver_tele,
 			receiver_phone, goodsInfo, goods_name, goods_num, goods_weight,
 			goods_length, goods_width, goods_height, goods_volume, deliType,
-			wrapper, transExpense, wrapperExpense, expense, ordernum, dueDate;
+			wrapper, transExpense, wrapperExpense, expense, ordernum, dueDate, jlo_num;
 
 	// 定义所有文本框
 	protected JTextField s_name, s_address, s_workplace, s_tele, s_phone,
@@ -42,10 +50,10 @@ public class OrderPanel extends JPanel {
 			o_ordernum, o_dueDate;
 
 	// 定义所有下拉框
-	protected JComboBox o_type, o_wrapper;
+	protected JComboBox o_type, o_wrapper, jcbs_address, jcbr_address;
 
 	// 定义确认、取消按钮
-	protected JButton button_1, button_2;
+	protected JButton button_1, button_2, jb_cal;
 
 	// 定义所有panel
 	protected JPanel sender, receiver, goods, other, button;
@@ -64,6 +72,9 @@ public class OrderPanel extends JPanel {
 	// 定义文本框的数组
 	protected JTextField[] OrderJtf, OrderJtf2;
 
+	String[] city = {"南京市", "北京市", "上海市", "广州市"};
+
+	@SuppressWarnings("unused")
 	public OrderPanel() {
 		this.setLayout(null);
 
@@ -88,9 +99,13 @@ public class OrderPanel extends JPanel {
 		sender_address.setBounds(x, y + addy, jl_width, height);
 		sender_address.setFont(font2);
 
+		jcbs_address = new JComboBox(city);
+		jcbs_address.setFont(font3);
+		jcbs_address.setBounds(x + addx, y + addy, 70, height);
+
 		s_address = new JTextField();
 		s_address.setFont(font3);
-		s_address.setBounds(x + addx, y + addy, jtf_width1, height);
+		s_address.setBounds(x + addx + 70, y + addy, 110, height);
 
 		sender_workplace = new JLabel("单位", JLabel.CENTER);
 		sender_workplace.setBounds(x, y + 2 * addy, jl_width, height);
@@ -122,6 +137,7 @@ public class OrderPanel extends JPanel {
 		sender.add(BorderLayout.NORTH, sender_name);
 		sender.add(s_name);
 		sender.add(sender_address);
+		sender.add(jcbs_address);
 		sender.add(s_address);
 		sender.add(sender_workplace);
 		sender.add(s_workplace);
@@ -151,9 +167,13 @@ public class OrderPanel extends JPanel {
 		receiver_address.setBounds(x, y + addy, jl_width, height);
 		receiver_address.setFont(font2);
 
+		jcbr_address = new JComboBox(city);
+		jcbr_address.setFont(font3);
+		jcbr_address.setBounds(x + addx, y + addy, 70, height);
+
 		r_address = new JTextField();
 		r_address.setFont(font3);
-		r_address.setBounds(x + addx, y + addy, jtf_width1, height);
+		r_address.setBounds(x + addx + 70, y + addy, 110, height);
 
 		receiver_workplace = new JLabel("单位", JLabel.CENTER);
 		receiver_workplace.setBounds(x, y + 2 * addy, jl_width, height);
@@ -185,6 +205,7 @@ public class OrderPanel extends JPanel {
 		receiver.add(receiver_name);
 		receiver.add(r_name);
 		receiver.add(receiver_address);
+		receiver.add(jcbr_address);
 		receiver.add(r_address);
 		receiver.add(receiver_workplace);
 		receiver.add(r_workplace);
@@ -277,10 +298,45 @@ public class OrderPanel extends JPanel {
 		ordernum.setFont(font2);
 		ordernum.setBounds(x + 2 * addx + 2 * addx1, 0, jl_width + 40, height);
 
+		Iterator<String> ite = null;
+		ArrayList<String> list1 = new ArrayList<String>();
+		ManageblService bl;
+		try {
+			bl = new ManageController();
+			ite = bl.checkCityNum();
+		} catch (RemoteException e1) {
+			RunTip.makeTip("网络异常", false);
+		}
+
+		if (ite != null) {
+			while (ite.hasNext()) {
+				list1.add(ite.next());
+			}
+		}
+
+		int n = list1.size();
+		String[] s = new String[n];
+		for (int i = 0; i < n; i++) {
+			s[i] = list1.get(i);
+		}
+
+		String num = null;
+		ManageblService mbl;
+		try {
+			mbl = new ManageController();
+			num = mbl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+		} catch (RemoteException e2) {
+			RunTip.makeTip("网络异常", false);
+		}
+		jlo_num = new JLabel(num.substring(0, 3));
+		jlo_num.setFont(font3);
+		jlo_num.setBounds(x + 2 * addx + 2 * addx1 + jl_width + 40, 0, 40,
+				height);
+
 		o_ordernum = new JTextField();
 		o_ordernum.setFont(font3);
-		o_ordernum.setBounds(x + 2 * addx + 2 * addx1 + jl_width + 40, 0,
-				jtf_width, height);
+		o_ordernum.setBounds(x + 2 * addx + 2 * addx1 + jl_width + 80, 0,
+				jtf_width - 40, height);
 		o_ordernum.addFocusListener(new TextFocus());
 
 		wrapper = new JLabel("包装", JLabel.CENTER);
@@ -325,6 +381,16 @@ public class OrderPanel extends JPanel {
 				height);
 		o_dueDate.setEditable(false);
 
+		jb_cal = new JButton("计算");
+		jb_cal.setFont(font2);
+		jb_cal.setBounds(x + addx1 + 3 * jl_width + jtf_width, 2 * addy, 70, 25);
+		jb_cal.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				performCal();
+			}
+		});
+
 		other.add(deliType);
 		other.add(o_type);
 		other.add(transExpense);
@@ -339,6 +405,8 @@ public class OrderPanel extends JPanel {
 		other.add(o_ordernum);
 		other.add(dueDate);
 		other.add(o_dueDate);
+		other.add(jb_cal);
+		other.add(jlo_num);
 
 		// 处理按钮信息面板
 		button = new JPanel();
@@ -346,7 +414,7 @@ public class OrderPanel extends JPanel {
 		button.setBounds(0, 465, 650, 60);
 		button_1 = new JButton("确定");
 		button_1.setFont(font2);
-		button_1.setBounds(x + addx1 + 50, 0, 70, 25);
+		button_1.setBounds(x + addx1 + 50, 25, 70, 25);
 		button_1.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -366,12 +434,12 @@ public class OrderPanel extends JPanel {
 
 		button_2 = new JButton("取消");
 		button_2.setFont(font2);
-		button_2.setBounds(x + 2 * addx1 + addx, 0, 70, 25);
+		button_2.setBounds(x + 2 * addx1 + addx, 25, 70, 25);
 		button_2.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-                performCancel();
-            }
+				performCancel();
+			}
 		});
 
 		button.add(button_1);
@@ -384,10 +452,46 @@ public class OrderPanel extends JPanel {
 		this.add(button);
 	}
 
-    protected void performCancel() {
-        new Empty(OrderJtf);
+	protected void performCal() {
 
-    }
+		boolean isOK = NumExceptioin.isInt(g_num)
+				&& NumExceptioin.isDouble(g_weight)
+				&& NumExceptioin.isDouble(g_volume);
+		JTextField[] calField = {g_num, g_weight, g_volume};
+		boolean isenter = isAllEntered.isEntered(calField);
+		if (isOK && isenter) {
+			ListblService bl;
+			try {
+				bl = new ListController();
+				ExpenseAndDateVO ovo = new ExpenseAndDateVO(jcbs_address
+						.getSelectedItem().toString(), jcbr_address
+						.getSelectedItem().toString(), o_wrapper
+						.getSelectedItem().toString(), g_volume.getText(), "",
+						deliveryType, "", "", "");
+				ExpenseAndDateVO nvo;
+				try {
+					nvo = bl.getExpenseAndDate(ovo);
+					o_transExpense.setText(nvo.getExpenseOfTransport());
+					o_expense.setText(nvo.getExpense());
+					o_wrapperExpense.setText(nvo.getExpenseOfWrap());
+					o_dueDate.setText(nvo.getDays());
+				} catch (ExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (RemoteException e) {
+				RunTip.makeTip("网络异常", false);
+			}
+
+		} else {
+			RunTip.makeTip("请输入相关正确信息", false);
+		}
+
+	}
+
+	protected void performCancel() {
+		new Empty(OrderJtf);
+	}
 
 	protected void performButton1() {
 
@@ -408,37 +512,38 @@ public class OrderPanel extends JPanel {
 				&& NumExceptioin.isDouble(g_weight)
 				&& NumExceptioin.isDouble(g_volume);
 		if (isOk && isAllEntered.isEntered(OrderJtf2)) {
-			OrderVO order_vo = new OrderVO(s_name.getText(),
-					s_address.getText(), s_workplace.getText(),
-					s_tele.getText(), s_phone.getText(), r_name.getText(),
-					r_address.getText(), r_workplace.getText(),
+			OrderVO order_vo = new OrderVO(s_name.getText(), jcbs_address
+					.getSelectedItem().toString() + s_address.getText(),
+					s_workplace.getText(), s_tele.getText(), s_phone.getText(),
+					r_name.getText(), jcbr_address.getSelectedItem().toString()
+					+ r_address.getText(), r_workplace.getText(),
 					r_tele.getText(), r_phone.getText(), g_num.getText(),
 					g_weight.getText(), g_volume.getText(), g_name.getText(),
 					deliveryType, o_wrapper.getSelectedItem().toString(),
 					o_transExpense.getText(), o_wrapperExpense.getText(),
 					o_expense.getText(), o_dueDate.getText(),
-					o_ordernum.getText(), ListState.UNCHECK);
+					jlo_num.getText() + o_ordernum.getText(), ListState.UNCHECK);
 
 			ListblService bl;
 
 			try {
 				bl = new ListController();
+				order_vo.setLogistics(GetDate.getTime() + "审核已通过");
 				bl.save(order_vo);
 			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-                RunTip.makeTip("网络异常", false);
-            }
+				RunTip.makeTip("网络异常", false);
+			}
 
-            RunTip.makeTip("保存成功", true);
+			RunTip.makeTip("保存成功", true);
 
-        } else if ((!isOk) && isAllEntered.isEntered(OrderJtf2)) {
-            RunTip.makeTip("请输入正确格式的信息", false);
+		} else if ((!isOk) && isAllEntered.isEntered(OrderJtf2)) {
+			RunTip.makeTip("请输入正确格式的信息", false);
 
-        } else if (isOk && !isAllEntered.isEntered(OrderJtf2)) {
-            RunTip.makeTip("仍有信息未输入", false);
-        } else if (!isOk && !isAllEntered.isEntered(OrderJtf2)) {
-            RunTip.makeTip("请输入所有正确格式的信息", false);
-        }
+		} else if (isOk && !isAllEntered.isEntered(OrderJtf2)) {
+			RunTip.makeTip("仍有信息未输入", false);
+		} else if (!isOk && !isAllEntered.isEntered(OrderJtf2)) {
+			RunTip.makeTip("请输入所有正确格式的信息", false);
+		}
 	}
 
 	// 错误提示信息是否已经被添加
@@ -601,7 +706,7 @@ public class OrderPanel extends JPanel {
 					}
 				}
 			}
-			if (temp == g_volume) {// 判断实际重量是否为小数或整数
+			if (temp == g_volume) {// 判断体积是否为小数或整数
 				if (!NumExceptioin.isDouble(g_volume)) {
 					isgoodsVolumeAdd = true;
 					if (tip7 == null) {
@@ -624,8 +729,7 @@ public class OrderPanel extends JPanel {
 				}
 			}
 			if (temp == o_ordernum) {// 判断订单条形码号输入是否符合规范
-				if ((!NumExceptioin.isOrderValid(o_ordernum))
-						) {
+				if ((!NumExceptioin.isOrderValid(o_ordernum))) {
 					isOrdernumAdd = true;
 					if (tip8 == null) {
 						tip8 = new JLabel("订单号为10位0~9整数");

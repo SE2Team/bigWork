@@ -139,7 +139,7 @@ public class FinanceAccountPanel extends JPanel {
 			list.add(iterator.next());
 		}
 		int n = list.size();
-		String row[][] = new String[n][2];
+		final String row[][] = new String[n][2];
 		for (int j = 0; j < n; j++) {
 			AccountVO vo = list.get(j);
 			String[] temp = new String[2];
@@ -152,7 +152,17 @@ public class FinanceAccountPanel extends JPanel {
 		tableModel = (DefaultTableModel) accountTable.getModel();
 
 		//------------------------------------
-
+		operation4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String name = jtfName.getText();
+				for (int j = 0; j < row.length; j++) {
+					if (row[j][0].equals(name)) {
+						accountTable.setRowSelectionInterval(j, j);
+					}
+				}
+			}
+		});
 		
 		accountTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选
 		accountTable.addMouseListener(new MouseAdapter() {// 鼠标事件
