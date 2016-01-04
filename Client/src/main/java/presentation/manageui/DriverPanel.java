@@ -122,23 +122,7 @@ public class DriverPanel extends JPanel {
 		search = new JButton("查询");
 		search.setFont(font2);
 		search.setBounds(x + 4 * addx + 50, y, width, height);
-		search.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) {
-				String num = inputInfo.getText();
-				;
-				ManageblService bl1;
-				DriverVO driver;
-
-				try {
-					bl1 = new ManageController();
-					driver = bl1.checkDriver(num);
-				} catch (RemoteException e2) {
-					RunTip.makeTip("网络异常", false);
-				}
-
-			}
-		});
 
 
 		String[] column = {"司机编号", "姓名", "性别", "出生日期", "身份证号", "手机", "车辆单位",
@@ -167,7 +151,7 @@ public class DriverPanel extends JPanel {
 
 		}
 		n = list1.size();
-		String row[][] = new String[n][8];
+		final String row[][] = new String[n][8];
 		// 将s1赋值为司机信息
 		for (int j = 0; j < n; j++) {
 			String[] s1 = new String[8];
@@ -188,7 +172,17 @@ public class DriverPanel extends JPanel {
 		driverTable = Table.getTable(column, row);
 		tableModel = (DefaultTableModel) driverTable.getModel();
 		//-------------------------------------------------	
-
+		search.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String num = inputInfo.getText();
+				for (int j = 0; j < row.length; j++) {
+					if (row[j][0].equals(num)) {
+						driverTable.setRowSelectionInterval(j, j);
+					}
+				}
+			}
+		});
 
 		driverTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// 单选
 		driverTable.addMouseListener(new MouseAdapter() {// 鼠标事件

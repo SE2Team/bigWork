@@ -24,9 +24,19 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 		// TODO Auto-generated constructor stub
 	}
 
-	public void update(StockPO PO) throws RemoteException {
+	public void update(StockPO PO, String transferOrganization) throws RemoteException {
 		// TODO Auto-generated method stub
-		Common common=new Common("stock");
+		Common common;
+		if (transferOrganization.equals("南京中转中心")) {
+			common = new Common("nanJingStock");
+		} else if (transferOrganization.equals("北京中转中心")) {
+			common = new Common("beiJingStock");
+		} else if (transferOrganization.equals("上海中转中心")) {
+			common = new Common("shangHaiStock");
+		} else {
+			common = new Common("guangZhouStock");
+		}
+		
 		ArrayList<StockInPO> list=PO.getStockList();
 		ArrayList<String> list1=new ArrayList<String>();
 		if(PO.getStockState()==true){
@@ -42,10 +52,19 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 		common.writeData(list1);
 	}
 
-	public StockPO check() throws RemoteException {
+	public StockPO check(String transferOrganization) throws RemoteException {
 		// TODO Auto-generated method stub
 		Boolean stockState=false;
-		Common common=new Common("stock");
+		Common common;
+		if (transferOrganization.equals("南京中转中心")) {
+			common = new Common("nanJingStock");
+		} else if (transferOrganization.equals("北京中转中心")) {
+			common = new Common("beiJingStock");
+		} else if (transferOrganization.equals("上海中转中心")) {
+			common = new Common("shangHaiStock");
+		} else {
+			common = new Common("guangZhouStock");
+		}
 		ArrayList<StockInPO> list2=new ArrayList<>();
 		ArrayList<String> list=common.readData();
 		if(list.get(0).equals("true")){
@@ -60,7 +79,7 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 		
 	}
 
-	public StockPO initial() throws RemoteException {
+	public StockPO initial(String transferOrganization) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 		return null;
@@ -118,16 +137,35 @@ public class CommoditydataImpl extends UnicastRemoteObject implements CommodityD
 	 * @return 出库数量/入库数量      库存数量
 	 * @throws RemoteException
 	 */
-	public ArrayList<Integer> check(String start, String end) throws RemoteException {
+	public ArrayList<Integer> check(String start, String end, String transferOrganization) throws RemoteException {
 		// TODO Auto-generated method stub
+
+		Common common;
+		Common common2;
+		Common common3;
+		if (transferOrganization.equals("南京中转中心")) {
+			common = new Common("nanJingStockIn");
+			common2 = new Common("nanJingStockOut");
+			common3 = new Common("nanJingStock");
+		} else if (transferOrganization.equals("北京中转中心")) {
+			common = new Common("beiJingStockIn");
+			common2 = new Common("beiJingStockOut");
+			common3 = new Common("beiJingStock");
+		} else if (transferOrganization.equals("上海中转中心")) {
+			common = new Common("shangHaiStockIn");
+			common2 = new Common("shangHaiStockOut");
+			common3 = new Common("shangHaiStock");
+		} else {
+			common = new Common("guangZhouStockIn");
+			common2 = new Common("guangZhouStockOut");
+			common3 = new Common("guangZhouStock");
+		}
 		int inNum=0;
 		int outNum=0;
 		int stockNum=0;
 		int startDate=this.DateToInt(start);
 		int endDate1=this.DateToInt(end);
-		Common common=new Common("stockIn");
-		Common common2=new Common("stockOut");
-		Common common3=new Common("stock");
+
 		ArrayList<String> listIn=common.readData();
 		ArrayList<String> listOut=common2.readData();
 		ArrayList<Integer> integers=new ArrayList<>();

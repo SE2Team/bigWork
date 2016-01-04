@@ -1,19 +1,14 @@
 package presentation.financeui;
 
-import java.awt.Cursor;
-import java.awt.Font;
+import presentation.commonui.DateChooser;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
-import presentation.commonui.DateChooser;
+import java.util.ArrayList;
 
 /**
  * 财务人员查看统计分析界面
@@ -130,6 +125,16 @@ public class FinanceAnalysisPanel extends JPanel{
 		getButton.setBounds(500, 0, width, height);
 		
 		costPanel.add(t2Label);
+		ArrayList<String> str = new ArrayList<>();
+		str.add("1");
+		str.add("3");
+		str.add("2");
+		getButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 		costPanel.add(getButton);
 		
 		String[] column2 = { "总收入","总支出","总利润"};

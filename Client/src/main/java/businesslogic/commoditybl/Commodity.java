@@ -37,18 +37,20 @@ public class Commodity {
     private StockPO stockPO;
 
     private InquiryDataService inquiryDataService;
+    private String organization = "";
 
     /**
      * Instantiates a new Commodity.
      *
      * @throws RemoteException the remote exception
      */
-    public Commodity() throws RemoteException {
+    public Commodity(String organization) throws RemoteException {
+        this.organization = organization;
         dataFactory = DataFactory.getInstance();
         commodity = dataFactory.getCommodityData();
         inquiryDataService=dataFactory.getInquiryData();
         try {
-            stockPO = commodity.check();
+            stockPO = commodity.check(organization);
         } catch (NullPointerException e) {
             System.out.println("没有连接到服务器！");
         }
@@ -72,7 +74,7 @@ public class Commodity {
         //从库存中删去
         stockPO.remove(stockOutVO.getDeliveryNum());
 
-        commodity.update(stockPO);
+        commodity.update(stockPO, organization);
 
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"出库"));
 
@@ -98,7 +100,7 @@ public class Commodity {
         //添加到库存
         stockPO.add(stockInPO);
 
-        commodity.update(stockPO);
+        commodity.update(stockPO, organization);
 
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"入库"));
 
@@ -113,7 +115,7 @@ public class Commodity {
      * @return stock vo
      */
     public Iterator<Integer> checkStock(String startDate, String endDate) throws RemoteException {
-        Iterator<Integer> itr = commodity.check(startDate, endDate).iterator();
+        Iterator<Integer> itr = commodity.check(startDate, endDate, organization).iterator();
 
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getDay(), Helper.getUserType().toString(), "查看库存"));
 

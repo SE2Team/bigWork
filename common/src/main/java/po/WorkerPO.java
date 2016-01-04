@@ -14,15 +14,18 @@ public class WorkerPO implements Serializable{
 	private String organization;
 	private String userId;
 	private String sex;
+	private String age;
+
 
 	public WorkerPO(String name, String idNum, String position, String organization
-			, String userId, String sex) {
+			, String userId, String sex, String age) {
 		this.name=name;
 		this.idNum=idNum;
 		this.position=position;
 		this.organization=organization;
 		this.userId=userId;
 		this.sex=sex;
+		this.age = age;
 	}
 	
 	public void setName(String name){
@@ -72,5 +75,16 @@ public class WorkerPO implements Serializable{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
 }

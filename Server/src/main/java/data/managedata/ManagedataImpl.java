@@ -219,8 +219,9 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	}
 	
 	private String workerPOToString(WorkerPO po){
-		return po.getName()+";"+po.getIdNum()+";"+po.getPosition()+";"+po.getPosition()+";"+po.getUserId();
-	}
+        return po.getName() + ";" + po.getIdNum() + ";" + po.getPosition() + ";" + po.getOrganization() + ";" + po.getUserId()
+                + ";" + po.getSex() + ";" + po.getAge();
+    }
 
 	private String driverPOToString(DriverPO oldDriverPO) {
 		return oldDriverPO.getDriverNum() + ";" + oldDriverPO.getDriverName() + ";" + oldDriverPO.getBirthDate() + ";" + oldDriverPO.getIdNum() + ";" + oldDriverPO.getPhone()
@@ -228,8 +229,8 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 	}
    
 	private WorkerPO stringToWorkerPO(String[] str){
-		return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5]);
-	}
+        return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
+    }
 	
 	private String vehiclePOToString(VehiclePO po){
 		return po.getVehicleNum()+";"+po.getLicensePlate()+";"+po.getBuyDate()+";"+po.getUseTime();
@@ -397,8 +398,8 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		ArrayList<String> list = common.readData();
 		for (int j = 0; j < list.size(); j++) {
 			String[] str = list.get(j).split(";");
-			if (str[0].equals(num)) {
-				return new OrganizationPO(str[0], str[1], str[2]);
+            if (str[0].equals(num) || str[1].equals(num) || str[2].equals(num)) {
+                return new OrganizationPO(str[0], str[1], str[2]);
 			}
 		}
 		return null;
@@ -410,10 +411,12 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		Common common = new Common("worker");
 		ArrayList<String> list = common.readData();
 		for (int j = 0; j < list.size(); j++) {
-			String[] str = list.get(j).split(";");
-			if (str[1].equals(id)) {
-				return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5]);
-			}
+            System.out.println(list.get(j));
+            System.out.println("a");
+            String[] str = list.get(j).split(";");
+            if (str[4].equals(id)) {
+                return new WorkerPO(str[0], str[1], str[2], str[3], str[4], str[5], str[6]);
+            }
 		}
 		return null;
 	}

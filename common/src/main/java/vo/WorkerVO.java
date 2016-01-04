@@ -10,15 +10,17 @@ public class WorkerVO {
     private String organization;
     private String userId;
     private String sex;
+    private String age;
 
     public WorkerVO(String name, String idNum, String position,
-                    String organization, String userId, String sex) {
+                    String organization, String userId, String sex, String age) {
         this.name = name;
         this.idNum = idNum;
         this.position = position;
         this.organization = organization;
         this.userId = userId;
         this.sex = sex;
+        this.age = age;
     }
 
     public WorkerVO() {
@@ -71,4 +73,13 @@ public class WorkerVO {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 }
+

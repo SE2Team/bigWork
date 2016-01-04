@@ -19,8 +19,9 @@ import java.util.Iterator;
 
 public class addInstituInfoDialog extends MyDialog {
 
-    private EmpAndInsPanel parent;
-    private FinanceInitialPanel parent2;
+    private EmpAndInsPanel parent = null;
+    private FinanceInitialPanel parent2 = null;
+    private boolean modifing = false;
 
     public addInstituInfoDialog(EmpAndInsPanel parent) {
         this.parent = parent;
@@ -28,6 +29,16 @@ public class addInstituInfoDialog extends MyDialog {
         this.setSize(400, 380);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        modifing = false;
+    }
+
+    public addInstituInfoDialog(EmpAndInsPanel parent, boolean b) {
+        this.parent = parent;
+        this.setContentPane(new addInstituInfoPanel(parent));
+        this.setSize(400, 380);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        modifing = b;
     }
 
     public addInstituInfoDialog(FinanceInitialPanel parent) {
@@ -48,7 +59,7 @@ public class addInstituInfoDialog extends MyDialog {
     JLabel addInfo, institution, city, institutionNum, cityNum;
     // 定义对应的文本框
     JTextField jtf_institution;
-    JTextField jtf_city;
+    //    JTextField jtf_city;
     JComboBox cityBox;
     JTextField jtf_institutionNum;
     // 定义确定，取消按钮
@@ -60,6 +71,9 @@ public class addInstituInfoDialog extends MyDialog {
     // 定义文本框的数组
     JTextField[] insJtf;
     ManageblService manageblService;
+
+    // 错误提示信息是否已经被添加
+    boolean isInstitutionAdd = false;
 
     class addInstituInfoPanel extends JPanel {
 
@@ -97,10 +111,12 @@ public class addInstituInfoDialog extends MyDialog {
 
             cityNum = new JLabel();
             cityNum.setFont(font);
+            city.setBounds(x, y + addy / 2, jl_width, height);
+
+            cityNum = new JLabel();
+            cityNum.setFont(font);
             cityNum.setBounds(x + addx, y + addy, jl_width, height);
 
-            arrayList.add("北京");
-            arrayList.add("上海");
             cityBox = new JComboBox(arrayList.toArray());
             cityBox.setBounds(x + addx, y + addy / 2, jtf_width, height);
             cityBox.setFont(font2);
@@ -141,41 +157,10 @@ public class addInstituInfoDialog extends MyDialog {
             sure.setBounds(80, y + 2 * addy + 10, 80, height);
             sure.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-
-                    insJtf = new JTextField[]{jtf_institution,
-                            jtf_institutionNum};
-                    boolean isOk = NumExceptioin
-                            .isInstitutionValid(jtf_institutionNum);
-                    if (isOk && isAllEntered.isEntered(insJtf)) {
-                        rowContent = new String[]{cityNum.getText() + jtf_institutionNum.getText(), jtf_city.getText()
-                                , jtf_institution.getText()};
-                        OrganizationVO vo = new OrganizationVO(rowContent[0], rowContent[1], rowContent[2]);
-                        ManageblService bl;
-                        try {
-                            bl = new ManageController();
-                            bl.addOrganization(vo);
-                        } catch (RemoteException e) {
-                            RunTip.makeTip("网络异常", false);
-                            return;
-                        } catch (ExistException e) {
-                            RunTip.makeTip("该机构已存在", false);
-                            return;
-
-                        }
-                        if (jp == parent) {
-                            parent.addInsInfo(rowContent);
-                        }
-                        if (jp == parent2) {
-                            parent2.addInsInfo(rowContent);
-                        }
-                        RunTip.makeTip("保存成功", true);
-                        dispose();
-                    } else if ((!isOk) && isAllEntered.isEntered(insJtf)) {
-                        RunTip.makeTip("请输入正确格式的信息", false);
-                    } else if (isOk && !isAllEntered.isEntered(insJtf)) {
-                        RunTip.makeTip("仍有信息未输入", false);
-                    } else if (!isOk && !isAllEntered.isEntered(insJtf)) {
-                        RunTip.makeTip("请输入所有正确格式的信息", false);
+                    if (modifing) {
+                        modify();
+                    } else {
+                        addInfo();
                     }
 
                 }
@@ -204,14 +189,71 @@ public class addInstituInfoDialog extends MyDialog {
         }
     }
 
-    // 错误提示信息是否已经被添加
-    boolean isInstitutionAdd = false;
 
     private String getCityNum() throws RemoteException {
         String str = manageblService.checkCityNum(cityBox.getSelectedItem().toString());
-
+        System.out.println(str + "ll");
         return str;
     }
+
+    private void addInfo() {
+        insJtf = new JTextField[]{jtf_institution,
+                jtf_institutionNum};
+        boolean isOk = NumExceptioin
+                .isInstitutionValid(jtf_institutionNum);
+        if (isOk && isAllEntered.isEntered(insJtf)) {
+            rowContent = new String[]{cityNum.getText() + jtf_institutionNum.getText(),
+                    cityBox.getSelectedItem().toString()
+                    , jtf_institution.getText()};
+            OrganizationVO vo = new OrganizationVO(rowContent[0], rowContent[1], rowContent[2]);
+            ManageblService bl;
+            try {
+                bl = new ManageController();
+                bl.addOrganization(vo);
+            } catch (RemoteException e) {
+                RunTip.makeTip("网络异常", false);
+                return;
+            } catch (ExistException e) {
+                RunTip.makeTip("该机构已存在", false);
+                return;
+
+            }
+            if (parent != null) {
+                parent.addInsInfo(rowContent);
+            }
+            if (parent2 != null) {
+                parent2.addInsInfo(rowContent);
+            }
+            RunTip.makeTip("保存成功", true);
+            parent.update2();
+            dispose();
+        } else if ((!isOk) && isAllEntered.isEntered(insJtf)) {
+            RunTip.makeTip("请输入正确格式的信息", false);
+        } else if (isOk && !isAllEntered.isEntered(insJtf)) {
+            RunTip.makeTip("仍有信息未输入", false);
+        } else if (!isOk && !isAllEntered.isEntered(insJtf)) {
+            RunTip.makeTip("请输入所有正确格式的信息", false);
+        }
+    }
+
+    private void modify() {
+        insJtf = new JTextField[]{jtf_institution, jtf_institutionNum};
+        boolean isOk = NumExceptioin.isInstitutionValid(jtf_institutionNum);
+        boolean isenter = isAllEntered.isEntered(insJtf);
+        if (isOk && isenter) {
+            rowContent = new String[]{jtf_institution.getText(), jtf_institutionNum.getText()};
+            parent.updateInsInfo(rowContent);
+            RunTip.makeTip("修改成功", true);
+            dispose();
+        } else if ((!isOk) && isenter) {
+            RunTip.makeTip("请输入正确格式的信息", false);
+        } else if (isOk && !isenter) {
+            RunTip.makeTip("仍有信息未输入", false);
+        } else if (!isOk && !isenter) {
+            RunTip.makeTip("请输入所有正确格式的信息", false);
+        }
+    }
+
 
     /**
      * 监听焦点
@@ -230,8 +272,8 @@ public class addInstituInfoDialog extends MyDialog {
             if (!NumExceptioin.isInstitutionValid(jtf_institutionNum)) {
                 isInstitutionAdd = true;
                 if (tip1 == null) {
-                    tip1 = new JLabel("机构编号位数应为6位", JLabel.CENTER);
-                    tip1.setBounds(x + addx, y + addy + height, jtf_width,
+                    tip1 = new JLabel("机构编号位数应为6位或3位", JLabel.CENTER);
+                    tip1.setBounds(x + addx / 2, y + addy + height, jtf_width,
                             height);
                     tip1.setFont(font2);
                     tip1.setForeground(Color.RED);
@@ -250,6 +292,7 @@ public class addInstituInfoDialog extends MyDialog {
         }
 
     }
+
 
     /**
      * 添加错误提示信息

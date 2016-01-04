@@ -2,6 +2,7 @@ package presentation.manageui;
 
 import businesslogic.listbl.ListController;
 import businesslogicservice.ListblService;
+import presentation.commonui.swing.Table;
 import presentation.listui.check.*;
 import util.ListState;
 import vo.*;
@@ -36,7 +37,7 @@ public class ListApprovalPanel extends JPanel {
     private DefaultTableModel model;
     private String listType = null;
     String[] column = {"序号", "审批状态", "单据类型"};
-    String row[][] = new String[50][3];
+
 
     Font font1 = new Font("宋体", Font.PLAIN, 15);
     Font font2 = new Font("宋体", Font.PLAIN, 12);
@@ -74,7 +75,7 @@ public class ListApprovalPanel extends JPanel {
 
         arrayList = new ArrayList<ListVO>();
         Iterator<ListVO> itr = null;
-
+        int n = 0;
 
         try {
             bl = new ListController();
@@ -84,16 +85,19 @@ public class ListApprovalPanel extends JPanel {
             e.printStackTrace();
         }
 
-        int cout = 1;
+
         while (itr.hasNext()) {
-            ListVO vo = itr.next();
-            arrayList.add(vo);
-            String[] temp = {String.valueOf(cout), cCheck(String.valueOf(vo.getIsCheck())), cType(vo.getType().toString())};
-            row[cout - 1] = temp;
-            cout++;
+            arrayList.add(itr.next());
         }
-
-
+        n = arrayList.size();
+        String[][] row = new String[n][3];
+        for (int j = 0; j < n; j++) {
+            ListVO vo = arrayList.get(j);
+            String[] temp = {String.valueOf(j + 1), cCheck(String.valueOf(vo.getIsCheck())), cType(vo.getType().toString())};
+            row[j] = temp;
+        }
+        listTable = Table.getTable(column, row);
+        model = (DefaultTableModel) listTable.getModel();
 //
 //
 //        for(ListVO vo:arrayList){
@@ -110,8 +114,7 @@ public class ListApprovalPanel extends JPanel {
 //            System.out.println(rowArray.get(i)[0]+rowArray.get(i)[1]+rowArray.get(i)[2]+rowArray.get(i)[3]);
 //            row[i]=rowArray.get(i);
 //        }
-        model = new DefaultTableModel(row, column);
-        listTable = new JTable(model);
+
         listTable.setFont(font1);
         listTable.setRowHeight(20);
         jsp = new JScrollPane(listTable);

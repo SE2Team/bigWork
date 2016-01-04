@@ -162,7 +162,8 @@ public class PO2VO {
     public static WorkerVO convert(WorkerPO po){
         if (po == null)
             return null;
-        return new WorkerVO(po.getName(),po.getIdNum(),po.getPosition(),po.getOrganization(),po.getUserId(),po.getSex());
+        return new WorkerVO(po.getName(), po.getIdNum(), po.getPosition(), po.getOrganization(), po.getUserId(), po.getSex()
+                , po.getAge());
     }
 
     public static VehicleVO convert(VehiclePO po){

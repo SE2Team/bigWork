@@ -73,4 +73,20 @@ public class StockOutVO extends ListVO {
     public TransportType getTransportType() {
         return transportType;
     }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public void setTransportType(TransportType transportType) {
+        this.transportType = transportType;
+    }
+
+    public void setOutDate(String outDate) {
+        this.outDate = outDate;
+    }
 }

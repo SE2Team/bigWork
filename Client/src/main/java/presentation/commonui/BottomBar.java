@@ -34,14 +34,15 @@ public class BottomBar extends JPanel {
     }
 
     private void initSetButton() {
-        jb_set = new JButton("设置");
-        jb_set.setBounds(500, 0, 150, 30);
+        jb_set = new JButton(new ImageIcon("images/setting.png"));
+        jb_set.setBounds(860, 0, 30, 30);
         this.add(jb_set);
         jb_set.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 new SetIPDialog(BottomBar.this).setVisible(true);
             }
         });
+        jb_set.setOpaque(true);
     }
     
     public static BottomBar getInstance() {
@@ -55,7 +56,7 @@ public class BottomBar extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(new ImageIcon("images/buttom.jpg").getImage(), 0, 0, this);
+//        g.drawImage(new ImageIcon("images/buttom.jpg").getImage(), 0, 0, this);
         repaint();
     }
 

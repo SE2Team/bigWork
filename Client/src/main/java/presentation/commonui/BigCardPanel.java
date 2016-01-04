@@ -1,7 +1,9 @@
 package presentation.commonui;
 
 import businesslogic.loginbl.LoginController;
+import businesslogic.managebl.ManageController;
 import businesslogicservice.LoginblService;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.userui.LogInPanel;
 import vo.UserVO;
 
@@ -103,14 +105,14 @@ public class BigCardPanel extends JPanel implements ActionListener {
                 return;
             }
 
-            //初始化UserInfo
-//            UserInfo.USER = vo;
-//            try {
-//                UserInfo.WORKER = new ManageController().checkWorkerByID(vo.getId());
-//            } catch (RemoteException e) {
-//                RunTip.makeTip("网络异常", false);
-//                return;
-//            }
+//            初始化UserInfo
+            UserInfo.USER = vo;
+            try {
+                UserInfo.WORKER = new ManageController().checkWorkerByID(vo.getId());
+            } catch (RemoteException e) {
+                RunTip.makeTip("网络异常", false);
+                return;
+            }
             switch (vo.getPermission()) {
                 case COURIER:
                     commonPanel = new CourierPanel();

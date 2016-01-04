@@ -27,6 +27,7 @@ public class StockIn extends List {
     public boolean save2File(ListVO listVO) throws RemoteException {
         StockInVO vo = null;
         vo = (StockInVO) listVO;
+        String organization =
         new CommodityController().stockIn(vo);
         StockInPO po = VO2PO.convert(vo);
         inquiryDataService.saveOperationLog(new OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),

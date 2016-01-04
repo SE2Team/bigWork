@@ -201,8 +201,8 @@ public class addEmployeeInfoDialog extends MyDialog {
 						WorkerVO vo = new WorkerVO(jtf_name.getText(),
                                 jtf_idNum.getText(), positionBox.getSelectedItem().toString(),
                                 organization.getSelectedItem().toString(), jtf_accountNum
-                                .getText(), saveValue);
-                        ;
+								.getText(), saveValue, jtf_age.getText());
+						;
                         if (jp == parent) {
 							ManageblService bl;
 							try {
@@ -241,6 +241,7 @@ public class addEmployeeInfoDialog extends MyDialog {
 							parent2.addEmpInfo(rowContent);
 						}
 						RunTip.makeTip("保存成功", true);
+						parent.update1();
 						dispose();
 
 					} else if ((!isOk) && isenter) {

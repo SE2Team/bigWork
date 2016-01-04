@@ -37,6 +37,7 @@ public class MyDialog extends JDialog {
 
     private void init() {
         this.setAlwaysOnTop(true);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     @Override

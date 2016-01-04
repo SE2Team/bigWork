@@ -142,7 +142,7 @@ public class VehiclePanel extends JPanel {
 			}
 		}
 		n = list2.size();
-		String row[][] = new String[n][4];
+		final String row[][] = new String[n][4];
 		for (int j = 0; j < n; j++) {
 			vehicle = list2.get(j);
 			String[] s1 = new String[4];
@@ -155,7 +155,17 @@ public class VehiclePanel extends JPanel {
 		vehicleTable = Table.getTable(column, row);
 		tableModel = (DefaultTableModel) vehicleTable.getModel();
 		//---------------------------------------------------------
-
+		search.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String num = inputInfo.getText();
+				for (int j = 0; j < row.length; j++) {
+					if (row[j][0].equals(num)) {
+						vehicleTable.setRowSelectionInterval(j, j);
+					}
+				}
+			}
+		});
 		//	tableModel =new DefaultTableModel(row, column);
 
 

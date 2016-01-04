@@ -7,9 +7,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface CommodityDataService extends Remote {
-    void update(StockPO PO) throws RemoteException;
+    void update(StockPO PO, String transferOrganization) throws RemoteException;
 
-    StockPO check() throws RemoteException;//返回完整的stockpo
+    StockPO check(String transferOrganization) throws RemoteException;//返回完整的stockpo
 
 
     /**
@@ -18,7 +18,7 @@ public interface CommodityDataService extends Remote {
      * @return
      * @throws RemoteException
      */
-    StockPO initial() throws RemoteException;
+    StockPO initial(String transferOrganization) throws RemoteException;
 
     /**
      * @param start
@@ -26,6 +26,6 @@ public interface CommodityDataService extends Remote {
      * @return 出库数量/入库数量      库存数量
      * @throws RemoteException
      */
-    ArrayList<Integer> check(String start, String end) throws RemoteException;
+    ArrayList<Integer> check(String start, String end, String transferOrganization) throws RemoteException;
 
 }

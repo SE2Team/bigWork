@@ -239,6 +239,11 @@ public class Manage {
         return arrayList.iterator();
     }
 
+    public OrganizationVO checkOrganization(String str) throws RemoteException {
+        return PO2VO.convert(manage.check(str));
+    }
+
+
     public boolean addOrganization(OrganizationVO vo) throws RemoteException, ExistException {
         return manage.addOrganization(VO2PO.convert(vo));
     }

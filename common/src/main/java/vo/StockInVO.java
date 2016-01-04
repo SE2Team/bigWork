@@ -21,6 +21,7 @@ public class StockInVO extends ListVO {
     private String shelfNum;
     private String positionNum;
 
+
     public StockInVO(String deliveryNum, String inDate, String end, String zoneNum,
                      String rowNum, String shelfNum, String positionNum, ListState isCheck) {
         super(isCheck);

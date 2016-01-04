@@ -24,8 +24,8 @@ public class CommodityController implements CommodityblService {
      *
      * @throws RemoteException the remote exception
      */
-    public CommodityController() throws RemoteException {
-        commodity = new Commodity();
+    public CommodityController(String str) throws RemoteException {
+        commodity = new Commodity(str);
     }
 
     public boolean stockOut(StockOutVO stockOutVO) throws RemoteException {

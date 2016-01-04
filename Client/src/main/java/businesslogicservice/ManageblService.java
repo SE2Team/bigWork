@@ -134,4 +134,6 @@ public interface ManageblService {
 
     String checkCityNum(String city) throws RemoteException;
 
+    OrganizationVO checkOrganization(String num) throws RemoteException;
+
 }

@@ -128,7 +128,8 @@ public class VO2PO {
         if (vo == null) {
             return null;
         }
-        return new WorkerPO(vo.getName(), vo.getIdNum(), vo.getPosition(), vo.getOrganization(), vo.getUserId(), vo.getSex());
+        return new WorkerPO(vo.getName(), vo.getIdNum(), vo.getPosition(), vo.getOrganization(), vo.getUserId(),
+                vo.getSex(), vo.getAge());
     }
 
     public static StockPO convert(StockVO vo) {
@@ -161,6 +162,6 @@ public class VO2PO {
         if (vo == null) {
             return null;
         }
-        return new OrganizationPO(vo.getNum(), vo.getTransfer(), vo.getName());
+        return new OrganizationPO(vo.getNum(), vo.getCity(), vo.getName());
     }
 }

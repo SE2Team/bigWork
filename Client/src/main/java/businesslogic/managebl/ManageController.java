@@ -69,6 +69,10 @@ public class ManageController implements ManageblService {
         return manage.checkOrganization();
     }
 
+    public OrganizationVO checkOrganization(String num) throws RemoteException {
+        return manage.checkOrganization(num);
+    }
+
     public boolean addOrganization(OrganizationVO vo) throws RemoteException, ExistException {
         return manage.addOrganization(vo);
     }

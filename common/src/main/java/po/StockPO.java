@@ -24,6 +24,7 @@ public class StockPO implements Serializable {
         this.stockList = stockList;
     }
 
+
     public boolean getStockState() {
         return stockState;
     }

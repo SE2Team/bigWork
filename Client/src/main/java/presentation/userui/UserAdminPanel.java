@@ -176,8 +176,8 @@ public class UserAdminPanel extends JPanel{
 			list.add(iterator.next());
 		}
 		int n = list.size();
-		String row[][] = new String[n][4];
-		for (int j = 0; j < n; j++) {
+        final String row[][] = new String[n][4];
+        for (int j = 0; j < n; j++) {
 			String[] str = new String[4];
 			UserVO vo = list.get(j);
 			str[0] = vo.getId();
@@ -192,7 +192,17 @@ public class UserAdminPanel extends JPanel{
 
 
 		//----------------------------------------------------------------
-
+        checkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = checkField.getText();
+                for (int j = 0; j < row.length; j++) {
+                    if (row[j][0].equals(name)) {
+                        userTable.setRowSelectionInterval(j, j);
+                    }
+                }
+            }
+        });
 
 		//	userTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//单选
 		userTable.addMouseListener(new MouseAdapter() {//鼠标事件

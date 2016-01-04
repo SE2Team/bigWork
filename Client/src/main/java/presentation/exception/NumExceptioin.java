@@ -273,7 +273,7 @@ public class NumExceptioin {
 		for (int i = 0; i < s.length(); i++) {
 			if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
 				if (!"".equalsIgnoreCase(text.getText().trim())
-						&& text.getText().length() != 6) {
+						&& (text.getText().length() != 1 && text.getText().length() != 3)) {
 					return false;
 				}
 			} else {

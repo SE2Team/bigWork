@@ -31,7 +31,7 @@ public class MockList extends List {
      * @throws RemoteException the remote exception
      */
     public static void main(String[] args) throws RemoteException {
-        CommodityblService commodity = new CommodityController();
+        CommodityblService commodity = new CommodityController(null);
 
         StockInVO vo = new StockInVO("121", "121", "121", "121", "121", "121", "121", ListState.PASSED);
         commodity.stockIn(vo);
