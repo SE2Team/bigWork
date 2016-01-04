@@ -91,13 +91,13 @@ public class Finance {
      *
      * @return the result message
      */
-    public boolean generateForm() throws RemoteException {
-        finance.get();
+    public Iterator<String> generateForm() throws RemoteException {
+
 
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"生成报表"));
 
-        return true;
+        return finance.get().iterator();
     }
 
     /**
@@ -108,13 +108,13 @@ public class Finance {
      * @return the result message
      * @throws RemoteException the remote exception
      */
-    public boolean generateForm(String startDate, String endDate) throws RemoteException {
+    public Iterator<String> generateForm(String startDate, String endDate) throws RemoteException {
 
         inquiryDataService.saveOperationLog(new
                 OperationLogPO(Helper.getTime(),Helper.getUserType().toString(),"生成报表"));
 
-        finance.get(startDate, endDate);
-        return false;
+
+        return finance.get(startDate, endDate).iterator();
     }
 
 

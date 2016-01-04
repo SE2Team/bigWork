@@ -28,7 +28,7 @@ public interface FinanceblService {
      * @return
      * @throws RemoteException 网络异常
      */
-    boolean generateForm() throws RemoteException;
+    Iterator<String> generateForm() throws RemoteException;
 
     /**
      * @param startDate 传入起始日期
@@ -36,7 +36,7 @@ public interface FinanceblService {
      * @return
      * @throws RemoteException 网络异常
      */
-    boolean generateForm(String startDate, String endDate) throws RemoteException;
+    Iterator<String> generateForm(String startDate, String endDate) throws RemoteException;
 
     /**
      * @param institution 传入机构名称
@@ -118,5 +118,5 @@ public interface FinanceblService {
 
     StockVO checkInitStock() throws RemoteException;
 
-    public Iterator<OrganizationVO> checkInitOrganization() throws RemoteException;
+    Iterator<OrganizationVO> checkInitOrganization() throws RemoteException;
 }

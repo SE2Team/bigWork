@@ -37,11 +37,11 @@ public class FinanceController implements FinanceblService {
         return finance.payment(paymentVO);
     }
 
-    public boolean generateForm() throws RemoteException {
+    public Iterator<String> generateForm() throws RemoteException {
         return finance.generateForm();
     }
 
-    public boolean generateForm(String startDate, String endDate) throws RemoteException {
+    public Iterator<String> generateForm(String startDate, String endDate) throws RemoteException {
         return finance.generateForm(startDate, endDate);
     }
 

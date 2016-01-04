@@ -64,7 +64,7 @@ public interface FinanceDataService extends Remote {
      */
 
     ArrayList<GatheringPO> getGathering() throws RemoteException;
-    
+
     /**
      * @param po
      * @return
@@ -97,11 +97,11 @@ public interface FinanceDataService extends Remote {
     /**
      * @return
      * @throws RemoteException
-     * @throws ExistException 
+     * @throws ExistException
      */
 
     boolean initial(OrganizationPO po) throws RemoteException, ExistException;
-    
+
     ArrayList<WorkerPO> checkInitWorker() throws RemoteException;
 
     /**
@@ -122,6 +122,6 @@ public interface FinanceDataService extends Remote {
      */
     StockPO checkInitStock() throws RemoteException;
 
- ArrayList<OrganizationPO> checkInitOrganization() throws RemoteException;
+    ArrayList<OrganizationPO> checkInitOrganization() throws RemoteException;
 
 }
