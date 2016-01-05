@@ -34,8 +34,6 @@ public class DriverVO {
         this.vehicleInstitution = vehicleInstitution;
     }
 
-    public DriverVO() {
-    }
 
     public String getDriverNum() {
         return driverNum;

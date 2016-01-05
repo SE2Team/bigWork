@@ -303,7 +303,7 @@ public class ManagedataImpl extends UnicastRemoteObject implements ManageDataSer
 		if (list.contains(this.driverPOToString(oldDriverPO))) {
 			list.remove(this.driverPOToString(oldDriverPO));
 			list.add(this.driverPOToString(newDriverPO));
-			common.clearData("vehicle");
+			common.clearData("driver");
 			common.writeData(list);
 			return true;
 		} else {

@@ -235,7 +235,7 @@ public class addDriverDialog extends MyDialog {
 				&& (jrb_male.isSelected() || jrb_female
 				.isSelected());
 		if (isOk && isenter) {
-			DriverVO driver_vo = new DriverVO(jtf_driverNum
+			DriverVO driver_vo = new DriverVO(jl_num.getText() + jtf_driverNum
 					.getText(), jtf_driverName.getText(),
 					jtf_birthDate.getText(), jtf_idNum.getText(),
 					jtf_phone.getText(), jtf_Institution.getText(),
@@ -255,7 +255,7 @@ public class addDriverDialog extends MyDialog {
 				return;
 			}
 
-			rowContent = new String[]{jtf_driverNum.getText(),
+			rowContent = new String[]{jl_num.getText() + jtf_driverNum.getText(),
 					jtf_driverName.getText(), saveValue,
 					jtf_birthDate.getText(), jtf_idNum.getText(),
 					jtf_phone.getText(), jtf_Institution.getText(),

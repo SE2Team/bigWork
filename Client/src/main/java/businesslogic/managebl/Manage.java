@@ -268,6 +268,11 @@ public class Manage {
         return manage.checkCityNum(city);
     }
 
+    public boolean editOrganization(OrganizationVO ovo, OrganizationVO nvo) throws RemoteException, ExistException {
+        return manage.editOrganization(VO2PO.convert(ovo), VO2PO.convert(nvo));
+    }
+
+
     /**
      * 私有vo和po之间转换的方法
      *

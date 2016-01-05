@@ -60,6 +60,13 @@ public class EmpAndInsPanel extends JPanel {
     Font font1 = new Font("楷体", Font.PLAIN, 25);
     Font font2 = new Font("宋体", Font.PLAIN, 15);
 
+    ManageblService bl;
+
+    WorkerVO vo;
+    OrganizationVO organizationVO;
+
+
+
     public EmpAndInsPanel() {
         // 初始化各组件
         this.setSize(650, 530);
@@ -164,8 +171,6 @@ public class EmpAndInsPanel extends JPanel {
         Iterator<WorkerVO> ite2 = null;
         ArrayList<WorkerVO> list2 = new ArrayList<WorkerVO>();
         int n = 0;
-        ManageblService bl;
-        WorkerVO vo;
         try {
             bl = new ManageController();
             ite2 = bl.checkWorker();
@@ -251,6 +256,13 @@ public class EmpAndInsPanel extends JPanel {
                 int rowNum = instituteTable.getSelectedRow();
                 if (rowNum != -1) {
                     tableModel2.removeRow(rowNum);
+                    try {
+                        bl.delOrganization(new OrganizationVO(ins0.toString(), ins1.toString(), ins2.toString()));
+                    } catch (RemoteException e) {
+                        RunTip.makeTip("网络异常", false);
+                    } catch (ExistException e) {
+                        RunTip.makeTip("机构信息重复", false);
+                    }
                 }
             }
         });

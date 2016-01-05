@@ -108,4 +108,6 @@ public class FinanceController implements FinanceblService {
     public Iterator<OrganizationVO> checkInitOrganization() throws RemoteException {
         return finance.checkInitOrganization();
     }
+
+
 }

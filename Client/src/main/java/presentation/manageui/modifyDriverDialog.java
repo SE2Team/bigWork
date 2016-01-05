@@ -179,6 +179,8 @@ public class modifyDriverDialog extends MyDialog {
 			jtf_licenseTime.addFocusListener(new TextFocus());
 
 			final DriverVO oDrivervo = parent.getVo();
+            System.out.println(oDrivervo.getDriverName());
+
 
 			sure = new JButton("确定");
 			sure.setFont(font);
@@ -205,7 +207,8 @@ public class modifyDriverDialog extends MyDialog {
 						try {
 							bl = new ManageController();
 							try {
-								bl.editDriver(oDrivervo, driver_vo);
+                                System.out.println(oDrivervo.getDriverName());
+                                bl.editDriver(oDrivervo, driver_vo);
 							} catch (ExistException e) {
 								RunTip.makeTip("该司机信息已存在", false);
 								return;
@@ -214,9 +217,13 @@ public class modifyDriverDialog extends MyDialog {
 							RunTip.makeTip("网络异常", false);
 							return;
 						}
-
-						rowContent = new String[]{jtf_driverNum.getText(),
-								jtf_driverName.getText(), saveValue,
+                        if (jrb_male.isSelected()) {
+                            saveValue = jrb_male.getText();
+                        } else if (jrb_female.isSelected()) {
+                            saveValue = jrb_female.getText();
+                        }
+                        rowContent = new String[]{jl_num.getText() + jtf_driverNum.getText(),
+                                jtf_driverName.getText(), saveValue,
 								jtf_birthDate.getText(), jtf_idNum.getText(),
 								jtf_phone.getText(), jtf_Institution.getText(),
 								jtf_licenseTime.getText()};
@@ -263,8 +270,8 @@ public class modifyDriverDialog extends MyDialog {
 			this.add(jtf_licenseTime);
 			this.add(sure);
 			this.add(cancel);
-
-		}
+            this.add(jl_num);
+        }
 	}
 
 	/**

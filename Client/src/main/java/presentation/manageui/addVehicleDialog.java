@@ -207,7 +207,7 @@ public class addVehicleDialog extends MyDialog {
 							}
 						}
 
-						rowContent = new String[]{jtf_vehicleNum.getText(),
+						rowContent = new String[]{jl_num.getText() + jtf_vehicleNum.getText(),
 								jtf_licensePlate.getText(),
 								jtf_buyDate.getText(), jtf_useTime.getText()};
 						if (jp == parent) {

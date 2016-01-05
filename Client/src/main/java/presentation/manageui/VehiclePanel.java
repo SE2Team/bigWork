@@ -6,6 +6,7 @@ package presentation.manageui;
 import businesslogic.managebl.ManageController;
 import businesslogicservice.ManageblService;
 import presentation.commonui.RunTip;
+import presentation.commonui.UIdata.UserInfo;
 import presentation.commonui.swing.Table;
 import vo.VehicleVO;
 
@@ -133,14 +134,15 @@ public class VehiclePanel extends JPanel {
 			ite2 = bl.checkVehicle();
 			if (ite2 != null) {
 				while (ite2.hasNext()) {
+					VehicleVO vehicleVO = ite2.next();
 					String num = null;
-//					try {
-//					//	num = bl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
-//					} catch (RemoteException e1) {
-//						RunTip.makeTip("网络异常", false);
-//					}
-					if (ite2.next().toString().substring(0, 6).equals(num)) {
-						list2.add(ite2.next());
+					try {
+						num = bl.checkOrganization(UserInfo.WORKER.getOrganization()).getNum();
+					} catch (RemoteException e1) {
+						RunTip.makeTip("网络异常", false);
+					}
+					if (vehicleVO.getVehicleNum().substring(0, 6).equals(num)) {
+						list2.add(vehicleVO);
 					}
 				}
 			}
@@ -173,6 +175,8 @@ public class VehiclePanel extends JPanel {
 				for (int j = 0; j < row.length; j++) {
 					if (row[j][0].equals(num)) {
 						vehicleTable.setRowSelectionInterval(j, j);
+					} else {
+						RunTip.makeTip("找不到该车辆", false);
 					}
 				}
 			}
@@ -185,7 +189,7 @@ public class VehiclePanel extends JPanel {
 				c1 = tableModel.getValueAt(selectedRow, 1);
 				c2 = tableModel.getValueAt(selectedRow, 2);
 				c3 = tableModel.getValueAt(selectedRow, 3);
-				modifyVehicle.getVehicleNum().setText(c0.toString());
+				modifyVehicle.getVehicleNum().setText(c0.toString().substring(6));
 				modifyVehicle.getLicensePlate().setText(c1.toString());
 				modifyVehicle.getBuyDate().setText(c2.toString());
 				modifyVehicle.getUseTime().setText(c3.toString());

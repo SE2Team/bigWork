@@ -136,4 +136,5 @@ public interface ManageblService {
 
     OrganizationVO checkOrganization(String num) throws RemoteException;
 
+    boolean editOrganization(OrganizationVO ovo, OrganizationVO nvo) throws RemoteException, ExistException;
 }

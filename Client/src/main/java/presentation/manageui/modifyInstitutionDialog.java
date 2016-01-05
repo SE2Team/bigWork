@@ -6,6 +6,7 @@ import presentation.commonui.RunTip;
 import presentation.commonui.isAllEntered;
 import presentation.commonui.swing.MyDialog;
 import presentation.exception.NumExceptioin;
+import util.ExistException;
 import vo.OrganizationVO;
 
 import javax.swing.*;
@@ -19,9 +20,11 @@ public class modifyInstitutionDialog extends MyDialog {
 
     private EmpAndInsPanel parent = null;
     OrganizationVO vo;
+    OrganizationVO ovo;
 
     public modifyInstitutionDialog(EmpAndInsPanel parent, OrganizationVO vo) {
         this.vo = vo;
+        this.ovo = vo;
         this.parent = parent;
         this.setContentPane(new modInstituInfoPanel());
         this.setSize(400, 380);
@@ -140,6 +143,13 @@ public class modifyInstitutionDialog extends MyDialog {
                                 cityBox.getSelectedItem().toString()
                                 , jtf_institution.getText()};
                         parent.updateInsInfo(rowContent);
+                        try {
+                            manageblService.editOrganization(ovo, vo);
+                        } catch (RemoteException e) {
+                            RunTip.makeTip("网络异常", false);
+                        } catch (ExistException e) {
+                            RunTip.makeTip("机构信息重复", false);
+                        }
                         RunTip.makeTip("修改成功", true);
                         parent.update2();
                         dispose();

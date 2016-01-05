@@ -154,4 +154,9 @@ public class ManageController implements ManageblService {
     public boolean editVehicle(VehicleVO ovo, VehicleVO nvo) throws RemoteException, ExistException {
         return manage.editVehicle(ovo, nvo);
     }
+
+    @Override
+    public boolean editOrganization(OrganizationVO ovo, OrganizationVO nvo) throws RemoteException, ExistException {
+        return manage.editOrganization(ovo, nvo);
+    }
 }

@@ -1,3 +1,4 @@
+
 import presentation.userui.LogInFrame;
 
 import javax.swing.*;
@@ -8,14 +9,6 @@ import javax.swing.*;
  */
 class Main {
     public static void main(String[] args) {
-//    	JFrame mFrame = new JFrame();
-//        mFrame.setSize(900, 600);
-//        mFrame.setLocation(300, 300);
-//        ListblService bl=new ListController();
-//        JPanel panel=new ListFinanceView(bl);
-//        mFrame.getContentPane().add(panel);
-//        mFrame.setTitle("ss�");
-//        mFrame.setVisible(true);
         String lookAndFeel = "javax.swing.plaf.metal.MetalLookAndFeel";
         try {
             UIManager.setLookAndFeel(lookAndFeel);
